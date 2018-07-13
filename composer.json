@@ -1,0 +1,51 @@
+{
+    "name": "thtg88/mmcms",
+    "type": "library",
+    "description": "A package to create CMS modules",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Marassi",
+            "email": "admin@marco-marassi.com"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "^2.7",
+        "illuminate/bus": "5.6.*",
+        "illuminate/console": "5.6.*",
+        "illuminate/contracts": "5.6.*",
+        "illuminate/database": "5.6.*",
+        "illuminate/filesystem": "5.6.*",
+        "illuminate/mail": "5.6.*",
+        "illuminate/notifications": "5.6.*",
+        "illuminate/queue": "5.6.*",
+        "illuminate/routing": "5.6.*",
+        "illuminate/support": "5.6.*",
+        "laravel/passport": "6.0.*",
+        "nesbot/carbon": "~1.18"
+    },
+    "autoload": {
+        "psr-4": {
+            "Thtg88\\MmCms\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Thtg88\\MmCms\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1",
+        "orchestra/testbench": "~3.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Thtg88\\MmCms\\MmCmsServiceProvider"
+            ],
+            "aliases": {
+                "Debugbar": "Thtg88\\MmCms\\MmCmsFacade"
+            }
+        }
+    }
+}

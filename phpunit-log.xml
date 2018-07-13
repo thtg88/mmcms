@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="MmCms Test Suite" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="2.441059">
+    <testsuite name="Thtg88\MmCms\Test\LoginTest" file="/var/www/vhosts/mmcms/tests/LoginTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="2.441059">
+      <testcase name="testLoginFail" class="Thtg88\MmCms\Test\LoginTest" classname="Thtg88.MmCms.Test.LoginTest" file="/var/www/vhosts/mmcms/tests/LoginTest.php" line="27" assertions="1" time="2.441059">
+        <failure type="PHPUnit\Framework\ExpectationFailedException">Thtg88\MmCms\Test\LoginTest::testLoginFail
+Expected status code 422 but received 500.
+Failed asserting that false is true.
+
+/var/www/vhosts/mmcms/vendor/laravel/framework/src/Illuminate/Foundation/Testing/TestResponse.php:109
+/var/www/vhosts/mmcms/tests/LoginTest.php:36
+/home/vagrant/.config/composer/vendor/phpunit/phpunit/src/TextUI/Command.php:203
+/home/vagrant/.config/composer/vendor/phpunit/phpunit/src/TextUI/Command.php:156
+</failure>
+      </testcase>
+    </testsuite>
+  </testsuite>
+</testsuites>
