@@ -1,7 +1,7 @@
 {
     "name": "thtg88/mmcms",
     "type": "library",
-    "description": "A package to create CMS modules",
+    "description": "A headless CMS. With a REST API.",
     "license": "MIT",
     "authors": [
         {
