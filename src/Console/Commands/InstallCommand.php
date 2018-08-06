@@ -175,15 +175,18 @@ class InstallCommand extends Command
     {
         // Adding Exception handlers
         $str = file_get_contents(app_path('Providers/AuthServiceProvider.php'));
+
         if (
             $str !== false
             && strpos($str, 'Passport::routes();') === false
             && strpos($str, '$this->registerPolicies();') !== false
         )
         {
-            $routes_str = '$this->registerPolicies();'.PHP_EOL.PHP_EOL;
-            $routes_str .= '\tPassport::routes();'.PHP_EOL;
-            $str = str_replace('$this->registerPolicies();', $routes_str, $str);
+            $passport_str = '$this->registerPolicies();'.PHP_EOL.PHP_EOL;
+            $passport_str .= "\t\tPassport::routes();";
+            $str = str_replace('$this->registerPolicies();', $passport_str, $str);
+
+            file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
         }
         if (
             $str !== false
@@ -191,9 +194,11 @@ class InstallCommand extends Command
             && strpos($str, 'namespace App\Providers;'.PHP_EOL.PHP_EOL) !== false
         )
         {
-            $routes_str = 'namespace App\Providers;'.PHP_EOL.PHP_EOL;
-            $routes_str .= 'use Laravel\Passport\Passport;'.PHP_EOL;
-            $str = str_replace('$this->registerPolicies();', $routes_str, $str);
+            $passport_str = 'namespace App\Providers;'.PHP_EOL.PHP_EOL;
+            $passport_str .= 'use Laravel\Passport\Passport;'.PHP_EOL;
+            $str = str_replace('namespace App\Providers;'.PHP_EOL.PHP_EOL, $passport_str, $str);
+
+            file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
         }
     }
 
@@ -205,17 +210,20 @@ class InstallCommand extends Command
      */
     private function addLaravelCorsMiddleware(FileSystem $filesystem)
     {
-        // Adding Exception handlers
+        // Adding middleware handlers
         $str = file_get_contents(app_path('Http/Kernel.php'));
+
         if (
             $str !== false
             && strpos($str, '\Barryvdh\Cors\HandleCors::class,') === false
             && strpos($str, 'protected $middleware = [') !== false
         )
         {
-            $routes_str = 'protected $middleware = ['.PHP_EOL;
-            $routes_str .= "\t\Barryvdh\Cors\HandleCors::class,".PHP_EOL;
-            $str = str_replace('protected $middleware = [', $routes_str, $str);
+            $middleware_str = 'protected $middleware = ['.PHP_EOL;
+            $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
+            $str = str_replace('protected $middleware = [', $middleware_str, $str);
+
+            file_put_contents(app_path('Http/Kernel.php'), $str);
         }
     }
 
