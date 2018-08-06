@@ -152,7 +152,6 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        dd($request->all());
         try
         {
             $oauth_data = [
