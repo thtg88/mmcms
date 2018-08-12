@@ -108,17 +108,21 @@ class AuthController extends Controller
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'password',
-                    'client_id' => env('PASSWORD_CLIENT_ID'),
-                    'client_secret' => env('PASSWORD_CLIENT_SECRET'),
+                    'client_id' => config('mmcms.passport.password_client_id'),
+                    'client_secret' => config('mmcms.passport.password_client_secret'),
                     'username' => $request->get('email'),
                     'password' => $request->get('password'),
                     'remember' => false,
                     'scope' => '',
                 ],
+                'headers' => [
+                    // This allows loopback on custom localhost domains
+                    'Host' => $request->server('SERVER_NAME'),
+                ]
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(env('APP_OAUTH_URL').'/oauth/token', $oauth_data);
+            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
@@ -131,6 +135,11 @@ class AuthController extends Controller
         }
         catch (\Exception $e)
         {
+            // If there was an error registering the user
+            // Delete the newly created user
+            // and send the error response to the client
+            $this->repository->destroy($user->id);
+
             $response_data = [
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
@@ -157,17 +166,21 @@ class AuthController extends Controller
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'password',
-                    'client_id' => env('PASSWORD_CLIENT_ID'),
-                    'client_secret' => env('PASSWORD_CLIENT_SECRET'),
+                    'client_id' => config('mmcms.passport.password_client_id'),
+                    'client_secret' => config('mmcms.passport.password_client_secret'),
                     'username' => $request->get('email'),
                     'password' => $request->get('password'),
                     'remember' => $request->get('remember'),
                     'scope' => '',
                 ],
+                'headers' => [
+                    // This allows loopback on custom localhost domains
+                    'Host' => $request->server('SERVER_NAME'),
+                ]
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(env('APP_OAUTH_URL').'/oauth/token', $oauth_data);
+            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream

@@ -78,11 +78,6 @@ class InstallCommand extends Command
         $this->info('Adding Exception renderers');
         $this->addExceptionRenderers();
 
-        // // Adding routes to api.php
-        // $this->info('Adding mmCMS routes to routes/api.php');
-        // $this->addRoutes($filesystem);
-        // \MmCms::routes();
-
         $this->info('Seeding data into the database');
         $this->seed('MmCmsDatabaseSeeder');
 
@@ -132,22 +127,41 @@ class InstallCommand extends Command
      */
     private function extendUserModel()
     {
+        // Check that file exists
         if (file_exists(app_path('User.php')))
         {
+            // Get model's content as string
             $str = file_get_contents(app_path('User.php'));
 
             if ($str !== false)
             {
-                $str = str_replace('extends Authenticatable', "extends \Thtg88\MmCms\Models\User", $str);
-                $str = str_replace('use Notifiable;', 'use HasApiTokens, Notifiable;', $str);
+                // Replace inherited class
+                if(
+                    strpos($str, 'extends \Thtg88\MmCms\Models\User') === false
+                    && strpos($str, 'extends Authenticatable') !== false
+                )
+                {
+                    $str = str_replace('extends Authenticatable', "extends \Thtg88\MmCms\Models\User", $str);
+                }
+                // Replace traits
+                if(
+                    strpos($str, 'use \Laravel\Passport\HasApiTokens, Notifiable;') === false
+                    && strpos($str, 'use Notifiable;') !== false
+                )
+                {
+                    $str = str_replace('use Notifiable;', 'use \Laravel\Passport\HasApiTokens, Notifiable;', $str);
+                }
 
                 file_put_contents(app_path('User.php'), $str);
             }
         }
         else
         {
+            // Warn the user to do changes manually
             $this->warn('Unable to locate "app/User.php". Did you move this file?');
-            $this->warn('You will need to update this manually. Change "extends Authenticatable" to "extends \Thtg88\MmCms\Models\User" in your User model');
+            $this->warn('You will need to update this manually.');
+            $this->warn('Change "extends Authenticatable" to "extends \Thtg88\MmCms\Models\User",');
+            $this->warn('and "use Notifiable;" to "use \Laravel\Passport\HasApiTokens, Notifiable;" in your User model');
         }
     }
 
@@ -166,39 +180,41 @@ class InstallCommand extends Command
     }
 
     /**
-     * Add JSON-specific exception renderers.
+     * Add Laravel Passport routes.
      *
      * @param   \Illuminate\Filesystem\Filesystem   $filesystem
      * @return  void
      */
     private function addPassportRoutes(FileSystem $filesystem)
     {
-        // Adding Exception handlers
-        $str = file_get_contents(app_path('Providers/AuthServiceProvider.php'));
-
-        if (
-            $str !== false
-            && strpos($str, 'Passport::routes();') === false
-            && strpos($str, '$this->registerPolicies();') !== false
-        )
+        // Check that Auth service provider exists
+        if (file_exists(app_path('Providers/AuthServiceProvider.php')))
         {
-            $passport_str = '$this->registerPolicies();'.PHP_EOL.PHP_EOL;
-            $passport_str .= "\t\tPassport::routes();";
-            $str = str_replace('$this->registerPolicies();', $passport_str, $str);
+            // Get Auth service provider content as string
+            $str = file_get_contents(app_path('Providers/AuthServiceProvider.php'));
 
-            file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
+            if ($str !== false)
+            {
+                // Add Passport routes
+                if(
+                    strpos($str, 'Passport::routes();') === false
+                    && strpos($str, '$this->registerPolicies();') !== false
+                )
+                {
+                    $passport_str = '$this->registerPolicies();'.PHP_EOL.PHP_EOL;
+                    $passport_str .= "\t\t\Laravel\Passport\Passport::routes();";
+                    $str = str_replace('$this->registerPolicies();', $passport_str, $str);
+                }
+
+                file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
+            }
         }
-        if (
-            $str !== false
-            && strpos($str, 'use Laravel\Passport\Passport;') === false
-            && strpos($str, 'namespace App\Providers;'.PHP_EOL.PHP_EOL) !== false
-        )
+        else
         {
-            $passport_str = 'namespace App\Providers;'.PHP_EOL.PHP_EOL;
-            $passport_str .= 'use Laravel\Passport\Passport;'.PHP_EOL;
-            $str = str_replace('namespace App\Providers;'.PHP_EOL.PHP_EOL, $passport_str, $str);
-
-            file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
+            // Warn the user to do changes manually
+            $this->warn('Unable to locate "app/Providers/AuthServiceProvider.php". Did you move this file?');
+            $this->warn('You will need to update this manually.');
+            $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Auth service provider.');
         }
     }
 
@@ -210,20 +226,32 @@ class InstallCommand extends Command
      */
     private function addLaravelCorsMiddleware(FileSystem $filesystem)
     {
-        // Adding middleware handlers
-        $str = file_get_contents(app_path('Http/Kernel.php'));
-
-        if (
-            $str !== false
-            && strpos($str, '\Barryvdh\Cors\HandleCors::class,') === false
-            && strpos($str, 'protected $middleware = [') !== false
-        )
+        // Check that HTTP Kernel exists
+        if (file_exists(app_path('Http/Kernel.php')))
         {
-            $middleware_str = 'protected $middleware = ['.PHP_EOL;
-            $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
-            $str = str_replace('protected $middleware = [', $middleware_str, $str);
+            // Get HTTP kernel content as string
+            $str = file_get_contents(app_path('Http/Kernel.php'));
 
-            file_put_contents(app_path('Http/Kernel.php'), $str);
+            // Replace middleware import for all routes
+            if (
+                $str !== false
+                && strpos($str, '\Barryvdh\Cors\HandleCors::class,') === false
+                && strpos($str, 'protected $middleware = [') !== false
+            )
+            {
+                $middleware_str = 'protected $middleware = ['.PHP_EOL;
+                $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
+                $str = str_replace('protected $middleware = [', $middleware_str, $str);
+
+                file_put_contents(app_path('Http/Kernel.php'), $str);
+            }
+        }
+        else
+        {
+            // Warn the suer of the manual change needed
+            $this->warn('Unable to locate "app/Http/Kernel.php". Did you move this file?');
+            $this->warn('You will need to update this manually.');
+            $this->warn('Add "\Barryvdh\Cors\HandleCors::class," after "protected $middleware = [" in the HTTP kernel.');
         }
     }
 
@@ -234,62 +262,63 @@ class InstallCommand extends Command
      */
     private function addExceptionRenderers()
     {
-        // Adding Exception handlers
-        $str = file_get_contents(app_path('Exceptions/Handler.php'));
-        if (
-            $str !== false
-            && strpos($str, 'use Symfony\Component\HttpKernel\Exception\HttpException;') === false
-            && strpos($str, 'use Exception;') !== false
-            && strpos($str, 'return parent::render($request, $exception);') !== false
-        )
+        // Check that exception handler is in the standard Laravel place
+        if (file_exists(app_path('Exceptions/Handler.php')))
         {
-            // Adding imports
-            $imports_str = "use Exception;".PHP_EOL;
-            $imports_str .= "use Illuminate\Auth\AuthenticationException;".PHP_EOL;
-            $imports_str .= "use Illuminate\Auth\Access\AuthorizationException;".PHP_EOL;
-            $imports_str .= "use Symfony\Component\HttpKernel\Exception\HttpException;".PHP_EOL;
-            $imports_str .= "use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;".PHP_EOL;
-            $imports_str .= "use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;".PHP_EOL;
-            $str = str_replace("use Exception;", $imports_str, $str);
+            // Get exceptions handler content as string
+            $str = file_get_contents(app_path('Exceptions/Handler.php'));
 
-            // Adding content
-            $render_str = 'if($exception instanceof NotFoundHttpException)'.PHP_EOL;
-            $render_str .= "\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Resource not found.";'.PHP_EOL;
-            $render_str .= "\t\t\t".'return response()->json(["errors" => ["resource_not_found" => [$msg]]], 404);'.PHP_EOL;
-            $render_str .= "\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'else if($exception instanceof AuthorizationException)'.PHP_EOL;
-            $render_str .= "\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-            $render_str .= "\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-            $render_str .= "\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'else if($exception instanceof AuthenticationException)'.PHP_EOL;
-            $render_str .= "\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Unauthenticated.";'.PHP_EOL;
-            $render_str .= "\t\t\t".'return response()->json(["errors" => ["unauthenticated" => [$msg]]], 403);'.PHP_EOL;
-            $render_str .= "\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'else if($exception instanceof MethodNotAllowedHttpException)'.PHP_EOL;
-            $render_str .= "\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t".'return response()->json(["errors" => ["method_not_allowed" => ["Method not allowed."]]], 405);'.PHP_EOL;
-            $render_str .= "\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'else if($exception instanceof HttpException)'.PHP_EOL;
-            $render_str .= "\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t".'if($exception->getStatusCode() == 403)'.PHP_EOL;
-            $render_str .= "\t\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-            $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-            $render_str .= "\t\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t\t".'if($exception->getStatusCode() == 401)'.PHP_EOL;
-            $render_str .= "\t\t\t".'{'.PHP_EOL;
-            $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Unauthorized.";'.PHP_EOL;
-            $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["unauthorized" => [$msg]]], 403);'.PHP_EOL;
-            $render_str .= "\t\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'}'.PHP_EOL;
-            $render_str .= "\t\t".'return parent::render($request, $exception);';
+            if (
+                $str !== false
+                && strpos($str, 'if($exception->getStatusCode() == 403)') === false
+                && strpos($str, 'return parent::render($request, $exception);') !== false
+            )
+            {
+                // Adding content
+                $render_str = 'if($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)'.PHP_EOL;
+                $render_str .= "\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Resource not found.";'.PHP_EOL;
+                $render_str .= "\t\t\t".'return response()->json(["errors" => ["resource_not_found" => [$msg]]], 404);'.PHP_EOL;
+                $render_str .= "\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\Access\AuthorizationException)'.PHP_EOL;
+                $render_str .= "\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
+                $render_str .= "\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
+                $render_str .= "\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\AuthenticationException)'.PHP_EOL;
+                $render_str .= "\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Unauthenticated.";'.PHP_EOL;
+                $render_str .= "\t\t\t".'return response()->json(["errors" => ["unauthenticated" => [$msg]]], 403);'.PHP_EOL;
+                $render_str .= "\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)'.PHP_EOL;
+                $render_str .= "\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t".'return response()->json(["errors" => ["method_not_allowed" => ["Method not allowed."]]], 405);'.PHP_EOL;
+                $render_str .= "\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException)'.PHP_EOL;
+                $render_str .= "\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 403)'.PHP_EOL;
+                $render_str .= "\t\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
+                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
+                $render_str .= "\t\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 401)'.PHP_EOL;
+                $render_str .= "\t\t\t".'{'.PHP_EOL;
+                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Unauthorized.";'.PHP_EOL;
+                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["unauthorized" => [$msg]]], 403);'.PHP_EOL;
+                $render_str .= "\t\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'}'.PHP_EOL;
+                $render_str .= "\t\t".'return parent::render($request, $exception);';
 
-            $str = str_replace('return parent::render($request, $exception);', $render_str, $str);
+                $str = str_replace('return parent::render($request, $exception);', $render_str, $str);
 
-            file_put_contents(app_path('Exceptions/Handler.php'), $str);
+                file_put_contents(app_path('Exceptions/Handler.php'), $str);
+            }
+        }
+        else
+        {
+            // Warn user of the manual changes needed
+            $this->warn('Unable to locate "app/Exceptions/Handler.php". Did you move this file?');
+            $this->warn('You will need to update this manually in order for the exceptions to be caught and converted into JSON.');
         }
     }
 }

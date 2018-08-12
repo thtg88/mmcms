@@ -77,7 +77,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $with = [
-        'role',
+        // 'role',
     ];
 
     /**
@@ -97,8 +97,8 @@ class User extends Authenticatable
         return $this->morphMany(config('mmcms.models.namespace').'\JournalEntry', 'target');
     }
 
-    public function role()
-    {
-        return $this->belongsTo(config('mmcms.models.namespace').'\Role', 'role_id', 'id');
-    }
+    // public function role()
+    // {
+    //     return $this->belongsTo(config('mmcms.models.namespace').'\Role', 'role_id', 'id');
+    // }
 }
