@@ -17,4 +17,12 @@ return [
         'password_client_id' => env('MMCMS_PASSWORD_CLIENT_ID'),
         'password_client_secret' => env('MMCMS_PASSWORD_CLIENT_SECRET'),
     ],
+    'journal' => [
+        'mode' => env('MMCMS_JOURNAL_MODE', true),
+    ],
+    'pagination' => [
+        'columns' => ['*'],
+        'page_name' => env('MMCMS_PAGINATION_PAGE_NAME', 'page'),
+        'page_size' => env('MMCMS_PAGINATION_PAGE_SIZE', 10),
+    ],
 ];

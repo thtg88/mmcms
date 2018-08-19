@@ -60,7 +60,7 @@ class RouteRegistrar
                 ]);
                 $router->put('auth/me', [
                     'uses' => 'AuthController@updateProfile',
-                    'as' => 'updateProfile'
+                    'as' => 'update-profile'
                 ]);
             });
         });
@@ -76,6 +76,10 @@ class RouteRegistrar
                 $router->get('users', [
                     'uses' => 'UserController@index',
                     'as' => 'index'
+                ]);
+                $router->get('users/paginate', [
+                    'uses' => 'UserController@paginate',
+                    'as' => 'paginate'
                 ]);
                 $router->get('users/{id}', [
                     'uses' => 'UserController@show',

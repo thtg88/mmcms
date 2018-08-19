@@ -11,10 +11,6 @@ class RoleRepository extends Repository
 {
     protected static $model_name = 'name';
 
-    protected static $eager_load_associations = [
-        //
-    ];
-
     protected static $order_by_columns = [
         'name' => 'asc',
     ];
