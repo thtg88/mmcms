@@ -11,6 +11,7 @@ use Thtg88\MmCms\Http\Controllers\Controller;
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
 use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
 use Thtg88\MmCms\Http\Requests\Auth\RegisterRequest;
+use Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest;
 // Repositories
 use Thtg88\MmCms\Repositories\OauthRefreshTokenRepository;
 use Thtg88\MmCms\Repositories\RoleRepository;
@@ -96,6 +97,12 @@ class AuthController extends Controller
                 // If found - assign it to the user registering
                 $input['role_id'] = $developer_role->id;
             }
+        }
+
+        if(!array_key_exists('role_id', $input))
+        {
+            // Get user role
+            $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
         }
 
         // Create user
@@ -241,5 +248,45 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         return response()->json(['resource' => $request->user(), ]);
+    }
+
+    /**
+     * Update the current user data.
+     *
+     * @param   \Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest        $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+        // Get user
+        $user = $request->user();
+
+        // Get input
+        $input = $request->all();
+
+        // Get admin role
+        $admin_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+
+        $except = [
+            'created_at',
+            'deleted_at',
+        ];
+
+        if($user->role === null || $admin_role === null || $user->role->priority > $admin_role->priority)
+        {
+            if(array_key_exists('role_id', $input))
+            {
+                // Remove role_id from editable fields if user less then admin
+                $except = 'role_id';
+            }
+        }
+
+        // Get input
+        $input = $request->except($except);
+
+        // Update user
+        $user = $this->repository->update($user->id, $input);
+
+        return response()->json(['resource' => $user, ]);
     }
 }

@@ -58,6 +58,10 @@ class RouteRegistrar
                     'uses' => 'AuthController@me',
                     'as' => 'me'
                 ]);
+                $router->put('auth/me', [
+                    'uses' => 'AuthController@updateProfile',
+                    'as' => 'updateProfile'
+                ]);
             });
         });
     }

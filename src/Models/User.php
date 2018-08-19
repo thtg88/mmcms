@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Models\JournalEntry;
 
 class User extends Authenticatable
 {
@@ -77,7 +79,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $with = [
-        // 'role',
+        'role',
     ];
 
     /**
@@ -94,11 +96,11 @@ class User extends Authenticatable
 
     public function journal_entries()
     {
-        return $this->morphMany(config('mmcms.models.namespace').'\JournalEntry', 'target');
+        return $this->morphMany(JournalEntry::class, 'target');
     }
 
-    // public function role()
-    // {
-    //     return $this->belongsTo(config('mmcms.models.namespace').'\Role', 'role_id', 'id');
-    // }
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
 }
