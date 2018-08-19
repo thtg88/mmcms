@@ -68,7 +68,7 @@ class Controller extends BaseController
         // Get resources
         $resources = $this->repository->paginate($input['page_size'], $input['page']);
 
-        $response_data = [$resources];
+        $response_data = $resources;
 
         return response()->json($response_data);
     }
