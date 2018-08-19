@@ -1,0 +1,64 @@
+<?php
+
+namespace Thtg88\MmCms\Http\Requests\Auth;
+
+use Thtg88\MmCms\Http\Requests\Request;
+use Thtg88\MmCms\Repositories\UserRepository;
+use Illuminate\Validation\Rule;
+
+class UpdateProfileRequest extends Request
+{
+    /**
+	 * Create a new request instance.
+	 *
+	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
+	 * @return	void
+	 */
+	public function __construct(UserRepository $users)
+	{
+		$this->repository = $users;
+	}
+
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+		// Get user
+		$user = $this->user();
+
+        $all_rules = [
+            'email' => [
+				'required',
+				'email',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'email')->where(function($query) use ($user) {
+					$query->whereNull('deleted_at')
+						->where('id', '<>', $user->id);
+				}),
+			],
+            'name' => 'required|string|max:255',
+            'password' => 'required|confirmed|string|min:6|max:255',
+        ];
+
+		// Get input
+        $input = $this->all();
+
+		// Get necessary rules based on input (same keys basically)
+		$rules = array_intersect_key($all_rules, $input);
+
+		return $rules;
+    }
+}
