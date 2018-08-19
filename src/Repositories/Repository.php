@@ -161,7 +161,7 @@ class Repository implements RepositoryInterface
             $model = $this->find($model->id);
         }
 
-        if(config('app.journal_mode') === true)
+        if(config('mmcms.journal.mode') === true)
         {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entity_class_name = '\Thtg88\MmCms\JournalEntry';
@@ -192,7 +192,7 @@ class Repository implements RepositoryInterface
         // Check if a model uses discards, so I can log into journal
         if(in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model)))
         {
-            if(config('app.journal_mode') === true)
+            if(config('mmcms.journal.mode') === true)
             {
                 app('JournalEntryHelper')->createJournalEntry('discard', $model, []);
             }
@@ -427,17 +427,25 @@ class Repository implements RepositoryInterface
      * Return the paginated model instances.
      *
      * @param       int     $page_size  The number of model instances to return per page
+     * @param       int     $page  The page number
      * @return  \Illuminate\Support\Collection
      */
-    public function paginate($page_size = 15)
+    public function paginate($page_size = 10, $page = null)
     {
-        // Assume id as numeric and > 0
+        // Assume page_size as numeric and > 0
         if(empty($page_size) || !is_numeric($page_size) || $page_size < 1)
         {
             return collect([]);
         }
 
+        // Assume page as numeric and > 0
+        if(!empty($page) && (!is_numeric($page) || $page < 1))
+        {
+            return collect([]);
+        }
+
         $page_size = floor($page_size);
+        $page = floor($page);
 
         $result = $this->model;
 
@@ -450,7 +458,7 @@ class Repository implements RepositoryInterface
             }
         }
 
-        return $result->paginate($page_size);
+        return $result->paginate($page_size, config('mmcms.pagination.columns'), config('mmcms.pagination.page_name'), $page);
     }
 
     /**
@@ -527,7 +535,7 @@ class Repository implements RepositoryInterface
         // Re-fetch the model to reload all relations
         $model = $this->find($model->id);
 
-        if(config('app.journal_mode') === true)
+        if(config('mmcms.journal.mode') === true)
         {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\JournalEntry';

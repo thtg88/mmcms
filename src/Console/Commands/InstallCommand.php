@@ -14,7 +14,7 @@ class InstallCommand extends Command
 {
     use Seedable;
 
-    protected $seedersPath = __DIR__.'/../../../database/seeds/';
+    protected $seedersPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'seeds'.DIRECTORY_SEPARATOR.'';
 
     /**
      * The console command name.
@@ -94,9 +94,9 @@ class InstallCommand extends Command
      */
     private function findComposer()
     {
-        if (file_exists(getcwd().'/composer.phar'))
+        if (file_exists(getcwd().DIRECTORY_SEPARATOR.'composer.phar'))
         {
-            return '"'.PHP_BINARY.'" '.getcwd().'/composer.phar';
+            return '"'.PHP_BINARY.'" '.getcwd().''.DIRECTORY_SEPARATOR.'composer.phar';
         }
 
         return 'composer';
@@ -158,7 +158,7 @@ class InstallCommand extends Command
         else
         {
             // Warn the user to do changes manually
-            $this->warn('Unable to locate "app/User.php". Did you move this file?');
+            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'User.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
             $this->warn('Change "extends Authenticatable" to "extends \Thtg88\MmCms\Models\User",');
             $this->warn('and "use Notifiable;" to "use \Laravel\Passport\HasApiTokens, Notifiable;" in your User model');
@@ -188,10 +188,10 @@ class InstallCommand extends Command
     private function addPassportRoutes(FileSystem $filesystem)
     {
         // Check that Auth service provider exists
-        if (file_exists(app_path('Providers/AuthServiceProvider.php')))
+        if (file_exists(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php')))
         {
             // Get Auth service provider content as string
-            $str = file_get_contents(app_path('Providers/AuthServiceProvider.php'));
+            $str = file_get_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php'));
 
             if ($str !== false)
             {
@@ -206,13 +206,13 @@ class InstallCommand extends Command
                     $str = str_replace('$this->registerPolicies();', $passport_str, $str);
                 }
 
-                file_put_contents(app_path('Providers/AuthServiceProvider.php'), $str);
+                file_put_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php'), $str);
             }
         }
         else
         {
             // Warn the user to do changes manually
-            $this->warn('Unable to locate "app/Providers/AuthServiceProvider.php". Did you move this file?');
+            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
             $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Auth service provider.');
         }
@@ -227,10 +227,10 @@ class InstallCommand extends Command
     private function addLaravelCorsMiddleware(FileSystem $filesystem)
     {
         // Check that HTTP Kernel exists
-        if (file_exists(app_path('Http/Kernel.php')))
+        if (file_exists(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php')))
         {
             // Get HTTP kernel content as string
-            $str = file_get_contents(app_path('Http/Kernel.php'));
+            $str = file_get_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'));
 
             // Replace middleware import for all routes
             if (
@@ -243,13 +243,13 @@ class InstallCommand extends Command
                 $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
                 $str = str_replace('protected $middleware = [', $middleware_str, $str);
 
-                file_put_contents(app_path('Http/Kernel.php'), $str);
+                file_put_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'), $str);
             }
         }
         else
         {
             // Warn the suer of the manual change needed
-            $this->warn('Unable to locate "app/Http/Kernel.php". Did you move this file?');
+            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Kernel.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
             $this->warn('Add "\Barryvdh\Cors\HandleCors::class," after "protected $middleware = [" in the HTTP kernel.');
         }
@@ -263,10 +263,10 @@ class InstallCommand extends Command
     private function addExceptionRenderers()
     {
         // Check that exception handler is in the standard Laravel place
-        if (file_exists(app_path('Exceptions/Handler.php')))
+        if (file_exists(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')))
         {
             // Get exceptions handler content as string
-            $str = file_get_contents(app_path('Exceptions/Handler.php'));
+            $str = file_get_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'));
 
             if (
                 $str !== false
@@ -311,14 +311,53 @@ class InstallCommand extends Command
 
                 $str = str_replace('return parent::render($request, $exception);', $render_str, $str);
 
-                file_put_contents(app_path('Exceptions/Handler.php'), $str);
+                file_put_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'), $str);
             }
         }
         else
         {
             // Warn user of the manual changes needed
-            $this->warn('Unable to locate "app/Exceptions/Handler.php". Did you move this file?');
+            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Exceptions'.DIRECTORY_SEPARATOR.'Handler.php". Did you move this file?');
             $this->warn('You will need to update this manually in order for the exceptions to be caught and converted into JSON.');
+        }
+    }
+
+    /**
+     * Set Auth driver as Passport in config.
+     *
+     * @return  void
+     */
+    private function setPassportAuthDriver(Filesystem $filesystem)
+    {
+        // Check that auth config is in the standard Laravel place
+        if (file_exists(config_path('auth.php')))
+        {
+            // Get auth config content as string
+            $str = file_get_contents(config_path('auth.php'));
+
+            if (
+                $str !== false
+                && (
+                    strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") !== false
+                    || strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'token',") !== false
+                )
+                && strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") === false
+                && strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',") === false
+            )
+            {
+                $replace_str = "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',";
+
+                $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
+                $str = str_replace("'api' => [".PHP_EOL."\t\t\t'driver' => 'token',", $replace_str, $str);
+
+                file_put_contents(config_path('auth.php'), $str);
+            }
+        }
+        else
+        {
+            // Warn user of the manual changes needed
+            $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
+            $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
         }
     }
 }

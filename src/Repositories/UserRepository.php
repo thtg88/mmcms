@@ -12,13 +12,8 @@ class UserRepository extends Repository
 {
     protected static $model_name = 'email';
 
-    protected static $eager_load_associations = [
-        //
-    ];
-
     protected static $order_by_columns = [
-        'first_name' => 'asc',
-        'last_name' => 'asc',
+        'name' => 'asc',
         'email' => 'asc',
         'id' => 'asc',
     ];

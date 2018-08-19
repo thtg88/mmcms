@@ -200,7 +200,7 @@ class AuthController extends Controller
         catch (\Exception $e)
         {
             $response_data = [
-                'error' => [
+                'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
                 ],
                 'message' => 'The user credentials were incorrect.'

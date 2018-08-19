@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 // Requests
 use Thtg88\MmCms\Http\Requests\IndexRequest;
+use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
 use Thtg88\MmCms\Http\Requests\ShowRequest;
 use Thtg88\MmCms\Http\Requests\UserDateFilterRequest;
@@ -25,7 +26,7 @@ class Controller extends BaseController
     protected $repository;
 
     /**
-     * Display a listing of the resource belonging to the user.
+     * Display a listing of the resources.
      *
      * @param  \Thtg88\MmCms\Http\Requests\IndexRequest  $request
      * @return \Illuminate\Http\Response
@@ -36,6 +37,38 @@ class Controller extends BaseController
         $resources = $this->repository->all();
 
         $response_data = ['resources' => $resources];
+
+        return response()->json($response_data);
+    }
+
+    /**
+     * Display a paginated listing of the resources.
+     *
+     * @param  \Thtg88\MmCms\Http\Requests\PaginateRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function paginate(PaginateRequest $request)
+    {
+        // Get input
+        $input = $request->only([
+            'page',
+            'page_size'
+        ]);
+
+        if(!array_key_exists('page', $input) || $input['page'] === null)
+        {
+            $input['page'] = 1;
+        }
+
+        if(!array_key_exists('page_size', $input) || $input['page_size'] === null)
+        {
+            $input['page_size'] = config('mmcms.pagination.page_size');
+        }
+
+        // Get resources
+        $resources = $this->repository->paginate($input['page_size'], $input['page']);
+
+        $response_data = [$resources];
 
         return response()->json($response_data);
     }
