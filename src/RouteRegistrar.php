@@ -39,31 +39,28 @@ class RouteRegistrar
     public function forAuth()
     {
         // Auth routes...
-        $this->router->group(['as' => 'mmcms.auth.'], function($router) {
+        $this->router->post('auth/register', [
+            'uses' => 'AuthController@register',
+            'as' => 'register'
+        ]);
+        $this->router->post('auth/login', [
+            'uses' => 'AuthController@login',
+            'as' => 'login'
+        ]);
 
-            $this->router->post('auth/register', [
-                'uses' => 'AuthController@register',
-                'as' => 'register'
+        $this->router->group(['middleware' => 'auth:api'], function($router) {
+            $router->delete('auth/logout', [
+                'uses' => 'AuthController@logout',
+                'as' => 'logout'
             ]);
-            $this->router->post('auth/login', [
-                'uses' => 'AuthController@login',
-                'as' => 'login'
+            $router->get('auth/me', [
+                'uses' => 'AuthController@me',
+                'as' => 'me'
             ]);
-
-            $this->router->group(['middleware' => 'auth:api'], function($router) {
-                $router->delete('auth/logout', [
-                    'uses' => 'AuthController@logout',
-                    'as' => 'logout'
-                ]);
-                $router->get('auth/me', [
-                    'uses' => 'AuthController@me',
-                    'as' => 'me'
-                ]);
-                $router->put('auth/me', [
-                    'uses' => 'AuthController@updateProfile',
-                    'as' => 'update-profile'
-                ]);
-            });
+            $router->put('auth/me', [
+                'uses' => 'AuthController@updateProfile',
+                'as' => 'update-profile'
+            ]);
         });
     }
 
