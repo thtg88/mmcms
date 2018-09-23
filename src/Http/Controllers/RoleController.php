@@ -3,40 +3,35 @@
 namespace Thtg88\MmCms\Http\Controllers;
 
 // Repositories
-use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Repositories\RoleRepository;
 // Requests
-use Thtg88\MmCms\Http\Requests\User\DestroyUserRequest;
-use Thtg88\MmCms\Http\Requests\User\StoreUserRequest;
-use Thtg88\MmCms\Http\Requests\User\UpdateUserRequest;
+use Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest;
+use Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest;
+use Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest;
 
-class UserController extends Controller
+class RoleController extends Controller
 {
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\UserRepository        $users
+     * @param       \Thtg88\MmCms\Repositories\RoleRepository        $roles
      * @return      void
      */
-    public function __construct(UserRepository $users)
+    public function __construct(RoleRepository $roles)
     {
-        $this->repository = $users;
+        $this->repository = $roles;
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\StoreUserRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(StoreRoleRequest $request)
     {
         // Get input
         $input = $request->all();
-
-        if(array_key_exists('password', $input) && !empty($input['password']))
-        {
-            $input['password'] = bcrypt($input['password']);
-        }
 
         // Create
         $resource = $this->repository->create($input);
@@ -50,19 +45,14 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\UpdateUserRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, $id)
+    public function update(UpdateRoleRequest $request, $id)
     {
         // Get input
         $input = $request->all();
-
-        if(array_key_exists('password', $input) && !empty($input['password']))
-        {
-            $input['password'] = bcrypt($input['password']);
-        }
 
         // Update
         $resource = $this->repository->update($id, $input);
@@ -78,11 +68,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\DestroyUserRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DestroyUserRequest $request, $id)
+    public function destroy(DestroyRoleRequest $request, $id)
     {
         // Delete resource
         $resource = $this->repository->destroy($id);

@@ -38,8 +38,7 @@ class UpdateUserRequest extends UpdateRequest
                         ->where('id', '<>', $this->route('id'));
 				}),
             ],
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 

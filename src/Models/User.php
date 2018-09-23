@@ -45,6 +45,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $visible = [
+        'created_at',
         'email',
         'id',
         'name',
