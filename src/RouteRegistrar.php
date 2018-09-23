@@ -32,6 +32,7 @@ class RouteRegistrar
     public function all()
     {
         $this->forAuth();
+        $this->forRoles();
         $this->forUsers();
     }
 
@@ -61,6 +62,41 @@ class RouteRegistrar
                 $router->put('auth/me', [
                     'uses' => 'AuthController@updateProfile',
                     'as' => 'update-profile'
+                ]);
+            });
+        });
+    }
+
+    public function forRoles()
+    {
+        $this->router->group(['as' => 'mmcms.roles.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('roles', [
+                    'uses' => 'RoleController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('roles/paginate', [
+                    'uses' => 'RoleController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('roles/{id}', [
+                    'uses' => 'RoleController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('roles', [
+                    'uses' => 'RoleController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('roles/{id}', [
+                    'uses' => 'RoleController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('roles/{id}', [
+                    'uses' => 'RoleController@destroy',
+                    'as' => 'destroy'
                 ]);
             });
         });
