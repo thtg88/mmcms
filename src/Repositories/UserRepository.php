@@ -20,8 +20,7 @@ class UserRepository extends Repository
 
     protected static $search_columns = [
         'email',
-        'first_name',
-        'last_name',
+        'name',
     ];
 
     /**

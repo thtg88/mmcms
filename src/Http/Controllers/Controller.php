@@ -52,7 +52,8 @@ class Controller extends BaseController
         // Get input
         $input = $request->only([
             'page',
-            'page_size'
+            'page_size',
+            'q'
         ]);
 
         if(!array_key_exists('page', $input) || $input['page'] === null)
@@ -65,8 +66,17 @@ class Controller extends BaseController
             $input['page_size'] = config('mmcms.pagination.page_size');
         }
 
+        if(!array_key_exists('q', $input))
+        {
+            $q = null;
+        }
+        else
+        {
+            $q = $input['q'];
+        }
+
         // Get resources
-        $resources = $this->repository->paginate($input['page_size'], $input['page']);
+        $resources = $this->repository->paginate($input['page_size'], $input['page'], $q);
 
         $response_data = $resources;
 

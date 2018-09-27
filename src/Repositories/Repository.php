@@ -428,9 +428,10 @@ class Repository implements RepositoryInterface
      *
      * @param       int     $page_size  The number of model instances to return per page
      * @param       int     $page  The page number
+     * @param       int     $page  The optional search query
      * @return  \Illuminate\Support\Collection
      */
-    public function paginate($page_size = 10, $page = null)
+    public function paginate($page_size = 10, $page = null, $q = null)
     {
         // Assume page_size as numeric and > 0
         if(empty($page_size) || !is_numeric($page_size) || $page_size < 1)
@@ -448,6 +449,17 @@ class Repository implements RepositoryInterface
         $page = floor($page);
 
         $result = $this->model;
+
+        // Search clause
+        if(!empty($q))
+        {
+            $result = $this->model->where(function ($query) use($q) {
+                foreach(static::$search_columns as $idx => $column)
+                {
+                    $query->orWhere($column, 'LIKE', '%'.$q.'%');
+                }
+            });
+        }
 
         // Order by clause
         if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
