@@ -19,6 +19,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Auth route group
 
-## [0.1.0] - 2018-09-23
+## [0.1.0] - 2018-07-13
 ### Added
 - First release of mmCMS. Basic Installation command and setup with users and roles.

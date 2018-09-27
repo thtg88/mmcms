@@ -13,7 +13,7 @@ A headless CMS. With a REST API.
 
 ``` bash
 # clone the repo
-$ git clone thtg88/mmcms.git mmcms
+$ git clone https://github.com/thtg88/mmcms.git mmcms
 
 # create a new Laravel application
 $ laravel new mmcms-api
@@ -53,7 +53,7 @@ php artisan mmcms:install
 
 ## License
 
-**Coming soon!**
+mmCMS is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Security Vulnerabilities
 
