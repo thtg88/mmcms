@@ -48,9 +48,23 @@ class InstallCommand extends Command
         $this->info('Publishing the mmCMS assets, database, and config files');
         $this->publishVendorTags();
 
+        if(empty(env('APP_KEY')))
+        {
+            // Generate app key
+            $this->info('Generating app key');
+            $this->call('key:generate');
+        }
+        else
+        {
+            $this->info('App key already exists, skipping...');
+        }
+
         // Migrating the database tables into your application
+        // We force it for production server to work properly
         $this->info('Migrating the database tables into your application');
-        $this->call('migrate');
+        $this->call('migrate', [
+            '--force' => true,
+        ]);
 
         // Installing Laravel Passport
         $this->info('Installing Laravel Passport');
@@ -83,6 +97,9 @@ class InstallCommand extends Command
 
         $this->info('Adding the storage symlink to your public folder');
         $this->call('storage:link');
+
+        $this->info('Creating .htaccess for project root folder');
+        $this->createHtaccess();
 
         $this->info('Successfully installed mmCMS, enjoy!');
     }
@@ -358,6 +375,32 @@ class InstallCommand extends Command
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
             $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
+        }
+    }
+
+    /**
+     * Create .htaccess in root directory.
+     *
+     * @return  void
+     */
+    private function createHtaccess()
+    {
+        if (file_exists(base_path('auth.php')))
+        {
+            // Warn user that file already exists
+            $this->info('htaccess file already exists, skipping...');
+        }
+        else
+        {
+            // Create .htaccess file
+            $str = "";
+            $str .= "<IfModule mod_rewrite.c>\n";
+            $str .= "\tRewriteEngine on\n\n";
+            $str .= "\tRewriteCond %{REQUEST_URI} !public/\n";
+            $str .= "\tRewriteRule (.*) /public/$1 [L]\n";
+            $str .= "</IfModule>\n";
+
+            file_put_contents(base_path('.htaccess'), $str);
         }
     }
 }
