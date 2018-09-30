@@ -10,6 +10,8 @@
         }
     ],
     "require": {
+        "anhskohbo/no-captcha": "^3.0",
+        "barryvdh/laravel-cors": "^0.11.0",
         "doctrine/dbal": "^2.7",
         "illuminate/bus": "5.7.*",
         "illuminate/console": "5.7.*",
@@ -22,8 +24,7 @@
         "illuminate/routing": "5.7.*",
         "illuminate/support": "5.7.*",
         "laravel/passport": "^7.0",
-        "nesbot/carbon": "~1.18",
-        "barryvdh/laravel-cors": "^0.11.0"
+        "nesbot/carbon": "~1.18"
     },
     "autoload": {
         "psr-4": {

@@ -5,13 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) (or at least it tries to).
 
 ## [Unreleased]
-### Added
-- Google ReCaptcha for user registration
 ### Fixed
 - Journal mode not working
 - Set auth driver to passport in config
 ### Removed
 - Unique index for user email in create users table migration in install command
+
+## [0.3.0] - 2018-09-30
+### Added
+- Google ReCaptcha for user registration
+- Publish ReCaptcha config in install command
 
 ## [0.2.2] - 2018-09-30
 ### Fixed

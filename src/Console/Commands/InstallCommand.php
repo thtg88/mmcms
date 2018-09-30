@@ -75,6 +75,11 @@ class InstallCommand extends Command
         $this->info('Configuring Laravel Passport');
         $this->addPassportRoutes($filesystem);
 
+        $this->info('Configuring Anhskohbo NoCaptcha');
+        $this->call('vendor:publish', [
+            '--provider' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider'
+        ]);
+
         $this->info('Configuring Barryvdh Laravel CORS');
         $this->call('vendor:publish', [
             '--provider' => 'Barryvdh\Cors\ServiceProvider'

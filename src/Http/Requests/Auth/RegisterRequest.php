@@ -45,6 +45,7 @@ class RegisterRequest extends Request
 					$query->whereNull('deleted_at');
 				}),
 			],
+			'g_recaptcha_response' => 'bail|required|captcha',
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
