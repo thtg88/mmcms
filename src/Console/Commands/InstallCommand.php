@@ -85,10 +85,6 @@ class InstallCommand extends Command
         $this->info('Attempting to set mmCMS User model as parent to App\User');
         $this->extendUserModel();
 
-        // Dumping the autoloaded files and reloading all new files
-        $this->info('Dumping the autoloaded files and reloading all new files');
-        $this->dumpComposerAutoload();
-
         $this->info('Adding Exception renderers');
         $this->addExceptionRenderers();
 
@@ -100,6 +96,10 @@ class InstallCommand extends Command
 
         $this->info('Creating .htaccess for project root folder');
         $this->createHtaccess();
+
+        // Dumping the autoloaded files and reloading all new files
+        $this->info('Dumping the autoloaded files and reloading all new files');
+        $this->dumpComposerAutoload();
 
         $this->info('Successfully installed mmCMS, enjoy!');
     }
@@ -385,7 +385,7 @@ class InstallCommand extends Command
      */
     private function createHtaccess()
     {
-        if (file_exists(base_path('auth.php')))
+        if (file_exists(base_path('.htaccess')))
         {
             // Warn user that file already exists
             $this->info('htaccess file already exists, skipping...');
