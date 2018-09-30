@@ -6,9 +6,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 
 ## [Unreleased]
 ### Added
-- .htaccess if N/A in app root folder
+- Google ReCaptcha for user registration
 ### Fixed
+- Journal mode not working
 - Set auth driver to passport in config
+### Removed
+- Unique index for user email in create users table migration in install command
+
+## [0.2.2] - 2018-09-30
+### Fixed
+- .htaccess creation in install command not checking right file name
+
+## [0.2.1] - 2018-09-27
+### Added
+- .htaccess in install command if N/A in app root folder
+- APP_KEY in install command if not available via key:generate method
+### Fixed
+- migrate in install command now forces, so it works on production applications
 
 ## [0.2.0] - 2018-09-23
 ### Added
