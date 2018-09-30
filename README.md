@@ -1,6 +1,7 @@
 # mmCMS
 
 A headless CMS. With a REST API.
+mmCMS is a Laravel package that provides a REST interface over creating structured data.
 
 ## Table of Contents
 
