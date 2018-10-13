@@ -48,7 +48,7 @@ class InstallCommand extends Command
         $this->info('Publishing the mmCMS assets, database, and config files');
         $this->publishVendorTags();
 
-        if(empty(env('APP_KEY')))
+        if(empty(config('app.key')))
         {
             // Generate app key
             $this->info('Generating app key');
