@@ -103,6 +103,12 @@ class AuthController extends Controller
         {
             // Get user role
             $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+
+            if($user_role !== null)
+            {
+                // If found - assign it to the user registering
+                $input['role_id'] = $user_role->id;
+            }
         }
 
         // Create user

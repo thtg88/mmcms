@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.3.2] - 2018-10-13
+### Changed
+- Recaptcha on registration is now configurable
+### Fixed
+- User role not set properly on registration
+
 ## [0.3.1] - 2018-10-13
 ### Changed
 - Now checks for app key from config helper instead of env helper for consistency
