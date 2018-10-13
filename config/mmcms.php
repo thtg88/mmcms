@@ -9,6 +9,7 @@ return [
     ],
     'roles' => [
         'developer_role_name' => env('MMCMS_ROLES_DEVELOPER_NAME', 'dev'),
+        'user_role_name' => env('MMCMS_ROLES_USER_NAME', 'user'),
     ],
     'passport' => [
         'oauth_url' => env('MMCMS_OAUTH_URL', 'http://localhost'),
@@ -19,6 +20,9 @@ return [
     ],
     'journal' => [
         'mode' => env('MMCMS_JOURNAL_MODE', true),
+    ],
+    'recaptcha' => [
+        'mode' => env('MMCMS_RECAPTCHA_MODE', true),
     ],
     'pagination' => [
         'columns' => ['*'],

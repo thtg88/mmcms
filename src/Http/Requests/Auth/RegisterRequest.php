@@ -36,7 +36,7 @@ class RegisterRequest extends Request
      */
     public function rules()
     {
-        return [
+        $all_rules = [
             'email' => [
 				'required',
 				'email',
@@ -45,9 +45,15 @@ class RegisterRequest extends Request
 					$query->whereNull('deleted_at');
 				}),
 			],
-			'g_recaptcha_response' => 'bail|required|captcha',
-            'name' => 'required|string|max:255',
+			'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
+
+		if(config('mmcms.recaptcha.mode') === true)
+		{
+			$all_rules['g_recaptcha_response'] = 'bail|required|captcha';
+		}
+
+		return $all_rules;
     }
 }
