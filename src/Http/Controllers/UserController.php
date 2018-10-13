@@ -31,7 +31,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         // Get input
-        $input = $request->all();
+        $input = $request->except(['created_at']);
 
         if(array_key_exists('password', $input) && !empty($input['password']))
         {
@@ -57,7 +57,7 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, $id)
     {
         // Get input
-        $input = $request->all();
+        $input = $request->except(['created_at']);
 
         if(array_key_exists('password', $input) && !empty($input['password']))
         {
