@@ -11,6 +11,7 @@ use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 // MmCms Imports
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
+use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
@@ -88,6 +89,17 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->singleton(MmCms::class, function () {
             return new MmCms();
         });
+
+        if(config('mmcms.journal.mode') === true)
+	    {
+		    // Register journal entry helper
+	        $this->app->singleton('JournalEntryHelper', function($app) {
+		        // Get current request IP
+		        $ip = $app['request']->ip();
+
+		        return new JournalEntryHelper($app->make('Thtg88\MmCms\Repositories\JournalEntryRepository'), $ip);
+			});
+	    }
 
         $this->app->alias(MmCms::class, 'mmcms');
     }
