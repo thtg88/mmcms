@@ -6,10 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 
 ## [Unreleased]
 ### Fixed
-- Journal mode not working
 - Set auth driver to passport in config
 ### Removed
 - Unique index for user email in create users table migration in install command
+
+## [0.3.3] - 2018-11-22
+### Fixed
+- Journal mode not working
 
 ## [0.3.2] - 2018-10-13
 ### Changed

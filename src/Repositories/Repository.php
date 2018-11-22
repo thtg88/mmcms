@@ -164,8 +164,8 @@ class Repository implements RepositoryInterface
         if(config('mmcms.journal.mode') === true)
         {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
-            $journal_entity_class_name = '\Thtg88\MmCms\JournalEntry';
-            if($model instanceof $journal_entity_class_name === false)
+            $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
+            if($model instanceof $journal_entry_class_name === false)
             {
                 app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
             }
@@ -550,7 +550,7 @@ class Repository implements RepositoryInterface
         if(config('mmcms.journal.mode') === true)
         {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
-            $journal_entry_class_name = '\Thtg88\MmCms\JournalEntry';
+            $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if($model instanceof $journal_entry_class_name === false)
             {
                 app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
