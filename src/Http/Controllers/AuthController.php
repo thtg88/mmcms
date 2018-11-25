@@ -11,6 +11,7 @@ use Thtg88\MmCms\Http\Controllers\Controller;
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
 use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
 use Thtg88\MmCms\Http\Requests\Auth\RegisterRequest;
+use Thtg88\MmCms\Http\Requests\Auth\TokenRequest;
 use Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest;
 // Repositories
 use Thtg88\MmCms\Repositories\OauthRefreshTokenRepository;
@@ -254,6 +255,56 @@ class AuthController extends Controller
     public function me(Request $request)
     {
         return response()->json(['resource' => $request->user(), ]);
+    }
+
+    /**
+     * Refresh token.
+     *
+     * @param  \Thtg88\MmCms\Http\Requests\Auth\TokenRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function token(TokenRequest $request)
+    {
+        try
+        {
+            $oauth_data = [
+                'form_params' => [
+                    'grant_type' => 'refresh_token',
+                    'client_id' => config('mmcms.passport.password_client_id'),
+                    'client_secret' => config('mmcms.passport.password_client_secret'),
+                    'refresh_token' => $request->get('refresh_token'),
+                    'scope' => '',
+                ],
+                'headers' => [
+                    // This allows loopback on custom localhost domains
+                    'Host' => $request->server('SERVER_NAME'),
+                ]
+            ];
+
+            // Request OAuth token
+            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
+
+            // Get response
+            // $response->getBody() is a stream
+            // by casting it to string we force it to return the content
+            // this behaviour is expected and documented by Guzzle
+            // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
+            $response_data = json_decode((string)$response->getBody(), true);
+            $response_status_code = 200;
+        }
+        catch (\Exception $e)
+        {
+            $response_data = [
+                'errors' => [
+                    'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
+                ],
+                'message' => 'The user credentials were incorrect.'
+            ];
+
+            $response_status_code = 401;
+        }
+
+        return response()->json($response_data, $response_status_code);
     }
 
     /**

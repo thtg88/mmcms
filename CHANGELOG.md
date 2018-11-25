@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.4.0] - 2018-11-25
+## Added
+- Refresh token endpoint
+
 ## [0.3.3] - 2018-11-22
 ### Fixed
 - Journal mode not working

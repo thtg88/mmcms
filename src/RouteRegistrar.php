@@ -47,6 +47,10 @@ class RouteRegistrar
             'uses' => 'AuthController@login',
             'as' => 'login'
         ]);
+        $this->router->post('auth/token', [
+            'uses' => 'AuthController@token',
+            'as' => 'token'
+        ]);
 
         $this->router->group(['middleware' => 'auth:api'], function($router) {
             $router->delete('auth/logout', [
