@@ -53,7 +53,9 @@ class Controller extends BaseController
         $input = $request->only([
             'page',
             'page_size',
-            'q'
+            'q',
+            'sort_direction',
+            'sort_name',
         ]);
 
         if(!array_key_exists('page', $input) || $input['page'] === null)
@@ -75,8 +77,24 @@ class Controller extends BaseController
             $q = $input['q'];
         }
 
+        if(empty($input['sort_name']))
+        {
+            $input['sort_name'] = null;
+        }
+
+        if(empty($input['sort_direction']))
+        {
+            $input['sort_direction'] = null;
+        }
+
         // Get resources
-        $resources = $this->repository->paginate($input['page_size'], $input['page'], $q);
+        $resources = $this->repository->paginate(
+            $input['page_size'],
+            $input['page'],
+            $q,
+            $input['sort_name'],
+            $input['sort_direction']
+        );
 
         $response_data = $resources;
 

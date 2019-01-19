@@ -79,7 +79,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Return the associations to eager load with the repository model.
+     * Return the column to order by with the repository model.
      *
      * @return array
      */
@@ -428,10 +428,12 @@ class Repository implements RepositoryInterface
      *
      * @param       int     $page_size  The number of model instances to return per page
      * @param       int     $page  The page number
-     * @param       int     $page  The optional search query
+     * @param       string     $q  The optional search query
+     * @param       string     $sort_column  The optional column to sort by
+     * @param       string     $sort_direction  The optional direction to sort by
      * @return  \Illuminate\Support\Collection
      */
-    public function paginate($page_size = 10, $page = null, $q = null)
+    public function paginate($page_size = 10, $page = null, $q = null, $sort_column = null, $sort_direction = null)
     {
         // Assume page_size as numeric and > 0
         if(empty($page_size) || !is_numeric($page_size) || $page_size < 1)
@@ -461,16 +463,46 @@ class Repository implements RepositoryInterface
             });
         }
 
-        // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
+        // We check if order by is set and valid
+        $order_by_set = false;
+        if(!empty($sort_column) && !empty($sort_direction))
         {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
+            // Direction needs to be either 'asc' or 'desc'
+	        if(in_array($sort_direction, array('asc', 'desc')))
+	        {
+		        if(is_string($sort_column))
+		        {
+			        $visible = $this->model->getVisible();
+
+                    // Column needs to be a string,
+                    // and part of the visible attributes of the model
+			        if(in_array($sort_column, $visible))
+			        {
+				        $result = $result->orderBy($sort_column, $sort_direction);
+                        $order_by_set = true;
+			        }
+				}
+			}
+		}
+        // If order by not set, we assume defaults
+        if($order_by_set === false)
+        {
+            // Order by clause
+            if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
             {
-                $result = $result->orderBy($order_by_column, $direction);
+                foreach(static::$order_by_columns as $order_by_column => $direction)
+                {
+                    $result = $result->orderBy($order_by_column, $direction);
+                }
             }
         }
 
-        return $result->paginate($page_size, config('mmcms.pagination.columns'), config('mmcms.pagination.page_name'), $page);
+        return $result->paginate(
+            $page_size,
+            config('mmcms.pagination.columns'),
+            config('mmcms.pagination.page_name'),
+            $page
+        );
     }
 
     /**
