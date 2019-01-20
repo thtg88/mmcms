@@ -18,6 +18,7 @@ class CreateContentValidationRulesTable extends Migration
             $table->unsignedInteger('priority')->default(0);
             $table->string('name');
             $table->string('migration_method_name')->nullable();
+            $table->text('description')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
