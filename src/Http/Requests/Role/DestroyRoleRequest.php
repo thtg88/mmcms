@@ -12,11 +12,11 @@ class DestroyRoleRequest extends DestroyRequest
     /**
 	 * Create a new request instance.
 	 *
-	 * @param	\Thtg88\MmCms\Repositories\RoleRepository	$roles
+	 * @param	\Thtg88\MmCms\Repositories\RoleRepository	$repository
 	 * @return	void
 	 */
-	public function __construct(RoleRepository $roles)
+	public function __construct(RoleRepository $repository)
 	{
-		$this->repository = $roles;
+		$this->repository = $repository;
 	}
 }
