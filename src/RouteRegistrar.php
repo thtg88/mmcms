@@ -33,6 +33,7 @@ class RouteRegistrar
     {
         $this->forAuth();
         $this->forContentTypes();
+        $this->forContentValidationRuleAdditionalFieldTypes();
         $this->forRoles();
         $this->forUsers();
     }
@@ -98,6 +99,41 @@ class RouteRegistrar
                 ]);
                 $router->delete('content-types/{id}', [
                     'uses' => 'ContentTypeController@destroy',
+                    'as' => 'destroy'
+                ]);
+            });
+        });
+    }
+
+    public function forContentValidationRuleAdditionalFieldTypes()
+    {
+        $this->router->group(['as' => 'mmcms.content-validation-rule-additional-field-types.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('content-validation-rule-additional-field-types', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('content-validation-rule-additional-field-types/paginate', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('content-validation-rule-additional-field-types/{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('content-validation-rule-additional-field-types', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('content-validation-rule-additional-field-types/{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('content-validation-rule-additional-field-types/{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@destroy',
                     'as' => 'destroy'
                 ]);
             });
