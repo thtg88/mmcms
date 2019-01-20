@@ -13,12 +13,12 @@ class StoreUserRequest extends StoreRequest
     /**
 	 * Create a new request instance.
 	 *
-	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
+	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$repository
 	 * @return	void
 	 */
-	public function __construct(UserRepository $users)
+	public function __construct(UserRepository $repository)
 	{
-		$this->repository = $users;
+		$this->repository = $repository;
 	}
 
     /**
