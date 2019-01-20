@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Http\Controllers;
 
 // Repositories
+use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
 // Requests
 use Thtg88\MmCms\Http\Requests\User\DestroyUserRequest;
@@ -14,12 +15,14 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\UserRepository        $users
+     * @param       \Thtg88\MmCms\Repositories\UserRepository        $repository
+     * @param       \Thtg88\MmCms\Repositories\RoleRepository        $roles
      * @return      void
      */
-    public function __construct(UserRepository $users)
+    public function __construct(UserRepository $repository, RoleRepository $roles)
     {
-        $this->repository = $users;
+        $this->repository = $repository;
+        $this->roles = $roles;
     }
 
     /**
@@ -36,6 +39,18 @@ class UserController extends Controller
         if(array_key_exists('password', $input) && !empty($input['password']))
         {
             $input['password'] = bcrypt($input['password']);
+        }
+
+        if(!array_key_exists('role_id', $input))
+        {
+            // Get user role
+            $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+
+            if($user_role !== null)
+            {
+                // If found - assign it to the user registering
+                $input['role_id'] = $user_role->id;
+            }
         }
 
         // Create
