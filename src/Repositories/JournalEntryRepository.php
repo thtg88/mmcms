@@ -22,12 +22,12 @@ class JournalEntryRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\JournalEntry     $journal_entry
+     * @param \Thtg88\MmCms\Models\JournalEntry     $model
      * @return  void
      */
-    public function __construct(JournalEntry $journal_entry)
+    public function __construct(JournalEntry $model)
     {
-        $this->model = $journal_entry;
+        $this->model = $model;
 
         parent::__construct();
     }
