@@ -24,12 +24,12 @@ class OauthRefreshTokenRepository extends Repository
 	/**
 	 * Create a new repository instance.
 	 *
-	 * @param	\Thtg88\MmCms\OauthRefreshToken	$oauth_refresh_token
+	 * @param	\Thtg88\MmCms\OauthRefreshToken	$model
 	 * @return	void
 	 */
-	public function __construct(OauthRefreshToken $oauth_refresh_token)
+	public function __construct(OauthRefreshToken $model)
 	{
-		$this->model = $oauth_refresh_token;
+		$this->model = $model;
 
 		parent::__construct();
 	}

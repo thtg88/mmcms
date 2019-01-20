@@ -26,12 +26,12 @@ class UserRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\User     $user
+     * @param \Thtg88\MmCms\Models\User     $model
      * @return  void
      */
-    public function __construct(User $user)
+    public function __construct(User $model)
     {
-        $this->model = $user;
+        $this->model = $model;
 
         parent::__construct();
     }

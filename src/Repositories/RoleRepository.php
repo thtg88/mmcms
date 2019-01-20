@@ -22,12 +22,12 @@ class RoleRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\Role     $role
+     * @param \Thtg88\MmCms\Models\Role     $model
      * @return  void
      */
-    public function __construct(Role $role)
+    public function __construct(Role $model)
     {
-        $this->model = $role;
+        $this->model = $model;
 
         parent::__construct();
     }
