@@ -28,7 +28,12 @@ class UpdateContentTypeRequest extends UpdateRequest
      */
     public function authorize()
     {
-        return $this->authorizeDeveloper();
+        if($this->authorizeDeveloper() === false)
+		{
+			return false;
+		}
+
+		return $this->authorizeResourceExist();
     }
 
     /**
