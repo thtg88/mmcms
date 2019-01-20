@@ -32,6 +32,7 @@ class RouteRegistrar
     public function all()
     {
         $this->forAuth();
+        $this->forContentTypes();
         $this->forRoles();
         $this->forUsers();
     }
@@ -65,6 +66,41 @@ class RouteRegistrar
                 'uses' => 'AuthController@updateProfile',
                 'as' => 'update-profile'
             ]);
+        });
+    }
+
+    public function forContentTypes()
+    {
+        $this->router->group(['as' => 'mmcms.content-types.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('content-types', [
+                    'uses' => 'ContentTypeController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('content-types/paginate', [
+                    'uses' => 'ContentTypeController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('content-types/{id}', [
+                    'uses' => 'ContentTypeController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('content-types', [
+                    'uses' => 'ContentTypeController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('content-types/{id}', [
+                    'uses' => 'ContentTypeController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('content-types/{id}', [
+                    'uses' => 'ContentTypeController@destroy',
+                    'as' => 'destroy'
+                ]);
+            });
         });
     }
 
