@@ -44,7 +44,10 @@ class StoreContentFieldRequest extends StoreRequest
      */
     public function rules()
     {
-        return [
+		// Get input
+		$input = $this->all();
+
+        $all_rules = [
 			'content_model_id' => [
 				'required',
 				'integer',
@@ -63,9 +66,6 @@ class StoreContentFieldRequest extends StoreRequest
 				'required',
 				'string',
 				'max:255',
-				Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
 			],
 			'helper_text' => [
 				'nullable',
@@ -79,10 +79,22 @@ class StoreContentFieldRequest extends StoreRequest
 				'required',
 				'string',
 				'max:255',
-				Rule::unique($this->repository->getName(), 'name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
 			],
         ];
+
+		if(array_key_exists('content_model_id', $input) && !empty($input['content_model_id']) && is_numeric($input['content_model_id']))
+		{
+			// Add unique-ness of fields within model
+			$input['display_name'] = Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
+				$query->whereNull('deleted_at')
+					->where('content_model_id', $input['content_model_id']);
+			});
+			$input['name'] = Rule::unique($this->repository->getName(), 'name')->where(function($query) {
+				$query->whereNull('deleted_at')
+					->where('content_model_id', $input['content_model_id']);
+			});
+		}
+
+		return $all_rules;
     }
 }
