@@ -1,6 +1,12 @@
 <?php
 
 return [
+    'events' => [
+        'namespace' => 'Thtg88\\MmCms\\Events\\',
+    ],
+    'listeners' => [
+        'namespace' => 'Thtg88\\MmCms\\Listeners\\',
+    ],
     'models' => [
         'namespace' => 'Thtg88\\MmCms\\Models\\',
     ],
