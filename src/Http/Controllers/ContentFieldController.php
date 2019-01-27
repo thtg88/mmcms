@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+// Events
+use Thtg88\MmCms\Events\ContentFieldStored;
 // Repositories
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
 // Requests
@@ -35,6 +37,8 @@ class ContentFieldController extends Controller
 
         // Create
         $resource = $this->repository->create($input);
+
+        event(new ContentFieldStored($resource));
 
         return response()->json([
             'success' => true,
