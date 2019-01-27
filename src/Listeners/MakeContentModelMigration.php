@@ -27,7 +27,8 @@ class MakeContentModelMigration
      */
     public function handle(ContentModelStored $event)
     {
-        $migration_name = 'create_'.$event->content_model->table_name.'_table';
+        $table_name = $event->content_model->table_name;
+        $migration_name = 'create_'.$table_name.'_table';
 
         // We check if we have already a migration with the same name
         $migration = \DB::table('migrations')
@@ -38,8 +39,8 @@ class MakeContentModelMigration
         {
             // If migration N/A we make it
             \Artisan::call('make:migration', [
-                'name' => 'create_'.$event->content_model->table_name.'_table',
-                '--create' => $event->content_model->table_name,
+                'name' => $migration_name,
+                '--table' => $table_name,
             ]);
 
             // The nwe get the last migration so we can insert our custom fields
