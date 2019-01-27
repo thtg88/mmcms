@@ -1,0 +1,88 @@
+<?php
+
+namespace Thtg88\MmCms\Http\Requests\ContentField;
+
+use Illuminate\Validation\Rule;
+// Requests
+use Thtg88\MmCms\Http\Requests\StoreRequest;
+// Repositories
+use Thtg88\MmCms\Repositories\ContentFieldRepository;
+use Thtg88\MmCms\Repositories\ContentModelRepository;
+use Thtg88\MmCms\Repositories\ContentTypeRepository;
+
+class StoreContentFieldRequest extends StoreRequest
+{
+    /**
+	 * Create a new request instance.
+	 *
+	 * @param	\Thtg88\MmCms\Repositories\ContentFieldRepository	$repository
+	 * @param	\Thtg88\MmCms\Repositories\ContentModelRepository	$content_models
+	 * @param	\Thtg88\MmCms\Repositories\ContentTypeRepository	$content_types
+	 * @return	void
+	 */
+	public function __construct(ContentFieldRepository $repository, ContentModelRepository $content_models, ContentTypeRepository $content_types)
+	{
+		$this->repository = $repository;
+		$this->content_models = $content_models;
+		$this->content_types = $content_types;
+	}
+
+	/**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return $this->authorizeDeveloper();
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+			'content_model_id' => [
+				'required',
+				'integer',
+				Rule::exists($this->content_models->getName(), 'id')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
+			],
+			'content_type_id' => [
+				'required',
+				'integer',
+				Rule::exists($this->content_types->getName(), 'id')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
+			],
+            'display_name' => [
+				'required',
+				'string',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
+			],
+			'helper_text' => [
+				'nullable',
+				'string',
+			],
+			'is_resource_name' => [
+				'required',
+				'boolean',
+			],
+            'name' => [
+				'required',
+				'string',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'name')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
+			],
+        ];
+    }
+}
