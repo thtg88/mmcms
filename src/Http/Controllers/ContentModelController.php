@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+// Events
+use Thtg88\MmCms\Events\ContentModelStored;
 // Repositories
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 // Requests
@@ -33,8 +35,65 @@ class ContentModelController extends Controller
         // Get input
         $input = $request->all();
 
+        if(!array_key_exists('base_route_name', $input) || empty($input['base_route_name']))
+        {
+            // If base route name is not provided we build it
+            // We first get all the lowercase words
+            // We pluralize the last
+            // And finally we separate them by hyphens instead of spaces
+
+            // Get words
+            $words = explode(' ', strtolower($input['name']));
+
+            $input['base_route_name'] = implode(
+                '-',
+                array_map(
+                    function($word, $idx) use ($words) {
+                        return $idx === count($words) - 1
+                            ? str_plural($word)
+                            : $word;
+                    },
+                    $words,
+                    array_keys($words)
+                )
+            );
+        }
+
+        if(!array_key_exists('model_name', $input) || empty($input['model_name']))
+        {
+            // If model name is not provided we build it
+            // By studly casing the name
+            $input['model_name'] = studly_case($input['name']);
+        }
+
+        if(!array_key_exists('table_name', $input) || empty($input['table_name']))
+        {
+            // If table name is not provided we build it
+            // We first get all the lowercase words
+            // We pluralize the last
+            // And finally we separate them by underscores instead of spaces
+
+            // Get words
+            $words = explode(' ', strtolower($input['name']));
+
+            $input['table_name'] = implode(
+                '_',
+                array_map(
+                    function($word, $idx) use ($words) {
+                        return $idx === count($words) - 1
+                            ? str_plural($word)
+                            : $word;
+                    },
+                    $words,
+                    array_keys($words)
+                )
+            );
+        }
+
         // Create
         $resource = $this->repository->create($input);
+
+        event(new ContentModelStored($resource));
 
         return response()->json([
             'success' => true,
