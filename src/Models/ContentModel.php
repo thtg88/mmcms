@@ -27,6 +27,7 @@ class ContentModel extends Model
         'base_route_name',
         'created_at',
         'description',
+        'model_name',
         'name',
         'table_name',
     ];
@@ -42,6 +43,7 @@ class ContentModel extends Model
         'created_at',
         'description',
         'id',
+        'model_name',
         'name',
         'table_name',
     ];

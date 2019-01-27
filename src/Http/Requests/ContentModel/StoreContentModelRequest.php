@@ -41,6 +41,14 @@ class StoreContentModelRequest extends StoreRequest
 				'nullable',
 				'string',
 			],
+            'model_name' => [
+				'nullable',
+				'string',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'model_name')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
+			],
             'name' => [
 				'required',
 				'string',

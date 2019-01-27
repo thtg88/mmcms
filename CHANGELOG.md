@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Fixed
 - Set auth driver to passport in config in InstallCommand
 - Set event listeners in EventServiceProvider in InstallCommand
+- Replace content replace with stubs for event listeners
 ### Removed
 - Unique index for user email in create users table migration in install command
 
