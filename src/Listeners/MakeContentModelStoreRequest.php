@@ -6,7 +6,7 @@ use Thtg88\MmCms\Events\ContentModelStored;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MakeContentModelDestroyRequest
+class MakeContentModelStoreRequest
 {
     /**
      * Create the event listener.
@@ -27,7 +27,7 @@ class MakeContentModelDestroyRequest
     public function handle(ContentModelStored $event)
     {
         $model_name = studly_case($event->content_model->name);
-        $request_name = 'Destroy'.$model_name.'Request';
+        $request_name = 'Store'.$model_name.'Request';
 
         if(!class_exists($request_name))
         {
@@ -41,10 +41,6 @@ class MakeContentModelDestroyRequest
 
                 if($file_content !== false)
                 {
-                    $replace_content = $this->getContentModelRequestAuthorizeMethodContent();
-
-                    $file_content = str_replace('return false;', $replace_content, $file_content);
-
                     $replace_content = $this->getContentModelRequestConstructor($model_name);
 
                     $file_content = str_replace("class ".$request_name." extends FormRequest\n{\n", $replace_content, $file_content);
@@ -52,6 +48,8 @@ class MakeContentModelDestroyRequest
                     $replace_content = $this->getContentModelRequestImports($model_name);
 
                     $file_content = str_replace('use Illuminate\Foundation\Http\FormRequest;', $replace_content, $file_content);
+
+                    dd($file_content);
 
                     file_put_contents(app_path('Http/Requests/'.$request_name.'.php'), $file_content);
                 }
@@ -68,10 +66,11 @@ class MakeContentModelDestroyRequest
     private function getContentModelRequestImports($model_name)
     {
         $content = '';
+        $content .= "use Illuminate\Validation\Rule;\n";
         $content .= "// Repositories\n";
         $content .= "use App\Repositories\\".$model_name."Repository;\n";
         $content .= "// Requests\n";
-        $content .= "use Thtg88\MmCms\Http\Requests\DestroyRequest;";
+        $content .= "use Thtg88\MmCms\Http\Requests\StoreRequest;";
 
         return $content;
     }
@@ -85,7 +84,7 @@ class MakeContentModelDestroyRequest
     private function getContentModelRequestConstructor($model_name)
     {
         $content = '';
-        $content .= "class Destroy".$model_name."Request extends DestroyRequest\n";
+        $content .= "class Store".$model_name."Request extends StoreRequest\n";
         $content .= "{\n";
         $content .= "    /**\n";
     	$content .= "     * Create a new request instance.\n";
@@ -96,20 +95,8 @@ class MakeContentModelDestroyRequest
     	$content .= "    public function __construct(".$model_name."Repository \$repository)\n";
     	$content .= "    {\n";
     	$content .= "        \$this->repository = \$repository;\n";
-    	$content .= "    }\n";
-
-        return $content;
-    }
-
-    /**
-     * Returns the authorize method content for the request from a given model name.
-     *
-     * @return  string
-     */
-    private function getContentModelRequestAuthorizeMethodContent()
-    {
-        $content = '';
-        $content .= "return \$this->authorizeResourceExist();";
+        $content .= "    }\n";
+    	$content .= "\n";
 
         return $content;
     }
