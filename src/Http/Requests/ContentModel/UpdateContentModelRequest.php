@@ -29,18 +29,17 @@ class UpdateContentModelRequest extends UpdateRequest
     public function rules()
     {
         $all_rules = [
-			'description' => [
-				'nullable',
-				'string',
-			],
-            'display_name' => [
+			'base_route_name' => [
 				'required',
 				'string',
 				'max:255',
-				Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
-					$query->whereNull('deleted_at')
-						->where('id', '<>', $this->route('id'));
+				Rule::unique($this->repository->getName(), 'base_route_name')->where(function($query) {
+					$query->whereNull('deleted_at');
 				}),
+			],
+			'description' => [
+				'nullable',
+				'string',
 			],
             'name' => [
 				'required',
@@ -49,6 +48,14 @@ class UpdateContentModelRequest extends UpdateRequest
 				Rule::unique($this->repository->getName(), 'name')->where(function($query) {
 					$query->whereNull('deleted_at')
 						->where('id', '<>', $this->route('id'));
+				}),
+			],
+			'table_name' => [
+				'required',
+				'string',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'table_name')->where(function($query) {
+					$query->whereNull('deleted_at');
 				}),
 			],
         ];
