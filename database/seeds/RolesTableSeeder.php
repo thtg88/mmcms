@@ -11,7 +11,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         // Check if dev role exist
-        $role = Role::where('name', 'developer')->first();
+        $role = Role::where('name', 'dev')->first();
         if($role === null)
         {
             // if not - create
