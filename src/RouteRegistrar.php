@@ -32,6 +32,7 @@ class RouteRegistrar
     public function all()
     {
         $this->forAuth();
+        $this->forContentMigrationMethods();
         $this->forContentTypes();
         $this->forContentValidationRuleAdditionalFieldTypes();
         $this->forRoles();
@@ -67,6 +68,41 @@ class RouteRegistrar
                 'uses' => 'AuthController@updateProfile',
                 'as' => 'update-profile'
             ]);
+        });
+    }
+
+    public function forContentMigrationMethods()
+    {
+        $this->router->group(['as' => 'mmcms.content-migration-methods.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('content-migration-methods', [
+                    'uses' => 'ContentMigrationMethodController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('content-migration-methods/paginate', [
+                    'uses' => 'ContentMigrationMethodController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('content-migration-methods/{id}', [
+                    'uses' => 'ContentMigrationMethodController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('content-migration-methods', [
+                    'uses' => 'ContentMigrationMethodController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('content-migration-methods/{id}', [
+                    'uses' => 'ContentMigrationMethodController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('content-migration-methods/{id}', [
+                    'uses' => 'ContentMigrationMethodController@destroy',
+                    'as' => 'destroy'
+                ]);
+            });
         });
     }
 
