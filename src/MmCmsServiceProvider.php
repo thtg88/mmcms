@@ -11,6 +11,7 @@ use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 // MmCms Imports
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
+use Thtg88\MmCms\Console\Commands\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
@@ -45,18 +46,18 @@ class MmCmsServiceProvider extends ServiceProvider
             __DIR__.'/../database/migrations' => database_path('migrations'),
         ], 'mmcms-migrations');
 
-        // // Translations
+        // Translations
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'mmcms');
         // $this->publishes([
         //     __DIR__.'/../resources/lang' => resource_path('lang/vendor/mmcms'),
         // ], 'translations');
-        //
-        // // Views
+
+        // Views
         // $this->loadViewsFrom(__DIR__.'/../views', 'mmcms');
         // $this->publishes([
         //     __DIR__.'/../reousrces/views' => resource_path('views/vendor/mmcms'),
         // ], 'views');
-        //
+
         // Commands
         if ($this->app->runningInConsole())
         {
@@ -65,11 +66,16 @@ class MmCmsServiceProvider extends ServiceProvider
                 PassportClientCommand::class,
                 PassportInstallCommand::class,
                 PassportKeysCommand::class,
-                PublishModuleCommand::class
+                PublishModuleCommand::class,
+                RepositoryMakeCommand::class,
             ]);
         }
-        //
-        // // Assets
+
+        $this->commands([
+            RepositoryMakeCommand::class,
+        ]);
+
+        // Assets
         // $this->publishes([
         //     __DIR__.'/../reousrces/assets' => public_path('vendor/mmcms'),
         // ], 'assets');
