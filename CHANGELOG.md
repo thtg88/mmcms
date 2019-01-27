@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 
 ## [Unreleased]
 ### Fixed
-- Set auth driver to passport in config
+- Set auth driver to passport in config in InstallCommand
+- Set event listeners in EventServiceProvider in InstallCommand
 ### Removed
 - Unique index for user email in create users table migration in install command
 
