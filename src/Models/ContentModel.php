@@ -24,10 +24,11 @@ class ContentModel extends Model
      * @var array
      */
     protected $fillable = [
+        'base_route_name',
         'created_at',
         'description',
-        'display_name',
         'name',
+        'table_name',
     ];
 
     /**
@@ -36,12 +37,13 @@ class ContentModel extends Model
      * @var array
      */
     protected $visible = [
+        'base_route_name',
         'content_fields',
         'created_at',
         'description',
         'id',
-        'display_name',
         'name',
+        'table_name',
     ];
 
     /**
