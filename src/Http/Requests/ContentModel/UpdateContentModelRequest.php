@@ -34,12 +34,22 @@ class UpdateContentModelRequest extends UpdateRequest
 				'string',
 				'max:255',
 				Rule::unique($this->repository->getName(), 'base_route_name')->where(function($query) {
-					$query->whereNull('deleted_at');
+					$query->whereNull('deleted_at')
+						->where('id', '<>', $this->route('id'));
 				}),
 			],
 			'description' => [
 				'nullable',
 				'string',
+			],
+            'model_name' => [
+				'nullable',
+				'string',
+				'max:255',
+				Rule::unique($this->repository->getName(), 'model_name')->where(function($query) {
+					$query->whereNull('deleted_at')
+						->where('id', '<>', $this->route('id'));
+				}),
 			],
             'name' => [
 				'required',
@@ -55,7 +65,8 @@ class UpdateContentModelRequest extends UpdateRequest
 				'string',
 				'max:255',
 				Rule::unique($this->repository->getName(), 'table_name')->where(function($query) {
-					$query->whereNull('deleted_at');
+					$query->whereNull('deleted_at')
+						->where('id', '<>', $this->route('id'));
 				}),
 			],
         ];

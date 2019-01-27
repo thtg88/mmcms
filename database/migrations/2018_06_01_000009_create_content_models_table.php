@@ -15,9 +15,10 @@ class CreateContentModelsTable extends Migration
     {
         Schema::create('content_models', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('base_route_name');
+            $table->string('model_name');
             $table->string('name');
             $table->string('table_name');
-            $table->string('base_route_name');
             $table->text('description')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
