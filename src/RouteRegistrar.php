@@ -32,6 +32,7 @@ class RouteRegistrar
     public function all()
     {
         $this->forAuth();
+        $this->forContentFields();
         $this->forContentMigrationMethods();
         $this->forContentModels();
         $this->forContentTypes();
@@ -69,6 +70,41 @@ class RouteRegistrar
                 'uses' => 'AuthController@updateProfile',
                 'as' => 'update-profile'
             ]);
+        });
+    }
+
+    public function forContentFields()
+    {
+        $this->router->group(['as' => 'mmcms.content-fields.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('content-fields', [
+                    'uses' => 'ContentFieldController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('content-fields/paginate', [
+                    'uses' => 'ContentFieldController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('content-fields/{id}', [
+                    'uses' => 'ContentFieldController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('content-fields', [
+                    'uses' => 'ContentFieldController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('content-fields/{id}', [
+                    'uses' => 'ContentFieldController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('content-fields/{id}', [
+                    'uses' => 'ContentFieldController@destroy',
+                    'as' => 'destroy'
+                ]);
+            });
         });
     }
 
