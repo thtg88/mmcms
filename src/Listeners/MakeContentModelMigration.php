@@ -40,10 +40,10 @@ class MakeContentModelMigration
             // If migration N/A we make it
             \Artisan::call('make:migration', [
                 'name' => $migration_name,
-                '--table' => $table_name,
+                '--create' => $table_name,
             ]);
 
-            // The nwe get the last migration so we can insert our custom fields
+            // Then we get the last migration so we can insert our custom fields
             $migrations = $this->filesystem->files(database_path('migrations'));
 
             if(count($migrations) > 0)
