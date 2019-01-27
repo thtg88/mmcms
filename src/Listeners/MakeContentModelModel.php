@@ -34,15 +34,15 @@ class MakeContentModelModel
 
         if(file_exists(app_path($model_name.'.php')))
         {
-            $model_content = file_get_contents(app_path($model_name.'.php'));
+            $file_content = file_get_contents(app_path($model_name.'.php'));
 
-            if($model_content !== false)
+            if($file_content !== false)
             {
                 $replace_content = $this->getContentModelModelAdditionalContent($event->content_model->table_name);
 
-                $model_content = str_replace('//', $replace_content, $model_content);
+                $file_content = str_replace('//', $replace_content, $file_content);
 
-                file_put_contents(app_path($model_name.'.php'), $model_content);
+                file_put_contents(app_path($model_name.'.php'), $file_content);
             }
         }
     }
@@ -55,53 +55,53 @@ class MakeContentModelModel
      */
     private function getContentModelModelAdditionalContent($table_name)
     {
-        $replace_content = '';
-        $replace_content .= "/**\n";
-        $replace_content .= "     * The database table used by the model.\n";
-        $replace_content .= "     *\n";
-        $replace_content .= "     * @var string\n";
-        $replace_content .= "     */\n";
-        $replace_content .= "    protected \$table = '".$table_name."';\n";
-        $replace_content .= "\n";
-        $replace_content .= "    /**\n";
-        $replace_content .= "     * The primary key for the model.\n";
-        $replace_content .= "     *\n";
-        $replace_content .= "     * @var string\n";
-        $replace_content .= "     */\n";
-        $replace_content .= "    protected \$primaryKey = 'id';\n";
-        $replace_content .= "\n";
-        $replace_content .= "    /**\n";
-        $replace_content .= "     * The attributes that are mass assignable.\n";
-        $replace_content .= "     *\n";
-        $replace_content .= "     * @var array\n";
-        $replace_content .= "     */\n";
-        $replace_content .= "    protected \$fillable = [\n";
-        $replace_content .= "        'created_at',\n";
-        $replace_content .= "        // fillable attributes\n";
-        $replace_content .= "    ];\n";
-        $replace_content .= "\n";
-        $replace_content .= "    /**\n";
-        $replace_content .= "     * The attributes that should be visible in arrays.\n";
-        $replace_content .= "     *\n";
-        $replace_content .= "     * @var array\n";
-        $replace_content .= "     */\n";
-        $replace_content .= "    protected \$visible = [\n";
-        $replace_content .= "        'created_at',\n";
-        $replace_content .= "        'id',\n";
-        $replace_content .= "        // visible attributes\n";
-        $replace_content .= "    ];\n";
-        $replace_content .= "\n";
-        $replace_content .= "    /**\n";
-        $replace_content .= "     * The relations to eager load on every query.\n";
-        $replace_content .= "     *\n";
-        $replace_content .= "     * @var array\n";
-        $replace_content .= "     */\n";
-        $replace_content .= "    protected \$visible = [\n";
-        $replace_content .= "        // with attributes\n";
-        $replace_content .= "    ];\n";
-        $replace_content .= "\n";
-        $replace_content .= "    // RELATIONSHIPS\n";
+        $content = '';
+        $content .= "/**\n";
+        $content .= "     * The database table used by the model.\n";
+        $content .= "     *\n";
+        $content .= "     * @var string\n";
+        $content .= "     */\n";
+        $content .= "    protected \$table = '".$table_name."';\n";
+        $content .= "\n";
+        $content .= "    /**\n";
+        $content .= "     * The primary key for the model.\n";
+        $content .= "     *\n";
+        $content .= "     * @var string\n";
+        $content .= "     */\n";
+        $content .= "    protected \$primaryKey = 'id';\n";
+        $content .= "\n";
+        $content .= "    /**\n";
+        $content .= "     * The attributes that are mass assignable.\n";
+        $content .= "     *\n";
+        $content .= "     * @var array\n";
+        $content .= "     */\n";
+        $content .= "    protected \$fillable = [\n";
+        $content .= "        'created_at',\n";
+        $content .= "        // fillable attributes\n";
+        $content .= "    ];\n";
+        $content .= "\n";
+        $content .= "    /**\n";
+        $content .= "     * The attributes that should be visible in arrays.\n";
+        $content .= "     *\n";
+        $content .= "     * @var array\n";
+        $content .= "     */\n";
+        $content .= "    protected \$visible = [\n";
+        $content .= "        'created_at',\n";
+        $content .= "        'id',\n";
+        $content .= "        // visible attributes\n";
+        $content .= "    ];\n";
+        $content .= "\n";
+        $content .= "    /**\n";
+        $content .= "     * The relations to eager load on every query.\n";
+        $content .= "     *\n";
+        $content .= "     * @var array\n";
+        $content .= "     */\n";
+        $content .= "    protected \$visible = [\n";
+        $content .= "        // with attributes\n";
+        $content .= "    ];\n";
+        $content .= "\n";
+        $content .= "    // RELATIONSHIPS\n";
 
-        return $replace_content;
+        return $content;
     }
 }
