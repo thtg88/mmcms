@@ -22,6 +22,8 @@ class CreateContentValidationRuleAdditionalFieldValueOptionsTable extends Migrat
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+
+            $table->index('content_validation_rule_additional_field_id', 'content_validation_rule_additional_field_id_index');
         });
     }
 
