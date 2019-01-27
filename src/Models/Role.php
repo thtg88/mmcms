@@ -56,6 +56,6 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(config('mmcms.models.namespace').'\User', 'role_id', 'id');
+        return $this->hasMany(config('mmcms.models.namespace').'User', 'role_id', 'id');
     }
 }
