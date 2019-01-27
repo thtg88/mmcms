@@ -85,7 +85,7 @@ class MakeContentModelUpdateRequest
     private function getContentModelRequestConstructor($model_name)
     {
         $content = '';
-        $content .= "class Destroy".$model_name."Request extends UpdateRequest\n";
+        $content .= "class Update".$model_name."Request extends UpdateRequest\n";
         $content .= "{\n";
         $content .= "    /**\n";
     	$content .= "     * Create a new request instance.\n";
