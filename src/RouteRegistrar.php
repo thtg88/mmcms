@@ -33,6 +33,7 @@ class RouteRegistrar
     {
         $this->forAuth();
         $this->forContentMigrationMethods();
+        $this->forContentModels();
         $this->forContentTypes();
         $this->forContentValidationRuleAdditionalFieldTypes();
         $this->forRoles();
@@ -100,6 +101,41 @@ class RouteRegistrar
                 ]);
                 $router->delete('content-migration-methods/{id}', [
                     'uses' => 'ContentMigrationMethodController@destroy',
+                    'as' => 'destroy'
+                ]);
+            });
+        });
+    }
+
+    public function forContentModels()
+    {
+        $this->router->group(['as' => 'mmcms.content-models.'], function($router) {
+
+            $router->group(['middleware' => 'auth:api'], function($router) {
+
+                // Role routes...
+                $router->get('content-models', [
+                    'uses' => 'ContentModelController@index',
+                    'as' => 'index'
+                ]);
+                $router->get('content-models/paginate', [
+                    'uses' => 'ContentModelController@paginate',
+                    'as' => 'paginate'
+                ]);
+                $router->get('content-models/{id}', [
+                    'uses' => 'ContentModelController@show',
+                    'as' => 'show'
+                ]);
+                $router->post('content-models', [
+                    'uses' => 'ContentModelController@store',
+                    'as' => 'store'
+                ]);
+                $router->put('content-models/{id}', [
+                    'uses' => 'ContentModelController@update',
+                    'as' => 'update'
+                ]);
+                $router->delete('content-models/{id}', [
+                    'uses' => 'ContentModelController@destroy',
                     'as' => 'destroy'
                 ]);
             });
