@@ -21,10 +21,9 @@ class DatabaseMigrate
     /**
      * Handle the event.
      *
-     * @param  ContentModelStored  $event
      * @return void
      */
-    public function handle(ContentModelStored $event)
+    public function handle()
     {
         \Artisan::call('migrate', [
             '--force' => true,
