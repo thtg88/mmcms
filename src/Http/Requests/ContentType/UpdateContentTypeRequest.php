@@ -6,6 +6,7 @@ use Illuminate\Validation\Rule;
 // Requests
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
 // Repositories
+use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
 class UpdateContentTypeRequest extends UpdateRequest
@@ -14,11 +15,14 @@ class UpdateContentTypeRequest extends UpdateRequest
 	 * Create a new request instance.
 	 *
 	 * @param	\Thtg88\MmCms\Repositories\ContentTypeRepository	$repository
+	 * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$content_migration_methods
 	 * @return	void
 	 */
-	public function __construct(ContentTypeRepository $repository)
+	public function __construct(ContentTypeRepository $repository, ContentMigrationMethodRepository $content_migration_methods)
 	{
 		$this->repository = $repository;
+
+		$this->content_migration_methods = $content_migration_methods;
 	}
 
 	/**
@@ -48,9 +52,12 @@ class UpdateContentTypeRequest extends UpdateRequest
 				'nullable',
 				'string',
 			],
-			'migration_method_name' => [
+			'content_migration_method_id' => [
 				'nullable',
-				'string',
+				'integer',
+				Rule::exists($this->content_migration_methods->getName(), 'id')->where(function($query) {
+					$query->whereNull('deleted_at');
+				}),
 			],
             'name' => [
 				'required',

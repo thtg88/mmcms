@@ -15,9 +15,9 @@ class CreateContentValidationRulesTable extends Migration
     {
         Schema::create('content_validation_rules', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('content_migration_method_id')->nullable();
             $table->unsignedInteger('priority')->default(0);
             $table->string('name');
-            $table->string('migration_method_name')->nullable();
             $table->text('description')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();

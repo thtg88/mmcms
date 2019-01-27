@@ -24,9 +24,9 @@ class ContentType extends Model
      * @var array
      */
     protected $fillable = [
+        'content_migration_method_id',
         'created_at',
         'description',
-        'migration_method_name',
         'name',
         'priority',
     ];
@@ -37,11 +37,12 @@ class ContentType extends Model
      * @var array
      */
     protected $visible = [
+        'content_migration_method',
+        'content_migration_method_id',
         'content_validation_rules',
         'created_at',
         'description',
         'id',
-        'migration_method_name',
         'name',
         'priority',
     ];
@@ -52,10 +53,20 @@ class ContentType extends Model
      * @var array
      */
     protected $with = [
+        'content_migration_method',
         'content_validation_rules',
     ];
 
     // RELATIONSHIPS
+
+    public function content_migration_method()
+    {
+        return $this->belongsTo(
+            config('mmcms.models.namespace').'ContentMigrationMethod',
+            'content_migration_method_id',
+            'id'
+        );
+    }
 
     public function content_validation_rules()
     {
