@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Http\Controllers;
 
 // Events
+use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Thtg88\MmCms\Events\ContentFieldStored;
 // Repositories
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
@@ -57,6 +58,8 @@ class ContentFieldController extends Controller
     {
         // Delete resource
         $resource = $this->repository->destroy($id);
+
+        event(new ContentFieldDestroyed($resource));
 
         return response()->json([
             'success' => true,
