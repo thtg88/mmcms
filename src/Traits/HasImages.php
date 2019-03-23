@@ -1,8 +1,8 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Traits;
+namespace Thtg88\MmCms\Traits;
 
-use SdSomersetDesign\CastleCombe\Models\ImageCategory;
+use Thtg88\MmCms\Models\ImageCategory;
 
 trait HasImages
 {
@@ -14,7 +14,7 @@ trait HasImages
     public function images()
     {
         return $this->morphMany(
-            'SdSomersetDesign\CastleCombe\Models\Image',
+            config('mmcms.models.namespace').'Image',
             'target',
             'target_table'
         );

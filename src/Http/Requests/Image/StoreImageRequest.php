@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Image;
+namespace Thtg88\MmCms\Http\Requests\Image;
 
 use Illuminate\Validation\Rule;
 // Helpers
-use SdSomersetDesign\CastleCombe\Helpers\DatabaseHelper;
+use Thtg88\MmCms\Helpers\DatabaseHelper;
 // Requests
-use SdSomersetDesign\CastleCombe\Http\Requests\StoreRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\ImageRepository;
+use Thtg88\MmCms\Repositories\ImageRepository;
 
 class StoreImageRequest extends StoreRequest
 {
     /**
 	 * Create a new request instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\ImageRepository	$repository
-	 * @param	\SdSomersetDesign\CastleCombe\Helpers\DatabaseHelper	$database_helper
+	 * @param	\Thtg88\MmCms\Repositories\ImageRepository	$repository
+	 * @param	\Thtg88\MmCms\Helpers\DatabaseHelper	$database_helper
 	 * @return	void
 	 */
 	public function __construct(ImageRepository $repository, DatabaseHelper $database_helper)

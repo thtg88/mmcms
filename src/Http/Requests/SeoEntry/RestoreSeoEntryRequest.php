@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\SeoEntry;
+namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
 // Requests
-use SdSomersetDesign\CastleCombe\Http\Requests\Request;
+use Thtg88\MmCms\Http\Requests\Request;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\SeoEntryRepository;
+use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
 class RestoreSeoEntryRequest extends Request
 {
 	/**
 	 * Create a new request instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\SeoEntryRepository	$repository
+	 * @param	\Thtg88\MmCms\Repositories\SeoEntryRepository	$repository
 	 * @return	void
 	 */
 	public function __construct(SeoEntryRepository $repository)
