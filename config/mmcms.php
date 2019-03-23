@@ -14,6 +14,7 @@ return [
         'namespace' => 'Thtg88\\MmCms'
     ],
     'roles' => [
+        'administrator_role_name' => env('MMCMS_ROLES_ADMINISTRATOR_NAME', 'admin'),
         'developer_role_name' => env('MMCMS_ROLES_DEVELOPER_NAME', 'dev'),
         'user_role_name' => env('MMCMS_ROLES_USER_NAME', 'user'),
     ],

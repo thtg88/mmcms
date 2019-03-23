@@ -37,16 +37,16 @@ class AuthorizeAdministrator
 	    }
 
         // Get administrator role
-		$administrator_role = $this->roles->find(config('castle-combe.administrator_role_id'));
+		$administrator_role = $this->roles->findByModelName(config('mmcms.roles.administrator_role_name'));
 
 		if($administrator_role === null)
 		{
-			abort(403, 'This action is unauthorized.');
+			abort(403, 'This action is unauthorized!');
 		}
 
         if($user->role->priority > $administrator_role->priority)
 		{
-			abort(403, 'This action is unauthorized.');
+			abort(403, 'This action is unauthorized!!');
 		}
 
 		return $next($request);

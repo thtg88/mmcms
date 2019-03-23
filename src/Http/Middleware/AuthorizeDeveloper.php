@@ -37,16 +37,16 @@ class AuthorizeDeveloper
 	    }
 
         // Get developer role
-		$developer_role = $this->roles->find(config('castle-combe.developer_role_id'));
+		$developer_role = $this->roles->findByModelName(config('mmcms.roles.developer_role_name'));
 
 		if($developer_role === null)
 		{
-			abort(403, 'This action is unauthorized.');
+			abort(403, 'This action is unauthorized!');
 		}
 
         if($user->role->priority > $developer_role->priority)
 		{
-			abort(403, 'This action is unauthorized.');
+			abort(403, 'This action is unauthorized!!');
 		}
 
 		return $next($request);
