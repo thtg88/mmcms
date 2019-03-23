@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Image;
+namespace Thtg88\MmCms\Http\Requests\Image;
 
 // Requests
-use SdSomersetDesign\CastleCombe\Http\Requests\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\DestroyRequest;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\ImageRepository;
+use Thtg88\MmCms\Repositories\ImageRepository;
 
 class DestroyImageRequest extends DestroyRequest
 {
     /**
 	 * Create a new request instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\ImageRepository	$repository
+	 * @param	\Thtg88\MmCms\Repositories\ImageRepository	$repository
 	 * @return	void
 	 */
 	public function __construct(ImageRepository $repository)

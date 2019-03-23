@@ -1,22 +1,22 @@
 <?php
 
-namespace App\Http\Requests\ImageCategory;
+namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
 use Illuminate\Validation\Rule;
 // Helpers
-use SdSomersetDesign\CastleCombe\Helpers\DatabaseHelper;
+use Thtg88\MmCms\Helpers\DatabaseHelper;
 // Requests
-use SdSomersetDesign\CastleCombe\Http\Requests\UpdateRequest;
+use Thtg88\MmCms\Http\Requests\UpdateRequest;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\ImageCategoryRepository;
+use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
 class UpdateImageCategoryRequest extends UpdateRequest
 {
 	/**
 	 * Create a new request instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\ImageCategoryRepository	$repository
-	 * @param	\SdSomersetDesign\CastleCombe\Helpers\DatabaseHelper	$database_helper
+	 * @param	\Thtg88\MmCms\Repositories\ImageCategoryRepository	$repository
+	 * @param	\Thtg88\MmCms\Helpers\DatabaseHelper	$database_helper
 	 * @return	void
 	 */
 	public function __construct(ImageCategoryRepository $repository, DatabaseHelper $database_helper)

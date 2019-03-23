@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Thtg88\MmCms\Http\Controllers;
 
 // Controllers
-use SdSomersetDesign\CastleCombe\Http\Controllers\Controller;
+use Thtg88\MmCms\Http\Controllers\Controller;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\SeoEntryRepository;
+use Thtg88\MmCms\Repositories\SeoEntryRepository;
 // Requests
-use App\Http\Requests\SeoEntry\DestroySeoEntryRequest;
-use App\Http\Requests\SeoEntry\RestoreSeoEntryRequest;
-use App\Http\Requests\SeoEntry\StoreSeoEntryRequest;
-use App\Http\Requests\SeoEntry\UpdateSeoEntryRequest;
+use Thtg88\MmCms\Http\Requests\SeoEntry\DestroySeoEntryRequest;
+use Thtg88\MmCms\Http\Requests\SeoEntry\RestoreSeoEntryRequest;
+use Thtg88\MmCms\Http\Requests\SeoEntry\StoreSeoEntryRequest;
+use Thtg88\MmCms\Http\Requests\SeoEntry\UpdateSeoEntryRequest;
 
 class SeoEntryController extends Controller
 {
     /**
      * Create a new controller instance.
      *
-     * @param       \SdSomersetDesign\CastleCombe\Repositories\SeoEntryRepository        $repository
+     * @param       \Thtg88\MmCms\Repositories\SeoEntryRepository        $repository
      * @return      void
      */
     public function __construct(SeoEntryRepository $repository)
@@ -28,7 +28,7 @@ class SeoEntryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\SeoEntry\StoreSeoEntryRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\SeoEntry\StoreSeoEntryRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreSeoEntryRequest $request)
@@ -53,7 +53,7 @@ class SeoEntryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\SeoEntry\UpdateSeoEntryRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\SeoEntry\UpdateSeoEntryRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -81,7 +81,7 @@ class SeoEntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Http\Requests\SeoEntry\DestroySeoEntryRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\SeoEntry\DestroySeoEntryRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -99,7 +99,7 @@ class SeoEntryController extends Controller
     /**
      * Restore the specified resource from storage.
      *
-     * @param  \App\Http\Requests\SeoEntry\RestoreSeoEntryRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\SeoEntry\RestoreSeoEntryRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

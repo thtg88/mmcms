@@ -1,17 +1,17 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Http\Middleware;
+namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\RoleRepository;
+use Thtg88\MmCms\Repositories\RoleRepository;
 
 class AuthorizeAdministrator
 {
 	/**
 	 * Create a new middleware instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\RoleRepository	$roles
+	 * @param	\Thtg88\MmCms\Repositories\RoleRepository	$roles
 	 * @return	void
 	 */
 	public function __construct(RoleRepository $roles)

@@ -1,6 +1,6 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Traits;
+namespace Thtg88\MmCms\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
