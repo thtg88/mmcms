@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace Thtg88\MmCms\Http\Requests\Auth;
 
-use App\Http\Requests\Request;
+use Thtg88\MmCms\Http\Requests\Request;
 
 class ForgotPasswordRequest extends Request
 {

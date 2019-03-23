@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\ImageCategory;
+namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
 // Requests
-use SdSomersetDesign\CastleCombe\Http\Requests\Request;
+use Thtg88\MmCms\Http\Requests\Request;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\ImageCategoryRepository;
+use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
 class RestoreImageCategoryRequest extends Request
 {
 	/**
 	 * Create a new request instance.
 	 *
-	 * @param	\SdSomersetDesign\CastleCombe\Repositories\ImageCategoryRepository	$repository
+	 * @param	\Thtg88\MmCms\Repositories\ImageCategoryRepository	$repository
 	 * @return	void
 	 */
 	public function __construct(ImageCategoryRepository $repository)

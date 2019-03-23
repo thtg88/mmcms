@@ -1,8 +1,8 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Repositories;
+namespace Thtg88\MmCms\Repositories;
 
-use SdSomersetDesign\CastleCombe\Models\ImageCategory;
+use Thtg88\MmCms\Models\ImageCategory;
 
 /**
  *
@@ -25,7 +25,7 @@ class ImageCategoryRepository extends Repository
 	/**
 	 * Create a new repository instance.
 	 *
-	 * @param \SdSomersetDesign\CastleCombe\Models\ImageCategory	$model
+	 * @param \Thtg88\MmCms\Models\ImageCategory	$model
 	 * @return  void
 	 */
 	public function __construct(ImageCategory $model)
