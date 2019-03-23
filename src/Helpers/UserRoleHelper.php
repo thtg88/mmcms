@@ -45,10 +45,10 @@ class UserRoleHelper
 	 * this function will return true.
 	 *
 	 * @param	int	$user_id	The id of the user.
-	 * @param	int	$role_id	The id of the role.
+	 * @param	int	$role_name	The name of the role.
 	 * @return	boolean
 	 */
-	public function authorize($user_id, $role_id)
+	public function authorize($user_id, $role_name)
 	{
 		// Assume id is numeric and not empty
 		if(empty($user_id) || !is_numeric($user_id))
@@ -57,7 +57,7 @@ class UserRoleHelper
 		}
 
 		// Assume id is numeric and not empty
-		if(empty($role_id) || !is_numeric($role_id))
+		if(empty($role_name) || !is_string($role_name))
 		{
 			return false;
 		}
@@ -78,7 +78,7 @@ class UserRoleHelper
 		}
 
 		// Get role
-		$role = $this->roles->find($role_id);
+		$role = $this->roles->findByModelName($role_name);
 
 		if($role === null)
 		{
@@ -105,7 +105,7 @@ class UserRoleHelper
 	 */
 	public function authorizeAdministrator($user_id)
 	{
-		return $this->authorize($user_id, config('castle-combe.administrator_role_id'));
+		return $this->authorize($user_id, config('mmcms.roles.administrator_role_name'));
 	}
 
 	/**
@@ -116,6 +116,6 @@ class UserRoleHelper
 	 */
 	public function authorizeDeveloper($user_id)
 	{
-		return $this->authorize($user_id, config('castle-combe.developer_role_id'));
+		return $this->authorize($user_id, config('mmcms.roles.developer_role_name'));
 	}
 }
