@@ -1,6 +1,6 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Models;
+namespace Thtg88\MmCms\Models;
 
 class ImageCategory extends Model
 {

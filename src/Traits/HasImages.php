@@ -1,8 +1,8 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Traits;
+namespace Thtg88\MmCms\Traits;
 
-use SdSomersetDesign\CastleCombe\Models\ImageCategory;
+use Thtg88\MmCms\Models\ImageCategory;
 
 trait HasImages
 {
