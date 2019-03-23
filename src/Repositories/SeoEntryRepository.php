@@ -1,8 +1,8 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Repositories;
+namespace Thtg88\MmCms\Repositories;
 
-use SdSomersetDesign\CastleCombe\Models\SeoEntry;
+use Thtg88\MmCms\Models\SeoEntry;
 
 /**
  *
@@ -22,7 +22,7 @@ class SeoEntryRepository extends Repository
 	/**
 	 * Create a new repository instance.
 	 *
-	 * @param \SdSomersetDesign\CastleCombe\Models\SeoEntry	$model
+	 * @param \Thtg88\MmCms\Models\SeoEntry	$model
 	 * @return  void
 	 */
 	public function __construct(SeoEntry $model)

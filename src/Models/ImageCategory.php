@@ -1,6 +1,6 @@
 <?php
 
-namespace SdSomersetDesign\CastleCombe\Models;
+namespace Thtg88\MmCms\Models;
 
 class ImageCategory extends Model
 {
@@ -35,6 +35,10 @@ class ImageCategory extends Model
 
 	public function images()
 	{
-		return $this->hasMany('SdSomersetDesign\CastleCombe\Models\Image', 'target_table', 'target_table');
+		return $this->hasMany(
+			config('mmcms.models.namespace').'Image',
+			'target_table',
+			'target_table'
+		);
 	}
 }

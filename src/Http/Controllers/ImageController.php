@@ -1,27 +1,27 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Thtg88\MmCms\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 // Controllers
-use SdSomersetDesign\CastleCombe\Http\Controllers\Controller;
+use Thtg88\MmCms\Http\Controllers\Controller;
 // Helpers
-use SdSomersetDesign\CastleCombe\Helpers\FileHelper;
+use Thtg88\MmCms\Helpers\FileHelper;
 // Repositories
-use SdSomersetDesign\CastleCombe\Repositories\ImageRepository;
+use Thtg88\MmCms\Repositories\ImageRepository;
 // Requests
-use App\Http\Requests\Image\DestroyImageRequest;
-use App\Http\Requests\Image\StoreImageRequest;
-use App\Http\Requests\Image\UpdateImageRequest;
+use Thtg88\MmCms\Http\Requests\Image\DestroyImageRequest;
+use Thtg88\MmCms\Http\Requests\Image\StoreImageRequest;
+use Thtg88\MmCms\Http\Requests\Image\UpdateImageRequest;
 
 class ImageController extends Controller
 {
     /**
      * Create a new controller instance.
      *
-     * @param       \SdSomersetDesign\CastleCombe\Repositories\ImageRepository        $repository
-     * @param       \SdSomersetDesign\CastleCombe\Helpers\FileHelper        $file_helper
+     * @param       \Thtg88\MmCms\Repositories\ImageRepository        $repository
+     * @param       \Thtg88\MmCms\Helpers\FileHelper        $file_helper
      * @return      void
      */
     public function __construct(ImageRepository $repository, FileHelper $file_helper)
@@ -33,7 +33,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\Image\StoreImageRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Image\StoreImageRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreImageRequest $request)
@@ -66,7 +66,7 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\Image\UpdateImageRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Image\UpdateImageRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -97,7 +97,7 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Http\Requests\Image\DestroyImageRequest  $request
+     * @param  \Thtg88\MmCms\Http\Requests\Image\DestroyImageRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
