@@ -61,6 +61,10 @@ class Image extends Model
 
 	public function image_category()
 	{
-		return $this->belongsTo('SdSomersetDesign\CastleCombe\Models\ImageCategory', 'image_category_id', 'id');
+		return $this->belongsTo(
+			config('mmcms.models.namespace').'ImageCategory',
+			'image_category_id',
+			'id'
+		);
 	}
 }

@@ -14,7 +14,7 @@ trait HasImages
     public function images()
     {
         return $this->morphMany(
-            'SdSomersetDesign\CastleCombe\Models\Image',
+            config('mmcms.models.namespace').'Image',
             'target',
             'target_table'
         );

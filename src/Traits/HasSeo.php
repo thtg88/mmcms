@@ -12,7 +12,7 @@ trait HasSeo
     public function seo_entry()
     {
         return $this->morphOne(
-            'SdSomersetDesign\CastleCombe\Models\SeoEntry',
+            config('mmcms.models.namespace').'SeoEntry',
             'target',
             'target_table'
         );
