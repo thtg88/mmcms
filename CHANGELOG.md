@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) (or at least it tries to).
 
 ## [Unreleased]
+### Added
+- Recovery resource support
 ### Fixed
 - Set auth driver to passport in config in InstallCommand
 - Set event listeners in EventServiceProvider in InstallCommand
