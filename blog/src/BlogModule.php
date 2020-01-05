@@ -7,7 +7,7 @@ class BlogModule
     /**
      * Binds the mmCMS routes into the controller.
      *
-     * @param array  $options
+     * @param array $options
      * @return void
      */
     public static function routes(array $options = [])

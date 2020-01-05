@@ -22,7 +22,7 @@ class MakeContentFieldMigration
     /**
      * Handle the event.
      *
-     * @param ContentFieldStored  $event
+     * @param ContentFieldStored $event
      * @return void
      */
     public function handle(ContentFieldStored $event)

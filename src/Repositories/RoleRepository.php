@@ -22,7 +22,7 @@ class RoleRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\Role     $model
+     * @param \Thtg88\MmCms\Models\Role $model
      * @return void
      */
     public function __construct(Role $model)

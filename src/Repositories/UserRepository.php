@@ -26,7 +26,7 @@ class UserRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\User     $model
+     * @param \Thtg88\MmCms\Models\User $model
      * @return void
      */
     public function __construct(User $model)

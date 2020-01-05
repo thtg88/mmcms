@@ -21,7 +21,7 @@ class MakeContentModelModel
     /**
      * Handle the event.
      *
-     * @param ContentModelStored  $event
+     * @param ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -48,7 +48,7 @@ class MakeContentModelModel
     /**
      * Returns additional content for the model from a given table name.
      *
-     * @param string  $table_name
+     * @param string $table_name
      * @return string
      */
     private function getContentModelModelAdditionalContent($table_name)

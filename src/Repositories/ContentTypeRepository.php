@@ -22,7 +22,7 @@ class ContentTypeRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\ContentType     $model
+     * @param \Thtg88\MmCms\Models\ContentType $model
      * @return void
      */
     public function __construct(ContentType $model)

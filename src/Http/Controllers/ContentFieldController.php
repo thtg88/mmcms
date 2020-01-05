@@ -17,7 +17,7 @@ class ContentFieldController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository        $repository
+     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $repository
      * @return void
      */
     public function __construct(ContentFieldRepository $repository)
@@ -51,7 +51,7 @@ class ContentFieldController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ContentField\DestroyContentFieldRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyContentFieldRequest $request, $id)

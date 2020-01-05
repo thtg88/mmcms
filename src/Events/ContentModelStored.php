@@ -20,7 +20,7 @@ class ContentModelStored
     /**
      * Create a new event instance.
      *
-     * @param ContentModel    $content_model
+     * @param ContentModel $content_model
      * @return void
      */
     public function __construct(ContentModel $content_model)
