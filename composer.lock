@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e5b0be2b2e9e74c52370683641c371e",
+    "content-hash": "e3314eb4a7aaaeda275c9c68109ac223",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -4853,58 +4853,6 @@
             "time": "2019-12-15T19:12:40+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v4.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9a9981c347c5c49d6dfe5cf826bb882b824080dc",
-                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc",
-                "shasum": ""
-            },
-            "require": {
-                "ext-tokenizer": "*",
-                "php": ">=7.0"
-            },
-            "require-dev": {
-                "ircmaxell/php-yacc": "0.0.5",
-                "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0"
-            },
-            "bin": [
-                "bin/php-parse"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PhpParser\\": "lib/PhpParser"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Nikita Popov"
-                }
-            ],
-            "description": "A PHP parser written in PHP",
-            "keywords": [
-                "parser",
-                "php"
-            ],
-            "time": "2019-11-08T13:50:10+00:00"
-        },
-        {
             "name": "phar-io/manifest",
             "version": "1.0.3",
             "source": {
@@ -6473,48 +6421,6 @@
             ],
             "description": "A small library for converting tokenized PHP source code into XML and potentially other formats",
             "time": "2019-06-13T22:48:21+00:00"
-        },
-        {
-            "name": "tightenco/tlint",
-            "version": "3.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tightenco/tlint.git",
-                "reference": "3d76b1f0a6d22e445137781cccaea3ad95d6c5f1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/tlint/zipball/3d76b1f0a6d22e445137781cccaea3ad95d6c5f1",
-                "reference": "3d76b1f0a6d22e445137781cccaea3ad95d6c5f1",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^4.2",
-                "php": ">=7.2",
-                "symfony/console": "^4.3|^5.0",
-                "symfony/process": "^4.3|^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.4"
-            },
-            "bin": [
-                "bin/tlint"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Tighten\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "Tighten linter for Laravel conventions",
-            "time": "2020-01-02T16:53:57+00:00"
         },
         {
             "name": "webmozart/assert",
