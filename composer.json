@@ -23,7 +23,7 @@
         "illuminate/queue": "^6.0.0",
         "illuminate/routing": "^6.0.0",
         "illuminate/support": "^6.0.0",
-        "laravel/passport": "^7.0",
+        "laravel/passport": "^8.0",
         "nesbot/carbon": "^2.0.0"
     },
     "autoload": {
