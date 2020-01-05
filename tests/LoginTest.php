@@ -1,6 +1,6 @@
 <?php
 
-namespace Thtg88\MmCms\Test;
+namespace Thtg88\MmCms\Tests;
 
 // use MmCms;
 
