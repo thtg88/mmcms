@@ -65,8 +65,8 @@ class PublishModuleCommand extends Command
     /**
      * Copy all the files from the given module name.
      *
-     * @param   $module_name
-     * @param   $force
+     * @param $module_name
+     * @param $force
      *
      * @return mixed
      */

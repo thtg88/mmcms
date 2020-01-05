@@ -26,7 +26,7 @@ class ImageCategoryRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\ImageCategory	$model
-     * @return  void
+     * @return void
      */
     public function __construct(ImageCategory $model)
     {

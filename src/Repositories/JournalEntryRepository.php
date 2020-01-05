@@ -23,7 +23,7 @@ class JournalEntryRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\JournalEntry     $model
-     * @return  void
+     * @return void
      */
     public function __construct(JournalEntry $model)
     {

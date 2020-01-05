@@ -23,7 +23,7 @@ class ContentMigrationMethodRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\ContentMigrationMethod     $model
-     * @return  void
+     * @return void
      */
     public function __construct(ContentMigrationMethod $model)
     {

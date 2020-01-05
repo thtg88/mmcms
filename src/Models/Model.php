@@ -23,7 +23,7 @@ class Model extends BaseModel
     /**
      * Returns the eager loaded relationship names for the model class.
      *
-     * @return  array
+     * @return array
      */
     public function getWith()
     {

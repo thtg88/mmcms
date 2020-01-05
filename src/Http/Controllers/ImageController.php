@@ -20,9 +20,9 @@ class ImageController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\ImageRepository        $repository
-     * @param       \Thtg88\MmCms\Helpers\FileHelper        $file_helper
-     * @return      void
+     * @param \Thtg88\MmCms\Repositories\ImageRepository        $repository
+     * @param \Thtg88\MmCms\Helpers\FileHelper        $file_helper
+     * @return void
      */
     public function __construct(ImageRepository $repository, FileHelper $file_helper)
     {
@@ -33,7 +33,7 @@ class ImageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Image\StoreImageRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Image\StoreImageRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreImageRequest $request)
@@ -65,8 +65,8 @@ class ImageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Image\UpdateImageRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Image\UpdateImageRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateImageRequest $request, $id)
@@ -96,8 +96,8 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Image\DestroyImageRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Image\DestroyImageRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyImageRequest $request, $id)

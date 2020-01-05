@@ -23,7 +23,7 @@ class ContentFieldRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\ContentField     $model
-     * @return  void
+     * @return void
      */
     public function __construct(ContentField $model)
     {

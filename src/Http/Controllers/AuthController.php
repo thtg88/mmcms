@@ -44,10 +44,10 @@ class AuthController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\UserRepository        $users
-     * @param       \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository   $oauth_refresh_tokens
-     * @param       \Thtg88\MmCms\Repositories\RoleRepository   $roles
-     * @return      void
+     * @param \Thtg88\MmCms\Repositories\UserRepository        $users
+     * @param \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository   $oauth_refresh_tokens
+     * @param \Thtg88\MmCms\Repositories\RoleRepository   $roles
+     * @return void
      */
     public function __construct(
         UserRepository $users,
@@ -66,7 +66,7 @@ class AuthController extends Controller
     /**
      * Register a new user.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Auth\RegisterRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\RegisterRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function register(RegisterRequest $request)
@@ -161,7 +161,7 @@ class AuthController extends Controller
     /**
      * Login a user.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Auth\LoginRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function login(LoginRequest $request)
@@ -210,7 +210,7 @@ class AuthController extends Controller
     /**
      * Logout a user.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Auth\LogoutRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\LogoutRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function logout(LogoutRequest $request)
@@ -237,7 +237,7 @@ class AuthController extends Controller
     /**
      * Return the current user data.
      *
-     * @param   \Illuminate\Http\Request        $request
+     * @param \Illuminate\Http\Request        $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function me(Request $request)
@@ -248,7 +248,7 @@ class AuthController extends Controller
     /**
      * Refresh token.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Auth\TokenRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\TokenRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function token(TokenRequest $request)
@@ -295,7 +295,7 @@ class AuthController extends Controller
     /**
      * Update the current user data.
      *
-     * @param   \Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest        $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest        $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfile(UpdateProfileRequest $request)

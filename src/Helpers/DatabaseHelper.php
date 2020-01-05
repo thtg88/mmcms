@@ -10,7 +10,7 @@ class DatabaseHelper
     /**
      * Get a list of all the database table names.
      *
-     * @return  array
+     * @return array
      */
     public function getTableNames()
     {

@@ -123,7 +123,7 @@ class InstallCommand extends Command
     /**
      * Publish the package vendor tags.
      *
-     * @return  void
+     * @return void
      */
     private function publishVendorTags()
     {
@@ -141,7 +141,7 @@ class InstallCommand extends Command
     /**
      * Extend the User model to mmCMS's.
      *
-     * @return  void
+     * @return void
      */
     private function extendUserModel()
     {
@@ -180,7 +180,7 @@ class InstallCommand extends Command
     /**
      * Run "composer dump-autoload".
      *
-     * @return  void
+     * @return void
      */
     private function dumpComposerAutoload()
     {
@@ -194,8 +194,8 @@ class InstallCommand extends Command
     /**
      * Add Laravel Passport routes.
      *
-     * @param   \Illuminate\Filesystem\Filesystem   $filesystem
-     * @return  void
+     * @param \Illuminate\Filesystem\Filesystem   $filesystem
+     * @return void
      */
     private function addPassportRoutes(FileSystem $filesystem)
     {
@@ -228,8 +228,8 @@ class InstallCommand extends Command
     /**
      * Add Barryvdh Laravel CORS middleware.
      *
-     * @param   \Illuminate\Filesystem\Filesystem   $filesystem
-     * @return  void
+     * @param \Illuminate\Filesystem\Filesystem   $filesystem
+     * @return void
      */
     private function addLaravelCorsMiddleware(FileSystem $filesystem)
     {
@@ -261,7 +261,7 @@ class InstallCommand extends Command
     /**
      * Add JSON-specific exception renderers.
      *
-     * @return  void
+     * @return void
      */
     private function addExceptionRenderers()
     {
@@ -324,7 +324,7 @@ class InstallCommand extends Command
     /**
      * Set Auth driver as Passport in config.
      *
-     * @return  void
+     * @return void
      */
     private function setPassportAuthDriver(Filesystem $filesystem)
     {
@@ -359,7 +359,7 @@ class InstallCommand extends Command
     /**
      * Create .htaccess in root directory.
      *
-     * @return  void
+     * @return void
      */
     private function createHtaccess()
     {
