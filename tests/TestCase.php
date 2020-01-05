@@ -16,8 +16,7 @@ class TestCase extends OrchestraTestCase
             mkdir(base_path('routes'));
         }
 
-        if (!file_exists(base_path('routes/api.php')))
-        {
+        if (!file_exists(base_path('routes/api.php'))) {
             file_put_contents(
                 base_path('routes/api.php'),
                 "<?php\n\n"
@@ -30,7 +29,7 @@ class TestCase extends OrchestraTestCase
         $migrator = app('migrator');
 
         // if (!$migrator->repositoryExists()) {
-            $this->artisan('migrate:install');
+        $this->artisan('migrate:install');
         // }
 
         $migrator->run([realpath(__DIR__.'/migrations')]);
@@ -41,8 +40,7 @@ class TestCase extends OrchestraTestCase
 
         $this->artisan('mmcms:install');
 
-        if (file_exists(base_path('routes/api.php')))
-        {
+        if (file_exists(base_path('routes/api.php'))) {
             require base_path('routes/api.php');
         }
     }

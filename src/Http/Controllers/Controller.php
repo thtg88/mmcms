@@ -58,32 +58,25 @@ class Controller extends BaseController
             'sort_name',
         ]);
 
-        if(!array_key_exists('page', $input) || $input['page'] === null)
-        {
+        if (!array_key_exists('page', $input) || $input['page'] === null) {
             $input['page'] = 1;
         }
 
-        if(!array_key_exists('page_size', $input) || $input['page_size'] === null)
-        {
+        if (!array_key_exists('page_size', $input) || $input['page_size'] === null) {
             $input['page_size'] = config('mmcms.pagination.page_size');
         }
 
-        if(!array_key_exists('q', $input))
-        {
+        if (!array_key_exists('q', $input)) {
             $q = null;
-        }
-        else
-        {
+        } else {
             $q = $input['q'];
         }
 
-        if(empty($input['sort_name']))
-        {
+        if (empty($input['sort_name'])) {
             $input['sort_name'] = null;
         }
 
-        if(empty($input['sort_direction']))
-        {
+        if (empty($input['sort_direction'])) {
             $input['sort_direction'] = null;
         }
 
@@ -128,8 +121,7 @@ class Controller extends BaseController
 
         // Get resource
         $resource = $this->repository->find($id);
-        if($resource === null)
-        {
+        if ($resource === null) {
             abort(404, ucwords(str_replace('_', ' ', $resource_name)).' not found.');
         }
 

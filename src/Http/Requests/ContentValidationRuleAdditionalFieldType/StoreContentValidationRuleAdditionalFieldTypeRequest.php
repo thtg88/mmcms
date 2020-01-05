@@ -11,17 +11,17 @@ use Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository
 class StoreContentValidationRuleAdditionalFieldTypeRequest extends StoreRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(ContentValidationRuleAdditionalFieldTypeRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository	$repository
+     * @return	void
+     */
+    public function __construct(ContentValidationRuleAdditionalFieldTypeRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
-	/**
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -39,22 +39,22 @@ class StoreContentValidationRuleAdditionalFieldTypeRequest extends StoreRequest
     public function rules()
     {
         return [
-			'display_name' => [
-				'required',
-				'string',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
-			'name' => [
-				'required',
-				'string',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
+            'display_name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
         ];
     }
 }

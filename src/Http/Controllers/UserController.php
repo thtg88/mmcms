@@ -36,18 +36,15 @@ class UserController extends Controller
         // Get input
         $input = $request->except(['created_at']);
 
-        if(array_key_exists('password', $input) && !empty($input['password']))
-        {
+        if (array_key_exists('password', $input) && !empty($input['password'])) {
             $input['password'] = bcrypt($input['password']);
         }
 
-        if(!array_key_exists('role_id', $input))
-        {
+        if (!array_key_exists('role_id', $input)) {
             // Get user role
             $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
 
-            if($user_role !== null)
-            {
+            if ($user_role !== null) {
                 // If found - assign it to the user registering
                 $input['role_id'] = $user_role->id;
             }
@@ -74,8 +71,7 @@ class UserController extends Controller
         // Get input
         $input = $request->except(['created_at']);
 
-        if(array_key_exists('password', $input) && !empty($input['password']))
-        {
+        if (array_key_exists('password', $input) && !empty($input['password'])) {
             $input['password'] = bcrypt($input['password']);
         }
 

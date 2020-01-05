@@ -98,10 +98,8 @@ class Repository implements RepositoryInterface
         $result = $this->model;
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -119,10 +117,8 @@ class Repository implements RepositoryInterface
         $result = $this->model->select('id', static::$model_name);
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -130,8 +126,7 @@ class Repository implements RepositoryInterface
         $temp_models = $result->get();
 
         $models = [];
-        foreach($temp_models as $idx => $model)
-        {
+        foreach ($temp_models as $idx => $model) {
             $models[$model->id] = $model->{static::$model_name};
         }
 
@@ -147,8 +142,7 @@ class Repository implements RepositoryInterface
     public function create(array $data)
     {
         // Set created time string
-        if(isset($data['created_at']) === FALSE || empty($data['created_at']))
-        {
+        if (isset($data['created_at']) === false || empty($data['created_at'])) {
             $data['created_at'] = app('now')->copy()->toDateTimeString();
         }
 
@@ -156,17 +150,14 @@ class Repository implements RepositoryInterface
         $model = $this->model->create($data);
 
         // Re-find model in order to load relationships and getting all the data
-        if($model !== null)
-        {
+        if ($model !== null) {
             $model = $this->find($model->id);
         }
 
-        if(config('mmcms.journal.mode') === true)
-        {
+        if (config('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
-            if($model instanceof $journal_entry_class_name === false)
-            {
+            if ($model instanceof $journal_entry_class_name === false) {
                 app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
             }
         }
@@ -184,16 +175,13 @@ class Repository implements RepositoryInterface
     {
         // Get model
         $model = $this->find($id);
-        if($model === null)
-        {
+        if ($model === null) {
             return null;
         }
 
         // Check if a model uses discards, so I can log into journal
-        if(in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model)))
-        {
-            if(config('mmcms.journal.mode') === true)
-            {
+        if (in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model))) {
+            if (config('mmcms.journal.mode') === true) {
                 app('JournalEntryHelper')->createJournalEntry('discard', $model, []);
             }
         }
@@ -212,8 +200,7 @@ class Repository implements RepositoryInterface
     public function find($id)
     {
         // Assume id as numeric and > 0
-        if(empty($id) || !is_numeric($id))
-        {
+        if (empty($id) || !is_numeric($id)) {
             return null;
         }
 
@@ -230,8 +217,7 @@ class Repository implements RepositoryInterface
     public function findByModelName($model_name)
     {
         // Assume id as numeric and > 0
-        if(empty($model_name) || !isset(static::$model_name))
-        {
+        if (empty($model_name) || !isset(static::$model_name)) {
             return null;
         }
 
@@ -270,8 +256,7 @@ class Repository implements RepositoryInterface
      */
     public function getByDateFilter(Carbon $start_date, Carbon $end_date)
     {
-        if(!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns))
-        {
+        if (!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns)) {
             // If no date filter columns set
             return collect([]);
         }
@@ -279,7 +264,7 @@ class Repository implements RepositoryInterface
         // Get total elements of the date filter columns array
         $total_date_filter_columns = count(static::$date_filter_columns);
 
-        switch($total_date_filter_columns) {
+        switch ($total_date_filter_columns) {
             case 0:
                 // Nothing to filter on
                 break;
@@ -298,10 +283,8 @@ class Repository implements RepositoryInterface
         }
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -318,18 +301,15 @@ class Repository implements RepositoryInterface
     public function getByUserId($user_id)
     {
         // Assume id as numeric and > 0
-        if(empty($user_id) || !is_numeric($user_id))
-        {
+        if (empty($user_id) || !is_numeric($user_id)) {
             return collect([]);
         }
 
         $result = $this->model->where('user_id', $user_id);
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -358,13 +338,11 @@ class Repository implements RepositoryInterface
     public function getByUserIdAndDateFilter($user_id, Carbon $start_date, Carbon $end_date)
     {
         // Assume id as numeric and > 0
-        if(empty($user_id) || !is_numeric($user_id))
-        {
+        if (empty($user_id) || !is_numeric($user_id)) {
             return collect([]);
         }
 
-        if(!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns))
-        {
+        if (!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns)) {
             // If no date filter columns set
             return collect([]);
         }
@@ -374,7 +352,7 @@ class Repository implements RepositoryInterface
         // Get total elements of the date filter columns array
         $total_date_filter_columns = count(static::$date_filter_columns);
 
-        switch($total_date_filter_columns) {
+        switch ($total_date_filter_columns) {
             case 0:
                 // Nothing to filter on
                 break;
@@ -393,10 +371,8 @@ class Repository implements RepositoryInterface
         }
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -413,8 +389,7 @@ class Repository implements RepositoryInterface
     public function latest($limit)
     {
         // Assume id as numeric and > 0
-        if(empty($limit) || !is_numeric($limit))
-        {
+        if (empty($limit) || !is_numeric($limit)) {
             return collect([]);
         }
 
@@ -436,14 +411,12 @@ class Repository implements RepositoryInterface
     public function paginate($page_size = 10, $page = null, $q = null, $sort_column = null, $sort_direction = null)
     {
         // Assume page_size as numeric and > 0
-        if(empty($page_size) || !is_numeric($page_size) || $page_size < 1)
-        {
+        if (empty($page_size) || !is_numeric($page_size) || $page_size < 1) {
             return collect([]);
         }
 
         // Assume page as numeric and > 0
-        if(!empty($page) && (!is_numeric($page) || $page < 1))
-        {
+        if (!empty($page) && (!is_numeric($page) || $page < 1)) {
             return collect([]);
         }
 
@@ -453,11 +426,9 @@ class Repository implements RepositoryInterface
         $result = $this->model;
 
         // Search clause
-        if(!empty($q))
-        {
-            $result = $this->model->where(function ($query) use($q) {
-                foreach(static::$search_columns as $idx => $column)
-                {
+        if (!empty($q)) {
+            $result = $this->model->where(function ($query) use ($q) {
+                foreach (static::$search_columns as $idx => $column) {
                     $query->orWhere($column, 'LIKE', '%'.$q.'%');
                 }
             });
@@ -465,33 +436,26 @@ class Repository implements RepositoryInterface
 
         // We check if order by is set and valid
         $order_by_set = false;
-        if(!empty($sort_column) && !empty($sort_direction))
-        {
+        if (!empty($sort_column) && !empty($sort_direction)) {
             // Direction needs to be either 'asc' or 'desc'
-	        if(in_array($sort_direction, array('asc', 'desc')))
-	        {
-		        if(is_string($sort_column))
-		        {
-			        $visible = $this->model->getVisible();
+            if (in_array($sort_direction, array('asc', 'desc'))) {
+                if (is_string($sort_column)) {
+                    $visible = $this->model->getVisible();
 
                     // Column needs to be a string,
                     // and part of the visible attributes of the model
-			        if(in_array($sort_column, $visible))
-			        {
-				        $result = $result->orderBy($sort_column, $sort_direction);
+                    if (in_array($sort_column, $visible)) {
+                        $result = $result->orderBy($sort_column, $sort_direction);
                         $order_by_set = true;
-			        }
-				}
-			}
-		}
+                    }
+                }
+            }
+        }
         // If order by not set, we assume defaults
-        if($order_by_set === false)
-        {
+        if ($order_by_set === false) {
             // Order by clause
-            if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-            {
-                foreach(static::$order_by_columns as $order_by_column => $direction)
-                {
+            if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+                foreach (static::$order_by_columns as $order_by_column => $direction) {
                     $result = $result->orderBy($order_by_column, $direction);
                 }
             }
@@ -514,32 +478,27 @@ class Repository implements RepositoryInterface
     public function search($q)
     {
         // If empty query or no search columns provided
-        if($q === null || $q === '')
-        {
+        if ($q === null || $q === '') {
             // Return empty collection
             return collect([]);
         }
 
         // If no search columns provided
-        if(!is_array(static::$search_columns) || count(static::$search_columns) <= 0)
-        {
+        if (!is_array(static::$search_columns) || count(static::$search_columns) <= 0) {
             // Return empty collection
             return collect([]);
         }
 
         // Search clause
-        $result = $this->model->where(function ($query) use($q) {
-            foreach(static::$search_columns as $idx => $column)
-            {
+        $result = $this->model->where(function ($query) use ($q) {
+            foreach (static::$search_columns as $idx => $column) {
                 $query->orWhere($column, 'LIKE', '%'.$q.'%');
             }
         });
 
         // Order by clause
-        if(is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0)
-        {
-            foreach(static::$order_by_columns as $order_by_column => $direction)
-            {
+        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+            foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
         }
@@ -559,16 +518,14 @@ class Repository implements RepositoryInterface
         // Get model
         $model = $this->find($id);
 
-        if($model === null)
-        {
+        if ($model === null) {
             return null;
         }
 
         // Get rid of unnecessary data e.g. not changed or not in the model
         $data = $this->pruneData($data, $model);
 
-        if(count($data) == 0)
-        {
+        if (count($data) == 0) {
             // No data changed - No need to fire an update
             return $model;
         }
@@ -579,12 +536,10 @@ class Repository implements RepositoryInterface
         // Re-fetch the model to reload all relations
         $model = $this->find($model->id);
 
-        if(config('mmcms.journal.mode') === true)
-        {
+        if (config('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
-            if($model instanceof $journal_entry_class_name === false)
-            {
+            if ($model instanceof $journal_entry_class_name === false) {
                 app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
             }
         }
@@ -614,15 +569,11 @@ class Repository implements RepositoryInterface
         // Gets rid of columns that needs to be excluded by the prune
         $data = array_diff_key($data, array_flip($exclude));
 
-        foreach($data as $column => $value)
-        {
-            if(!array_key_exists($column, $model_values))
-            {
+        foreach ($data as $column => $value) {
+            if (!array_key_exists($column, $model_values)) {
                 // If there is no such column in the original model - discard
                 unset($data[$column]);
-            }
-            else if($model_values[$column] == $value)
-            {
+            } elseif ($model_values[$column] == $value) {
                 // If the 2 values are the same - discard
                 unset($data[$column]);
             }

@@ -4,54 +4,54 @@ namespace Thtg88\MmCms\Models;
 
 class Image extends Model
 {
-	protected $table = 'images';
+    protected $table = 'images';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-		'caption',
-		'created_at',
-		'deleted_at',
-		'image_category_id',
-		'name',
-		'title',
-		'target_id',
-		'target_table',
-		'url',
+        'caption',
+        'created_at',
+        'deleted_at',
+        'image_category_id',
+        'name',
+        'title',
+        'target_id',
+        'target_table',
+        'url',
     ];
 
     protected $visible = [
-		'caption',
-		'created_at',
-		'deleted_at',
-		'id',
-		// 'image_category',
-		'image_category_id',
-		'name',
-		'title',
-		'target_id',
-		'target_table',
-		'url',
+        'caption',
+        'created_at',
+        'deleted_at',
+        'id',
+        // 'image_category',
+        'image_category_id',
+        'name',
+        'title',
+        'target_id',
+        'target_table',
+        'url',
     ];
 
-	protected $with = [
-		// 'image_category',
-	];
+    protected $with = [
+        // 'image_category',
+    ];
 
-	// ACCESSORS OF EXISTING FIELDS
+    // ACCESSORS OF EXISTING FIELDS
 
-	public function getImageCategoryIdAttributeName($value)
-	{
-		return abs($value);
-	}
+    public function getImageCategoryIdAttributeName($value)
+    {
+        return abs($value);
+    }
 
-	public function getTargetIdAttributeName($value)
-	{
-		return abs($value);
-	}
+    public function getTargetIdAttributeName($value)
+    {
+        return abs($value);
+    }
 
-	// RELATIONSHIPS
+    // RELATIONSHIPS
 
-	/**
+    /**
      * Get all of the owning target models.
      */
     public function target()
@@ -59,12 +59,12 @@ class Image extends Model
         return $this->morphTo(null, 'target_table');
     }
 
-	public function image_category()
-	{
-		return $this->belongsTo(
-			config('mmcms.models.namespace').'ImageCategory',
-			'image_category_id',
-			'id'
-		);
-	}
+    public function image_category()
+    {
+        return $this->belongsTo(
+            config('mmcms.models.namespace').'ImageCategory',
+            'image_category_id',
+            'id'
+        );
+    }
 }

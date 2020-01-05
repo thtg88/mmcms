@@ -11,15 +11,15 @@ use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 class StoreContentMigrationMethodRequest extends StoreRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(ContentMigrationMethodRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$repository
+     * @return	void
+     */
+    public function __construct(ContentMigrationMethodRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -30,21 +30,21 @@ class StoreContentMigrationMethodRequest extends StoreRequest
     {
         return [
             'display_name' => [
-				'nullable',
-				'string',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'display_name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
+                'nullable',
+                'string',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
             'name' => [
-				'required',
-				'string',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'name')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
+                'required',
+                'string',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
         ];
     }
 }

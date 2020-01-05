@@ -10,15 +10,15 @@ use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 class DestroyImageCategoryRequest extends DestroyRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\ImageCategoryRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(ImageCategoryRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\ImageCategoryRepository	$repository
+     * @return	void
+     */
+    public function __construct(ImageCategoryRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * Determine if the user is authorized to make this request.

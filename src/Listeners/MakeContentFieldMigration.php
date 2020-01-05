@@ -39,16 +39,13 @@ class MakeContentFieldMigration
         // Then we get the last migration so we can insert our custom fields
         $migrations = $this->filesystem->files(database_path('migrations'));
 
-        if(count($migrations) > 0)
-        {
+        if (count($migrations) > 0) {
             $last_migration = $migrations[count($migrations) - 1].'';
 
-            if(strpos($last_migration, $migration_name) !== FALSE)
-            {
+            if (strpos($last_migration, $migration_name) !== false) {
                 $last_migration_content = file_get_contents($last_migration);
 
-                if($last_migration_content !== false)
-                {
+                if ($last_migration_content !== false) {
                     $search_content = '';
                     $search_content .= "public function up()\n";
                     $search_content .= "    {\n";

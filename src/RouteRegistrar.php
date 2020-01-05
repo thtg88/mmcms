@@ -60,7 +60,7 @@ class RouteRegistrar
             'as' => 'token'
         ]);
 
-        $this->router->group(['middleware' => 'auth:api'], function($router) {
+        $this->router->group(['middleware' => 'auth:api'], function ($router) {
             $router->delete('auth/logout', [
                 'uses' => 'AuthController@logout',
                 'as' => 'logout'
@@ -78,11 +78,9 @@ class RouteRegistrar
 
     public function forContentFields()
     {
-        $this->router->group(['as' => 'mmcms.content-fields.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.content-fields.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Content Field routes...
                     $router->get('content-fields', [
                         'uses' => 'ContentFieldController@index',
@@ -115,11 +113,9 @@ class RouteRegistrar
 
     public function forContentMigrationMethods()
     {
-        $this->router->group(['as' => 'mmcms.content-migration-methods.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.content-migration-methods.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Content Migration Method routes...
                     $router->get('content-migration-methods', [
                         'uses' => 'ContentMigrationMethodController@index',
@@ -152,11 +148,9 @@ class RouteRegistrar
 
     public function forContentModels()
     {
-        $this->router->group(['as' => 'mmcms.content-models.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.content-models.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Content Model routes...
                     $router->get('content-models', [
                         'uses' => 'ContentModelController@index',
@@ -189,11 +183,9 @@ class RouteRegistrar
 
     public function forContentTypes()
     {
-        $this->router->group(['as' => 'mmcms.content-types.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.content-types.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Content Type routes...
                     $router->get('content-types', [
                         'uses' => 'ContentTypeController@index',
@@ -226,11 +218,9 @@ class RouteRegistrar
 
     public function forContentValidationRuleAdditionalFieldTypes()
     {
-        $this->router->group(['as' => 'mmcms.content-validation-rule-additional-field-types.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.content-validation-rule-additional-field-types.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Content Validation Rule Additional Field Type routes...
                     $router->get('content-validation-rule-additional-field-types', [
                         'uses' => 'ContentValidationRuleAdditionalFieldTypeController@index',
@@ -263,50 +253,44 @@ class RouteRegistrar
 
     public function forImageCategories()
     {
-        $this->router->group(['as' => 'mmcms.image-categories.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
-        			$router->post('image-categories/{id}/restore', 'ImageCategoryController@restore');
-        			$router->get('image-categories/paginate', 'ImageCategoryController@paginate');
-        			$router->delete('image-categories/{id}', 'ImageCategoryController@destroy');
-        			$router->get('image-categories/{id}', 'ImageCategoryController@show');
-        			$router->put('image-categories/{id}', 'ImageCategoryController@update');
-        			// $router->get('image-categories', 'ImageCategoryController@index');
-        			$router->post('image-categories', 'ImageCategoryController@store');
+        $this->router->group(['as' => 'mmcms.image-categories.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
+                    $router->post('image-categories/{id}/restore', 'ImageCategoryController@restore');
+                    $router->get('image-categories/paginate', 'ImageCategoryController@paginate');
+                    $router->delete('image-categories/{id}', 'ImageCategoryController@destroy');
+                    $router->get('image-categories/{id}', 'ImageCategoryController@show');
+                    $router->put('image-categories/{id}', 'ImageCategoryController@update');
+                    // $router->get('image-categories', 'ImageCategoryController@index');
+                    $router->post('image-categories', 'ImageCategoryController@store');
                 });
             });
-		});
+        });
     }
 
     public function forImages()
     {
-        $this->router->group(['as' => 'mmcms.images.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.administrator']], function($router) {
-            		// $router->get('images/paginate', 'ImageController@paginate');
-            		$router->delete('images/{id}', 'ImageController@destroy');
-            	});
-            	$router->get('images/{id}', 'ImageController@show');
-            	$router->group(['middleware' => ['authorize.administrator']], function($router) {
-            		$router->put('images/{id}', 'ImageController@update');
-            		// $router->get('images', 'ImageController@index');
-            		$router->post('images', 'ImageController@store');
+        $this->router->group(['as' => 'mmcms.images.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
+                    // $router->get('images/paginate', 'ImageController@paginate');
+                    $router->delete('images/{id}', 'ImageController@destroy');
+                });
+                $router->get('images/{id}', 'ImageController@show');
+                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
+                    $router->put('images/{id}', 'ImageController@update');
+                    // $router->get('images', 'ImageController@index');
+                    $router->post('images', 'ImageController@store');
                 });
             });
-    	});
+        });
     }
 
     public function forRoles()
     {
-        $this->router->group(['as' => 'mmcms.roles.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.developer']], function($router) {
+        $this->router->group(['as' => 'mmcms.roles.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.developer']], function ($router) {
                     // Role routes...
                     $router->get('roles', [
                         'uses' => 'RoleController@index',
@@ -339,32 +323,28 @@ class RouteRegistrar
 
     public function forSeoEntries()
     {
-        $this->router->group(['as' => 'mmcms.seo-entries.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.administrator']], function($router) {
-        			$router->post('seo-entries/{id}/restore', 'SeoEntryController@restore');
-        			$router->get('seo-entries/paginate', 'SeoEntryController@paginate');
-        			$router->delete('seo-entries/{id}', 'SeoEntryController@destroy');
-        		});
-        		$router->get('seo-entries/{id}', 'SeoEntryController@show');
-        		$router->group(['middleware' => ['authorize.administrator']], function($router) {
-        			$router->put('seo-entries/{id}', 'SeoEntryController@update');
-        			$router->get('seo-entries', 'SeoEntryController@index');
-        			$router->post('seo-entries', 'SeoEntryController@store');
+        $this->router->group(['as' => 'mmcms.seo-entries.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
+                    $router->post('seo-entries/{id}/restore', 'SeoEntryController@restore');
+                    $router->get('seo-entries/paginate', 'SeoEntryController@paginate');
+                    $router->delete('seo-entries/{id}', 'SeoEntryController@destroy');
+                });
+                $router->get('seo-entries/{id}', 'SeoEntryController@show');
+                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
+                    $router->put('seo-entries/{id}', 'SeoEntryController@update');
+                    $router->get('seo-entries', 'SeoEntryController@index');
+                    $router->post('seo-entries', 'SeoEntryController@store');
                 });
             });
-		});
+        });
     }
 
     public function forUsers()
     {
-        $this->router->group(['as' => 'mmcms.users.'], function($router) {
-
-            $router->group(['middleware' => 'auth:api'], function($router) {
-
-                $router->group(['middleware' => ['authorize.administrator']], function($router) {
+        $this->router->group(['as' => 'mmcms.users.'], function ($router) {
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
                     // User routes...
                     $router->get('users', [
                         'uses' => 'UserController@index',

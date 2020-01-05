@@ -24,7 +24,7 @@ class ChildrenScope implements Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-	    $builder->whereNull($model->getQualifiedParentIdColumn());
+        $builder->whereNull($model->getQualifiedParentIdColumn());
     }
 
     /**

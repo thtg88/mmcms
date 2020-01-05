@@ -32,12 +32,10 @@ class MakeContentModelModel
             'name' => $model_name,
         ]);
 
-        if(file_exists(app_path($model_name.'.php')))
-        {
+        if (file_exists(app_path($model_name.'.php'))) {
             $file_content = file_get_contents(app_path($model_name.'.php'));
 
-            if($file_content !== false)
-            {
+            if ($file_content !== false) {
                 $replace_content = $this->getContentModelModelAdditionalContent($event->content_model->table_name);
 
                 $file_content = str_replace('//', $replace_content, $file_content);

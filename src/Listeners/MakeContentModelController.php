@@ -29,18 +29,15 @@ class MakeContentModelController
         $model_name = studly_case($event->content_model->name);
         $controller_name = $model_name.'Controller';
 
-        if(!class_exists($controller_name))
-        {
+        if (!class_exists($controller_name)) {
             \Artisan::call('make:controller', [
                 'name' => $controller_name,
             ]);
 
-            if(file_exists(app_path('Http/Controllers/'.$controller_name.'.php')))
-            {
+            if (file_exists(app_path('Http/Controllers/'.$controller_name.'.php'))) {
                 $file_content = file_get_contents(app_path('Http/Controllers/'.$controller_name.'.php'));
 
-                if($file_content !== false)
-                {
+                if ($file_content !== false) {
                     $replace_content = $this->getContentModelControllerAdditionalContent($model_name);
 
                     $file_content = str_replace('//', $replace_content, $file_content);

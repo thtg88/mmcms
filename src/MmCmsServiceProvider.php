@@ -59,8 +59,7 @@ class MmCmsServiceProvider extends ServiceProvider
         // ], 'views');
 
         // Commands
-        if ($this->app->runningInConsole())
-        {
+        if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
                 PassportClientCommand::class,
@@ -90,22 +89,21 @@ class MmCmsServiceProvider extends ServiceProvider
     {
         $this->app->register(CurrentTimeServiceProvider::class);
 
-        $this->mergeConfigFrom( __DIR__.'/../config/mmcms.php', 'mmcms');
+        $this->mergeConfigFrom(__DIR__.'/../config/mmcms.php', 'mmcms');
 
         $this->app->singleton(MmCms::class, function () {
             return new MmCms();
         });
 
-        if(config('mmcms.journal.mode') === true)
-	    {
-		    // Register journal entry helper
-	        $this->app->singleton('JournalEntryHelper', function($app) {
-		        // Get current request IP
-		        $ip = $app['request']->ip();
+        if (config('mmcms.journal.mode') === true) {
+            // Register journal entry helper
+            $this->app->singleton('JournalEntryHelper', function ($app) {
+                // Get current request IP
+                $ip = $app['request']->ip();
 
-		        return new JournalEntryHelper($app->make('Thtg88\MmCms\Repositories\JournalEntryRepository'), $ip);
-			});
-	    }
+                return new JournalEntryHelper($app->make('Thtg88\MmCms\Repositories\JournalEntryRepository'), $ip);
+            });
+        }
 
         $this->app->alias(MmCms::class, 'mmcms');
     }

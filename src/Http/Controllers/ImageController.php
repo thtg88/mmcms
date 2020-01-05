@@ -40,19 +40,18 @@ class ImageController extends Controller
     {
         // Get input
         $input = $request->except([
-		    'created_at',
-		    'deleted_at',
+            'created_at',
+            'deleted_at',
             'published_at',
-		    'updated_at',
-	    ]);
+            'updated_at',
+        ]);
 
-        if($request->hasFile('data') && $request->file('data')->isValid())
-		{
+        if ($request->hasFile('data') && $request->file('data')->isValid()) {
             // Get path from uploaded file
             $input['url'] = $this->file_helper->store($request->data, $this->repository);
 
             unset($input['data']);
-		}
+        }
 
         // Create
         $resource = $this->repository->create($input);
@@ -74,14 +73,14 @@ class ImageController extends Controller
     {
         // Get input
         $input = $request->except([
-		    'created_at',
-		    'deleted_at',
+            'created_at',
+            'deleted_at',
             'published_at',
-		    'updated_at',
+            'updated_at',
             // Can't update a file via PUT (sic...)
             // https://bugs.php.net/bug.php?id=55815
             'data',
-	    ]);
+        ]);
 
         // Update
         $resource = $this->repository->update($id, $input, false, true);
@@ -106,12 +105,10 @@ class ImageController extends Controller
         // Delete resource
         $resource = $this->repository->destroy($id);
 
-        if(Str::startsWith($resource->url, '/storage/userfiles'))
-        {
+        if (Str::startsWith($resource->url, '/storage/userfiles')) {
             $path = storage_path('app/public'.substr($resource->url, strlen('/storage')));
 
-            if(is_file($path) && is_readable($path))
-            {
+            if (is_file($path) && is_readable($path)) {
                 // remove from FS
                 unlink($path);
             }

@@ -13,8 +13,7 @@ class AddDeletedAtColumnToUsersTable extends Migration
      */
     public function up()
     {
-        if(Schema::hasColumn('users', 'deleted_at') === false)
-        {
+        if (Schema::hasColumn('users', 'deleted_at') === false) {
             Schema::table('users', function (Blueprint $table) {
                 $table->timestamp('deleted_at')->nullable()->before('created_at');
             });
@@ -28,8 +27,7 @@ class AddDeletedAtColumnToUsersTable extends Migration
      */
     public function down()
     {
-        if(Schema::hasColumn('users', 'deleted_at'))
-        {
+        if (Schema::hasColumn('users', 'deleted_at')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->dropColumn('deleted_at');
             });

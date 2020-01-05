@@ -11,6 +11,6 @@ class DestroyRequest extends Request
      */
     public function authorize()
     {
-	    return $this->authorizeResourceExist();
+        return $this->authorizeResourceExist();
     }
 }

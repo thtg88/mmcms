@@ -35,11 +35,11 @@ class ImageCategoryController extends Controller
     {
         // Get input
         $input = $request->except([
-		    'created_at',
-		    'deleted_at',
+            'created_at',
+            'deleted_at',
             'published_at',
-		    'updated_at',
-	    ]);
+            'updated_at',
+        ]);
 
         // Create
         $resource = $this->repository->create($input);
@@ -61,11 +61,11 @@ class ImageCategoryController extends Controller
     {
         // Get input
         $input = $request->except([
-		    'created_at',
-		    'deleted_at',
+            'created_at',
+            'deleted_at',
             'published_at',
-		    'updated_at',
-	    ]);
+            'updated_at',
+        ]);
 
         // Update
         $resource = $this->repository->update($id, $input, false, true);

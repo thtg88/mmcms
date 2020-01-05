@@ -13,8 +13,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'boolean')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'boolean',
@@ -25,8 +24,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'dateTime')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'dateTime',
@@ -37,8 +35,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'decimal')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'decimal',
@@ -49,8 +46,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'string')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'string',
@@ -61,8 +57,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'text')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'text',
@@ -73,8 +68,7 @@ class ContentMigrationMethodsTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentMigrationMethod::where('name', 'unsignedInteger')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // if not - create
             ContentMigrationMethod::create([
                 'name' => 'unsignedInteger',
