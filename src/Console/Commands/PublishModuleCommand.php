@@ -55,8 +55,7 @@ class PublishModuleCommand extends Command
     {
         $module_name = $this->argument('module');
 
-        if(empty($module_name))
-        {
+        if (empty($module_name)) {
             return $this->error('Module argument is mandatory.');
         }
 
@@ -75,28 +74,24 @@ class PublishModuleCommand extends Command
     {
         $module_directory = base_path('vendor/thtg88/mmcms/'.$module_name);
 
-        if (!$this->filesystem->isDirectory($module_directory))
-        {
+        if (!$this->filesystem->isDirectory($module_directory)) {
             return $this->error('Module '.$module_name.' not found.');
         }
 
         $all_files = $this->filesystem->allFiles($module_directory, true);
 
-        foreach ($all_files as $source_file)
-        {
+        foreach ($all_files as $source_file) {
             $namespace = config('mmcms.modules.namespace', 'Thtg88\\MmCms\\Modules');
 
             $appNamespace = app()->getNamespace();
 
-            if (!starts_with($namespace, $appNamespace))
-            {
+            if (!starts_with($namespace, $appNamespace)) {
                 return $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
             }
 
             $location = str_replace('\\', DIRECTORY_SEPARATOR, substr($namespace, strlen($appNamespace)));
 
-            if (!$this->filesystem->isDirectory(app_path($location)))
-            {
+            if (!$this->filesystem->isDirectory(app_path($location))) {
                 $this->filesystem->makeDirectory(app_path($location));
             }
 
@@ -105,12 +100,9 @@ class PublishModuleCommand extends Command
 
             $destination_path = app_path($location.DIRECTORY_SEPARATOR.$filename);
 
-            if (!$this->filesystem->exists($destination_path) || $this->option('force'))
-            {
+            if (!$this->filesystem->exists($destination_path) || $this->option('force')) {
                 $this->filesystem->put($destination_path, $this->filesystem->get($source_file));
-            }
-            else
-            {
+            } else {
                 $this->warn($source_file.' of module '.$this->argument('module').' already exists. Run the command with option --force to overwrite.');
             }
         }

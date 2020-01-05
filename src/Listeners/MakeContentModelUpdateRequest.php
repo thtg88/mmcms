@@ -29,18 +29,15 @@ class MakeContentModelUpdateRequest
         $model_name = studly_case($event->content_model->name);
         $request_name = 'Update'.$model_name.'Request';
 
-        if(!class_exists($request_name))
-        {
+        if (!class_exists($request_name)) {
             \Artisan::call('make:request', [
                 'name' => $request_name,
             ]);
 
-            if(file_exists(app_path('Http/Requests/'.$request_name.'.php')))
-            {
+            if (file_exists(app_path('Http/Requests/'.$request_name.'.php'))) {
                 $file_content = file_get_contents(app_path('Http/Requests/'.$request_name.'.php'));
 
-                if($file_content !== false)
-                {
+                if ($file_content !== false) {
                     $replace_content = $this->getContentModelRequestAuthorizeMethodContent();
 
                     $file_content = str_replace('return false;', $replace_content, $file_content);
@@ -88,15 +85,15 @@ class MakeContentModelUpdateRequest
         $content .= "class Update".$model_name."Request extends UpdateRequest\n";
         $content .= "{\n";
         $content .= "    /**\n";
-    	$content .= "     * Create a new request instance.\n";
-    	$content .= "     *\n";
-    	$content .= "     * @param	\Thtg88\MmCms\Repositories\\".$model_name."Repository	\$repository\n";
-    	$content .= "     * @return	void\n";
-    	$content .= "     */\n";
-    	$content .= "    public function __construct(".$model_name."Repository \$repository)\n";
-    	$content .= "    {\n";
-    	$content .= "        \$this->repository = \$repository;\n";
-    	$content .= "    }\n";
+        $content .= "     * Create a new request instance.\n";
+        $content .= "     *\n";
+        $content .= "     * @param	\Thtg88\MmCms\Repositories\\".$model_name."Repository	\$repository\n";
+        $content .= "     * @return	void\n";
+        $content .= "     */\n";
+        $content .= "    public function __construct(".$model_name."Repository \$repository)\n";
+        $content .= "    {\n";
+        $content .= "        \$this->repository = \$repository;\n";
+        $content .= "    }\n";
 
         return $content;
     }

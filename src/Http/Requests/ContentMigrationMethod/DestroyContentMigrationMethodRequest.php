@@ -10,28 +10,27 @@ use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 class DestroyContentMigrationMethodRequest extends DestroyRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(ContentMigrationMethodRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$repository
+     * @return	void
+     */
+    public function __construct(ContentMigrationMethodRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
-	/**
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        if($this->authorizeDeveloper() === false)
-		{
-			return false;
-		}
+        if ($this->authorizeDeveloper() === false) {
+            return false;
+        }
 
-		return $this->authorizeResourceExist();
+        return $this->authorizeResourceExist();
     }
 }

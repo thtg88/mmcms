@@ -53,8 +53,7 @@ class AuthController extends Controller
         UserRepository $users,
         OauthRefreshTokenRepository $oauth_refresh_tokens,
         RoleRepository $roles
-    )
-    {
+    ) {
         $this->repository = $users;
         $this->oauth_refresh_tokens = $oauth_refresh_tokens;
         $this->roles = $roles;
@@ -80,33 +79,28 @@ class AuthController extends Controller
             'updated_at',
         ]);
 
-        if(array_key_exists('password', $input))
-        {
+        if (array_key_exists('password', $input)) {
             $input['password'] = bcrypt($input['password']);
         }
 
         // Get a random user to see if there is any
         $random_user = $this->repository->findRandom();
-        if ($random_user === null)
-        {
+        if ($random_user === null) {
             // If not found it means the first one is registering
 
             // Get developer role
             $developer_role = $this->roles->findByModelName(config('mmcms.roles.developer_role_name'));
-            if($developer_role !== null)
-            {
+            if ($developer_role !== null) {
                 // If found - assign it to the user registering
                 $input['role_id'] = $developer_role->id;
             }
         }
 
-        if(!array_key_exists('role_id', $input))
-        {
+        if (!array_key_exists('role_id', $input)) {
             // Get user role
             $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
 
-            if($user_role !== null)
-            {
+            if ($user_role !== null) {
                 // If found - assign it to the user registering
                 $input['role_id'] = $user_role->id;
             }
@@ -115,8 +109,7 @@ class AuthController extends Controller
         // Create user
         $user = $this->repository->create($input);
 
-        try
-        {
+        try {
             event(new Registered($user));
 
             $oauth_data = [
@@ -146,9 +139,7 @@ class AuthController extends Controller
             $response_data = json_decode((string)$response->getBody(), true);
             $response_data['resource'] = $user;
             $response_status_code = 200;
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             // If there was an error registering the user
             // Delete the newly created user
             // and send the error response to the client
@@ -175,8 +166,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        try
-        {
+        try {
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'password',
@@ -203,9 +193,7 @@ class AuthController extends Controller
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
             $response_data = json_decode((string)$response->getBody(), true);
             $response_status_code = 200;
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response_data = [
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
@@ -265,8 +253,7 @@ class AuthController extends Controller
      */
     public function token(TokenRequest $request)
     {
-        try
-        {
+        try {
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'refresh_token',
@@ -291,9 +278,7 @@ class AuthController extends Controller
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
             $response_data = json_decode((string)$response->getBody(), true);
             $response_status_code = 200;
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             $response_data = [
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
@@ -329,10 +314,8 @@ class AuthController extends Controller
             'deleted_at',
         ];
 
-        if($user->role === null || $admin_role === null || $user->role->priority > $admin_role->priority)
-        {
-            if(array_key_exists('role_id', $input))
-            {
+        if ($user->role === null || $admin_role === null || $user->role->priority > $admin_role->priority) {
+            if (array_key_exists('role_id', $input)) {
                 // Remove role_id from editable fields if user less then admin
                 $except = 'role_id';
             }

@@ -60,8 +60,8 @@ class RepositoryMakeCommand extends GeneratorCommand
         $stub = $this->files->get($this->getStub());
 
         return $this->replaceNamespace($stub, $name)
-        	->replaceModel($stub, $name)
-        	->replaceClass($stub, $name);
+            ->replaceModel($stub, $name)
+            ->replaceClass($stub, $name);
     }
 
     /**
@@ -73,9 +73,9 @@ class RepositoryMakeCommand extends GeneratorCommand
      */
     protected function replaceModel(&$stub, $name)
     {
-	    $class = str_replace($this->getNamespace($name).'\\', '', $name);
+        $class = str_replace($this->getNamespace($name).'\\', '', $name);
 
-	    $class = str_replace('Repository', '', $class);
+        $class = str_replace('Repository', '', $class);
 
         $stub = str_replace('DummyModel', $class, $stub);
 

@@ -11,15 +11,15 @@ use Thtg88\MmCms\Repositories\UserRepository;
 class StoreUserRequest extends StoreRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(UserRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\UserRepository	$repository
+     * @return	void
+     */
+    public function __construct(UserRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -30,13 +30,13 @@ class StoreUserRequest extends StoreRequest
     {
         return [
             'email' => [
-				'required',
-				'email',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'email')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
+                'required',
+                'email',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];

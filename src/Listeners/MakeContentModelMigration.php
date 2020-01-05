@@ -35,8 +35,7 @@ class MakeContentModelMigration
             ->where('migration', 'like', '%'.$migration_name.'%')
             ->first();
 
-        if($migration === null)
-        {
+        if ($migration === null) {
             // If migration N/A we make it
             \Artisan::call('make:migration', [
                 'name' => $migration_name,
@@ -46,16 +45,13 @@ class MakeContentModelMigration
             // Then we get the last migration so we can insert our custom fields
             $migrations = $this->filesystem->files(database_path('migrations'));
 
-            if(count($migrations) > 0)
-            {
+            if (count($migrations) > 0) {
                 $last_migration = $migrations[count($migrations) - 1].'';
 
-                if(strpos($last_migration, $migration_name) !== FALSE)
-                {
+                if (strpos($last_migration, $migration_name) !== false) {
                     $last_migration_content = file_get_contents($last_migration);
 
-                    if($last_migration_content !== false)
-                    {
+                    if ($last_migration_content !== false) {
                         $replace_content = '';
                         $replace_content .= "\$table->timestamp('deleted_at')->nullable();\n";
                         $replace_content .= "            \$table->timestamp('created_at')->nullable();\n";

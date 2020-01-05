@@ -8,11 +8,11 @@ use Illuminate\Contracts\Validation\Validator;
 class Request extends FormRequest
 {
     /**
-	 * The request repository implementation.
-	 *
-	 * @var \Thtg88\MmCms\Repositories\Repository
-	 */
-	protected $repository;
+     * The request repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\Repository
+     */
+    protected $repository;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -44,16 +44,15 @@ class Request extends FormRequest
      */
     protected function authorizeOwner()
     {
-	    // Get resource
-	    $resource = $this->repository->find($this->route('id'));
+        // Get resource
+        $resource = $this->repository->find($this->route('id'));
 
-	    // Needs to be an existing resource
-	    if($resource === null)
-	    {
-		    return false;
-	    }
+        // Needs to be an existing resource
+        if ($resource === null) {
+            return false;
+        }
 
-	    // Current user is the owner of the viewing
+        // Current user is the owner of the viewing
         return $this->user()->id == $resource->user_id;
     }
 
@@ -64,7 +63,7 @@ class Request extends FormRequest
      */
     protected function authorizeDeveloper()
     {
-	    return $this->authorizeRole(config('mmcms.roles.developer_role_name'));
+        return $this->authorizeRole(config('mmcms.roles.developer_role_name'));
     }
 
     /**
@@ -75,33 +74,28 @@ class Request extends FormRequest
      */
     protected function authorizeRole($role_name)
     {
-	    if(empty($role_name))
-		{
-			return false;
-		}
+        if (empty($role_name)) {
+            return false;
+        }
 
-		if(!is_string($role_name))
-		{
-			return false;
-		}
+        if (!is_string($role_name)) {
+            return false;
+        }
 
-		// Get user
-	    $user = $this->user();
+        // Get user
+        $user = $this->user();
 
-	    if($user === null)
-	    {
-		    return false;
-	    }
+        if ($user === null) {
+            return false;
+        }
 
-		if($user->role === null)
-		{
-			return false;
-		}
+        if ($user->role === null) {
+            return false;
+        }
 
-		if($user->role->name !== $role_name)
-		{
-			return false;
-		}
+        if ($user->role->name !== $role_name) {
+            return false;
+        }
 
         return true;
     }
@@ -114,20 +108,19 @@ class Request extends FormRequest
      */
     protected function authorizeResourceExist()
     {
-	    // Get resource
-	    $resource = $this->repository->find($this->route('id'));
+        // Get resource
+        $resource = $this->repository->find($this->route('id'));
 
-	    // Needs to be an existing resource
-	    if($resource === null)
-	    {
-		    return false;
-	    }
+        // Needs to be an existing resource
+        if ($resource === null) {
+            return false;
+        }
 
         return true;
     }
 
     protected function formatErrors(Validator $validator)
     {
-	    return ['errors' => $validator->getMessageBag()->toArray()];
+        return ['errors' => $validator->getMessageBag()->toArray()];
     }
 }

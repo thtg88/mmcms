@@ -51,5 +51,4 @@ class ContentMigrationMethod extends Model
     ];
 
     // RELATIONSHIPS
-
 }

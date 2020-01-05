@@ -39,35 +39,29 @@ class MakeContentFieldDropColumnMigration
         // Then we get the last migration so we can insert our custom fields
         $migrations = $this->filesystem->files(database_path('migrations'));
 
-        if(count($migrations) > 0)
-        {
+        if (count($migrations) > 0) {
             // We append te value with an empty string
             // so the file gets cast to one
             $last_migration = $migrations[count($migrations) - 1].'';
 
-            if(strpos($last_migration, $migration_name) !== FALSE)
-            {
+            if (strpos($last_migration, $migration_name) !== false) {
                 $last_migration_content = file_get_contents($last_migration);
 
-                if($last_migration_content !== false)
-                {
+                if ($last_migration_content !== false) {
                     $search_content = '';
                     $search_content .= "public function up()\n";
                     $search_content .= "    {\n";
                     $search_content .= "        Schema::table('".$table_name."', function (Blueprint \$table) {\n";
                     $search_content .= "            //";
 
-                    if($event->force === true)
-                    {
+                    if ($event->force === true) {
                         // If we force the migration to drop the column
                         $replace_content = '';
                         $replace_content .= "public function up()\n";
                         $replace_content .= "    {\n";
                         $replace_content .= "         Schema::table('".$table_name."', function (Blueprint \$table) {\n";
                         $replace_content .= "            \$table->dropColumn('".$event->content_field->name."');";
-                    }
-                    else
-                    {
+                    } else {
                         // Otherwise we simply rename the column to preserve the data
                         // But first we check that the same column starting with underscore (_)
                         // Doesn't exist already, and if so, we drop it
@@ -92,8 +86,7 @@ class MakeContentFieldDropColumnMigration
                     $search_content .= "        Schema::table('".$table_name."', function (Blueprint \$table) {\n";
                     $search_content .= "            //";
 
-                    if($event->force === true)
-                    {
+                    if ($event->force === true) {
                         // If we force the migration to drop the column
                         // The down method will re-create it
                         $replace_content = '';
@@ -102,9 +95,7 @@ class MakeContentFieldDropColumnMigration
                         $replace_content .= "         Schema::table('".$table_name."', function (Blueprint \$table) {\n";
                         $replace_content .= "            \$table->".$event->content_field->content_type->content_migration_method->name;
                         $replace_content .= "('".$event->content_field->name."')->nullable();";
-                    }
-                    else
-                    {
+                    } else {
                         $replace_content = '';
                         $replace_content .= "public function down()\n";
                         $replace_content .= "    {\n";

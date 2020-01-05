@@ -51,5 +51,4 @@ class ContentValidationRuleAdditionalFieldType extends Model
     ];
 
     // RELATIONSHIPS
-
 }

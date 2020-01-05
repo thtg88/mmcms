@@ -10,13 +10,13 @@ use Thtg88\MmCms\Repositories\RoleRepository;
 class DestroyRoleRequest extends DestroyRequest
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\RoleRepository	$repository
-	 * @return	void
-	 */
-	public function __construct(RoleRepository $repository)
-	{
-		$this->repository = $repository;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\RoleRepository	$repository
+     * @return	void
+     */
+    public function __construct(RoleRepository $repository)
+    {
+        $this->repository = $repository;
+    }
 }

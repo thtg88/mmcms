@@ -12,8 +12,7 @@ class RolesTableSeeder extends Seeder
     {
         // Check if dev role exist
         $role = Role::where('name', 'dev')->first();
-        if($role === null)
-        {
+        if ($role === null) {
             // if not - create
             Role::create([
                 'name' => 'dev',
@@ -24,8 +23,7 @@ class RolesTableSeeder extends Seeder
 
         // Check if admin role exist
         $role = Role::where('name', 'admin')->first();
-        if($role === null)
-        {
+        if ($role === null) {
             // if not - create
             Role::create([
                 'name' => 'admin',
@@ -36,8 +34,7 @@ class RolesTableSeeder extends Seeder
 
         // Check if user role exist
         $role = Role::where('name', 'user')->first();
-        if($role === null)
-        {
+        if ($role === null) {
             // if not - create
             Role::create([
                 'name' => 'user',

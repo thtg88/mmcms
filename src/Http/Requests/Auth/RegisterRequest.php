@@ -9,15 +9,15 @@ use Illuminate\Validation\Rule;
 class RegisterRequest extends Request
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
-	 * @return	void
-	 */
-	public function __construct(UserRepository $users)
-	{
-		$this->repository = $users;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
+     * @return	void
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->repository = $users;
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -38,22 +38,21 @@ class RegisterRequest extends Request
     {
         $all_rules = [
             'email' => [
-				'required',
-				'email',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'email')->where(function($query) {
-					$query->whereNull('deleted_at');
-				}),
-			],
-			'name' => 'required|string|max:255',
+                'required',
+                'email',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'email')->where(function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
+            'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 
-		if(config('mmcms.recaptcha.mode') === true)
-		{
-			$all_rules['g_recaptcha_response'] = 'bail|required|captcha';
-		}
+        if (config('mmcms.recaptcha.mode') === true) {
+            $all_rules['g_recaptcha_response'] = 'bail|required|captcha';
+        }
 
-		return $all_rules;
+        return $all_rules;
     }
 }

@@ -35,8 +35,7 @@ class ContentModelController extends Controller
         // Get input
         $input = $request->all();
 
-        if(!array_key_exists('base_route_name', $input) || empty($input['base_route_name']))
-        {
+        if (!array_key_exists('base_route_name', $input) || empty($input['base_route_name'])) {
             // If base route name is not provided we build it
             // We first get all the lowercase words
             // We pluralize the last
@@ -48,7 +47,7 @@ class ContentModelController extends Controller
             $input['base_route_name'] = implode(
                 '-',
                 array_map(
-                    function($word, $idx) use ($words) {
+                    function ($word, $idx) use ($words) {
                         return $idx === count($words) - 1
                             ? str_plural($word)
                             : $word;
@@ -59,15 +58,13 @@ class ContentModelController extends Controller
             );
         }
 
-        if(!array_key_exists('model_name', $input) || empty($input['model_name']))
-        {
+        if (!array_key_exists('model_name', $input) || empty($input['model_name'])) {
             // If model name is not provided we build it
             // By studly casing the name
             $input['model_name'] = studly_case($input['name']);
         }
 
-        if(!array_key_exists('table_name', $input) || empty($input['table_name']))
-        {
+        if (!array_key_exists('table_name', $input) || empty($input['table_name'])) {
             // If table name is not provided we build it
             // We first get all the lowercase words
             // We pluralize the last
@@ -79,7 +76,7 @@ class ContentModelController extends Controller
             $input['table_name'] = implode(
                 '_',
                 array_map(
-                    function($word, $idx) use ($words) {
+                    function ($word, $idx) use ($words) {
                         return $idx === count($words) - 1
                             ? str_plural($word)
                             : $word;

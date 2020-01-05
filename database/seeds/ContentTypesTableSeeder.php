@@ -14,13 +14,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Text')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'string')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Text',
@@ -34,13 +32,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Long Text')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'text')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Long Text',
@@ -54,13 +50,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Integer Positive Number')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'unsignedInteger')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Integer Positive Number',
@@ -74,13 +68,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Decimal Number')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'decimal')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Decimal Number',
@@ -94,13 +86,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Date and Time')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'dateTime')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Date and Time',
@@ -114,13 +104,11 @@ class ContentTypesTableSeeder extends Seeder
         // Check if resource exist
         $resource = ContentType::where('name', 'Boolean')->first();
 
-        if($resource === null)
-        {
+        if ($resource === null) {
             // Get migration method
             $migration_method = ContentMigrationMethod::where('name', 'boolean')->first();
 
-            if($migration_method !== null)
-            {
+            if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
                     'name' => 'Boolean',

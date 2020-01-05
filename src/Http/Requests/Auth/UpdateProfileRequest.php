@@ -9,15 +9,15 @@ use Illuminate\Validation\Rule;
 class UpdateProfileRequest extends Request
 {
     /**
-	 * Create a new request instance.
-	 *
-	 * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
-	 * @return	void
-	 */
-	public function __construct(UserRepository $users)
-	{
-		$this->repository = $users;
-	}
+     * Create a new request instance.
+     *
+     * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
+     * @return	void
+     */
+    public function __construct(UserRepository $users)
+    {
+        $this->repository = $users;
+    }
 
     /**
      * Determine if the user is authorized to make this request.
@@ -36,29 +36,29 @@ class UpdateProfileRequest extends Request
      */
     public function rules()
     {
-		// Get user
-		$user = $this->user();
+        // Get user
+        $user = $this->user();
 
         $all_rules = [
             'email' => [
-				'required',
-				'email',
-				'max:255',
-				Rule::unique($this->repository->getName(), 'email')->where(function($query) use ($user) {
-					$query->whereNull('deleted_at')
-						->where('id', '<>', $user->id);
-				}),
-			],
+                'required',
+                'email',
+                'max:255',
+                Rule::unique($this->repository->getName(), 'email')->where(function ($query) use ($user) {
+                    $query->whereNull('deleted_at')
+                        ->where('id', '<>', $user->id);
+                }),
+            ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 
-		// Get input
+        // Get input
         $input = $this->all();
 
-		// Get necessary rules based on input (same keys basically)
-		$rules = array_intersect_key($all_rules, $input);
+        // Get necessary rules based on input (same keys basically)
+        $rules = array_intersect_key($all_rules, $input);
 
-		return $rules;
+        return $rules;
     }
 }
