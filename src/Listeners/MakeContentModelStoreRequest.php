@@ -21,7 +21,7 @@ class MakeContentModelStoreRequest
     /**
      * Handle the event.
      *
-     * @param  ContentModelStored  $event
+     * @param ContentModelStored  $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -55,8 +55,8 @@ class MakeContentModelStoreRequest
     /**
      * Returns imports for the request from a given model name.
      *
-     * @param   string  $model_name
-     * @return  string
+     * @param string  $model_name
+     * @return string
      */
     private function getContentModelRequestImports($model_name)
     {
@@ -73,8 +73,8 @@ class MakeContentModelStoreRequest
     /**
      * Returns the constructor for the request from a given model name.
      *
-     * @param   string  $model_name
-     * @return  string
+     * @param string  $model_name
+     * @return string
      */
     private function getContentModelRequestConstructor($model_name)
     {

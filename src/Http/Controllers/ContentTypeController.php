@@ -14,8 +14,8 @@ class ContentTypeController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\ContentTypeRepository        $repository
-     * @return      void
+     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository        $repository
+     * @return void
      */
     public function __construct(ContentTypeRepository $repository)
     {
@@ -25,7 +25,7 @@ class ContentTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\ContentType\StoreContentTypeRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\ContentType\StoreContentTypeRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreContentTypeRequest $request)
@@ -45,8 +45,8 @@ class ContentTypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\ContentType\UpdateContentTypeRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\ContentType\UpdateContentTypeRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateContentTypeRequest $request, $id)
@@ -68,8 +68,8 @@ class ContentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\ContentType\DestroyContentTypeRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\ContentType\DestroyContentTypeRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyContentTypeRequest $request, $id)

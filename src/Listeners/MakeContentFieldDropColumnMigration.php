@@ -22,7 +22,7 @@ class MakeContentFieldDropColumnMigration
     /**
      * Handle the event.
      *
-     * @param  ContentFieldDestroyed  $event
+     * @param ContentFieldDestroyed  $event
      * @return void
      */
     public function handle(ContentFieldDestroyed $event)

@@ -15,9 +15,9 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\UserRepository        $repository
-     * @param       \Thtg88\MmCms\Repositories\RoleRepository        $roles
-     * @return      void
+     * @param \Thtg88\MmCms\Repositories\UserRepository        $repository
+     * @param \Thtg88\MmCms\Repositories\RoleRepository        $roles
+     * @return void
      */
     public function __construct(UserRepository $repository, RoleRepository $roles)
     {
@@ -28,7 +28,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\StoreUserRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\User\StoreUserRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreUserRequest $request)
@@ -62,8 +62,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\UpdateUserRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\User\UpdateUserRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request, $id)
@@ -89,8 +89,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\User\DestroyUserRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\User\DestroyUserRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyUserRequest $request, $id)

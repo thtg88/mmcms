@@ -16,8 +16,8 @@ class FileHelper
      * by pre-pending a unique id to the slug of the filename,
      * conserving the original file extension
      *
-     * @param   \Illuminate\Http\UploadedFile   $file
-     * @return  string
+     * @param \Illuminate\Http\UploadedFile   $file
+     * @return string
      */
     public function buildFilename(UploadedFile $file)
     {
@@ -46,9 +46,9 @@ class FileHelper
      * Stores a file from a given uploaded file and repository.
      * This creates a folder with 777 permissions if N/A.
      *
-     * @param   \Illuminate\Http\UploadedFile   $file
-     * @param   \Thtg88\MmCms\Repositories\Repository   $repository
-     * @return  string
+     * @param \Illuminate\Http\UploadedFile   $file
+     * @param \Thtg88\MmCms\Repositories\Repository   $repository
+     * @return string
      */
     public function store(UploadedFile $file, Repository $repository)
     {

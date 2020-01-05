@@ -20,7 +20,7 @@ class DummyClass extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\DummyModel	$model
-     * @return  void
+     * @return void
      */
     public function __construct(DummyModel $model)
     {

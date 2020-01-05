@@ -86,7 +86,7 @@ class User extends Authenticatable
     /**
      * Returns the eager loaded relationship names for the model class.
      *
-     * @return  array
+     * @return array
      */
     public function getWith()
     {

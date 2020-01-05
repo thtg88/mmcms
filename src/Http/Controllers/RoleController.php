@@ -14,8 +14,8 @@ class RoleController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param       \Thtg88\MmCms\Repositories\RoleRepository        $repository
-     * @return      void
+     * @param \Thtg88\MmCms\Repositories\RoleRepository        $repository
+     * @return void
      */
     public function __construct(RoleRepository $repository)
     {
@@ -25,7 +25,7 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRoleRequest $request)
@@ -45,8 +45,8 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRoleRequest $request, $id)
@@ -68,8 +68,8 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyRoleRequest $request, $id)

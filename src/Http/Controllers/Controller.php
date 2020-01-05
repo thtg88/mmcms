@@ -28,7 +28,7 @@ class Controller extends BaseController
     /**
      * Display a listing of the resources.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\IndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\IndexRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function index(IndexRequest $request)
@@ -44,7 +44,7 @@ class Controller extends BaseController
     /**
      * Display a paginated listing of the resources.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\PaginateRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\PaginateRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function paginate(PaginateRequest $request)
@@ -97,7 +97,7 @@ class Controller extends BaseController
     /**
      * Search for the specified resource in storage.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\SearchRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\SearchRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function search(SearchRequest $request)
@@ -111,8 +111,8 @@ class Controller extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\ShowRequest  $request
-     * @param  int  $id
+     * @param \Thtg88\MmCms\Http\Requests\ShowRequest  $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(ShowRequest $request, $id)
@@ -132,7 +132,7 @@ class Controller extends BaseController
      * Display a listing of the resource belonging to the user,
      * filtered by a given start and end date.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function userDateFilter(UserDateFilterRequest $request)
@@ -152,7 +152,7 @@ class Controller extends BaseController
     /**
      * Display a listing of the resource belonging to the user.
      *
-     * @param  \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function userIndex(UserIndexRequest $request)
