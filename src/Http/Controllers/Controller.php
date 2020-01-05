@@ -112,7 +112,7 @@ class Controller extends BaseController
      * Display the specified resource.
      *
      * @param \Thtg88\MmCms\Http\Requests\ShowRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(ShowRequest $request, $id)

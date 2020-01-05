@@ -22,7 +22,7 @@ class MakeContentModelMigration
     /**
      * Handle the event.
      *
-     * @param ContentModelStored  $event
+     * @param ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)

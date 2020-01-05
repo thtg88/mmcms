@@ -14,7 +14,7 @@ class ContentMigrationMethodController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository        $repository
+     * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $repository
      * @return void
      */
     public function __construct(ContentMigrationMethodRepository $repository)
@@ -46,7 +46,7 @@ class ContentMigrationMethodController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ContentMigrationMethod\UpdateContentMigrationMethodRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateContentMigrationMethodRequest $request, $id)
@@ -69,7 +69,7 @@ class ContentMigrationMethodController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ContentMigrationMethod\DestroyContentMigrationMethodRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyContentMigrationMethodRequest $request, $id)

@@ -44,9 +44,9 @@ class AuthController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\UserRepository        $users
-     * @param \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository   $oauth_refresh_tokens
-     * @param \Thtg88\MmCms\Repositories\RoleRepository   $roles
+     * @param \Thtg88\MmCms\Repositories\UserRepository $users
+     * @param \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository $oauth_refresh_tokens
+     * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
      * @return void
      */
     public function __construct(
@@ -237,7 +237,7 @@ class AuthController extends Controller
     /**
      * Return the current user data.
      *
-     * @param \Illuminate\Http\Request        $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function me(Request $request)

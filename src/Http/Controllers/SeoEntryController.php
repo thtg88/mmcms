@@ -17,7 +17,7 @@ class SeoEntryController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\SeoEntryRepository        $repository
+     * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
      * @return void
      */
     public function __construct(SeoEntryRepository $repository)
@@ -54,7 +54,7 @@ class SeoEntryController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\SeoEntry\UpdateSeoEntryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateSeoEntryRequest $request, $id)
@@ -82,7 +82,7 @@ class SeoEntryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\SeoEntry\DestroySeoEntryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroySeoEntryRequest $request, $id)
@@ -100,7 +100,7 @@ class SeoEntryController extends Controller
      * Restore the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\SeoEntry\RestoreSeoEntryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function restore(RestoreSeoEntryRequest $request, $id)

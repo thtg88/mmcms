@@ -21,7 +21,7 @@ class MakeContentModelController
     /**
      * Handle the event.
      *
-     * @param ContentModelStored  $event
+     * @param ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -55,7 +55,7 @@ class MakeContentModelController
     /**
      * Returns imports for the controller from a given model name.
      *
-     * @param string  $model_name
+     * @param string $model_name
      * @return string
      */
     private function getContentModelControllerImports($model_name)
@@ -74,7 +74,7 @@ class MakeContentModelController
     /**
      * Returns additional content for the controller from a given model name.
      *
-     * @param string  $model_name
+     * @param string $model_name
      * @return string
      */
     private function getContentModelControllerAdditionalContent($model_name)
@@ -115,7 +115,7 @@ class MakeContentModelController
         $content .= "     * Update the specified resource in storage.\n";
         $content .= "     *\n";
         $content .= "     * @param \Thtg88\MmCms\Http\Requests\\".$model_name."\Update".$model_name."Request  \$request\n";
-        $content .= "     * @param int  \$id\n";
+        $content .= "     * @param int \$id\n";
         $content .= "     * @return \Illuminate\Http\Response\n";
         $content .= "     */\n";
         $content .= "    public function update(Update".$model_name."Request \$request, \$id)\n";
@@ -138,7 +138,7 @@ class MakeContentModelController
         $content .= "     * Remove the specified resource from storage.\n";
         $content .= "     *\n";
         $content .= "     * @param \Thtg88\MmCms\Http\Requests\\".$model_name."\Destroy".$model_name."Request  \$request\n";
-        $content .= "     * @param int  \$id\n";
+        $content .= "     * @param int \$id\n";
         $content .= "     * @return \Illuminate\Http\Response\n";
         $content .= "     */\n";
         $content .= "    public function destroy(Destroy".$model_name."Request \$request, \$id)\n";

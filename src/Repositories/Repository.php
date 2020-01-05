@@ -136,7 +136,7 @@ class Repository implements RepositoryInterface
     /**
      * Create a new model instance in storage.
      *
-     * @param array   $data
+     * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function create(array $data)
@@ -250,8 +250,8 @@ class Repository implements RepositoryInterface
      * >2. If more than 2 columns are specified, the ones after the second
      * are ignored, and scenario 2 applies.
      *
-     * @param \Carbon\Carbon  $start_date     The start date.
-     * @param \Carbon\Carbon  $end_date       The end date.
+     * @param \Carbon\Carbon $start_date     The start date.
+     * @param \Carbon\Carbon $end_date       The end date.
      * @return \Illuminate\Support\Collection
      */
     public function getByDateFilter(Carbon $start_date, Carbon $end_date)
@@ -295,7 +295,7 @@ class Repository implements RepositoryInterface
     /**
      * Return all the resources belonging to a given user id.
      *
-     * @param int     $user_id        The id of the user.
+     * @param int $user_id        The id of the user.
      * @return \Illuminate\Support\Collection
      */
     public function getByUserId($user_id)
@@ -330,9 +330,9 @@ class Repository implements RepositoryInterface
      * >2. If more than 2 columns are specified, the ones after the second
      * are ignored, and scenario 2 applies.
      *
-     * @param int     $user_id        The id of the user.
-     * @param \Carbon\Carbon  $start_date     The start date.
-     * @param \Carbon\Carbon  $end_date       The end date.
+     * @param int $user_id        The id of the user.
+     * @param \Carbon\Carbon $start_date     The start date.
+     * @param \Carbon\Carbon $end_date       The end date.
      * @return \Illuminate\Support\Collection
      */
     public function getByUserIdAndDateFilter($user_id, Carbon $start_date, Carbon $end_date)
@@ -383,7 +383,7 @@ class Repository implements RepositoryInterface
     /**
      * Return the given number of latest inserted model instances.
      *
-     * @param int     $limit  The number of model instances to return
+     * @param int $limit  The number of model instances to return
      * @return \Illuminate\Support\Collection
      */
     public function latest($limit)
@@ -401,11 +401,11 @@ class Repository implements RepositoryInterface
     /**
      * Return the paginated model instances.
      *
-     * @param int     $page_size  The number of model instances to return per page
-     * @param int     $page  The page number
-     * @param string     $q  The optional search query
-     * @param string     $sort_column  The optional column to sort by
-     * @param string     $sort_direction  The optional direction to sort by
+     * @param int $page_size  The number of model instances to return per page
+     * @param int $page  The page number
+     * @param string $q  The optional search query
+     * @param string $sort_column  The optional column to sort by
+     * @param string $sort_direction  The optional direction to sort by
      * @return \Illuminate\Support\Collection
      */
     public function paginate($page_size = 10, $page = null, $q = null, $sort_column = null, $sort_direction = null)
@@ -472,7 +472,7 @@ class Repository implements RepositoryInterface
     /**
      * Return the model instances matching the given search query.
      *
-     * @param string  $q      The search query.
+     * @param string $q      The search query.
      * @return \Illuminate\Support\Collection
      */
     public function search($q)
@@ -509,8 +509,8 @@ class Repository implements RepositoryInterface
     /**
      * Updates a model instance with given data, from a given id.
      *
-     * @param int     $id The id of the model
-     * @param array   $data
+     * @param int $id The id of the model
+     * @param array $data
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function update($id, array $data)
@@ -550,9 +550,9 @@ class Repository implements RepositoryInterface
     /**
      * Filter out data that would not change the state of the model.
      *
-     * @param array   $data   The data to set.
-     * @param \Illuminate\Database\Eloquent\Model     $model  The model to update.
-     * @param array   $exclude        A set of columns to exclude from the prune e.g. if the update is meant to update associations as well.
+     * @param array $data   The data to set.
+     * @param \Illuminate\Database\Eloquent\Model $model  The model to update.
+     * @param array $exclude        A set of columns to exclude from the prune e.g. if the update is meant to update associations as well.
      * @return array
      */
     protected function pruneData(array $data, Model $model, array $exclude = array())

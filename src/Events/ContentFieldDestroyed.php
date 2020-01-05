@@ -21,8 +21,8 @@ class ContentFieldDestroyed
     /**
      * Create a new event instance.
      *
-     * @param ContentField    $content_field
-     * @param boolean    $force
+     * @param ContentField $content_field
+     * @param boolean $force
      * @return void
      */
     public function __construct(ContentField $content_field, $force = false)

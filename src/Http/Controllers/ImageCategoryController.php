@@ -17,7 +17,7 @@ class ImageCategoryController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository        $repository
+     * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
      * @return void
      */
     public function __construct(ImageCategoryRepository $repository)
@@ -54,7 +54,7 @@ class ImageCategoryController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ImageCategory\UpdateImageCategoryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateImageCategoryRequest $request, $id)
@@ -82,7 +82,7 @@ class ImageCategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ImageCategory\DestroyImageCategoryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyImageCategoryRequest $request, $id)
@@ -100,7 +100,7 @@ class ImageCategoryController extends Controller
      * Restore the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\ImageCategory\RestoreImageCategoryRequest  $request
-     * @param int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function restore(RestoreImageCategoryRequest $request, $id)

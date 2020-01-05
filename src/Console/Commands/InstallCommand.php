@@ -194,7 +194,7 @@ class InstallCommand extends Command
     /**
      * Add Laravel Passport routes.
      *
-     * @param \Illuminate\Filesystem\Filesystem   $filesystem
+     * @param \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
     private function addPassportRoutes(FileSystem $filesystem)
@@ -228,7 +228,7 @@ class InstallCommand extends Command
     /**
      * Add Barryvdh Laravel CORS middleware.
      *
-     * @param \Illuminate\Filesystem\Filesystem   $filesystem
+     * @param \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
     private function addLaravelCorsMiddleware(FileSystem $filesystem)

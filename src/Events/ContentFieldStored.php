@@ -20,7 +20,7 @@ class ContentFieldStored
     /**
      * Create a new event instance.
      *
-     * @param ContentField    $content_field
+     * @param ContentField $content_field
      * @return void
      */
     public function __construct(ContentField $content_field)
