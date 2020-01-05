@@ -64,13 +64,6 @@
             "vendor/bin/tlint lint resources/views"
         ],
         "fix-style": "vendor/bin/php-cs-fixer fix --using-cache=no",
-        "stan": [
-            "vendor/bin/phpstan analyse app",
-            "vendor/bin/phpstan analyse config",
-            "vendor/bin/phpstan analyse resources",
-            "vendor/bin/phpstan analyse routes",
-            "vendor/bin/phpstan analyse tests"
-        ],
         "test": "vendor/bin/phpunit"
     }
 }
