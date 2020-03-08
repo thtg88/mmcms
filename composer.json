@@ -11,8 +11,8 @@
     ],
     "require": {
         "anhskohbo/no-captcha": "^3.0",
-        "barryvdh/laravel-cors": "^0.11.0",
-        "doctrine/dbal": "^2.7",
+        "fruitcake/laravel-cors": "^1.0",
+        "doctrine/dbal": "^2.9",
         "illuminate/bus": "^6.0.0",
         "illuminate/console": "^6.0.0",
         "illuminate/contracts": "^6.0.0",
