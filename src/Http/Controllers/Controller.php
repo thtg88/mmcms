@@ -44,7 +44,6 @@ class Controller extends BaseController
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
      * @return \Illuminate\Http\Response
-     * @todo move to service
      */
     public function dateFilter(DateFilterRequestInterface $request)
     {
@@ -79,8 +78,7 @@ class Controller extends BaseController
      */
     public function index(IndexRequest $request)
     {
-        // Get resources
-        $resources = $this->repository->all();
+        $resources = $this->service->getRepository()->all();
 
         return response()->json(['resources' => $resources]);
     }
@@ -106,7 +104,7 @@ class Controller extends BaseController
      */
     public function search(SearchRequest $request)
     {
-        $resources = $this->repository->search($request->q);
+        $resources = $this->service->getRepository()->search($request->q);
 
         return response()->json(['resources' => $resources]);
     }
@@ -146,7 +144,7 @@ class Controller extends BaseController
      */
     public function userDateFilter(DateFilterRequestInterface $request)
     {
-        $resources = $this->repository->userDateFilter($request);
+        $resources = $this->service->userDateFilter($request);
 
         return response()->json(['resources' => $resources]);
     }
@@ -202,6 +200,8 @@ class Controller extends BaseController
 
     /**
      * Return the service name.
+     *
+     * @return string
      */
     protected function getServiceName()
     {
