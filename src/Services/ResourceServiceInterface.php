@@ -17,7 +17,6 @@ interface ResourceServiceInterface
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
      * @return \Illuminate\Http\Response
-     * @todo move to service
      */
     public function dateFilter(DateFilterRequestInterface $request);
 
