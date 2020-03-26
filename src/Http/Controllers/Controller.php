@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 // Requests
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -27,6 +28,31 @@ class Controller extends BaseController
      * @var \Thtg88\MmCms\Repositories\Repository
      */
     protected $repository;
+
+    /**
+     * The service implementation.
+     *
+     * @var \App\Http\Requests\Contracts\ResourceServiceInterface
+     */
+    protected $service;
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Http\Requests\Contracts\DestroyRequestInterface $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DestroyRequestInterface $request, $id)
+    {
+        // Destroy resource
+        $resource = $this->service->destroy($request, $id);
+
+        return response()->json([
+            'success' => true,
+            'resource' => $resource,
+        ]);
+    }
 
     /**
      * Display a listing of the resources.
