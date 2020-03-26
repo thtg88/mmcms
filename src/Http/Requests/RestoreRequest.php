@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 
-class StoreRequest extends Request implements StoreRequestInterface
+class RestoreRequest extends Request implements RestoreRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,6 +13,6 @@ class StoreRequest extends Request implements StoreRequestInterface
      */
     public function authorize()
     {
-        return true;
+        return $this->authorizeResourceDeletedExist();
     }
 }

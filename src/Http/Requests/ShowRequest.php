@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class ShowRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
+
+class ShowRequest extends Request implements ShowRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -11,6 +13,6 @@ class ShowRequest extends Request
      */
     public function authorize()
     {
-        return true;
+        return $this->authorizeResourceExist();
     }
 }
