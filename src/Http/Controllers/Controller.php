@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -152,6 +153,24 @@ class Controller extends BaseController
         return response()->json([
             'success' => true,
             'resource' => $resource,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\Contracts\UpdateRequestInterface $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequestInterface $request, $id)
+    {
+        // Update resource
+        $resource = $this->service->update($request, $id);
+
+        return response()->json([
+            'success', true,
+            'resource', $resource,
         ]);
     }
 
