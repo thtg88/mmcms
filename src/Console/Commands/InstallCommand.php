@@ -240,59 +240,48 @@ class InstallCommand extends Command
     private function addExceptionRenderers()
     {
         // Check that exception handler is in the standard Laravel place
-        if (file_exists(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'))) {
-            // Get exceptions handler content as string
-            $str = file_get_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'));
-
-            if (
-                $str !== false
-                && strpos($str, 'if($exception->getStatusCode() == 403)') === false
-                && strpos($str, 'return parent::render($request, $exception);') !== false
-            ) {
-                // Adding content
-                $render_str = 'if($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Resource not found.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["resource_not_found" => [$msg]]], 404);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\Access\AuthorizationException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\AuthenticationException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Unauthenticated.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["unauthenticated" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["method_not_allowed" => ["Method not allowed."]]], 405);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 403)'.PHP_EOL;
-                $render_str .= "\t\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 401)'.PHP_EOL;
-                $render_str .= "\t\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Unauthorized.";'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["unauthorized" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'return parent::render($request, $exception);';
-
-                $str = str_replace('return parent::render($request, $exception);', $render_str, $str);
-
-                file_put_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'), $str);
-            }
-        } else {
+        if (! file_exists(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+        )) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Exceptions'.DIRECTORY_SEPARATOR.'Handler.php". Did you move this file?');
             $this->warn('You will need to update this manually in order for the exceptions to be caught and converted into JSON.');
+
+            return;
         }
+
+        // Get exceptions handler content as string
+        $str = file_get_contents(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+        );
+
+        if (
+            $str === false ||
+            strpos(
+                $str,
+                'use Thtg88\MmCms\Exceptions\Handler as ExceptionHandler;'
+            ) !== false
+        ) {
+            return;
+        }
+
+        // Adding content
+        $str = str_replace(
+            'use Throwable;',
+            'use Thtg88\MmCms\Exceptions\Handler as ExceptionHandler;'.PHP_EOL.
+                'use Throwable;',
+            $str
+        );
+        $str = str_replace(
+            'use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;',
+            '',
+            $str
+        );
+
+        file_put_contents(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
+            $str
+        );
     }
 
     /**
