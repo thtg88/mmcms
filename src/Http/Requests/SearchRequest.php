@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class SearchRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
+
+class SearchRequest extends Request implements SearchRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
