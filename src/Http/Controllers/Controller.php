@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
@@ -37,6 +38,20 @@ class Controller extends BaseController
      * @var \App\Http\Requests\Contracts\ResourceServiceInterface
      */
     protected $service;
+
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     * @todo move to service
+     */
+    public function dateFilter(DateFilterRequestInterface $request)
+    {
+        $resources = $this->service->dateFilter($request);
+
+        return response()->json(['resources' => $resources]);
+    }
 
     /**
      * Remove the specified resource from storage.
