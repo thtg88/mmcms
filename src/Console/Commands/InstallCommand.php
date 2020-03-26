@@ -30,19 +30,18 @@ class InstallCommand extends Command
      */
     protected $description = 'Install the mmCMS package';
 
-    public function fire(Filesystem $filesystem)
+    public function fire()
     {
-        return $this->handle($filesystem);
+        return $this->handle();
     }
 
     /**
      * Execute the console command.
      *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
      *
      * @return void
      */
-    public function handle(Filesystem $filesystem)
+    public function handle()
     {
         // Publish only relevant resources on install
         $this->info('Publishing the mmCMS assets, database, and config files');
@@ -70,7 +69,7 @@ class InstallCommand extends Command
         ]);
 
         $this->info('Configuring Laravel Passport');
-        $this->addPassportRoutes($filesystem);
+        $this->addPassportRoutes();
 
         $this->info('Configuring Anhskohbo NoCaptcha');
         $this->call('vendor:publish', [
@@ -211,10 +210,9 @@ class InstallCommand extends Command
     /**
      * Add Laravel Passport routes.
      *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
-    private function addPassportRoutes(FileSystem $filesystem)
+    private function addPassportRoutes()
     {
         // Check that Route service provider exists
         if (! file_exists(
@@ -312,7 +310,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    private function setPassportAuthDriver(Filesystem $filesystem)
+    private function setPassportAuthDriver()
     {
         // Check that auth config is in the standard Laravel place
         if (! file_exists(config_path('auth.php'))) {
@@ -327,21 +325,27 @@ class InstallCommand extends Command
         $str = file_get_contents(config_path('auth.php'));
 
         if (
-            $str === false
-            || (
-                strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") === false
-                && strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") === false
-            )
-            || strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") !== false
-            || strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") !== false
+            $str === false ||
+            strpos(
+                $str,
+                "'api' => [".PHP_EOL."            'driver' => 'token',"
+            ) === false ||
+            strpos(
+                $str,
+                "'api' => [".PHP_EOL."            'driver' => 'passport',"
+            ) !== false
         ) {
             return;
         }
 
-        $replace_str = "'api' => [".PHP_EOL."            'driver' => 'passport',";
+        $replace_str = "'api' => [".PHP_EOL.
+            "            'driver' => 'passport',";
 
-        $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
-        $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
+        $str = str_replace(
+            "'api' => [".PHP_EOL."            'driver' => 'token',",
+            $replace_str,
+            $str
+        );
 
         file_put_contents(config_path('auth.php'), $str);
     }
