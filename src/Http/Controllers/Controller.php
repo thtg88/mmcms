@@ -150,4 +150,12 @@ class Controller extends BaseController
 
         return response()->json(['resources' => $resources]);
     }
+
+    /**
+     * Return the service name.
+     */
+    protected function getServiceName()
+    {
+        return $this->service->getName();
+    }
 }
