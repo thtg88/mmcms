@@ -77,12 +77,6 @@ class InstallCommand extends Command
             '--provider' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider'
         ]);
 
-        $this->info('Configuring Barryvdh Laravel CORS');
-        $this->call('vendor:publish', [
-            '--provider' => 'Barryvdh\Cors\ServiceProvider'
-        ]);
-        $this->addLaravelCorsMiddleware($filesystem);
-
         // Attempting to set mmCMS User model as parent to App\User
         $this->info('Attempting to set mmCMS User model as parent to App\User');
         $this->extendUserModel();
@@ -222,39 +216,6 @@ class InstallCommand extends Command
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
             $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Auth service provider.');
-        }
-    }
-
-    /**
-     * Add Barryvdh Laravel CORS middleware.
-     *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
-     * @return void
-     */
-    private function addLaravelCorsMiddleware(FileSystem $filesystem)
-    {
-        // Check that HTTP Kernel exists
-        if (file_exists(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'))) {
-            // Get HTTP kernel content as string
-            $str = file_get_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'));
-
-            // Replace middleware import for all routes
-            if (
-                $str !== false
-                && strpos($str, '\Barryvdh\Cors\HandleCors::class,') === false
-                && strpos($str, 'protected $middleware = [') !== false
-            ) {
-                $middleware_str = 'protected $middleware = ['.PHP_EOL;
-                $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
-                $str = str_replace('protected $middleware = [', $middleware_str, $str);
-
-                file_put_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'), $str);
-            }
-        } else {
-            // Warn the suer of the manual change needed
-            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Kernel.php". Did you move this file?');
-            $this->warn('You will need to update this manually.');
-            $this->warn('Add "\Barryvdh\Cors\HandleCors::class," after "protected $middleware = [" in the HTTP kernel.');
         }
     }
 
