@@ -243,7 +243,7 @@ class InstallCommand extends Command
             && strpos($str, '$this->mapWebRoutes();') !== false
         ) {
             $passport_str = '$this->mapWebRoutes();'.PHP_EOL.PHP_EOL;
-            $passport_str .= "\t\t\Laravel\Passport\Passport::routes();";
+            $passport_str .= "        \Laravel\Passport\Passport::routes();";
             $str = str_replace('$this->mapWebRoutes();', $passport_str, $str);
         }
 
@@ -330,18 +330,18 @@ class InstallCommand extends Command
             $str === false
             || (
                 strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") === false
-                && strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'token',") === false
+                && strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") === false
             )
             || strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") !== false
-            || strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',") !== false
+            || strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") !== false
         ) {
             return;
         }
 
-        $replace_str = "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',";
+        $replace_str = "'api' => [".PHP_EOL."            'driver' => 'passport',";
 
         $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
-        $str = str_replace("'api' => [".PHP_EOL."\t\t\t'driver' => 'token',", $replace_str, $str);
+        $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
 
         file_put_contents(config_path('auth.php'), $str);
     }
@@ -362,11 +362,11 @@ class InstallCommand extends Command
 
         // Create .htaccess file
         $str = "";
-        $str .= "<IfModule mod_rewrite.c>\n";
-        $str .= "\tRewriteEngine on\n\n";
-        $str .= "\tRewriteCond %{REQUEST_URI} !public/\n";
-        $str .= "\tRewriteRule (.*) /public/$1 [L]\n";
-        $str .= "</IfModule>\n";
+        $str .= "<IfModule mod_rewrite.c>".PHP_EOL;
+        $str .= "    RewriteEngine on".PHP_EOL.PHP_EOL;
+        $str .= "    RewriteCond %{REQUEST_URI} !public/".PHP_EOL;
+        $str .= "    RewriteRule (.*) /public/$1 [L]".PHP_EOL;
+        $str .= "</IfModule>".PHP_EOL;
 
         file_put_contents(base_path('.htaccess'), $str);
     }
