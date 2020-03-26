@@ -146,7 +146,7 @@ class Controller extends BaseController
      */
     public function userDateFilter(DateFilterRequestInterface $request)
     {
-        $resources = $this->repository->userDateFilter($request);
+        $resources = $this->service->userDateFilter($request);
 
         return response()->json(['resources' => $resources]);
     }
