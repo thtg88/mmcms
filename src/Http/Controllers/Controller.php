@@ -105,7 +105,7 @@ class Controller extends BaseController
         // Get resources
         $resources = $this->repository->search($request->q);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json(['resources' => $resources]);
     }
 
     /**
@@ -146,7 +146,7 @@ class Controller extends BaseController
         // Get resources
         $resources = $this->repository->getByUserIdAndDateFilter($request->user()->id, $start_date, $end_date);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json(['resources' => $resources]);
     }
 
     /**
@@ -160,6 +160,6 @@ class Controller extends BaseController
         // Get resources
         $resources = $this->repository->getByUserId($request->user()->id);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json(['resources' => $resources]);
     }
 }
