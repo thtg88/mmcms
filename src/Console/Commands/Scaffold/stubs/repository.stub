@@ -2,24 +2,28 @@
 
 namespace DummyNamespace;
 
-use Thtg88\MmCms\Models\DummyModel;
+use App\Models\DummyModel;
 
 class DummyClass extends Repository
 {
     protected static $model_name = 'id';
 
     protected static $order_by_columns = [
-        //
+        'id' => 'asc',
     ];
 
     protected static $search_columns = [
         //
     ];
 
+    protected static $filter_columns = [
+        //
+    ];
+
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\DummyModel	$model
+     * @param \App\Models\DummyModel $model
      * @return void
      */
     public function __construct(DummyModel $model)
