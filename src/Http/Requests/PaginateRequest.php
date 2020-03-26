@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class PaginateRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+
+class PaginateRequest extends Request implements PaginateRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
