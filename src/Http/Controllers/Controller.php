@@ -6,7 +6,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-// Requests
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
@@ -92,7 +91,6 @@ class Controller extends BaseController
      */
     public function search(SearchRequest $request)
     {
-        // Get resources
         $resources = $this->repository->search($request->q);
 
         return response()->json(['resources' => $resources]);
