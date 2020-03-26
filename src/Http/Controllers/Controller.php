@@ -200,6 +200,8 @@ class Controller extends BaseController
 
     /**
      * Return the service name.
+     *
+     * @return string
      */
     protected function getServiceName()
     {
