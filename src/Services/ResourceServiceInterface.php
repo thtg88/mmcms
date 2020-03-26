@@ -17,7 +17,6 @@ interface ResourceServiceInterface
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
      * @return \Illuminate\Http\Response
-     * @todo move to service
      */
     public function dateFilter(DateFilterRequestInterface $request);
 
@@ -86,4 +85,13 @@ interface ResourceServiceInterface
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function update(UpdateRequestInterface $request, $id);
+
+    /**
+     * Display a listing of the resource belonging to the user,
+     * filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userDateFilter(DateFilterRequestInterface $request);
 }

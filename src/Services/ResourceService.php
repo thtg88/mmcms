@@ -45,7 +45,7 @@ class ResourceService implements ResourceServiceInterface
             config('app.timezone')
         );
 
-        return $this->repository->getByUserIdAndDateFilter(
+        return $this->repository->dateFilter(
             $start_date,
             $end_date
         );
@@ -232,5 +232,35 @@ class ResourceService implements ResourceServiceInterface
         $data = $request->validated();
 
         return $this->repository->update($id, $data);
+    }
+
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     * @todo move to service
+     */
+    public function userDateFilter(DateFilterRequestInterface $request)
+    {
+        $data = $request->only(['start', 'end']);
+
+        // Convert start and end date to object to be accepted by the repository
+        $start_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['start'].' 00:00:00',
+            config('app.timezone')
+        );
+        $end_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['end'].' 00:00:00',
+            config('app.timezone')
+        );
+
+        return $this->repository->getByUserIdAndDateFilter(
+            $request->user()->id,
+            $start_date,
+            $end_date
+        );
     }
 }

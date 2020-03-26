@@ -141,19 +141,12 @@ class Controller extends BaseController
      * Display a listing of the resource belonging to the user,
      * filtered by a given start and end date.
      *
-     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
      * @return \Illuminate\Http\Response
      */
-    public function userDateFilter(UserDateFilterRequest $request)
+    public function userDateFilter(DateFilterRequestInterface $request)
     {
-        $input = $request->only(['start', 'end']);
-
-        // Convert start and end date to object to be accepted by the repository.
-        $start_date = Carbon::createFromFormat('Y-m-d H:i:s', $input['start'], 'Europe/London');
-        $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $input['end'], 'Europe/London');
-
-        // Get resources
-        $resources = $this->repository->getByUserIdAndDateFilter($request->user()->id, $start_date, $end_date);
+        $resources = $this->repository->userDateFilter($request);
 
         return response()->json(['resources' => $resources]);
     }
