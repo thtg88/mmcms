@@ -63,12 +63,6 @@ class Handler extends ExceptionHandler
             );
         }
 
-        if ($exception instanceof AuthorizationException) {
-            $msg = $exception->getMessage() ?: 'Forbidden.';
-
-            return response()->json(['errors' => ['forbidden' => [$msg]]], 403);
-        }
-
         if ($exception instanceof AuthenticationException) {
             $msg = $exception->getMessage() ?: 'Unauthenticated.';
 
@@ -78,6 +72,12 @@ class Handler extends ExceptionHandler
             );
         }
 
+        if ($exception instanceof AuthorizationException) {
+            $msg = $exception->getMessage() ?: 'Forbidden.';
+
+            return response()->json(['errors' => ['forbidden' => [$msg]]], 403);
+        }
+
         if ($exception instanceof MethodNotAllowedHttpException) {
             return response()->json(
                 ['errors' => ['method_not_allowed' => ['Method not allowed.']]],
@@ -85,7 +85,25 @@ class Handler extends ExceptionHandler
             );
         }
 
+        if ($exception instanceof ThrottleRequestsException) {
+            $msg = $exception->getMessage() ?: 'Too Many Attempts.';
+
+            return response()->json(
+                ['errors' => ['too_many_attempts' => [$msg]]],
+                429
+            );
+        }
+
         if ($exception instanceof HttpException) {
+            if ($exception->getStatusCode() === 401) {
+                $msg = $exception->getMessage() ?: 'Unauthorized.';
+
+                return response()->json(
+                    ['errors' => ['unauthorized' => [$msg]]],
+                    401
+                );
+            }
+
             if ($exception->getStatusCode() === 403) {
                 $msg = $exception->getMessage() ?: 'Forbidden.';
 
@@ -95,12 +113,12 @@ class Handler extends ExceptionHandler
                 );
             }
 
-            if ($exception->getStatusCode() === 401) {
-                $msg = $exception->getMessage() ?: 'Unauthorized.';
+            if ($exception->getStatusCode() === 404) {
+                $msg = $exception->getMessage() ?: 'Resource not found.';
 
                 return response()->json(
-                    ['errors' => ['unauthorized' => [$msg]]],
-                    403
+                    ['errors' => ['resource_not_found' => [$msg]]],
+                    404
                 );
             }
         }
