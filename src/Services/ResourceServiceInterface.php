@@ -2,8 +2,9 @@
 
 namespace Thtg88\MmCms\Services;
 
+use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
-use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
@@ -11,6 +12,14 @@ use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 
 interface ResourceServiceInterface
 {
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function dateFilter(DateFilterRequestInterface $request);
+
     /**
      * Deletes a model instance from a given id.
      *
@@ -30,10 +39,10 @@ interface ResourceServiceInterface
     /**
      * Return all the model instances.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return \Illuminate\Support\Collection
      */
-    public function index(IndexRequestInterface $request);
+    public function paginate(PaginateRequestInterface $request);
 
     /**
      * Restore a model instance from a given id.
@@ -76,4 +85,13 @@ interface ResourceServiceInterface
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function update(UpdateRequestInterface $request, $id);
+
+    /**
+     * Display a listing of the resource belonging to the user,
+     * filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userDateFilter(DateFilterRequestInterface $request);
 }
