@@ -2,17 +2,17 @@
 
 namespace Thtg88\MmCms\Services\Concerns;
 
-use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 
 trait WithPagination
 {
     /**
      * Return the map of filter values from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getMapFilterValues(IndexRequestInterface $request)
+    public function getMapFilterValues(PaginateRequestInterface $request)
     {
         $filters = $this->getFilterValues($request);
 
@@ -58,10 +58,10 @@ trait WithPagination
     /**
      * Return the filter values from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getFilterValues(IndexRequestInterface $request)
+    public function getFilterValues(PaginateRequestInterface $request)
     {
         $filters = $this->getDefaultFilterValues();
 
@@ -108,10 +108,10 @@ trait WithPagination
     /**
      * Return the search value from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getSearchValue(IndexRequestInterface $request)
+    public function getSearchValue(PaginateRequestInterface $request)
     {
         if (empty($request->q) || ! is_string($request->q)) {
             return null;
@@ -123,10 +123,10 @@ trait WithPagination
     /**
      * Return the page size value from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getPageSize(IndexRequestInterface $request)
+    public function getPageSize(PaginateRequestInterface $request)
     {
         if (
             empty($request->page_size) ||
@@ -141,10 +141,10 @@ trait WithPagination
     /**
      * Return the sort from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getSort(IndexRequestInterface $request)
+    public function getSort(PaginateRequestInterface $request)
     {
         $default_order_by_columns = $this->repository
             ->getDefaultOrderByColumns();
@@ -179,10 +179,10 @@ trait WithPagination
     /**
      * Return the pagination data from a given request.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return array
      */
-    public function getPaginationData(IndexRequestInterface $request)
+    public function getPaginationData(PaginateRequestInterface $request)
     {
         return [
             'filter_map' => $this->getMapFilterValues($request),
