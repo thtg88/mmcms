@@ -45,7 +45,7 @@ class ResourceService implements ResourceServiceInterface
             config('app.timezone')
         );
 
-        return $this->repository->getByUserIdAndDateFilter(
+        return $this->repository->dateFilter(
             $start_date,
             $end_date
         );
