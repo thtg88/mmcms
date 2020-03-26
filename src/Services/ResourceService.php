@@ -31,17 +31,17 @@ class ResourceService implements ResourceServiceInterface
      */
     public function dateFilter(DateFilterRequestInterface $request)
     {
-        $input = $request->only(['start', 'end']);
+        $data = $request->only(['start', 'end']);
 
         // Convert start and end date to object to be accepted by the repository
         $start_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
-            $input['start'].' 00:00:00',
+            $data['start'].' 00:00:00',
             config('app.timezone')
         );
         $end_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
-            $input['end'].' 00:00:00',
+            $data['end'].' 00:00:00',
             config('app.timezone')
         );
 
