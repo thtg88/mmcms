@@ -1,0 +1,32 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummySuperNamespace\StoreRequest as BaseStoreRequest;
+use App\Repositories\DummyRepository;
+
+class StoreRequest extends BaseStoreRequest
+{
+    /**
+     * Create a new request instance.
+     *
+     * @param \App\Repositories\DummyRepository $repository
+     * @return void
+     */
+    public function __construct(DummyRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+}

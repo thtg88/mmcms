@@ -1,0 +1,40 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummySuperNamespace\UpdateRequest as BaseUpdateRequest;
+use App\Repositories\DummyRepository;
+
+class UpdateRequest extends BaseUpdateRequest
+{
+    /**
+     * Create a new request instance.
+     *
+     * @param \App\Repositories\DummyRepository $repository
+     * @return void
+     */
+    public function __construct(DummyRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        $all_rules = [
+            //
+        ];
+
+        // Get input
+        $input = $this->all();
+
+        // Get necessary rules based on input (same keys basically)
+        $rules = array_intersect_key($all_rules, $input);
+
+        return $rules;
+    }
+}
