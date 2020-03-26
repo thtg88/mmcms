@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class DestroyRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+
+class DestroyRequest extends Request implements DestroyRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.

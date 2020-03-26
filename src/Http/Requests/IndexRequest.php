@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class IndexRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
+
+class IndexRequest extends Request implements IndexRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.
