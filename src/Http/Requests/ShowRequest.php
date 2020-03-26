@@ -13,6 +13,6 @@ class ShowRequest extends Request implements ShowRequestInterface
      */
     public function authorize()
     {
-        return true;
+        return $this->authorizeResourceExist();
     }
 }
