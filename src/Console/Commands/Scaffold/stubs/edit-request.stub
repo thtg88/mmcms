@@ -1,0 +1,20 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummySuperNamespace\EditRequest as BaseEditRequest;
+use App\Repositories\DummyRepository;
+
+class EditRequest extends BaseEditRequest
+{
+    /**
+     * Create a new request instance.
+     *
+     * @param \App\Repositories\DummyRepository $repository
+     * @return void
+     */
+    public function __construct(DummyRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+}
