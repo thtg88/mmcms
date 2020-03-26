@@ -107,12 +107,18 @@ class Controller extends BaseController
      */
     public function show(ShowRequest $request, $id)
     {
-        $resource_name = str_singular($this->repository->getName());
+        $resource_name = ucwords(
+            str_replace(
+                '_',
+                ' ',
+                str_singular($this->repository->getName())
+            )
+        );
 
-        // Get resource
-        $resource = $this->repository->find($id);
+        $resource = $this->service->show($id);
+
         if ($resource === null) {
-            abort(404, ucwords(str_replace('_', ' ', $resource_name)).' not found.');
+            abort(404, $resource_name.' not found.');
         }
 
         return response()->json(['resource' => $resource]);
