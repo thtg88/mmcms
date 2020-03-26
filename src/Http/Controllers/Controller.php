@@ -78,8 +78,7 @@ class Controller extends BaseController
      */
     public function index(IndexRequest $request)
     {
-        // Get resources
-        $resources = $this->repository->all();
+        $resources = $this->service->getRepository()->all();
 
         return response()->json(['resources' => $resources]);
     }
@@ -105,7 +104,7 @@ class Controller extends BaseController
      */
     public function search(SearchRequest $request)
     {
-        $resources = $this->repository->search($request->q);
+        $resources = $this->service->getRepository()->search($request->q);
 
         return response()->json(['resources' => $resources]);
     }
