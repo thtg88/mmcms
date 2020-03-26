@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Services;
 
+use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
@@ -11,6 +12,15 @@ use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 
 interface ResourceServiceInterface
 {
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     * @todo move to service
+     */
+    public function dateFilter(DateFilterRequestInterface $request);
+
     /**
      * Deletes a model instance from a given id.
      *
