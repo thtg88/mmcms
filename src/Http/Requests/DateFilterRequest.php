@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
-
-class SearchRequest extends Request implements SearchRequestInterface
+class DateFilterRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +22,8 @@ class SearchRequest extends Request implements SearchRequestInterface
     public function rules()
     {
         return [
-            'q' => 'requrired|string|min:2|max:255'
+            'start' => 'nullable|string|date_format:Y-m-d',
+            'end' => 'nullable|string|date_format:Y-m-d',
         ];
     }
 }
