@@ -2,8 +2,9 @@
 
 namespace Thtg88\MmCms\Services;
 
+use Carbon\Carbon;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
-use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
@@ -20,6 +21,35 @@ class ResourceService implements ResourceServiceInterface
      * @var \Thtg88\MmCms\Repositories\RepositoryInterface
      */
     protected $repository;
+
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     * @todo move to service
+     */
+    public function dateFilter(DateFilterRequestInterface $request)
+    {
+        $data = $request->only(['start', 'end']);
+
+        // Convert start and end date to object to be accepted by the repository
+        $start_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['start'].' 00:00:00',
+            config('app.timezone')
+        );
+        $end_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['end'].' 00:00:00',
+            config('app.timezone')
+        );
+
+        return $this->repository->dateFilter(
+            $start_date,
+            $end_date
+        );
+    }
 
     /**
      * Deletes a model instance from a given id.
@@ -72,10 +102,10 @@ class ResourceService implements ResourceServiceInterface
     /**
      * Return all the model instances.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return \Illuminate\Support\Collection
      */
-    public function index(IndexRequestInterface $request)
+    public function paginate(PaginateRequestInterface $request)
     {
         // Get input
         $input = $request->only([
@@ -202,5 +232,35 @@ class ResourceService implements ResourceServiceInterface
         $data = $request->validated();
 
         return $this->repository->update($id, $data);
+    }
+
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     * @todo move to service
+     */
+    public function userDateFilter(DateFilterRequestInterface $request)
+    {
+        $data = $request->only(['start', 'end']);
+
+        // Convert start and end date to object to be accepted by the repository
+        $start_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['start'].' 00:00:00',
+            config('app.timezone')
+        );
+        $end_date = Carbon::createFromFormat(
+            'Y-m-d H:i:s',
+            $data['end'].' 00:00:00',
+            config('app.timezone')
+        );
+
+        return $this->repository->getByUserIdAndDateFilter(
+            $request->user()->id,
+            $start_date,
+            $end_date
+        );
     }
 }

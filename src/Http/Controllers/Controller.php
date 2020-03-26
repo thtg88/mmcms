@@ -6,7 +6,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-// Requests
+use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -16,7 +20,10 @@ use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests,
+        DispatchesJobs,
+        ValidatesRequests,
+        Concerns\WithBindings;
 
     /**
      * The controller repository.
@@ -26,103 +33,103 @@ class Controller extends BaseController
     protected $repository;
 
     /**
+     * The service implementation.
+     *
+     * @var \App\Http\Requests\Contracts\ResourceServiceInterface
+     */
+    protected $service;
+
+    /**
+     * Display a listing of the resource filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function dateFilter(DateFilterRequestInterface $request)
+    {
+        $resources = $this->service->dateFilter($request);
+
+        return response()->json(['resources' => $resources]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param \App\Http\Requests\Contracts\DestroyRequestInterface $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(DestroyRequestInterface $request, $id)
+    {
+        // Destroy resource
+        $resource = $this->service->destroy($request, $id);
+
+        return response()->json([
+            'success' => true,
+            'resource' => $resource,
+        ]);
+    }
+
+    /**
      * Display a listing of the resources.
      *
-     * @param \Thtg88\MmCms\Http\Requests\IndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\IndexRequest $request
      * @return \Illuminate\Http\Response
      */
     public function index(IndexRequest $request)
     {
-        // Get resources
-        $resources = $this->repository->all();
+        $resources = $this->service->getRepository()->all();
 
-        $response_data = ['resources' => $resources];
-
-        return response()->json($response_data);
+        return response()->json(['resources' => $resources]);
     }
 
     /**
      * Display a paginated listing of the resources.
      *
-     * @param \Thtg88\MmCms\Http\Requests\PaginateRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\PaginateRequest $request
      * @return \Illuminate\Http\Response
      */
     public function paginate(PaginateRequest $request)
     {
-        // Get input
-        $input = $request->only([
-            'page',
-            'page_size',
-            'q',
-            'sort_direction',
-            'sort_name',
-        ]);
+        $resources = $this->service->paginate($request);
 
-        if (!array_key_exists('page', $input) || $input['page'] === null) {
-            $input['page'] = 1;
-        }
-
-        if (!array_key_exists('page_size', $input) || $input['page_size'] === null) {
-            $input['page_size'] = config('mmcms.pagination.page_size');
-        }
-
-        if (!array_key_exists('q', $input)) {
-            $q = null;
-        } else {
-            $q = $input['q'];
-        }
-
-        if (empty($input['sort_name'])) {
-            $input['sort_name'] = null;
-        }
-
-        if (empty($input['sort_direction'])) {
-            $input['sort_direction'] = null;
-        }
-
-        // Get resources
-        $resources = $this->repository->paginate(
-            $input['page_size'],
-            $input['page'],
-            $q,
-            $input['sort_name'],
-            $input['sort_direction']
-        );
-
-        $response_data = $resources;
-
-        return response()->json($response_data);
+        return response()->json($resources);
     }
 
     /**
      * Search for the specified resource in storage.
      *
-     * @param \Thtg88\MmCms\Http\Requests\SearchRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\SearchRequest $request
      * @return \Illuminate\Http\Response
      */
     public function search(SearchRequest $request)
     {
-        // Get resources
-        $resources = $this->repository->search($request->q);
+        $resources = $this->service->getRepository()->search($request->q);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json(['resources' => $resources]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \Thtg88\MmCms\Http\Requests\ShowRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\ShowRequest $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(ShowRequest $request, $id)
     {
-        $resource_name = str_singular($this->repository->getName());
+        $resource_name = ucwords(
+            str_replace(
+                '_',
+                ' ',
+                str_singular($this->repository->getName())
+            )
+        );
 
-        // Get resource
-        $resource = $this->repository->find($id);
+        $resource = $this->service->show($id);
+
         if ($resource === null) {
-            abort(404, ucwords(str_replace('_', ' ', $resource_name)).' not found.');
+            abort(404, $resource_name.' not found.');
         }
 
         return response()->json(['resource' => $resource]);
@@ -132,27 +139,55 @@ class Controller extends BaseController
      * Display a listing of the resource belonging to the user,
      * filtered by a given start and end date.
      *
-     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
      * @return \Illuminate\Http\Response
      */
-    public function userDateFilter(UserDateFilterRequest $request)
+    public function userDateFilter(DateFilterRequestInterface $request)
     {
-        $input = $request->only(['start', 'end']);
+        $resources = $this->service->userDateFilter($request);
 
-        // Convert start and end date to object to be accepted by the repository.
-        $start_date = Carbon::createFromFormat('Y-m-d H:i:s', $input['start'], 'Europe/London');
-        $end_date = Carbon::createFromFormat('Y-m-d H:i:s', $input['end'], 'Europe/London');
+        return response()->json(['resources' => $resources]);
+    }
 
-        // Get resources
-        $resources = $this->repository->getByUserIdAndDateFilter($request->user()->id, $start_date, $end_date);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests\Contracts\StoreRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRequestInterface $request)
+    {
+        // Store resource
+        $resource = $this->service->store($request);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json([
+            'success' => true,
+            'resource' => $resource,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\Contracts\UpdateRequestInterface $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequestInterface $request, $id)
+    {
+        // Update resource
+        $resource = $this->service->update($request, $id);
+
+        return response()->json([
+            'success', true,
+            'resource', $resource,
+        ]);
     }
 
     /**
      * Display a listing of the resource belonging to the user.
      *
-     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest $request
      * @return \Illuminate\Http\Response
      */
     public function userIndex(UserIndexRequest $request)
@@ -160,6 +195,16 @@ class Controller extends BaseController
         // Get resources
         $resources = $this->repository->getByUserId($request->user()->id);
 
-        return response()->json(['resources' => $resources, ]);
+        return response()->json(['resources' => $resources]);
+    }
+
+    /**
+     * Return the service name.
+     *
+     * @return string
+     */
+    protected function getServiceName()
+    {
+        return $this->service->getName();
     }
 }

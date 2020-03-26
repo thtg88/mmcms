@@ -250,13 +250,16 @@ class Repository implements RepositoryInterface
      * >2. If more than 2 columns are specified, the ones after the second
      * are ignored, and scenario 2 applies.
      *
-     * @param \Carbon\Carbon $start_date     The start date.
-     * @param \Carbon\Carbon $end_date       The end date.
+     * @param \Carbon\Carbon $start_date The start date.
+     * @param \Carbon\Carbon $end_date The end date.
      * @return \Illuminate\Support\Collection
      */
-    public function getByDateFilter(Carbon $start_date, Carbon $end_date)
+    public function dateFilter(Carbon $start_date, Carbon $end_date)
     {
-        if (!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns)) {
+        if (
+            ! isset(static::$date_filter_columns) ||
+            ! is_array(static::$date_filter_columns)
+        ) {
             // If no date filter columns set
             return collect([]);
         }
@@ -270,20 +273,37 @@ class Repository implements RepositoryInterface
                 break;
             case 1:
                 // The filter is applied in the form of $start_date <= $date_filter_columns[0] < $end_date
-                $result = $this->model->where(static::$date_filter_columns[0], '>=', $start_date->toDateTimeString())
-                    ->where(static::$date_filter_columns[0], '<', $end_date->toDateTimeString());
+                $result = $this->model->where(
+                    static::$date_filter_columns[0],
+                    '>=',
+                    $start_date->toDateTimeString()
+                )->where(
+                    static::$date_filter_columns[0],
+                    '<',
+                    $end_date->toDateTimeString()
+                );
                 break;
             case 2:
             default:
                 // Check if date intervals are overlapping (excluding the edges)
                 // $date_filter_columns[0] < $end_date && $date_filter_columns[1] > $start_date
-                $result = $this->model->where(static::$date_filter_columns[0], '<', $end_date)
-                    ->where(static::$date_filter_columns[1], '>', $start_date);
+                $result = $this->model->where(
+                    static::$date_filter_columns[0],
+                    '<',
+                    $end_date
+                )->where(
+                    static::$date_filter_columns[1],
+                    '>',
+                    $start_date
+                );
                 break;
         }
 
         // Order by clause
-        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+        if (
+            is_array(static::$order_by_columns) &&
+            count(static::$order_by_columns) > 0
+        ) {
             foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
@@ -295,7 +315,7 @@ class Repository implements RepositoryInterface
     /**
      * Return all the resources belonging to a given user id.
      *
-     * @param int $user_id        The id of the user.
+     * @param int $user_id The id of the user.
      * @return \Illuminate\Support\Collection
      */
     public function getByUserId($user_id)
