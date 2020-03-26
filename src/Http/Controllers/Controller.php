@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 // Requests
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -78,49 +79,9 @@ class Controller extends BaseController
      */
     public function paginate(PaginateRequest $request)
     {
-        // Get input
-        $input = $request->only([
-            'page',
-            'page_size',
-            'q',
-            'sort_direction',
-            'sort_name',
-        ]);
+        $resources = $this->service->paginate($request);
 
-        if (!array_key_exists('page', $input) || $input['page'] === null) {
-            $input['page'] = 1;
-        }
-
-        if (!array_key_exists('page_size', $input) || $input['page_size'] === null) {
-            $input['page_size'] = config('mmcms.pagination.page_size');
-        }
-
-        if (!array_key_exists('q', $input)) {
-            $q = null;
-        } else {
-            $q = $input['q'];
-        }
-
-        if (empty($input['sort_name'])) {
-            $input['sort_name'] = null;
-        }
-
-        if (empty($input['sort_direction'])) {
-            $input['sort_direction'] = null;
-        }
-
-        // Get resources
-        $resources = $this->repository->paginate(
-            $input['page_size'],
-            $input['page'],
-            $q,
-            $input['sort_name'],
-            $input['sort_direction']
-        );
-
-        $response_data = $resources;
-
-        return response()->json($response_data);
+        return response()->json($resources);
     }
 
     /**
