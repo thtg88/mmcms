@@ -8,6 +8,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -135,6 +136,23 @@ class Controller extends BaseController
         $resources = $this->repository->getByUserIdAndDateFilter($request->user()->id, $start_date, $end_date);
 
         return response()->json(['resources' => $resources]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \App\Http\Requests\Contracts\StoreRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRequestInterface $request)
+    {
+        // Store resource
+        $resource = $this->service->store($request);
+
+        return response()->json([
+            'success' => true,
+            'resource' => $resource,
+        ]);
     }
 
     /**
