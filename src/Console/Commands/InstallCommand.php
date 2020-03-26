@@ -193,30 +193,43 @@ class InstallCommand extends Command
      */
     private function addPassportRoutes(FileSystem $filesystem)
     {
-        // Check that Auth service provider exists
-        if (file_exists(app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'))) {
-            // Get Auth service provider content as string
-            $str = file_get_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'));
-
-            if ($str !== false) {
-                // Add Passport routes
-                if (
-                    strpos($str, 'Passport::routes();') === false
-                    && strpos($str, '$this->mapWebRoutes();') !== false
-                ) {
-                    $passport_str = '$this->mapWebRoutes();'.PHP_EOL.PHP_EOL;
-                    $passport_str .= "\t\t\Laravel\Passport\Passport::routes();";
-                    $str = str_replace('$this->mapWebRoutes();', $passport_str, $str);
-                }
-
-                file_put_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'), $str);
-            }
-        } else {
+        // Check that Route service provider exists
+        if (! file_exists(
+            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+        )) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
-            $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Auth service provider.');
+            $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Route service provider.');
+
+            return;
         }
+
+        // Get Route service provider content as string
+        $str = file_get_contents(
+            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+        );
+
+        if ($str === false) {
+            return;
+        }
+
+        // Add Passport routes
+        if (
+            strpos($str, 'Passport::routes();') === false
+            && strpos($str, '$this->mapWebRoutes();') !== false
+        ) {
+            $passport_str = '$this->mapWebRoutes();'.PHP_EOL.PHP_EOL;
+            $passport_str .= "\t\t\Laravel\Passport\Passport::routes();";
+            $str = str_replace('$this->mapWebRoutes();', $passport_str, $str);
+        }
+
+        file_put_contents(
+            app_path(
+                'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'
+            ),
+            $str
+        );
     }
 
     /**
