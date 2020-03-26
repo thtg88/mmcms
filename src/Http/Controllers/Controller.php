@@ -16,7 +16,10 @@ use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests,
+        DispatchesJobs,
+        ValidatesRequests,
+        Concerns\WithBindings;
 
     /**
      * The controller repository.
