@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
-// Repositories
 use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 

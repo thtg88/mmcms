@@ -5,11 +5,9 @@ namespace Thtg88\MmCms;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-// Passport Commmands
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
 use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
-// MmCms Imports
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\RepositoryMakeCommand;

@@ -6,15 +6,12 @@ use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
-// Controllers
 use Thtg88\MmCms\Http\Controllers\Controller;
-// Requests
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
 use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
 use Thtg88\MmCms\Http\Requests\Auth\RegisterRequest;
 use Thtg88\MmCms\Http\Requests\Auth\TokenRequest;
 use Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\OauthRefreshTokenRepository;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
