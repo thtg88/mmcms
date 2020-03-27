@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentValidationRuleAdditionalFieldType;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\StoreRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository;
 
 class StoreContentValidationRuleAdditionalFieldTypeRequest extends StoreRequest

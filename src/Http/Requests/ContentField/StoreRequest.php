@@ -3,12 +3,12 @@
 namespace Thtg88\MmCms\Http\Requests\ContentField;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\StoreRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
-class StoreRequest extends StoreRequest
+class StoreRequest extends BaseStoreRequest
 {
     /**
      * Create a new request instance.

@@ -4,10 +4,10 @@ namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
-use Thtg88\MmCms\Http\Requests\StoreRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class StoreRequest extends StoreRequest
+class StoreRequest extends BaseStoreRequest
 {
     /**
      * Create a new request instance.
