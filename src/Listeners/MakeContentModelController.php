@@ -29,27 +29,51 @@ class MakeContentModelController
         $model_name = Str::studly($event->content_model->name);
         $controller_name = $model_name.'Controller';
 
-        if (!class_exists($controller_name)) {
-            \Artisan::call('make:controller', [
-                'name' => $controller_name,
-            ]);
-
-            if (file_exists(app_path('Http/Controllers/'.$controller_name.'.php'))) {
-                $file_content = file_get_contents(app_path('Http/Controllers/'.$controller_name.'.php'));
-
-                if ($file_content !== false) {
-                    $replace_content = $this->getContentModelControllerAdditionalContent($model_name);
-
-                    $file_content = str_replace('//', $replace_content, $file_content);
-
-                    $replace_content = $this->getContentModelControllerImports($model_name);
-
-                    $file_content = str_replace('use Illuminate\Http\Request;', $replace_content, $file_content);
-
-                    file_put_contents(app_path('Http/Controllers/'.$controller_name.'.php'), $file_content);
-                }
-            }
+        if (class_exists($controller_name)) {
+            return;
         }
+
+        \Artisan::call('make:controller', [
+            'name' => $controller_name,
+        ]);
+
+        if (
+            ! file_exists(
+                Container::getInstance()
+                    ->path('Http/Controllers/'.$controller_name.'.php')
+            )
+        ) {
+            return;
+        }
+
+        $file_content = file_get_contents(
+            Container::getInstance()
+                ->path('Http/Controllers/'.$controller_name.'.php')
+        );
+
+        if ($file_content === false) {
+            return;
+        }
+
+        $replace_content = $this->getContentModelControllerAdditionalContent(
+            $model_name
+        );
+
+        $file_content = str_replace('//', $replace_content, $file_content);
+
+        $replace_content = $this->getContentModelControllerImports($model_name);
+
+        $file_content = str_replace(
+            'use Illuminate\Http\Request;',
+            $replace_content,
+            $file_content
+        );
+
+        file_put_contents(
+            Container::getInstance()
+                ->path('Http/Controllers/'.$controller_name.'.php'),
+            $file_content
+        );
     }
 
     /**

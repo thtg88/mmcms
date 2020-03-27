@@ -24,7 +24,7 @@ class MakeContentModelModel
      * @param \Thtg88\MmCms\Events\ContentModelStored $event
      * @return void
      */
-    public function handle(ContentModelStored $event)
+    public function handle(ContentModelStored $event): void
     {
         $model_name = Str::studly($event->content_model->name);
 
@@ -32,17 +32,26 @@ class MakeContentModelModel
             'name' => $model_name,
         ]);
 
-        if (file_exists(app_path($model_name.'.php'))) {
-            $file_content = file_get_contents(app_path($model_name.'.php'));
-
-            if ($file_content !== false) {
-                $replace_content = $this->getContentModelModelAdditionalContent($event->content_model->table_name);
-
-                $file_content = str_replace('//', $replace_content, $file_content);
-
-                file_put_contents(app_path($model_name.'.php'), $file_content);
-            }
+        if (! file_exists(Container::getInstance()->path($model_name.'.php'))) {
+            return;
         }
+
+        $file_content = file_get_contents(Container::getInstance()->path($model_name.'.php'));
+
+        if ($file_content === false) {
+            return;
+        }
+
+        $replace_content = $this->getContentModelModelAdditionalContent(
+            $event->content_model->table_name
+        );
+
+        $file_content = str_replace('//', $replace_content, $file_content);
+
+        file_put_contents(
+            Container::getInstance()->path($model_name.'.php'),
+            $file_content
+        );
     }
 
     /**
@@ -51,7 +60,7 @@ class MakeContentModelModel
      * @param string $table_name
      * @return string
      */
-    private function getContentModelModelAdditionalContent($table_name)
+    private function getContentModelModelAdditionalContent($table_name): string
     {
         $content = '';
         $content .= "/**".PHP_EOL;
