@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentValidationRuleAdditionalFieldType;
 
-use Thtg88\MmCms\Http\Requests\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\DestroyRequest as BaseDestroyRequest;
 use Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository;
 
 class DestroyContentValidationRuleAdditionalFieldTypeRequest extends DestroyRequest

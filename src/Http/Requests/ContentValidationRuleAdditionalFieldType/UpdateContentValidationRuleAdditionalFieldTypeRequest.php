@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentValidationRuleAdditionalFieldType;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\UpdateRequest;
+use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository;
 
 class UpdateContentValidationRuleAdditionalFieldTypeRequest extends UpdateRequest

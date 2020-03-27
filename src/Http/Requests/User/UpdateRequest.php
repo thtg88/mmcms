@@ -3,10 +3,10 @@
 namespace Thtg88\MmCms\Http\Requests\User;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\UpdateRequest;
+use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\UserRepository;
 
-class UpdateRequest extends UpdateRequest
+class UpdateRequest extends BaseUpdateRequest
 {
     /**
      * Create a new request instance.
