@@ -5,8 +5,6 @@ namespace Thtg88\MmCms\Listeners;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
 use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Filesystem\Filesystem;
 
 class MakeContentModelMigration

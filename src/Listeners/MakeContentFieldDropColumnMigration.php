@@ -3,9 +3,7 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Filesystem\Filesystem;
 
 class MakeContentFieldDropColumnMigration
