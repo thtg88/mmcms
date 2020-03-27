@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
 

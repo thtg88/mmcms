@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Console\Commands;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
@@ -146,7 +147,7 @@ class InstallCommand extends Command
     private function extendUserModel()
     {
         // Check that file exists
-        if (! file_exists(app_path('User.php'))) {
+        if (! file_exists(Container::getInstance()->path('User.php'))) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'User.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
@@ -157,7 +158,7 @@ class InstallCommand extends Command
         }
 
         // Get model's content as string
-        $str = file_get_contents(app_path('User.php'));
+        $str = file_get_contents(Container::getInstance()->path('User.php'));
 
         if ($str === false) {
             return;
@@ -190,7 +191,7 @@ class InstallCommand extends Command
             );
         }
 
-        file_put_contents(app_path('User.php'), $str);
+        file_put_contents(Container::getInstance()->path('User.php'), $str);
     }
 
     /**
@@ -217,7 +218,7 @@ class InstallCommand extends Command
     {
         // Check that Route service provider exists
         if (! file_exists(
-            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+            Container::getInstance()->path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
         )) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php". Did you move this file?');
@@ -229,7 +230,7 @@ class InstallCommand extends Command
 
         // Get Route service provider content as string
         $str = file_get_contents(
-            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+            Container::getInstance()->path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
         );
 
         if ($str === false) {
@@ -247,7 +248,7 @@ class InstallCommand extends Command
         }
 
         file_put_contents(
-            app_path(
+            Container::getInstance()->path(
                 'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'
             ),
             $str
@@ -263,7 +264,7 @@ class InstallCommand extends Command
     {
         // Check that exception handler is in the standard Laravel place
         if (! file_exists(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
         )) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Exceptions'.DIRECTORY_SEPARATOR.'Handler.php". Did you move this file?');
@@ -274,7 +275,7 @@ class InstallCommand extends Command
 
         // Get exceptions handler content as string
         $str = file_get_contents(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
         );
 
         if (
@@ -301,7 +302,7 @@ class InstallCommand extends Command
         );
 
         file_put_contents(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
             $str
         );
     }
