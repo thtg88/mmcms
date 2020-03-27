@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -76,7 +76,7 @@ class PublishModuleCommand extends Command
     {
         $module_directory = base_path('vendor/thtg88/mmcms/'.$module_name);
 
-        if (!$this->filesystem->isDirectory($module_directory)) {
+        if (! $this->filesystem->isDirectory($module_directory)) {
             return $this->error('Module '.$module_name.' not found.');
         }
 
@@ -94,7 +94,11 @@ class PublishModuleCommand extends Command
                 return $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
             }
 
-            $location = str_replace('\\', DIRECTORY_SEPARATOR, substr($namespace, strlen($appNamespace)));
+            $location = str_replace(
+                '\\',
+                DIRECTORY_SEPARATOR,
+                substr($namespace, strlen($appNamespace))
+            );
 
             if (
                 ! $this->filesystem
@@ -110,8 +114,14 @@ class PublishModuleCommand extends Command
             $destination_path = Container::getInstance()
                 ->path($location.DIRECTORY_SEPARATOR.$filename);
 
-            if (!$this->filesystem->exists($destination_path) || $this->option('force')) {
-                $this->filesystem->put($destination_path, $this->filesystem->get($source_file));
+            if (
+                ! $this->filesystem->exists($destination_path) ||
+                $this->option('force')
+            ) {
+                $this->filesystem->put(
+                    $destination_path,
+                    $this->filesystem->get($source_file)
+                );
             } else {
                 $this->warn($source_file.' of module '.$this->argument('module').' already exists. Run the command with option --force to overwrite.');
             }
