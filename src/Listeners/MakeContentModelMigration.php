@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use DB;
 use Thtg88\MmCms\Events\ContentModelStored;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +32,7 @@ class MakeContentModelMigration
         $migration_name = 'create_'.$table_name.'_table';
 
         // We check if we have already a migration with the same name
-        $migration = \DB::table('migrations')
+        $migration = DB::table('migrations')
             ->where('migration', 'like', '%'.$migration_name.'%')
             ->first();
 

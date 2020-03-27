@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use DB;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 
@@ -88,7 +89,7 @@ class DropDatabaseCommand extends Command
             $default_database_connection
         );
 
-        \DB::statement('CREATE DATABASE '.$database_name.';');
+        DB::statement('CREATE DATABASE '.$database_name.';');
     }
 
     /**
@@ -109,11 +110,11 @@ class DropDatabaseCommand extends Command
             static function ($database) {
                 return $database->datname;
             },
-            \DB::select('SELECT datname FROM pg_database')
+            DB::select('SELECT datname FROM pg_database')
         );
 
         if (array_search($database_name, $databases) !== false) {
-            \DB::statement('DROP DATABASE '.$database_name.';');
+            DB::statement('DROP DATABASE '.$database_name.';');
             return;
         }
 
@@ -137,11 +138,11 @@ class DropDatabaseCommand extends Command
             static function ($database) {
                 return $database->Database;
             },
-            \DB::select('SHOW DATABASES;')
+            DB::select('SHOW DATABASES;')
         );
 
         if (array_search($database_name, $databases) !== false) {
-            \DB::statement('DROP DATABASE '.$database_name.';');
+            DB::statement('DROP DATABASE '.$database_name.';');
             return;
         }
 
