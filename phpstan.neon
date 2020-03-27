@@ -2,9 +2,9 @@ parameters:
     # The level 7 is the highest level
     level: 1
     ignoreErrors:
-        - '#Access to an undefined property App\\Models\\#'
-        - '#Function factory invoked with 1 parameter, 0 required.#'
-        - '#Function factory invoked with 2 parameters, 0 required.#'
-    # excludes_analyse:
-    #     - ./*/*/FileToBeExcluded.php
+        # - '#Access to an undefined property App\\Models\\#'
+        # - '#Function factory invoked with 1 parameter, 0 required.#'
+        # - '#Function factory invoked with 2 parameters, 0 required.#'
+    excludes_analyse:
+        - ./src/Http/Requests
     # checkMissingIterableValueType: false
