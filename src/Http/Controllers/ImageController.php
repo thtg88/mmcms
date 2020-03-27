@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 // Controllers
 use Thtg88\MmCms\Http\Controllers\Controller;
-// Helpers
 use Thtg88\MmCms\Helpers\FileHelper;
-// Repositories
 use Thtg88\MmCms\Repositories\ImageRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\Image\DestroyImageRequest;
 use Thtg88\MmCms\Http\Requests\Image\StoreImageRequest;
 use Thtg88\MmCms\Http\Requests\Image\UpdateImageRequest;

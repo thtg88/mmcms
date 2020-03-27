@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
 class DestroySeoEntryRequest extends DestroyRequest

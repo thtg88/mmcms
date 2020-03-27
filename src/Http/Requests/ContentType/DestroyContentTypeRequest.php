@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentType;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
 class DestroyContentTypeRequest extends DestroyRequest

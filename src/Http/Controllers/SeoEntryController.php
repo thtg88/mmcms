@@ -4,9 +4,7 @@ namespace Thtg88\MmCms\Http\Controllers;
 
 // Controllers
 use Thtg88\MmCms\Http\Controllers\Controller;
-// Repositories
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\SeoEntry\DestroySeoEntryRequest;
 use Thtg88\MmCms\Http\Requests\SeoEntry\RestoreSeoEntryRequest;
 use Thtg88\MmCms\Http\Requests\SeoEntry\StoreSeoEntryRequest;

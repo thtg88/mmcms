@@ -3,9 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
 use Illuminate\Validation\Rule;
-// Requests
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 
 class UpdateContentModelRequest extends UpdateRequest

@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\Request;
-// Repositories
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
 class RestoreImageCategoryRequest extends Request

@@ -2,12 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Events
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Thtg88\MmCms\Events\ContentFieldStored;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\ContentField\DestroyContentFieldRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\StoreContentFieldRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\UpdateContentFieldRequest;

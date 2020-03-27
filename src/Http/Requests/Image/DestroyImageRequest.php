@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\Image;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ImageRepository;
 
 class DestroyImageRequest extends DestroyRequest

@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\ContentType\DestroyContentTypeRequest;
 use Thtg88\MmCms\Http\Requests\ContentType\StoreContentTypeRequest;
 use Thtg88\MmCms\Http\Requests\ContentType\UpdateContentTypeRequest;
