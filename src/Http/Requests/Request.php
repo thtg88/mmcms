@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class Request extends FormRequest
 {

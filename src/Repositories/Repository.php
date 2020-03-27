@@ -159,7 +159,11 @@ class Repository implements RepositoryInterface
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {
-                app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
+                app('JournalEntryHelper')->createJournalEntry(
+                    null,
+                    $model,
+                    $data
+                );
             }
         }
 
