@@ -3,10 +3,10 @@
 namespace Thtg88\MmCms\Http\Requests\ContentValidationRuleAdditionalFieldType;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository;
 
-class UpdateContentValidationRuleAdditionalFieldTypeRequest extends UpdateRequest
+class StoreRequest extends BaseStoreRequest
 {
     /**
      * Create a new request instance.
@@ -26,11 +26,7 @@ class UpdateContentValidationRuleAdditionalFieldTypeRequest extends UpdateReques
      */
     public function authorize()
     {
-        if ($this->authorizeDeveloper() === false) {
-            return false;
-        }
-
-        return $this->authorizeResourceExist();
+        return $this->authorizeDeveloper();
     }
 
     /**
@@ -40,14 +36,13 @@ class UpdateContentValidationRuleAdditionalFieldTypeRequest extends UpdateReques
      */
     public function rules()
     {
-        $all_rules = [
+        return [
             'display_name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
+                    $query->whereNull('deleted_at');
                 }),
             ],
             'name' => [
@@ -55,18 +50,9 @@ class UpdateContentValidationRuleAdditionalFieldTypeRequest extends UpdateReques
                 'string',
                 'max:255',
                 Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
+                    $query->whereNull('deleted_at');
                 }),
             ],
         ];
-
-        // Get input
-        $input = $this->all();
-
-        // Get necessary rules based on input (same keys basically)
-        $rules = array_intersect_key($all_rules, $input);
-
-        return $rules;
     }
 }
