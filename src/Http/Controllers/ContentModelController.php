@@ -26,7 +26,7 @@ class ContentModelController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\ContentModelService $service
+     * @param \Thtg88\MmCms\Services\ContentModelService $service
      * @return void
      */
     public function __construct(ContentModelService $service)

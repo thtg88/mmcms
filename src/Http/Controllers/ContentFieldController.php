@@ -23,7 +23,7 @@ class ContentFieldController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\ContentFieldService $service
+     * @param \Thtg88\MmCms\Services\ContentFieldService $service
      * @return void
      */
     public function __construct(ContentFieldService $service)
