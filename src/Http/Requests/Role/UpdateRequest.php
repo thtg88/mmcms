@@ -3,10 +3,10 @@
 namespace Thtg88\MmCms\Http\Requests\Role;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\StoreRequest;
+use Thtg88\MmCms\Http\Requests\UpdateRequest;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
-class StoreRoleRequest extends StoreRequest
+class UpdateRequest extends UpdateRequest
 {
     /**
      * Create a new request instance.
@@ -26,13 +26,14 @@ class StoreRoleRequest extends StoreRequest
      */
     public function rules()
     {
-        return [
+        $all_rules = [
             'display_name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
+                    $query->whereNull('deleted_at')
+                        ->where('id', '<>', $this->route('id'));
                 }),
             ],
             'name' => [
@@ -40,7 +41,8 @@ class StoreRoleRequest extends StoreRequest
                 'string',
                 'max:255',
                 Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
+                    $query->whereNull('deleted_at')
+                        ->where('id', '<>', $this->route('id'));
                 }),
             ],
             'priority' => [
@@ -49,5 +51,13 @@ class StoreRoleRequest extends StoreRequest
                 'min:1',
             ],
         ];
+
+        // Get input
+        $input = $this->all();
+
+        // Get necessary rules based on input (same keys basically)
+        $rules = array_intersect_key($all_rules, $input);
+
+        return $rules;
     }
 }
