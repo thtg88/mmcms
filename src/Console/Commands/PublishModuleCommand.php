@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Console\Commands;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -95,14 +96,19 @@ class PublishModuleCommand extends Command
 
             $location = str_replace('\\', DIRECTORY_SEPARATOR, substr($namespace, strlen($appNamespace)));
 
-            if (!$this->filesystem->isDirectory(app_path($location))) {
-                $this->filesystem->makeDirectory(app_path($location));
+            if (
+                ! $this->filesystem
+                    ->isDirectory(Container::getInstance()->path($location))
+            ) {
+                $this->filesystem
+                    ->makeDirectory(Container::getInstance()->path($location));
             }
 
             $parts = explode(DIRECTORY_SEPARATOR, $source_file);
             $filename = end($parts);
 
-            $destination_path = app_path($location.DIRECTORY_SEPARATOR.$filename);
+            $destination_path = Container::getInstance()
+                ->path($location.DIRECTORY_SEPARATOR.$filename);
 
             if (!$this->filesystem->exists($destination_path) || $this->option('force')) {
                 $this->filesystem->put($destination_path, $this->filesystem->get($source_file));
