@@ -4,7 +4,7 @@ namespace Thtg88\MmCms\Helpers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\Auth;
 use Thtg88\MmCms\Repositories\JournalEntryRepository;
 
 /**
@@ -69,7 +69,7 @@ class JournalEntryHelper
         }
 
         // Get current authenticated user
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Build data array to save journal entry
         $data = [];
