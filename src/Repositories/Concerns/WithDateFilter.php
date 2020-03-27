@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use Illuminate\Database\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
 
 trait WithDateFilter
 {
