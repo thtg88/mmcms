@@ -11,7 +11,7 @@ use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
 use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
-use Thtg88\MmCms\Console\Commands\RepositoryMakeCommand;
+use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;

@@ -13,6 +13,13 @@ use Thtg88\MmCms\Repositories\ImageRepository;
 class ImageService extends ResourceService
 {
     /**
+     * The file helper implementation.
+     *
+     * @var \Thtg88\MmCms\Helpers\FileHelper
+     */
+    protected $file_helper;
+
+    /**
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageRepository $repository
@@ -37,7 +44,11 @@ class ImageService extends ResourceService
     {
         $data = $request->validated();
 
-        if ($request->hasFile('data') && $request->file('data')->isValid()) {
+        if (
+            array_key_exists('data', $data) &&
+            $request->hasFile('data') &&
+            $request->file('data')->isValid()
+        ) {
             // Get path from uploaded file
             $data['url'] = $this->file_helper
                 ->store($data['data'], $this->repository);

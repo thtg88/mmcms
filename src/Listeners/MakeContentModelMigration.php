@@ -4,11 +4,19 @@ namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Thtg88\MmCms\Events\ContentModelStored;
 
 class MakeContentModelMigration
 {
+    /**
+     * The file system implementation.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
     /**
      * Create the event listener.
      *
@@ -22,7 +30,7 @@ class MakeContentModelMigration
     /**
      * Handle the event.
      *
-     * @param ContentModelStored $event
+     * @param \Thtg88\MmCms\Events\ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -37,7 +45,7 @@ class MakeContentModelMigration
 
         if ($migration === null) {
             // If migration N/A we make it
-            \Artisan::call('make:migration', [
+            Artisan::call('make:migration', [
                 'name' => $migration_name,
                 '--create' => $table_name,
             ]);

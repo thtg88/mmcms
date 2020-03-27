@@ -2,9 +2,8 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use Illuminate\Support\Facades\Artisan;
 use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class DatabaseMigrate
 {
@@ -25,7 +24,7 @@ class DatabaseMigrate
      */
     public function handle()
     {
-        \Artisan::call('migrate', [
+        Artisan::call('migrate', [
             '--force' => true,
         ]);
     }

@@ -10,6 +10,13 @@ use Thtg88\MmCms\Repositories\UserRepository;
 class UserService extends ResourceService
 {
     /**
+     * The role repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     */
+    protected $roles;
+
+    /**
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository

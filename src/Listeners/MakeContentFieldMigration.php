@@ -4,10 +4,18 @@ namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
 use Thtg88\MmCms\Events\ContentFieldStored;
 
 class MakeContentFieldMigration
 {
+    /**
+     * The file system implementation.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
     /**
      * Create the event listener.
      *
@@ -21,7 +29,7 @@ class MakeContentFieldMigration
     /**
      * Handle the event.
      *
-     * @param ContentFieldStored $event
+     * @param \Thtg88\MmCms\Events\ContentFieldStored $event
      * @return void
      */
     public function handle(ContentFieldStored $event)
@@ -30,7 +38,7 @@ class MakeContentFieldMigration
         $migration_name = 'add_'.$event->content_field->name.'_column_to_'.$table_name.'_table';
 
         // If migration N/A we make it
-        \Artisan::call('make:migration', [
+        Artisan::call('make:migration', [
             'name' => $migration_name,
             '--table' => $table_name,
         ]);

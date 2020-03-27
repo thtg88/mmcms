@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
 
@@ -28,7 +29,7 @@ class MakeContentModelModel
     {
         $model_name = Str::studly($event->content_model->name);
 
-        \Artisan::call('make:model', [
+        Artisan::call('make:model', [
             'name' => $model_name,
         ]);
 
