@@ -26,7 +26,7 @@ class MakeContentModelModel
      */
     public function handle(ContentModelStored $event)
     {
-        $model_name = studly_case($event->content_model->name);
+        $model_name = Str::studly($event->content_model->name);
 
         \Artisan::call('make:model', [
             'name' => $model_name,
