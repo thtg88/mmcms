@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+use Illuminate\Container\Container;
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
@@ -36,7 +37,8 @@ class ContentFieldController extends Controller
         // Create
         $resource = $this->repository->create($input);
 
-        event(new ContentFieldStored($resource));
+        Container::getInstance()->make('events', [])
+            ->dispatch(new ContentFieldStored($resource));
 
         return response()->json([
             'success' => true,
@@ -56,7 +58,8 @@ class ContentFieldController extends Controller
         // Delete resource
         $resource = $this->repository->destroy($id);
 
-        event(new ContentFieldDestroyed($resource));
+        Container::getInstance()->make('events', [])
+            ->dispatch(new ContentFieldDestroyed($resource));
 
         return response()->json([
             'success' => true,
