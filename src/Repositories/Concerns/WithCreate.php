@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Models\JournalEntry;
 

@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Provide an enhanced searchQuery repository method to search for postcode
