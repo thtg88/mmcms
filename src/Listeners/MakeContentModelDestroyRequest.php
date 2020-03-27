@@ -29,31 +29,60 @@ class MakeContentModelDestroyRequest
         $model_name = Str::studly($event->content_model->name);
         $request_name = 'Destroy'.$model_name.'Request';
 
-        if (!class_exists($request_name)) {
-            \Artisan::call('make:request', [
-                'name' => $request_name,
-            ]);
-
-            if (file_exists(app_path('Http/Requests/'.$request_name.'.php'))) {
-                $file_content = file_get_contents(app_path('Http/Requests/'.$request_name.'.php'));
-
-                if ($file_content !== false) {
-                    $replace_content = $this->getContentModelRequestAuthorizeMethodContent();
-
-                    $file_content = str_replace('return false;', $replace_content, $file_content);
-
-                    $replace_content = $this->getContentModelRequestConstructor($model_name);
-
-                    $file_content = str_replace("class ".$request_name." extends FormRequest".PHP_EOL."{".PHP_EOL, $replace_content, $file_content);
-
-                    $replace_content = $this->getContentModelRequestImports($model_name);
-
-                    $file_content = str_replace('use Illuminate\Foundation\Http\FormRequest;', $replace_content, $file_content);
-
-                    file_put_contents(app_path('Http/Requests/'.$request_name.'.php'), $file_content);
-                }
-            }
+        if (class_exists($request_name)) {
+            return;
         }
+
+        \Artisan::call('make:request', [
+            'name' => $request_name,
+        ]);
+
+        if (
+            ! file_exists(
+                Container::getInstance()
+                    ->path('Http/Requests/'.$request_name.'.php')
+            )
+        ) {
+            return;
+        }
+
+        $file_content = file_get_contents(Container::getInstance()->path('Http/Requests/'.$request_name.'.php'));
+
+        if ($file_content === false) {
+            return;
+        }
+
+        $replace_content = $this->getContentModelRequestAuthorizeMethodContent();
+
+        $file_content = str_replace(
+            'return false;',
+            $replace_content,
+            $file_content
+        );
+
+        $replace_content = $this->getContentModelRequestConstructor(
+            $model_name
+        );
+
+        $file_content = str_replace(
+            'class '.$request_name.' extends FormRequest'.PHP_EOL.'{'.PHP_EOL,
+            $replace_content,
+            $file_content
+        );
+
+        $replace_content = $this->getContentModelRequestImports($model_name);
+
+        $file_content = str_replace(
+            'use Illuminate\Foundation\Http\FormRequest;',
+            $replace_content,
+            $file_content
+        );
+
+        file_put_contents(
+            Container::getInstance()
+                ->path('Http/Requests/'.$request_name.'.php'),
+            $file_content
+        );
     }
 
     /**
