@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Http\Request;
 // Controllers
 use Thtg88\MmCms\Http\Controllers\Controller;
@@ -59,7 +60,7 @@ class AuthController extends Controller
         $this->roles = $roles;
 
         $this->http_client = new Client([
-            'verify' => config('app.env') !== 'local'
+            'verify' => Config::get('app.env') !== 'local'
         ]);
     }
 
@@ -89,7 +90,9 @@ class AuthController extends Controller
             // If not found it means the first one is registering
 
             // Get developer role
-            $developer_role = $this->roles->findByModelName(config('mmcms.roles.developer_role_name'));
+            $developer_role = $this->roles->findByModelName(
+                Config::get('mmcms.roles.developer_role_name')
+            );
             if ($developer_role !== null) {
                 // If found - assign it to the user registering
                 $input['role_id'] = $developer_role->id;
@@ -98,7 +101,9 @@ class AuthController extends Controller
 
         if (!array_key_exists('role_id', $input)) {
             // Get user role
-            $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+            $user_role = $this->roles->findByModelName(
+                Config::get('mmcms.roles.user_role_name')
+            );
 
             if ($user_role !== null) {
                 // If found - assign it to the user registering
@@ -115,8 +120,12 @@ class AuthController extends Controller
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'password',
-                    'client_id' => config('mmcms.passport.password_client_id'),
-                    'client_secret' => config('mmcms.passport.password_client_secret'),
+                    'client_id' => Config::get(
+                        'mmcms.passport.password_client_id'
+                    ),
+                    'client_secret' => Config::get(
+                        'mmcms.passport.password_client_secret'
+                    ),
                     'username' => $request->get('email'),
                     'password' => $request->get('password'),
                     'remember' => false,
@@ -129,7 +138,10 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
+            $response = $this->http_client->post(
+                Config::get('mmcms.passport.oauth_url').'/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
@@ -170,8 +182,12 @@ class AuthController extends Controller
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'password',
-                    'client_id' => config('mmcms.passport.password_client_id'),
-                    'client_secret' => config('mmcms.passport.password_client_secret'),
+                    'client_id' => Config::get(
+                        'mmcms.passport.password_client_id'
+                    ),
+                    'client_secret' => Config::get(
+                        'mmcms.passport.password_client_secret'
+                    ),
                     'username' => $request->get('email'),
                     'password' => $request->get('password'),
                     'remember' => $request->get('remember'),
@@ -184,7 +200,10 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
+            $response = $this->http_client->post(
+                Config::get('mmcms.passport.oauth_url').'/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
@@ -257,8 +276,12 @@ class AuthController extends Controller
             $oauth_data = [
                 'form_params' => [
                     'grant_type' => 'refresh_token',
-                    'client_id' => config('mmcms.passport.password_client_id'),
-                    'client_secret' => config('mmcms.passport.password_client_secret'),
+                    'client_id' => Config::get(
+                        'mmcms.passport.password_client_id'
+                    ),
+                    'client_secret' => Config::get(
+                        'mmcms.passport.password_client_secret'
+                    ),
                     'refresh_token' => $request->get('refresh_token'),
                     'scope' => '',
                 ],
@@ -269,7 +292,10 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(config('mmcms.passport.oauth_url').'/oauth/token', $oauth_data);
+            $response = $this->http_client->post(
+                Config::get('mmcms.passport.oauth_url').'/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
@@ -307,7 +333,9 @@ class AuthController extends Controller
         $input = $request->all();
 
         // Get admin role
-        $admin_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+        $admin_role = $this->roles->findByModelName(
+            Config::get('mmcms.roles.user_role_name')
+        );
 
         $except = [
             'created_at',

@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Repositories;
 
 use Carbon\Carbon;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -154,7 +155,7 @@ class Repository implements RepositoryInterface
             $model = $this->find($model->id);
         }
 
-        if (config('mmcms.journal.mode') === true) {
+        if (Config::get('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {
@@ -181,7 +182,7 @@ class Repository implements RepositoryInterface
 
         // Check if a model uses discards, so I can log into journal
         if (in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model))) {
-            if (config('mmcms.journal.mode') === true) {
+            if (Config::get('mmcms.journal.mode') === true) {
                 app('JournalEntryHelper')->createJournalEntry('discard', $model, []);
             }
         }
@@ -483,8 +484,8 @@ class Repository implements RepositoryInterface
 
         return $result->paginate(
             $page_size,
-            config('mmcms.pagination.columns'),
-            config('mmcms.pagination.page_name'),
+            Config::get('mmcms.pagination.columns'),
+            Config::get('mmcms.pagination.page_name'),
             $page
         );
     }
@@ -556,7 +557,7 @@ class Repository implements RepositoryInterface
         // Re-fetch the model to reload all relations
         $model = $this->find($model->id);
 
-        if (config('mmcms.journal.mode') === true) {
+        if (Config::get('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {

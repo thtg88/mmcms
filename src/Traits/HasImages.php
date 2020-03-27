@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Traits;
 
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Models\ImageCategory;
 
 trait HasImages
@@ -14,7 +15,7 @@ trait HasImages
     public function images()
     {
         return $this->morphMany(
-            config('mmcms.models.namespace').'Image',
+            Config::get('mmcms.models.namespace').'Image',
             'target',
             'target_table'
         );

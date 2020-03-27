@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,6 +35,9 @@ class Model extends BaseModel
 
     public function journal_entries()
     {
-        return $this->morphMany(config('mmcms.models.namespace').'JournalEntry', 'target');
+        return $this->morphMany(
+            Config::get('mmcms.models.namespace').'JournalEntry',
+            'target'
+        );
     }
 }

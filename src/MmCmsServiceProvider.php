@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 // Passport Commmands
@@ -95,7 +96,7 @@ class MmCmsServiceProvider extends ServiceProvider
             return new MmCms();
         });
 
-        if (config('mmcms.journal.mode') === true) {
+        if (Config::get('mmcms.journal.mode') === true) {
             // Register journal entry helper
             $this->app->singleton('JournalEntryHelper', function ($app) {
                 // Get current request IP

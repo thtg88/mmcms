@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Services;
 
 use Carbon\Carbon;
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
@@ -37,12 +38,12 @@ class ResourceService implements ResourceServiceInterface
         $start_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $data['start'].' 00:00:00',
-            config('app.timezone')
+            Config::get('app.timezone')
         );
         $end_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $data['end'].' 00:00:00',
-            config('app.timezone')
+            Config::get('app.timezone')
         );
 
         return $this->repository->dateFilter(
@@ -131,7 +132,7 @@ class ResourceService implements ResourceServiceInterface
             $input['page_size'] === null ||
             filter_var($input['page_size'], FILTER_VALIDATE_INT) === false
         ) {
-            $input['page_size'] = config('app.pagination.page_size');
+            $input['page_size'] = Config::get('app.pagination.page_size');
         }
 
         $input['q'] = $this->getSearchValue($request);
@@ -249,12 +250,12 @@ class ResourceService implements ResourceServiceInterface
         $start_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $data['start'].' 00:00:00',
-            config('app.timezone')
+            Config::get('app.timezone')
         );
         $end_date = Carbon::createFromFormat(
             'Y-m-d H:i:s',
             $data['end'].' 00:00:00',
-            config('app.timezone')
+            Config::get('app.timezone')
         );
 
         return $this->repository->getByUserIdAndDateFilter(
