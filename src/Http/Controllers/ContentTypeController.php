@@ -26,7 +26,7 @@ class ContentTypeController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\ContentTypeService $service
+     * @param \Thtg88\MmCms\Services\ContentTypeService $service
      * @return void
      */
     public function __construct(ContentTypeService $service)

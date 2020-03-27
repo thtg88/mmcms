@@ -26,7 +26,7 @@ class ContentMigrationMethodController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\ContentMigrationMethodService $service
+     * @param \Thtg88\MmCms\Services\ContentMigrationMethodService $service
      * @return void
      */
     public function __construct(ContentMigrationMethodService $service)
