@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Helpers;
 
+use DB;
 use Illuminate\Config\Repository as Config;
 
 /**
@@ -23,7 +24,7 @@ class DatabaseHelper
         //  ],
         //  ...
         // ]
-        $tables = \DB::select('SHOW TABLES');
+        $tables = DB::select('SHOW TABLES');
 
         // Get the default connection
         $default_database_connection = Config::get('database.default');
