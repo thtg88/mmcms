@@ -32,7 +32,6 @@ class ContentFieldService extends ResourceService
     {
         $data = $request->validated();
 
-        // Create
         $resource = $this->repository->create($data);
 
         Container::getInstance()->make('events', [])
@@ -50,7 +49,6 @@ class ContentFieldService extends ResourceService
      */
     public function destroy(DestroyRequestInterface $request, $id)
     {
-        // Delete resource
         $resource = $this->repository->destroy($id);
 
         Container::getInstance()->make('events', [])
