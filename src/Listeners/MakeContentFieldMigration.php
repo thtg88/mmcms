@@ -2,13 +2,20 @@
 
 namespace Thtg88\MmCms\Listeners;
 
-use Thtg88\MmCms\Events\ContentFieldStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
+use Thtg88\MmCms\Events\ContentFieldStored;
 
 class MakeContentFieldMigration
 {
+    /**
+     * The file system implementation.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
     /**
      * Create the event listener.
      *
@@ -22,7 +29,7 @@ class MakeContentFieldMigration
     /**
      * Handle the event.
      *
-     * @param ContentFieldStored $event
+     * @param \Thtg88\MmCms\Events\ContentFieldStored $event
      * @return void
      */
     public function handle(ContentFieldStored $event)
@@ -31,13 +38,13 @@ class MakeContentFieldMigration
         $migration_name = 'add_'.$event->content_field->name.'_column_to_'.$table_name.'_table';
 
         // If migration N/A we make it
-        \Artisan::call('make:migration', [
+        Artisan::call('make:migration', [
             'name' => $migration_name,
             '--table' => $table_name,
         ]);
 
         // Then we get the last migration so we can insert our custom fields
-        $migrations = $this->filesystem->files(database_path('migrations'));
+        $migrations = $this->filesystem->files(Container::getInstance()->databasePath('migrations'));
 
         if (count($migrations) > 0) {
             $last_migration = $migrations[count($migrations) - 1].'';

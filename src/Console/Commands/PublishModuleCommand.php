@@ -2,9 +2,11 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class PublishModuleCommand extends Command
@@ -42,9 +44,14 @@ class PublishModuleCommand extends Command
         parent::__construct();
     }
 
-    public function fire()
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function fire(): void
     {
-        return $this->handle();
+        $this->handle();
     }
 
     /**
@@ -52,12 +59,13 @@ class PublishModuleCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $module_name = $this->argument('module');
 
         if (empty($module_name)) {
-            return $this->error('Module argument is mandatory.');
+            $this->error('Module argument is mandatory.');
+            return;
         }
 
         $this->copyAllFiles($module_name, $this->option('force'));
@@ -66,17 +74,17 @@ class PublishModuleCommand extends Command
     /**
      * Copy all the files from the given module name.
      *
-     * @param $module_name
-     * @param $force
-     *
-     * @return mixed
+     * @param string $module_name
+     * @param bool $force
+     * @return void
      */
-    protected function copyAllFiles($module_name, $force = false)
+    protected function copyAllFiles($module_name, $force = false): void
     {
-        $module_directory = base_path('vendor/thtg88/mmcms/'.$module_name);
+        $module_directory = Container::getInstance()->basePath('vendor/thtg88/mmcms/'.$module_name);
 
-        if (!$this->filesystem->isDirectory($module_directory)) {
-            return $this->error('Module '.$module_name.' not found.');
+        if (! $this->filesystem->isDirectory($module_directory)) {
+            $this->error('Module '.$module_name.' not found.');
+            return;
         }
 
         $all_files = $this->filesystem->allFiles($module_directory, true);
@@ -87,25 +95,41 @@ class PublishModuleCommand extends Command
                 'Thtg88\\MmCms\\Modules'
             );
 
-            $appNamespace = app()->getNamespace();
+            $appNamespace = Container::getInstance()->getNamespace();
 
-            if (!starts_with($namespace, $appNamespace)) {
-                return $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
+            if (! Str::startsWith($namespace, $appNamespace)) {
+                $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
+                return;
             }
 
-            $location = str_replace('\\', DIRECTORY_SEPARATOR, substr($namespace, strlen($appNamespace)));
+            $location = str_replace(
+                '\\',
+                DIRECTORY_SEPARATOR,
+                substr($namespace, strlen($appNamespace))
+            );
 
-            if (!$this->filesystem->isDirectory(app_path($location))) {
-                $this->filesystem->makeDirectory(app_path($location));
+            if (
+                ! $this->filesystem
+                    ->isDirectory(Container::getInstance()->path($location))
+            ) {
+                $this->filesystem
+                    ->makeDirectory(Container::getInstance()->path($location));
             }
 
             $parts = explode(DIRECTORY_SEPARATOR, $source_file);
             $filename = end($parts);
 
-            $destination_path = app_path($location.DIRECTORY_SEPARATOR.$filename);
+            $destination_path = Container::getInstance()
+                ->path($location.DIRECTORY_SEPARATOR.$filename);
 
-            if (!$this->filesystem->exists($destination_path) || $this->option('force')) {
-                $this->filesystem->put($destination_path, $this->filesystem->get($source_file));
+            if (
+                ! $this->filesystem->exists($destination_path) ||
+                $this->option('force')
+            ) {
+                $this->filesystem->put(
+                    $destination_path,
+                    $this->filesystem->get($source_file)
+                );
             } else {
                 $this->warn($source_file.' of module '.$this->argument('module').' already exists. Run the command with option --force to overwrite.');
             }

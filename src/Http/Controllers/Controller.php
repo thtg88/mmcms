@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -52,7 +54,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->dateFilter($request);
 
-        return response()->json(['resources' => $resources]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**
@@ -67,10 +71,9 @@ class Controller extends BaseController
         // Destroy resource
         $resource = $this->service->destroy($request, $id);
 
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**
@@ -83,7 +86,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->getRepository()->all();
 
-        return response()->json(['resources' => $resources]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**
@@ -96,7 +101,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->paginate($request);
 
-        return response()->json($resources);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json($resources);
     }
 
     /**
@@ -109,7 +116,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->getRepository()->search($request->q);
 
-        return response()->json(['resources' => $resources]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**
@@ -135,7 +144,9 @@ class Controller extends BaseController
             abort(404, $resource_name.' not found.');
         }
 
-        return response()->json(['resource' => $resource]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resource' => $resource]);
     }
 
     /**
@@ -149,7 +160,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->userDateFilter($request);
 
-        return response()->json(['resources' => $resources]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**
@@ -163,10 +176,9 @@ class Controller extends BaseController
         // Store resource
         $resource = $this->service->store($request);
 
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**
@@ -181,10 +193,9 @@ class Controller extends BaseController
         // Update resource
         $resource = $this->service->update($request, $id);
 
-        return response()->json([
-            'success', true,
-            'resource', $resource,
-        ]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success', true, 'resource', $resource]);
     }
 
     /**
@@ -199,7 +210,9 @@ class Controller extends BaseController
         $resources = $this->service->getRepository()
             ->getByUserId($request->user()->id);
 
-        return response()->json(['resources' => $resources]);
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**

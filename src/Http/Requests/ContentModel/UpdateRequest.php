@@ -3,10 +3,10 @@
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\UpdateRequest;
+use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 
-class UpdateRequest extends UpdateRequest
+class UpdateRequest extends BaseUpdateRequest
 {
     /**
      * Create a new request instance.

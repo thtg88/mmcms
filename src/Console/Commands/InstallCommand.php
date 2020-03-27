@@ -2,14 +2,15 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Config;
+use Laravel\Passport\PassportServiceProvider;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Traits\Seedable;
-use Laravel\Passport\PassportServiceProvider;
 
 class InstallCommand extends Command
 {
@@ -31,9 +32,9 @@ class InstallCommand extends Command
      */
     protected $description = 'Install the mmCMS package';
 
-    public function fire()
+    public function fire(): void
     {
-        return $this->handle();
+        $this->handle();
     }
 
     /**
@@ -42,7 +43,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         // Publish only relevant resources on install
         $this->info('Publishing the mmCMS assets, database, and config files');
@@ -146,7 +147,7 @@ class InstallCommand extends Command
     private function extendUserModel()
     {
         // Check that file exists
-        if (! file_exists(app_path('User.php'))) {
+        if (! file_exists(Container::getInstance()->path('User.php'))) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'User.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
@@ -157,7 +158,7 @@ class InstallCommand extends Command
         }
 
         // Get model's content as string
-        $str = file_get_contents(app_path('User.php'));
+        $str = file_get_contents(Container::getInstance()->path('User.php'));
 
         if ($str === false) {
             return;
@@ -190,7 +191,7 @@ class InstallCommand extends Command
             );
         }
 
-        file_put_contents(app_path('User.php'), $str);
+        file_put_contents(Container::getInstance()->path('User.php'), $str);
     }
 
     /**
@@ -205,7 +206,7 @@ class InstallCommand extends Command
         // Setting timeout to null
         // to prevent installation from stopping at a certain point in time
         $process->setTimeout(null);
-        $process->setWorkingDirectory(base_path())->run();
+        $process->setWorkingDirectory(Container::getInstance()->basePath())->run();
     }
 
     /**
@@ -217,7 +218,7 @@ class InstallCommand extends Command
     {
         // Check that Route service provider exists
         if (! file_exists(
-            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+            Container::getInstance()->path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
         )) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php". Did you move this file?');
@@ -229,7 +230,7 @@ class InstallCommand extends Command
 
         // Get Route service provider content as string
         $str = file_get_contents(
-            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+            Container::getInstance()->path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
         );
 
         if ($str === false) {
@@ -247,7 +248,7 @@ class InstallCommand extends Command
         }
 
         file_put_contents(
-            app_path(
+            Container::getInstance()->path(
                 'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'
             ),
             $str
@@ -263,7 +264,7 @@ class InstallCommand extends Command
     {
         // Check that exception handler is in the standard Laravel place
         if (! file_exists(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
         )) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Exceptions'.DIRECTORY_SEPARATOR.'Handler.php". Did you move this file?');
@@ -274,7 +275,7 @@ class InstallCommand extends Command
 
         // Get exceptions handler content as string
         $str = file_get_contents(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
         );
 
         if (
@@ -301,7 +302,7 @@ class InstallCommand extends Command
         );
 
         file_put_contents(
-            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
+            Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
             $str
         );
     }
@@ -314,7 +315,7 @@ class InstallCommand extends Command
     private function setPassportAuthDriver()
     {
         // Check that auth config is in the standard Laravel place
-        if (! file_exists(config_path('auth.php'))) {
+        if (! file_exists(Container::getInstance()->configPath('auth.php'))) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
             $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
@@ -323,7 +324,7 @@ class InstallCommand extends Command
         }
 
         // Get auth config content as string
-        $str = file_get_contents(config_path('auth.php'));
+        $str = file_get_contents(Container::getInstance()->configPath('auth.php'));
 
         if (
             $str === false ||
@@ -348,7 +349,7 @@ class InstallCommand extends Command
             $str
         );
 
-        file_put_contents(config_path('auth.php'), $str);
+        file_put_contents(Container::getInstance()->configPath('auth.php'), $str);
     }
 
     /**
@@ -358,7 +359,7 @@ class InstallCommand extends Command
      */
     private function createHtaccess()
     {
-        if (file_exists(base_path('.htaccess'))) {
+        if (file_exists(Container::getInstance()->basePath('.htaccess'))) {
             // Warn user that file already exists
             $this->info('htaccess file already exists, skipping...');
 
@@ -373,6 +374,6 @@ class InstallCommand extends Command
         $str .= "    RewriteRule (.*) /public/$1 [L]".PHP_EOL;
         $str .= "</IfModule>".PHP_EOL;
 
-        file_put_contents(base_path('.htaccess'), $str);
+        file_put_contents(Container::getInstance()->basePath('.htaccess'), $str);
     }
 }

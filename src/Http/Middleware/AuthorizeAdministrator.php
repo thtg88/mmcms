@@ -3,11 +3,19 @@
 namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
-use Illuminate\Config\Repository as Config;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class AuthorizeAdministrator
 {
+    /**
+     * The role repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     */
+    protected $roles;
+
     /**
      * Create a new middleware instance.
      *
@@ -32,7 +40,8 @@ class AuthorizeAdministrator
         $user = $request->user();
 
         if ($user->role === null) {
-            abort(403, 'This action is unauthorized.');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized.', []);
         }
 
         // Get administrator role
@@ -41,11 +50,13 @@ class AuthorizeAdministrator
         );
 
         if ($administrator_role === null) {
-            abort(403, 'This action is unauthorized!');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized!', []);
         }
 
         if ($user->role->priority > $administrator_role->priority) {
-            abort(403, 'This action is unauthorized!!');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized!!', []);
         }
 
         return $next($request);

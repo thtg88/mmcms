@@ -1,8 +1,8 @@
 <?php
 
-namespace Thtg88\MmCMs\Models;
+namespace Thtg88\MmCms\Models;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 
 class JournalEntry extends Model
 {

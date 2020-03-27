@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Traits;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 
 trait HasSeo
 {

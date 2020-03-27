@@ -1,6 +1,8 @@
 <?php
 
-use Thtg88\MmCms\Http\Controllers\Concerns;
+namespace Thtg88\MmCms\Http\Controllers\Concerns;
+
+use Illuminate\Container\Container;
 
 /**
  * Add bindings functionality to controllers.
@@ -19,7 +21,7 @@ trait WithBindings
      *
      * @return void
      */
-    protected function addBindings()
+    protected function addBindings(): void
     {
         $app = Container::getInstance();
 
@@ -33,7 +35,7 @@ trait WithBindings
      *
      * @return callable[]|string[]
      */
-    protected function getBindings()
+    protected function getBindings(): array
     {
         return $this->bindings;
     }

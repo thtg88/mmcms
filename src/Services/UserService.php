@@ -2,13 +2,20 @@
 
 namespace Thtg88\MmCms\Services;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
 
 class UserService extends ResourceService
 {
+    /**
+     * The role repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     */
+    protected $roles;
+
     /**
      * Create a new service instance.
      *

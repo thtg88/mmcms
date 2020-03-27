@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 
 class Role extends Model
 {
