@@ -26,7 +26,7 @@ class MakeContentModelDestroyRequest
      */
     public function handle(ContentModelStored $event)
     {
-        $model_name = studly_case($event->content_model->name);
+        $model_name = Str::studly($event->content_model->name);
         $request_name = 'Destroy'.$model_name.'Request';
 
         if (!class_exists($request_name)) {

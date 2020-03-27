@@ -26,7 +26,7 @@ class MakeContentModelRepository
      */
     public function handle(ContentModelStored $event)
     {
-        $repository_name = studly_case($event->content_model->name).'Repository';
+        $repository_name = Str::studly($event->content_model->name).'Repository';
 
         \Artisan::call('make:repository', [
             'name' => $repository_name,
