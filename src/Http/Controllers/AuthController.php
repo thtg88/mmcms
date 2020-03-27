@@ -34,6 +34,13 @@ class AuthController extends Controller
     protected $oauth_refresh_tokens;
 
     /**
+     * The repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\UserRepository
+     */
+    protected $repository;
+
+    /**
      * The role repository implementation.
      *
      * @var \Thtg88\MmCms\Repositories\RoleRepository
@@ -43,17 +50,17 @@ class AuthController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\UserRepository $users
+     * @param \Thtg88\MmCms\Repositories\UserRepository $repository
      * @param \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository $oauth_refresh_tokens
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
      * @return void
      */
     public function __construct(
-        UserRepository $users,
+        UserRepository $repository,
         OauthRefreshTokenRepository $oauth_refresh_tokens,
         RoleRepository $roles
     ) {
-        $this->repository = $users;
+        $this->repository = $repository;
         $this->oauth_refresh_tokens = $oauth_refresh_tokens;
         $this->roles = $roles;
 
