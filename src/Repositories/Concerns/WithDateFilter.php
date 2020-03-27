@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Collection;
 
 trait WithDateFilter
@@ -34,6 +35,8 @@ trait WithDateFilter
             return new Collection();
         }
 
+        $result = $this->model;
+
         // Get total elements of the date filter columns array
         $total_date_filter_columns = count(static::$date_filter_columns);
 
@@ -44,7 +47,7 @@ trait WithDateFilter
             case 1:
                 // The filter is applied in the form of
                 // $start_date <= $date_filter_columns[0] < $end_date
-                $result = $this->model->where(
+                $result = $result->where(
                     static::$date_filter_columns[0],
                     '>=',
                     $start_date->toDateTimeString()
@@ -59,7 +62,7 @@ trait WithDateFilter
                 // Check if date intervals are overlapping (excluding the edges)
                 // $date_filter_columns[0] < $end_date &&
                 // $date_filter_columns[1] > $start_date
-                $result = $this->model->where(
+                $result = $result->where(
                     static::$date_filter_columns[0],
                     '<',
                     $end_date
@@ -71,15 +74,9 @@ trait WithDateFilter
                 break;
         }
 
-        // Order by clause
-        if (
-            is_array(static::$order_by_columns) &&
-            count(static::$order_by_columns) > 0
-        ) {
-            foreach (static::$order_by_columns as $order_by_column => $direction) {
-                $result = $result->orderBy($order_by_column, $direction);
-            }
-        }
+        $result = $this->withOptionalTrashed($result);
+
+        $result = $this->withDefaultOrderBy($result);
 
         return $result->get();
     }
@@ -157,15 +154,9 @@ trait WithDateFilter
                 break;
         }
 
-        // Order by clause
-        if (
-            is_array(static::$order_by_columns) &&
-            count(static::$order_by_columns) > 0
-        ) {
-            foreach (static::$order_by_columns as $order_by_column => $direction) {
-                $result = $result->orderBy($order_by_column, $direction);
-            }
-        }
+        $result = $this->withOptionalTrashed($result);
+
+        $result = $this->withDefaultOrderBy($result);
 
         return $result->get();
     }
