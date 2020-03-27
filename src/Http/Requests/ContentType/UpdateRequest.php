@@ -7,7 +7,7 @@ use Thtg88\MmCms\Http\Requests\UpdateRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
-class UpdateContentTypeRequest extends UpdateRequest
+class UpdateRequest extends UpdateRequest
 {
     /**
      * Create a new request instance.
