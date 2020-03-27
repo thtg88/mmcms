@@ -98,6 +98,7 @@ class RouteRegistrar
                         'uses' => 'ContentFieldController@store',
                         'as' => 'store'
                     ]);
+                    // TODO: missing Request class
                     $router->put('content-fields/{id}', [
                         'uses' => 'ContentFieldController@update',
                         'as' => 'update'
