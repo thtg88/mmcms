@@ -21,7 +21,7 @@ trait WithBindings
      *
      * @return void
      */
-    protected function addBindings()
+    protected function addBindings(): void
     {
         $app = Container::getInstance();
 
@@ -35,7 +35,7 @@ trait WithBindings
      *
      * @return callable[]|string[]
      */
-    protected function getBindings()
+    protected function getBindings(): array
     {
         return $this->bindings;
     }
