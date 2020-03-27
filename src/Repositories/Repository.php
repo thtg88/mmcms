@@ -10,7 +10,15 @@ use Thtg88\MmCms\Helpers\JournalEntryHelper;
 
 class Repository implements RepositoryInterface
 {
-    use Concerns\WithDateFilter;
+    use Concerns\WithAllModels,
+        Concerns\WithCreate,
+        Concerns\WithDateFilter,
+        Concerns\WithDestroy,
+        Concerns\WithFind,
+        Concerns\WithGet,
+        Concerns\WithPagination,
+        Concerns\WithSearch,
+        Concerns\WithUpdate;
 
     /**
      * The journal entry helper implementation.
