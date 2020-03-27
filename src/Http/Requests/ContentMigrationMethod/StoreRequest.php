@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 
-class StoreContentMigrationMethodRequest extends StoreRequest
+class StoreRequest extends StoreRequest
 {
     /**
      * Create a new request instance.

@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 
-class UpdateContentMigrationMethodRequest extends UpdateRequest
+class UpdateRequest extends UpdateRequest
 {
     /**
      * Create a new request instance.
