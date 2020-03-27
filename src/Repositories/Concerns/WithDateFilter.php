@@ -1,11 +1,7 @@
 <?php
 
-use DateTime;
 use Illuminate\Database\Support\Collection;
 
-/**
- *
- */
 trait WithDateFilter
 {
     /**
