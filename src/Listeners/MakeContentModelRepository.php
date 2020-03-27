@@ -4,8 +4,6 @@ namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MakeContentModelRepository
 {
@@ -22,7 +20,7 @@ class MakeContentModelRepository
     /**
      * Handle the event.
      *
-     * @param ContentModelStored $event
+     * @param \Thtg88\MmCms\Events\ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
