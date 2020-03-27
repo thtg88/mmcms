@@ -1,6 +1,6 @@
 <?php
 
-namespace Thtg88\MmCMs\Models;
+namespace Thtg88\MmCms\Models;
 
 use Illuminate\Support\Facades\Config;
 
