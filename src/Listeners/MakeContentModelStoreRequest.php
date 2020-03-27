@@ -4,8 +4,6 @@ namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class MakeContentModelStoreRequest
 {
@@ -22,7 +20,7 @@ class MakeContentModelStoreRequest
     /**
      * Handle the event.
      *
-     * @param ContentModelStored $event
+     * @param \Thtg88\MmCms\Events\ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -41,7 +39,7 @@ class MakeContentModelStoreRequest
                 if ($file_content !== false) {
                     $replace_content = $this->getContentModelRequestConstructor($model_name);
 
-                    $file_content = str_replace("class ".$request_name." extends FormRequest\n{\n", $replace_content, $file_content);
+                    $file_content = str_replace("class ".$request_name." extends FormRequest".PHP_EOL."{".PHP_EOL, $replace_content, $file_content);
 
                     $replace_content = $this->getContentModelRequestImports($model_name);
 
@@ -62,10 +60,8 @@ class MakeContentModelStoreRequest
     private function getContentModelRequestImports($model_name)
     {
         $content = '';
-        $content .= "use Illuminate\Validation\Rule;\n";
-        $content .= "// Repositories\n";
-        $content .= "use App\Repositories\\".$model_name."Repository;\n";
-        $content .= "// Requests\n";
+        $content .= "use App\Repositories\\".$model_name."Repository;".PHP_EOL;
+        $content .= "use Illuminate\Validation\Rule;".PHP_EOL;
         $content .= "use Thtg88\MmCms\Http\Requests\StoreRequest;";
 
         return $content;
@@ -80,19 +76,19 @@ class MakeContentModelStoreRequest
     private function getContentModelRequestConstructor($model_name)
     {
         $content = '';
-        $content .= "class Store".$model_name."Request extends StoreRequest\n";
-        $content .= "{\n";
-        $content .= "    /**\n";
-        $content .= "     * Create a new request instance.\n";
-        $content .= "     *\n";
-        $content .= "     * @param	\Thtg88\MmCms\Repositories\\".$model_name."Repository	\$repository\n";
-        $content .= "     * @return	void\n";
-        $content .= "     */\n";
-        $content .= "    public function __construct(".$model_name."Repository \$repository)\n";
-        $content .= "    {\n";
-        $content .= "        \$this->repository = \$repository;\n";
-        $content .= "    }\n";
-        $content .= "\n";
+        $content .= "class Store".$model_name."Request extends StoreRequest".PHP_EOL;
+        $content .= "{".PHP_EOL;
+        $content .= "    /**".PHP_EOL;
+        $content .= "     * Create a new request instance.".PHP_EOL;
+        $content .= "     *".PHP_EOL;
+        $content .= "     * @param	\Thtg88\MmCms\Repositories\\".$model_name."Repository	\$repository".PHP_EOL;
+        $content .= "     * @return	void".PHP_EOL;
+        $content .= "     */".PHP_EOL;
+        $content .= "    public function __construct(".$model_name."Repository \$repository)".PHP_EOL;
+        $content .= "    {".PHP_EOL;
+        $content .= "        \$this->repository = \$repository;".PHP_EOL;
+        $content .= "    }".PHP_EOL;
+        $content .= PHP_EOL;
 
         return $content;
     }
