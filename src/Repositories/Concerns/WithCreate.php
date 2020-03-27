@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
+use DateTime;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Models\JournalEntry;
@@ -59,8 +60,12 @@ trait WithCreate
             $data[$idx] = array_intersect_key($model_data, $flipped_fillable);
 
             // Add created_at and updated_at automatically
-            $data[$idx][$this->model::CREATED_AT] = now();
-            $data[$idx][$this->model::UPDATED_AT] = now();
+            $data[$idx][$this->model::CREATED_AT] = (new DateTime())->format(
+                'Y-m-d H:i:s'
+            );
+            $data[$idx][$this->model::UPDATED_AT] = (new DateTime())->format(
+                'Y-m-d H:i:s'
+            );
         }
 
         // Chunk inserts to a max of 500 items
