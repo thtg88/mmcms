@@ -5,6 +5,7 @@ namespace Thtg88\MmCms\Http\Controllers;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Thtg88\MmCms\Http\Controllers\Controller;
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
@@ -112,7 +113,8 @@ class AuthController extends Controller
         $user = $this->repository->create($input);
 
         try {
-            event(new Registered($user));
+            Container::getInstance()->make('events', [])
+                ->dispatch(new Registered($user));
 
             $oauth_data = [
                 'form_params' => [

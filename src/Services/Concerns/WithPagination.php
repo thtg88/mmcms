@@ -191,4 +191,73 @@ trait WithPagination
             'sort' => $this->getSort($request),
         ];
     }
+
+    /**
+     * Return all the model instances.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
+     * @return \Illuminate\Support\Collection
+     */
+    public function paginate(PaginateRequestInterface $request)
+    {
+        // Get input
+        $input = $request->only([
+            'page',
+            'page_size',
+            'recovery',
+            'sort_direction',
+            'sort_name',
+        ]);
+
+        $wheres = [];
+
+        $wheres = array_merge($wheres, $this->getFilterValues($request));
+
+        // Page falls back to 1
+        if (! array_key_exists('page', $input) || $input['page'] === null) {
+            $input['page'] = 1;
+        }
+
+        // Page size fall back to configs
+        if (
+            ! array_key_exists('page_size', $input) ||
+            $input['page_size'] === null ||
+            filter_var($input['page_size'], FILTER_VALIDATE_INT) === false
+        ) {
+            $input['page_size'] = Config::get('app.pagination.page_size');
+        }
+
+        $input['q'] = $this->getSearchValue($request);
+
+        if (array_key_exists('recovery', $input) && $input['recovery'] == 1) {
+            // Set the repository to also fetch trashed models
+            $this->repository = $this->repository->withTrashed();
+
+            $wheres[] = [
+                'field' => 'deleted_at',
+                'operator' => '<>',
+                'value' => null,
+            ];
+        }
+
+        // Sort name fall back
+        if (empty($input['sort_name'])) {
+            $input['sort_name'] = null;
+        }
+
+        // Sort direction fall back
+        if (empty($input['sort_direction'])) {
+            $input['sort_direction'] = null;
+        }
+
+        // Get paginated resources
+        return $this->repository->paginate(
+            $input['page_size'],
+            $input['page'],
+            $input['q'],
+            $input['sort_name'],
+            $input['sort_direction'],
+            $wheres
+        );
+    }
 }

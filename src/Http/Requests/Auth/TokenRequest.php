@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\Request;
-// Repositories
 use Thtg88\MmCms\Repositories\UserRepository;
 
 class TokenRequest extends Request
