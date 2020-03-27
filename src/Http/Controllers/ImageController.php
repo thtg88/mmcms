@@ -8,6 +8,7 @@ use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Image\DestroyRequest;
 use Thtg88\MmCms\Http\Requests\Image\StoreRequest;
 use Thtg88\MmCms\Http\Requests\Image\UpdateRequest;
+use Thtg88\MmCms\Services\ImageService;
 
 class ImageController extends Controller
 {
@@ -25,10 +26,10 @@ class ImageController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Services\ContentFieldService $service
+     * @param \Thtg88\MmCms\Services\ImageService $service
      * @return void
      */
-    public function __construct(ContentFieldService $service)
+    public function __construct(ImageService $service)
     {
         $this->service = $service;
 

@@ -2,14 +2,21 @@
 
 namespace Thtg88\MmCms\Listeners;
 
-use DB;
-use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Thtg88\MmCms\Events\ContentModelStored;
 
 class MakeContentModelMigration
 {
+    /**
+     * The file system implementation.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $filesystem;
+
     /**
      * Create the event listener.
      *
@@ -23,7 +30,7 @@ class MakeContentModelMigration
     /**
      * Handle the event.
      *
-     * @param ContentModelStored $event
+     * @param \Thtg88\MmCms\Events\ContentModelStored $event
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -38,13 +45,13 @@ class MakeContentModelMigration
 
         if ($migration === null) {
             // If migration N/A we make it
-            \Artisan::call('make:migration', [
+            Artisan::call('make:migration', [
                 'name' => $migration_name,
                 '--create' => $table_name,
             ]);
 
             // Then we get the last migration so we can insert our custom fields
-            $migrations = $this->filesystem->files(database_path('migrations'));
+            $migrations = $this->filesystem->files(Container::getInstance()->databasePath('migrations'));
 
             if (count($migrations) > 0) {
                 $last_migration = $migrations[count($migrations) - 1].'';

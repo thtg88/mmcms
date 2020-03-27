@@ -15,7 +15,7 @@ class CurrentTimeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $now = app('now')->copy();
+        $now = Carbon::now()->copy();
 
         if ($this->app->runningInConsole() === false) {
             View::share('now', $now);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Thtg88\MmCms\Console\Commands;
+namespace Thtg88\MmCms\Console\Commands\Scaffold;
 
 use Illuminate\Console\Command;
 

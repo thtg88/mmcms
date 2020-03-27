@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Helpers;
 
-use DB;
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Helper methods for database.

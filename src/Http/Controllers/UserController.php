@@ -26,10 +26,10 @@ class UserController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Services\SeoEntryService $service
+     * @param \Thtg88\MmCms\Services\UserService $service
      * @return void
      */
-    public function __construct(SeoEntryService $service)
+    public function __construct(UserService $service)
     {
         $this->service = $service;
 

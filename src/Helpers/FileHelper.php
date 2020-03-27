@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Helpers;
 
+use Illuminate\Container\Container;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Repositories\Repository;
@@ -57,7 +58,8 @@ class FileHelper
         // Folder is userfiles/table-name folder
         $folder = 'public/userfiles/'.$repository->getName();
 
-        $fully_qualified_folder = storage_path('app/'.$folder);
+        $fully_qualified_folder = Container::getInstance()
+            ->make('path.storage').(DIRECTORY_SEPARATOR.'app/'.$folder);
 
         if (!is_dir($fully_qualified_folder)) {
             mkdir($fully_qualified_folder, 0777, true);

@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentField;
 
-use Thtg88\MmCms\Http\Requests\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\DestroyRequest as BaseDestroyRequest;
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
 
-class DestroyRequest extends DestroyRequest
+class DestroyRequest extends BaseDestroyRequest
 {
     /**
      * Create a new request instance.

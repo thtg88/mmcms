@@ -2,15 +2,16 @@
 
 namespace Thtg88\MmCms;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
 use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
-use Thtg88\MmCms\Console\Commands\RepositoryMakeCommand;
+use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
@@ -33,7 +34,7 @@ class MmCmsServiceProvider extends ServiceProvider
 
         // Config
         $this->publishes([
-            __DIR__.'/../config/mmcms.php' => config_path('mmcms.php'),
+            __DIR__.'/../config/mmcms.php' => Container::getInstance()->configPath('mmcms.php'),
         ], 'mmcms-config');
 
         // Routes
@@ -42,7 +43,7 @@ class MmCmsServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => Container::getInstance()->databasePath('migrations'),
         ], 'mmcms-migrations');
 
         // Translations

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace Thtg88\MmCms\Http\Requests;
 
 class DownloadCsvRequest extends IndexRequest
 {
