@@ -23,10 +23,10 @@ class ContentFieldController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \App\Services\ContentModelService $service
+     * @param \App\Services\ContentFieldService $service
      * @return void
      */
-    public function __construct(ContentModelService $service)
+    public function __construct(ContentFieldService $service)
     {
         $this->service = $service;
 
