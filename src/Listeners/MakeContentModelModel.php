@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
