@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-use Thtg88\MmCms\Http\Requests\Request;
+use Thtg88\MmCms\Http\Requests\DestroyRequest;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
-class RestoreSeoEntryRequest extends Request
+class DestroyRequest extends DestroyRequest
 {
     /**
      * Create a new request instance.
@@ -25,6 +25,6 @@ class RestoreSeoEntryRequest extends Request
      */
     public function authorize()
     {
-        return $this->authorizeResourceDeletedExist();
+        return $this->authorizeResourceExist();
     }
 }
