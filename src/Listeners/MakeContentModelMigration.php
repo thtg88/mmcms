@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
 use Thtg88\MmCms\Events\ContentModelStored;
 use Illuminate\Queue\InteractsWithQueue;
@@ -44,7 +45,7 @@ class MakeContentModelMigration
             ]);
 
             // Then we get the last migration so we can insert our custom fields
-            $migrations = $this->filesystem->files(database_path('migrations'));
+            $migrations = $this->filesystem->files(Container::getInstance()->databasePath('migrations'));
 
             if (count($migrations) > 0) {
                 $last_migration = $migrations[count($migrations) - 1].'';
