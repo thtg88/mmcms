@@ -3,10 +3,10 @@
 namespace Thtg88\MmCms\Http\Requests\User;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Http\Requests\UpdateRequest;
+use Thtg88\MmCms\Http\Requests\StoreRequest;
 use Thtg88\MmCms\Repositories\UserRepository;
 
-class UpdateUserRequest extends UpdateRequest
+class StoreRequest extends StoreRequest
 {
     /**
      * Create a new request instance.
@@ -26,26 +26,17 @@ class UpdateUserRequest extends UpdateRequest
      */
     public function rules()
     {
-        $all_rules = [
+        return [
             'email' => [
                 'required',
                 'email',
                 'max:255',
                 Rule::unique($this->repository->getName(), 'email')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
+                    $query->whereNull('deleted_at');
                 }),
             ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
-
-        // Get input
-        $input = $this->all();
-
-        // Get necessary rules based on input (same keys basically)
-        $rules = array_intersect_key($all_rules, $input);
-
-        return $rules;
     }
 }

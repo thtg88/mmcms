@@ -2,106 +2,37 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-use Illuminate\Config\Repository as Config;
-use Thtg88\MmCms\Repositories\RoleRepository;
-use Thtg88\MmCms\Repositories\UserRepository;
-use Thtg88\MmCms\Http\Requests\User\DestroyUserRequest;
-use Thtg88\MmCms\Http\Requests\User\StoreUserRequest;
-use Thtg88\MmCms\Http\Requests\User\UpdateUserRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
+use Thtg88\MmCms\Http\Requests\User\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\User\StoreRequest;
+use Thtg88\MmCms\Http\Requests\User\UpdateRequest;
+use Thtg88\MmCms\Services\UserService;
 
 class UserController extends Controller
 {
     /**
+     * The controller-specific bindings.
+     *
+     * @var string[]|callable[]
+     */
+    protected $bindings = [
+        DestroyRequestInterface::class => DestroyRequest::class,
+        StoreRequestInterface::class => StoreRequest::class,
+        UpdateRequestInterface::class => UpdateRequest::class,
+    ];
+
+    /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\UserRepository $repository
-     * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     * @param \Thtg88\MmCms\Services\SeoEntryService $service
      * @return void
      */
-    public function __construct(UserRepository $repository, RoleRepository $roles)
+    public function __construct(SeoEntryService $service)
     {
-        $this->repository = $repository;
-        $this->roles = $roles;
-    }
+        $this->service = $service;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\User\StoreUserRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUserRequest $request)
-    {
-        // Get input
-        $input = $request->except(['created_at']);
-
-        if (array_key_exists('password', $input) && !empty($input['password'])) {
-            $input['password'] = bcrypt($input['password']);
-        }
-
-        if (!array_key_exists('role_id', $input)) {
-            // Get user role
-            $user_role = $this->roles->findByModelName(
-                Config::get('mmcms.roles.user_role_name')
-            );
-
-            if ($user_role !== null) {
-                // If found - assign it to the user registering
-                $input['role_id'] = $user_role->id;
-            }
-        }
-
-        // Create
-        $resource = $this->repository->create($input);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\User\UpdateUserRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUserRequest $request, $id)
-    {
-        // Get input
-        $input = $request->except(['created_at']);
-
-        if (array_key_exists('password', $input) && !empty($input['password'])) {
-            $input['password'] = bcrypt($input['password']);
-        }
-
-        // Update
-        $resource = $this->repository->update($id, $input);
-
-        // No need to check if found as done by authorization method
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\User\DestroyUserRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DestroyUserRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->destroy($id);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        parent::__construct();
     }
 }
