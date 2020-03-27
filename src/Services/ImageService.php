@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Services;
 
+use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Helpers\FileHelper;
@@ -61,9 +62,9 @@ class ImageService extends ResourceService
         $resource = $this->repository->destroy($id);
 
         if (Str::startsWith($resource->url, '/storage/userfiles')) {
-            $path = storage_path(
-                'app/public'.substr($resource->url, strlen('/storage'))
-            );
+            $path = Container::getInstance()->make('path.storage').
+                DIRECTORY_SEPARATOR.'app/public'.
+                substr($resource->url, strlen('/storage'));
 
             if (is_file($path) && is_readable($path)) {
                 // remove from FS
