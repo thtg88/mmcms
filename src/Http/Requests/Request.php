@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 

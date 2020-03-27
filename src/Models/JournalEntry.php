@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCMs\Models;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 
 class JournalEntry extends Model
 {

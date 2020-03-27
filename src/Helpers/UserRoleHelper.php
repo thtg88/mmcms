@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Helpers;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
 

@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
