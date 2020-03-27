@@ -5,7 +5,7 @@ namespace Thtg88\MmCms\Http\Requests\User;
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
 use Thtg88\MmCms\Repositories\UserRepository;
 
-class DestroyUserRequest extends DestroyRequest
+class DestroyRequest extends DestroyRequest
 {
     /**
      * Create a new request instance.
