@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;

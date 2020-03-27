@@ -3,9 +3,9 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Container\Container;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\DB;
 use Thtg88\MmCms\Events\ContentModelStored;
-use Illuminate\Filesystem\Filesystem;
 
 class MakeContentModelMigration
 {

@@ -32,9 +32,9 @@ class InstallCommand extends Command
      */
     protected $description = 'Install the mmCMS package';
 
-    public function fire()
+    public function fire(): void
     {
-        return $this->handle();
+        $this->handle();
     }
 
     /**
@@ -43,7 +43,7 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         // Publish only relevant resources on install
         $this->info('Publishing the mmCMS assets, database, and config files');

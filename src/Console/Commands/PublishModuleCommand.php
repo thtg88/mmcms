@@ -4,8 +4,8 @@ namespace Thtg88\MmCms\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\Console\Input\InputOption;
 
 class PublishModuleCommand extends Command
@@ -90,8 +90,9 @@ class PublishModuleCommand extends Command
 
             $appNamespace = app()->getNamespace();
 
-                return $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
             if (! Str::startsWith($namespace, $appNamespace)) {
+                $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
+                return;
             }
 
             $location = str_replace(
