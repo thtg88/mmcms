@@ -3,8 +3,6 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Thtg88\MmCms\Events\ContentFieldStored;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 
