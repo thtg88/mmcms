@@ -3,11 +3,8 @@
 namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
 use Illuminate\Validation\Rule;
-// Helpers
 use Thtg88\MmCms\Helpers\DatabaseHelper;
-// Requests
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
 class UpdateImageCategoryRequest extends UpdateRequest

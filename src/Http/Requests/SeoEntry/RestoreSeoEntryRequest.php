@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\Request;
-// Repositories
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
 class RestoreSeoEntryRequest extends Request

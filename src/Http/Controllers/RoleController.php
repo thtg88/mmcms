@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
 use Thtg88\MmCms\Repositories\RoleRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest;
 use Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest;
 use Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest;

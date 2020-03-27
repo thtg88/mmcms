@@ -4,9 +4,7 @@ namespace Thtg88\MmCms\Http\Controllers;
 
 // Controllers
 use Thtg88\MmCms\Http\Controllers\Controller;
-// Repositories
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\ImageCategory\DestroyImageCategoryRequest;
 use Thtg88\MmCms\Http\Requests\ImageCategory\RestoreImageCategoryRequest;
 use Thtg88\MmCms\Http\Requests\ImageCategory\StoreImageCategoryRequest;

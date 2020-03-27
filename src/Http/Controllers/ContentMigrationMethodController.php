@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\ContentMigrationMethod\DestroyContentMigrationMethodRequest;
 use Thtg88\MmCms\Http\Requests\ContentMigrationMethod\StoreContentMigrationMethodRequest;
 use Thtg88\MmCms\Http\Requests\ContentMigrationMethod\UpdateContentMigrationMethodRequest;

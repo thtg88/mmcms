@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\Role;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class DestroyRoleRequest extends DestroyRequest

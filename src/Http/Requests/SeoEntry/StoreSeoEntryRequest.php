@@ -3,11 +3,8 @@
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
 use Illuminate\Validation\Rule;
-// Helpers
 use Thtg88\MmCms\Helpers\DatabaseHelper;
-// Requests
 use Thtg88\MmCms\Http\Requests\StoreRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
 class StoreSeoEntryRequest extends StoreRequest

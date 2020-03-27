@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Http\Requests\User;
 
-// Requests
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\UserRepository;
 
 class DestroyUserRequest extends DestroyRequest

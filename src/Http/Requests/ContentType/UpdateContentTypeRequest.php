@@ -3,9 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentType;
 
 use Illuminate\Validation\Rule;
-// Requests
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 

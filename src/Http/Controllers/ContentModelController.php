@@ -2,11 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Events
 use Thtg88\MmCms\Events\ContentModelStored;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentModelRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\ContentModel\DestroyContentModelRequest;
 use Thtg88\MmCms\Http\Requests\ContentModel\StoreContentModelRequest;
 use Thtg88\MmCms\Http\Requests\ContentModel\UpdateContentModelRequest;

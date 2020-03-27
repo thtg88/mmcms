@@ -3,9 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
 use Illuminate\Validation\Rule;
-// Requests
 use Thtg88\MmCms\Http\Requests\StoreRequest;
-// Repositories
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 
 class StoreContentModelRequest extends StoreRequest
