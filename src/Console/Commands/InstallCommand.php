@@ -2,15 +2,15 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Config;
+use Laravel\Passport\PassportServiceProvider;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Traits\Seedable;
-use Laravel\Passport\PassportServiceProvider;
 
 class InstallCommand extends Command
 {
