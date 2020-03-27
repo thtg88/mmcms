@@ -7,7 +7,7 @@ use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class UpdateImageCategoryRequest extends UpdateRequest
+class UpdateRequest extends UpdateRequest
 {
     /**
      * Create a new request instance.

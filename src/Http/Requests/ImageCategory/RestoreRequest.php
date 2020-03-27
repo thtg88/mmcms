@@ -5,7 +5,7 @@ namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class RestoreImageCategoryRequest extends Request
+class RestoreRequest extends Request
 {
     /**
      * Create a new request instance.

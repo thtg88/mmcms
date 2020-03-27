@@ -5,7 +5,7 @@ namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class DestroyImageCategoryRequest extends DestroyRequest
+class DestroyRequest extends DestroyRequest
 {
     /**
      * Create a new request instance.
