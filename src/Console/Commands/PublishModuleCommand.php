@@ -74,7 +74,7 @@ class PublishModuleCommand extends Command
      */
     protected function copyAllFiles($module_name, $force = false)
     {
-        $module_directory = base_path('vendor/thtg88/mmcms/'.$module_name);
+        $module_directory = Container::getInstance()->basePath('vendor/thtg88/mmcms/'.$module_name);
 
         if (! $this->filesystem->isDirectory($module_directory)) {
             return $this->error('Module '.$module_name.' not found.');
@@ -90,8 +90,8 @@ class PublishModuleCommand extends Command
 
             $appNamespace = app()->getNamespace();
 
-            if (!starts_with($namespace, $appNamespace)) {
                 return $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
+            if (! Str::startsWith($namespace, $appNamespace)) {
             }
 
             $location = str_replace(

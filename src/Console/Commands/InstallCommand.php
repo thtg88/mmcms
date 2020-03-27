@@ -206,7 +206,7 @@ class InstallCommand extends Command
         // Setting timeout to null
         // to prevent installation from stopping at a certain point in time
         $process->setTimeout(null);
-        $process->setWorkingDirectory(base_path())->run();
+        $process->setWorkingDirectory(Container::getInstance()->basePath())->run();
     }
 
     /**
@@ -315,7 +315,7 @@ class InstallCommand extends Command
     private function setPassportAuthDriver()
     {
         // Check that auth config is in the standard Laravel place
-        if (! file_exists(config_path('auth.php'))) {
+        if (! file_exists(Container::getInstance()->configPath('auth.php'))) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
             $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
@@ -324,7 +324,7 @@ class InstallCommand extends Command
         }
 
         // Get auth config content as string
-        $str = file_get_contents(config_path('auth.php'));
+        $str = file_get_contents(Container::getInstance()->configPath('auth.php'));
 
         if (
             $str === false ||
@@ -349,7 +349,7 @@ class InstallCommand extends Command
             $str
         );
 
-        file_put_contents(config_path('auth.php'), $str);
+        file_put_contents(Container::getInstance()->configPath('auth.php'), $str);
     }
 
     /**
@@ -359,7 +359,7 @@ class InstallCommand extends Command
      */
     private function createHtaccess()
     {
-        if (file_exists(base_path('.htaccess'))) {
+        if (file_exists(Container::getInstance()->basePath('.htaccess'))) {
             // Warn user that file already exists
             $this->info('htaccess file already exists, skipping...');
 
@@ -374,6 +374,6 @@ class InstallCommand extends Command
         $str .= "    RewriteRule (.*) /public/$1 [L]".PHP_EOL;
         $str .= "</IfModule>".PHP_EOL;
 
-        file_put_contents(base_path('.htaccess'), $str);
+        file_put_contents(Container::getInstance()->basePath('.htaccess'), $str);
     }
 }

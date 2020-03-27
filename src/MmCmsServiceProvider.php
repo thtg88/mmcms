@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms;
 
 use Illuminate\Support\Facades\Config;
+use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
@@ -33,7 +34,7 @@ class MmCmsServiceProvider extends ServiceProvider
 
         // Config
         $this->publishes([
-            __DIR__.'/../config/mmcms.php' => config_path('mmcms.php'),
+            __DIR__.'/../config/mmcms.php' => Container::getInstance()->configPath('mmcms.php'),
         ], 'mmcms-config');
 
         // Routes
@@ -42,7 +43,7 @@ class MmCmsServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
-            __DIR__.'/../database/migrations' => database_path('migrations'),
+            __DIR__.'/../database/migrations' => Container::getInstance()->databasePath('migrations'),
         ], 'mmcms-migrations');
 
         // Translations
