@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Repositories\Concerns;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Config;
 
 trait WithPagination
 {
@@ -74,8 +75,8 @@ trait WithPagination
 
         return $result->paginate(
             $page_size,
-            config('app.pagination.columns'),
-            config('app.pagination.page_name'),
+            Config::get('app.pagination.columns'),
+            Config::get('app.pagination.page_name'),
             $page
         );
     }

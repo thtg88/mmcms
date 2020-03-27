@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Repositories\Concerns;
 
 use App\Models\JournalEntry;
+use Illuminate\Support\Facades\Config;
 
 trait WithDestroy
 {
@@ -35,8 +36,8 @@ trait WithDestroy
         //         class_uses($this->model)
         //     )
         // ) {
-        if (config('app.journal_mode') === true) {
             app('JournalEntryHelper')->createJournalEntry(
+        if (Config::get('app.journal_mode') === true) {
                 'delete',
                 $model
             );
@@ -85,8 +86,8 @@ trait WithDestroy
         //         class_uses($this->model)
         //     )
         // ) {
-        if (config('app.journal_mode') === true) {
             app('JournalEntryHelper')->createJournalEntry(
+        if (Config::get('app.journal_mode') === true) {
                 'delete-bulk',
                 null,
                 [
@@ -125,7 +126,7 @@ trait WithDestroy
         // Restore model
         $model->restore();
 
-        if (config('app.journal_mode') === true) {
+        if (Config::get('app.journal_mode') === true) {
             // Create journal entry only if not creating journal entry i.e. infinite recursion
             $journal_entry_classname = JournalEntry::class;
 
