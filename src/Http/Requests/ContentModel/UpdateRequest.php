@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 
-class UpdateContentModelRequest extends UpdateRequest
+class UpdateRequest extends UpdateRequest
 {
     /**
      * Create a new request instance.
