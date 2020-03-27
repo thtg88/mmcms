@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class ContentModel extends Model
 {
     /**
@@ -61,6 +63,10 @@ class ContentModel extends Model
 
     public function content_fields()
     {
-        return $this->hasMany(config('mmcms.models.namespace').'ContentField', 'content_model_id', 'id');
+        return $this->hasMany(
+            Config::get('mmcms.models.namespace').'ContentField',
+            'content_model_id',
+            'id'
+        );
     }
 }
