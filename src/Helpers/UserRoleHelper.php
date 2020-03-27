@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Helpers;
 
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
 
@@ -99,7 +100,7 @@ class UserRoleHelper
      */
     public function authorizeAdministrator($user_id)
     {
-        return $this->authorize($user_id, config('mmcms.roles.administrator_role_name'));
+        return $this->authorize($user_id, Config::get('mmcms.roles.administrator_role_name'));
     }
 
     /**
@@ -110,6 +111,6 @@ class UserRoleHelper
      */
     public function authorizeDeveloper($user_id)
     {
-        return $this->authorize($user_id, config('mmcms.roles.developer_role_name'));
+        return $this->authorize($user_id, Config::get('mmcms.roles.developer_role_name'));
     }
 }

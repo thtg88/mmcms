@@ -2,7 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-class StoreRequest extends Request
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+
+class StoreRequest extends Request implements StoreRequestInterface
 {
     /**
      * Determine if the user is authorized to make this request.

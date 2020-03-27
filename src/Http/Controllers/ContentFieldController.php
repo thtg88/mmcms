@@ -2,68 +2,34 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Events
-use Thtg88\MmCms\Events\ContentFieldDestroyed;
-use Thtg88\MmCms\Events\ContentFieldStored;
-// Repositories
-use Thtg88\MmCms\Repositories\ContentFieldRepository;
-// Requests
-use Thtg88\MmCms\Http\Requests\ContentField\DestroyContentFieldRequest;
-use Thtg88\MmCms\Http\Requests\ContentField\StoreContentFieldRequest;
-use Thtg88\MmCms\Http\Requests\ContentField\UpdateContentFieldRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\ContentField\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\ContentField\StoreRequest;
+use Thtg88\MmCms\Services\ContentFieldService;
 
 class ContentFieldController extends Controller
 {
     /**
+     * The controller-specific bindings.
+     *
+     * @var string[]|callable[]
+     */
+    protected $bindings = [
+        DestroyRequestInterface::class => DestroyRequest::class,
+        StoreRequestInterface::class => StoreRequest::class,
+    ];
+
+    /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $repository
+     * @param \Thtg88\MmCms\Services\ContentFieldService $service
      * @return void
      */
-    public function __construct(ContentFieldRepository $repository)
+    public function __construct(ContentFieldService $service)
     {
-        $this->repository = $repository;
-    }
+        $this->service = $service;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ContentField\StoreContentFieldRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreContentFieldRequest $request)
-    {
-        // Get input
-        $input = $request->all();
-
-        // Create
-        $resource = $this->repository->create($input);
-
-        event(new ContentFieldStored($resource));
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ContentField\DestroyContentFieldRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DestroyContentFieldRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->destroy($id);
-
-        event(new ContentFieldDestroyed($resource));
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        parent::__construct();
     }
 }

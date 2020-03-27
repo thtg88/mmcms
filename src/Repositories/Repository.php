@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Repositories;
 
 use Carbon\Carbon;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
@@ -154,11 +155,15 @@ class Repository implements RepositoryInterface
             $model = $this->find($model->id);
         }
 
-        if (config('mmcms.journal.mode') === true) {
+        if (Config::get('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {
-                app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
+                app('JournalEntryHelper')->createJournalEntry(
+                    null,
+                    $model,
+                    $data
+                );
             }
         }
 
@@ -181,7 +186,7 @@ class Repository implements RepositoryInterface
 
         // Check if a model uses discards, so I can log into journal
         if (in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model))) {
-            if (config('mmcms.journal.mode') === true) {
+            if (Config::get('mmcms.journal.mode') === true) {
                 app('JournalEntryHelper')->createJournalEntry('discard', $model, []);
             }
         }
@@ -250,13 +255,16 @@ class Repository implements RepositoryInterface
      * >2. If more than 2 columns are specified, the ones after the second
      * are ignored, and scenario 2 applies.
      *
-     * @param \Carbon\Carbon $start_date     The start date.
-     * @param \Carbon\Carbon $end_date       The end date.
+     * @param \Carbon\Carbon $start_date The start date.
+     * @param \Carbon\Carbon $end_date The end date.
      * @return \Illuminate\Support\Collection
      */
-    public function getByDateFilter(Carbon $start_date, Carbon $end_date)
+    public function dateFilter(Carbon $start_date, Carbon $end_date)
     {
-        if (!isset(static::$date_filter_columns) || !is_array(static::$date_filter_columns)) {
+        if (
+            ! isset(static::$date_filter_columns) ||
+            ! is_array(static::$date_filter_columns)
+        ) {
             // If no date filter columns set
             return collect([]);
         }
@@ -270,20 +278,37 @@ class Repository implements RepositoryInterface
                 break;
             case 1:
                 // The filter is applied in the form of $start_date <= $date_filter_columns[0] < $end_date
-                $result = $this->model->where(static::$date_filter_columns[0], '>=', $start_date->toDateTimeString())
-                    ->where(static::$date_filter_columns[0], '<', $end_date->toDateTimeString());
+                $result = $this->model->where(
+                    static::$date_filter_columns[0],
+                    '>=',
+                    $start_date->toDateTimeString()
+                )->where(
+                    static::$date_filter_columns[0],
+                    '<',
+                    $end_date->toDateTimeString()
+                );
                 break;
             case 2:
             default:
                 // Check if date intervals are overlapping (excluding the edges)
                 // $date_filter_columns[0] < $end_date && $date_filter_columns[1] > $start_date
-                $result = $this->model->where(static::$date_filter_columns[0], '<', $end_date)
-                    ->where(static::$date_filter_columns[1], '>', $start_date);
+                $result = $this->model->where(
+                    static::$date_filter_columns[0],
+                    '<',
+                    $end_date
+                )->where(
+                    static::$date_filter_columns[1],
+                    '>',
+                    $start_date
+                );
                 break;
         }
 
         // Order by clause
-        if (is_array(static::$order_by_columns) && count(static::$order_by_columns) > 0) {
+        if (
+            is_array(static::$order_by_columns) &&
+            count(static::$order_by_columns) > 0
+        ) {
             foreach (static::$order_by_columns as $order_by_column => $direction) {
                 $result = $result->orderBy($order_by_column, $direction);
             }
@@ -295,7 +320,7 @@ class Repository implements RepositoryInterface
     /**
      * Return all the resources belonging to a given user id.
      *
-     * @param int $user_id        The id of the user.
+     * @param int $user_id The id of the user.
      * @return \Illuminate\Support\Collection
      */
     public function getByUserId($user_id)
@@ -463,8 +488,8 @@ class Repository implements RepositoryInterface
 
         return $result->paginate(
             $page_size,
-            config('mmcms.pagination.columns'),
-            config('mmcms.pagination.page_name'),
+            Config::get('mmcms.pagination.columns'),
+            Config::get('mmcms.pagination.page_name'),
             $page
         );
     }
@@ -536,7 +561,7 @@ class Repository implements RepositoryInterface
         // Re-fetch the model to reload all relations
         $model = $this->find($model->id);
 
-        if (config('mmcms.journal.mode') === true) {
+        if (Config::get('mmcms.journal.mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {

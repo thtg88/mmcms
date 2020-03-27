@@ -1,0 +1,11 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummySuperNamespace\CreateRequest as BaseCreateRequest;
+use App\Repositories\DummyRepository;
+
+class CreateRequest extends BaseCreateRequest
+{
+    //
+}

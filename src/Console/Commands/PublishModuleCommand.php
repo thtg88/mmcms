@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
@@ -81,7 +82,10 @@ class PublishModuleCommand extends Command
         $all_files = $this->filesystem->allFiles($module_directory, true);
 
         foreach ($all_files as $source_file) {
-            $namespace = config('mmcms.modules.namespace', 'Thtg88\\MmCms\\Modules');
+            $namespace = Config::get(
+                'mmcms.modules.namespace',
+                'Thtg88\\MmCms\\Modules'
+            );
 
             $appNamespace = app()->getNamespace();
 

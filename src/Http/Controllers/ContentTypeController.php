@@ -2,84 +2,37 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
-use Thtg88\MmCms\Repositories\ContentTypeRepository;
-// Requests
-use Thtg88\MmCms\Http\Requests\ContentType\DestroyContentTypeRequest;
-use Thtg88\MmCms\Http\Requests\ContentType\StoreContentTypeRequest;
-use Thtg88\MmCms\Http\Requests\ContentType\UpdateContentTypeRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
+use Thtg88\MmCms\Http\Requests\ContentType\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\ContentType\StoreRequest;
+use Thtg88\MmCms\Http\Requests\ContentType\UpdateRequest;
+use Thtg88\MmCms\Services\ContentTypeService;
 
 class ContentTypeController extends Controller
 {
     /**
+     * The controller-specific bindings.
+     *
+     * @var string[]|callable[]
+     */
+    protected $bindings = [
+        DestroyRequestInterface::class => DestroyRequest::class,
+        StoreRequestInterface::class => StoreRequest::class,
+        UpdateRequestInterface::class => UpdateRequest::class,
+    ];
+
+    /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $repository
+     * @param \Thtg88\MmCms\Services\ContentTypeService $service
      * @return void
      */
-    public function __construct(ContentTypeRepository $repository)
+    public function __construct(ContentTypeService $service)
     {
-        $this->repository = $repository;
-    }
+        $this->service = $service;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ContentType\StoreContentTypeRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreContentTypeRequest $request)
-    {
-        // Get input
-        $input = $request->all();
-
-        // Create
-        $resource = $this->repository->create($input);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ContentType\UpdateContentTypeRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateContentTypeRequest $request, $id)
-    {
-        // Get input
-        $input = $request->all();
-
-        // Update
-        $resource = $this->repository->update($id, $input);
-
-        // No need to check if found as done by authorization method
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ContentType\DestroyContentTypeRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DestroyContentTypeRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->destroy($id);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        parent::__construct();
     }
 }
