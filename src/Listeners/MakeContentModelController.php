@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
 
@@ -33,7 +34,7 @@ class MakeContentModelController
             return;
         }
 
-        \Artisan::call('make:controller', [
+        Artisan::call('make:controller', [
             'name' => $controller_name,
         ]);
 

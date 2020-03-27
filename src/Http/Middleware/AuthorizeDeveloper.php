@@ -3,11 +3,19 @@
 namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
+use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class AuthorizeDeveloper
 {
+    /**
+     * The role repository implementation.
+     *
+     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     */
+    protected $roles;
+
     /**
      * Create a new middleware instance.
      *
@@ -32,7 +40,8 @@ class AuthorizeDeveloper
         $user = $request->user();
 
         if ($user->role === null) {
-            abort(403, 'This action is unauthorized.');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized.', []);
         }
 
         // Get developer role
@@ -41,11 +50,13 @@ class AuthorizeDeveloper
         );
 
         if ($developer_role === null) {
-            abort(403, 'This action is unauthorized!');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized!', []);
         }
 
         if ($user->role->priority > $developer_role->priority) {
-            abort(403, 'This action is unauthorized!!');
+            Container::getInstance()
+                ->abort(403, 'This action is unauthorized!!', []);
         }
 
         return $next($request);

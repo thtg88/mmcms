@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Listeners;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
 
@@ -27,7 +28,7 @@ class MakeContentModelRepository
     {
         $repository_name = Str::studly($event->content_model->name).'Repository';
 
-        \Artisan::call('make:repository', [
+        Artisan::call('make:repository', [
             'name' => $repository_name,
         ]);
     }
