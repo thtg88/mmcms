@@ -3,9 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
 use Illuminate\Validation\Rule;
-// Requests
 use Thtg88\MmCms\Http\Requests\Request;
-// Repositories
 use Thtg88\MmCms\Repositories\UserRepository;
 
 class LoginRequest extends Request

@@ -26,18 +26,21 @@ class Controller extends BaseController
         Concerns\WithBindings;
 
     /**
-     * The controller repository.
-     *
-     * @var \Thtg88\MmCms\Repositories\Repository
-     */
-    protected $repository;
-
-    /**
      * The service implementation.
      *
      * @var \App\Http\Requests\Contracts\ResourceServiceInterface
      */
     protected $service;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->addBindings();
+    }
 
     /**
      * Display a listing of the resource filtered by a given start and end date.
@@ -122,7 +125,7 @@ class Controller extends BaseController
             str_replace(
                 '_',
                 ' ',
-                str_singular($this->repository->getName())
+                str_singular($this->service->getRepository()->getName())
             )
         );
 
@@ -193,7 +196,8 @@ class Controller extends BaseController
     public function userIndex(UserIndexRequest $request)
     {
         // Get resources
-        $resources = $this->repository->getByUserId($request->user()->id);
+        $resources = $this->service->getRepository()
+            ->getByUserId($request->user()->id);
 
         return response()->json(['resources' => $resources]);
     }

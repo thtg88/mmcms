@@ -4,13 +4,13 @@ namespace Thtg88\MmCms\Services;
 
 use Carbon\Carbon;
 use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
-use Illuminate\Support\Str;
 
 class ResourceService implements ResourceServiceInterface
 {
@@ -101,79 +101,10 @@ class ResourceService implements ResourceServiceInterface
     }
 
     /**
-     * Return all the model instances.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
-     * @return \Illuminate\Support\Collection
-     */
-    public function paginate(PaginateRequestInterface $request)
-    {
-        // Get input
-        $input = $request->only([
-            'page',
-            'page_size',
-            'recovery',
-            'sort_direction',
-            'sort_name',
-        ]);
-
-        $wheres = [];
-
-        $wheres = array_merge($wheres, $this->getFilterValues($request));
-
-        // Page falls back to 1
-        if (! array_key_exists('page', $input) || $input['page'] === null) {
-            $input['page'] = 1;
-        }
-
-        // Page size fall back to configs
-        if (
-            ! array_key_exists('page_size', $input) ||
-            $input['page_size'] === null ||
-            filter_var($input['page_size'], FILTER_VALIDATE_INT) === false
-        ) {
-            $input['page_size'] = Config::get('app.pagination.page_size');
-        }
-
-        $input['q'] = $this->getSearchValue($request);
-
-        if (array_key_exists('recovery', $input) && $input['recovery'] == 1) {
-            // Set the repository to also fetch trashed models
-            $this->repository = $this->repository->withTrashed();
-
-            $wheres[] = [
-                'field' => 'deleted_at',
-                'operator' => '<>',
-                'value' => null,
-            ];
-        }
-
-        // Sort name fall back
-        if (empty($input['sort_name'])) {
-            $input['sort_name'] = null;
-        }
-
-        // Sort direction fall back
-        if (empty($input['sort_direction'])) {
-            $input['sort_direction'] = null;
-        }
-
-        // Get paginated resources
-        return $this->repository->paginate(
-            $input['page_size'],
-            $input['page'],
-            $input['q'],
-            $input['sort_name'],
-            $input['sort_direction'],
-            $wheres
-        );
-    }
-
-    /**
      * Restore a model instance from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request
-     * @param int    $id The id of the model
+     * @param int $id The id of the model
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function restore(RestoreRequestInterface $request, $id)
