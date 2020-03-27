@@ -7,7 +7,7 @@ use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\StoreRequest;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class StoreImageCategoryRequest extends StoreRequest
+class StoreRequest extends StoreRequest
 {
     /**
      * Create a new request instance.

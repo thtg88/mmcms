@@ -2,113 +2,40 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Controllers
-use Thtg88\MmCms\Http\Controllers\Controller;
-use Thtg88\MmCms\Repositories\ImageCategoryRepository;
-use Thtg88\MmCms\Http\Requests\ImageCategory\DestroyImageCategoryRequest;
-use Thtg88\MmCms\Http\Requests\ImageCategory\RestoreImageCategoryRequest;
-use Thtg88\MmCms\Http\Requests\ImageCategory\StoreImageCategoryRequest;
-use Thtg88\MmCms\Http\Requests\ImageCategory\UpdateImageCategoryRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
+use Thtg88\MmCms\Http\Requests\ImageCategory\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\ImageCategory\RestoreRequest;
+use Thtg88\MmCms\Http\Requests\ImageCategory\StoreRequest;
+use Thtg88\MmCms\Http\Requests\ImageCategory\UpdateRequest;
+use Thtg88\MmCms\Services\ImageCategoryService;
 
 class ImageCategoryController extends Controller
 {
     /**
+     * The controller-specific bindings.
+     *
+     * @var string[]|callable[]
+     */
+    protected $bindings = [
+        DestroyRequestInterface::class => DestroyRequest::class,
+        RestoreRequestInterface::class => RestoreRequest::class,
+        StoreRequestInterface::class => StoreRequest::class,
+        UpdateRequestInterface::class => UpdateRequest::class,
+    ];
+
+    /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
+     * @param \Thtg88\MmCms\Services\ImageCategoryService $service
      * @return void
      */
-    public function __construct(ImageCategoryRepository $repository)
+    public function __construct(ImageCategoryService $service)
     {
-        $this->repository = $repository;
-    }
+        $this->service = $service;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ImageCategory\StoreImageCategoryRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreImageCategoryRequest $request)
-    {
-        // Get input
-        $input = $request->except([
-            'created_at',
-            'deleted_at',
-            'published_at',
-            'updated_at',
-        ]);
-
-        // Create
-        $resource = $this->repository->create($input);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ImageCategory\UpdateImageCategoryRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateImageCategoryRequest $request, $id)
-    {
-        // Get input
-        $input = $request->except([
-            'created_at',
-            'deleted_at',
-            'published_at',
-            'updated_at',
-        ]);
-
-        // Update
-        $resource = $this->repository->update($id, $input, false, true);
-
-        // No need to check if found as done by authorization method
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ImageCategory\DestroyImageCategoryRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DestroyImageCategoryRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->destroy($id);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Restore the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\ImageCategory\RestoreImageCategoryRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function restore(RestoreImageCategoryRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->restore($id);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        parent::__construct();
     }
 }
