@@ -88,7 +88,7 @@ class PublishModuleCommand extends Command
                 'Thtg88\\MmCms\\Modules'
             );
 
-            $appNamespace = app()->getNamespace();
+            $appNamespace = Container::getInstance()->getNamespace();
 
             if (! Str::startsWith($namespace, $appNamespace)) {
                 $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
