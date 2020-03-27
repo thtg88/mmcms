@@ -96,9 +96,6 @@ class ContentModelService extends ResourceService
         Container::getInstance()->make('events', [])
             ->dispatch(new ContentModelStored($resource));
 
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        return $resource;
     }
 }
