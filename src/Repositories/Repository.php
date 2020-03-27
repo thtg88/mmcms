@@ -2,13 +2,22 @@
 
 namespace Thtg88\MmCms\Repositories;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Config;
+use Thtg88\MmCms\Helpers\JournalEntryHelper;
 
 class Repository implements RepositoryInterface
 {
     use Concerns\WithDateFilter;
+
+    /**
+     * The journal entry helper implementation.
+     *
+     * @var \Thtg88\MmCms\Helpers\JournalEntryHelper
+     */
+    protected $journal_entry_helper;
 
     /**
      * The repository model.
@@ -58,6 +67,9 @@ class Repository implements RepositoryInterface
         Relation::morphMap([
             $target_table => $class_name,
         ]);
+
+        $this->journal_entry_helper = Container::getInstance()
+            ->make(JournalEntryHelper::class);
     }
 
     /**
@@ -188,7 +200,7 @@ class Repository implements RepositoryInterface
         // Check if a model uses discards, so I can log into journal
         if (in_array('Illuminate\Database\Eloquent\SoftDelete', class_uses($this->model))) {
             if (Config::get('mmcms.journal.mode') === true) {
-                app('JournalEntryHelper')->createJournalEntry('discard', $model, []);
+                $this->journal_entry_helper->createJournalEntry('discard', $model, []);
             }
         }
 
@@ -429,7 +441,8 @@ class Repository implements RepositoryInterface
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_class_name = '\Thtg88\MmCms\Models\JournalEntry';
             if ($model instanceof $journal_entry_class_name === false) {
-                app('JournalEntryHelper')->createJournalEntry(null, $model, $data);
+                $this->journal_entry_helper
+                    ->createJournalEntry(null, $model, $data);
             }
         }
 
