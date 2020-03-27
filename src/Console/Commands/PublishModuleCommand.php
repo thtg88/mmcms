@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputOption;
 
 class PublishModuleCommand extends Command
@@ -43,9 +44,14 @@ class PublishModuleCommand extends Command
         parent::__construct();
     }
 
-    public function fire()
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function fire(): void
     {
-        return $this->handle();
+        $this->handle();
     }
 
     /**
@@ -53,12 +59,13 @@ class PublishModuleCommand extends Command
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $module_name = $this->argument('module');
 
         if (empty($module_name)) {
-            return $this->error('Module argument is mandatory.');
+            $this->error('Module argument is mandatory.');
+            return;
         }
 
         $this->copyAllFiles($module_name, $this->option('force'));
@@ -67,17 +74,17 @@ class PublishModuleCommand extends Command
     /**
      * Copy all the files from the given module name.
      *
-     * @param $module_name
-     * @param $force
-     *
-     * @return mixed
+     * @param string $module_name
+     * @param bool $force
+     * @return void
      */
-    protected function copyAllFiles($module_name, $force = false)
+    protected function copyAllFiles($module_name, $force = false): void
     {
         $module_directory = Container::getInstance()->basePath('vendor/thtg88/mmcms/'.$module_name);
 
         if (! $this->filesystem->isDirectory($module_directory)) {
-            return $this->error('Module '.$module_name.' not found.');
+            $this->error('Module '.$module_name.' not found.');
+            return;
         }
 
         $all_files = $this->filesystem->allFiles($module_directory, true);
