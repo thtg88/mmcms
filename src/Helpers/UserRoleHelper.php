@@ -32,7 +32,7 @@ class UserRoleHelper
      * @param \Thtg88\MmCms\Repositories\UserRepository $users
      * @return void
      */
-    public function __construct(UserRoleRepository $user_roles, RoleRepository $roles, UserRepository $users)
+    public function __construct(RoleRepository $roles, UserRepository $users)
     {
         $this->roles = $roles;
         $this->users = $users;
