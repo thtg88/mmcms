@@ -2,6 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\SeoEntry\DestroyRequest;
 use Thtg88\MmCms\Http\Requests\SeoEntry\RestoreRequest;
 use Thtg88\MmCms\Http\Requests\SeoEntry\StoreRequest;
