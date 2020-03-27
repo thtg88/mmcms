@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Repositories\Concerns;
 
 use App\Models\JournalEntry;
 use DB;
+use Illuminate\Support\Facades\Config;
 
 trait WithCreate
 {
@@ -18,7 +19,7 @@ trait WithCreate
         // Create model
         $model = $this->model->create($data);
 
-        if (config('app.journal_mode') === true) {
+        if (Config::get('app.journal_mode') === true) {
             // Create journal entry only if not creating journal entry, lol (infinite recursion)
             $journal_entry_classname = JournalEntry::class;
 
@@ -66,7 +67,7 @@ trait WithCreate
         // to avoid hitting issues on certain DBs
         $chunked_data = array_chunk(
             $data,
-            config('app.create_bulk_chunk_size'),
+            Config::get('app.create_bulk_chunk_size'),
             true
         );
 
@@ -79,8 +80,8 @@ trait WithCreate
             }
         }
 
-        if (config('app.journal_mode') === true) {
             app('JournalEntryHelper')->createJournalEntry(
+        if (Config::get('app.journal_mode') === true) {
                 'create-bulk',
                 null,
                 [

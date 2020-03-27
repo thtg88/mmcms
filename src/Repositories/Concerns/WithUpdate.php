@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Repositories\Concerns;
 
 use App\Models\JournalEntry;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 trait WithUpdate
 {
@@ -34,7 +35,7 @@ trait WithUpdate
         // Save data
         $result = $model->fill($data)->save();
 
-        if (config('app.journal_mode') === true) {
+        if (Config::get('app.journal_mode') === true) {
             // Create journal entry only if not creating journal entry i.e. infinite recursion
             $journal_entry_classname = JournalEntry::class;
 
