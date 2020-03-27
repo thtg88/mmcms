@@ -45,8 +45,8 @@ class UserRoleHelper
      * e.g. if the given role is lower from the one the user owns,
      * this function will return true.
      *
-     * @param	int	$user_id	The id of the user.
-     * @param	int	$role_name	The name of the role.
+     * @param int $user_id The id of the user.
+     * @param int $role_name The name of the role.
      * @return	boolean
      */
     public function authorize($user_id, $role_name)
@@ -95,7 +95,7 @@ class UserRoleHelper
     /**
      * Return whether a user from a given id is authorized for an administrator role.
      *
-     * @param	int	$user_id	The id of the user.
+     * @param int $user_id The id of the user.
      * @return	boolean
      */
     public function authorizeAdministrator($user_id)
@@ -106,7 +106,7 @@ class UserRoleHelper
     /**
      * Return whether a user from a given id is authorized for a developer role.
      *
-     * @param	int	$user_id	The id of the user.
+     * @param int $user_id The id of the user.
      * @return	boolean
      */
     public function authorizeDeveloper($user_id)
