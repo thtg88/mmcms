@@ -1,0 +1,20 @@
+<?php
+
+namespace DummyNamespace;
+
+use DummySuperNamespace\IndexRequest as BaseIndexRequest;
+use App\Repositories\DummyRepository;
+
+class IndexRequest extends BaseIndexRequest
+{
+    /**
+     * Create a new request instance.
+     *
+     * @param \App\Repositories\DummyRepository $repository
+     * @return void
+     */
+    public function __construct(DummyRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+}

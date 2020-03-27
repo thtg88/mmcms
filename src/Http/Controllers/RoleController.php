@@ -2,84 +2,37 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
-use Thtg88\MmCms\Repositories\RoleRepository;
-// Requests
-use Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest;
-use Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest;
-use Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Role\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\Role\StoreRequest;
+use Thtg88\MmCms\Http\Requests\Role\UpdateRequest;
+use Thtg88\MmCms\Services\RoleService;
 
 class RoleController extends Controller
 {
     /**
+     * The controller-specific bindings.
+     *
+     * @var string[]|callable[]
+     */
+    protected $bindings = [
+        DestroyRequestInterface::class => DestroyRequest::class,
+        StoreRequestInterface::class => StoreRequest::class,
+        UpdateRequestInterface::class => UpdateRequest::class,
+    ];
+
+    /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\RoleRepository $repository
+     * @param \Thtg88\MmCms\Services\RoleService $service
      * @return void
      */
-    public function __construct(RoleRepository $repository)
+    public function __construct(RoleService $service)
     {
-        $this->repository = $repository;
-    }
+        $this->service = $service;
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\Role\StoreRoleRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreRoleRequest $request)
-    {
-        // Get input
-        $input = $request->all();
-
-        // Create
-        $resource = $this->repository->create($input);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\Role\UpdateRoleRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRoleRequest $request, $id)
-    {
-        // Get input
-        $input = $request->all();
-
-        // Update
-        $resource = $this->repository->update($id, $input);
-
-        // No need to check if found as done by authorization method
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\Role\DestroyRoleRequest  $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(DestroyRoleRequest $request, $id)
-    {
-        // Delete resource
-        $resource = $this->repository->destroy($id);
-
-        return response()->json([
-            'success' => true,
-            'resource' => $resource,
-        ]);
+        parent::__construct();
     }
 }

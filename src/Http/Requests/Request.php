@@ -2,8 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 
 class Request extends FormRequest
 {
@@ -63,7 +64,9 @@ class Request extends FormRequest
      */
     protected function authorizeDeveloper()
     {
-        return $this->authorizeRole(config('mmcms.roles.developer_role_name'));
+        return $this->authorizeRole(
+            Config::get('mmcms.roles.developer_role_name')
+        );
     }
 
     /**
@@ -78,7 +81,7 @@ class Request extends FormRequest
             return false;
         }
 
-        if (!is_string($role_name)) {
+        if (! is_string($role_name)) {
             return false;
         }
 
@@ -101,26 +104,73 @@ class Request extends FormRequest
     }
 
     /**
-     * Return whether the user is the owner of the resource concerning the
-     * request or not.
+     * Determine if the resource from the route's id exists.
      *
      * @return bool
      */
-    protected function authorizeResourceExist()
+    public function authorizeResourceExist()
     {
-        // Get resource
-        $resource = $this->repository->find($this->route('id'));
+        // Find resource
+        $resource = $this->findResource();
 
-        // Needs to be an existing resource
-        if ($resource === null) {
-            return false;
-        }
+        return $resource !== null;
+    }
 
-        return true;
+    /**
+     * Determine if the resource (even if deleted) exists.
+     *
+     * @return bool
+     */
+    public function authorizeResourceDeletedExist()
+    {
+        // Find resource
+        $resource = $this->findResource(true);
+
+        return $resource !== null;
+    }
+
+    /**
+     * Determine if the resource from the route's id belongs
+     * to the user performing the request.
+     *
+     * @return bool
+     */
+    public function authorizeResourceExistAndOwner()
+    {
+        // Find resource
+        $resource = $this->findResource();
+
+        return (
+            $resource !== null &&
+            $this->user() !== null &&
+            $resource->user_id == $this->user()->id
+        );
     }
 
     protected function formatErrors(Validator $validator)
     {
         return ['errors' => $validator->getMessageBag()->toArray()];
+    }
+
+    /**
+     * Find the resource from the route's id.
+     * Optionally include a trashed resource in the query.
+     *
+     * @param bool $with_trashed
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    protected function findResource($with_trashed = false)
+    {
+        // Get id from route
+        $resource_id = $this->route('id');
+
+        // Find trashed resource
+        if ($with_trashed === true) {
+            return $this->repository->withTrashed()
+                ->find($resource_id);
+        }
+
+        // Find resource
+        return $this->repository->find($resource_id);
     }
 }

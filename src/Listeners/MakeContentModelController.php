@@ -26,7 +26,7 @@ class MakeContentModelController
      */
     public function handle(ContentModelStored $event)
     {
-        $model_name = studly_case($event->content_model->name);
+        $model_name = Str::studly($event->content_model->name);
         $controller_name = $model_name.'Controller';
 
         if (!class_exists($controller_name)) {

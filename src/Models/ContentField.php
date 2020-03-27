@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class ContentField extends Model
 {
     /**
@@ -63,11 +65,19 @@ class ContentField extends Model
 
     public function content_model()
     {
-        return $this->belongsTo(config('mmcms.models.namespace').'ContentModel', 'content_model_id', 'id');
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'ContentModel',
+            'content_model_id',
+            'id'
+        );
     }
 
     public function content_type()
     {
-        return $this->belongsTo(config('mmcms.models.namespace').'ContentType', 'content_type_id', 'id');
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'ContentType',
+            'content_type_id',
+            'id'
+        );
     }
 }

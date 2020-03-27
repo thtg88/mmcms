@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class Image extends Model
 {
     protected $table = 'images';
@@ -62,7 +64,7 @@ class Image extends Model
     public function image_category()
     {
         return $this->belongsTo(
-            config('mmcms.models.namespace').'ImageCategory',
+            Config::get('mmcms.models.namespace').'ImageCategory',
             'image_category_id',
             'id'
         );

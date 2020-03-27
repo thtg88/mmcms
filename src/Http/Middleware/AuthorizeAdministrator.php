@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
-// Repositories
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class AuthorizeAdministrator
@@ -36,7 +36,9 @@ class AuthorizeAdministrator
         }
 
         // Get administrator role
-        $administrator_role = $this->roles->findByModelName(config('mmcms.roles.administrator_role_name'));
+        $administrator_role = $this->roles->findByModelName(
+            Config::get('mmcms.roles.administrator_role_name')
+        );
 
         if ($administrator_role === null) {
             abort(403, 'This action is unauthorized!');

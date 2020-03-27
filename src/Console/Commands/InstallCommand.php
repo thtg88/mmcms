@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
@@ -30,25 +31,24 @@ class InstallCommand extends Command
      */
     protected $description = 'Install the mmCMS package';
 
-    public function fire(Filesystem $filesystem)
+    public function fire()
     {
-        return $this->handle($filesystem);
+        return $this->handle();
     }
 
     /**
      * Execute the console command.
      *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
      *
      * @return void
      */
-    public function handle(Filesystem $filesystem)
+    public function handle()
     {
         // Publish only relevant resources on install
         $this->info('Publishing the mmCMS assets, database, and config files');
         $this->publishVendorTags();
 
-        if (empty(config('app.key'))) {
+        if (empty(Config::get('app.key'))) {
             // Generate app key
             $this->info('Generating app key');
             $this->call('key:generate');
@@ -70,18 +70,12 @@ class InstallCommand extends Command
         ]);
 
         $this->info('Configuring Laravel Passport');
-        $this->addPassportRoutes($filesystem);
+        $this->addPassportRoutes();
 
         $this->info('Configuring Anhskohbo NoCaptcha');
         $this->call('vendor:publish', [
             '--provider' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider'
         ]);
-
-        $this->info('Configuring Barryvdh Laravel CORS');
-        $this->call('vendor:publish', [
-            '--provider' => 'Barryvdh\Cors\ServiceProvider'
-        ]);
-        $this->addLaravelCorsMiddleware($filesystem);
 
         // Attempting to set mmCMS User model as parent to App\User
         $this->info('Attempting to set mmCMS User model as parent to App\User');
@@ -134,8 +128,14 @@ class InstallCommand extends Command
             'views',
             'assets'
         ];
-        $this->call('vendor:publish', ['--provider' => MmCmsServiceProvider::class, '--tag' => $tags]);
-        $this->call('vendor:publish', ['--provider' => PassportServiceProvider::class, '--tag' => 'passport-migrations']);
+        $this->call('vendor:publish', [
+            '--provider' => MmCmsServiceProvider::class,
+            '--tag' => $tags,
+        ]);
+        $this->call('vendor:publish', [
+            '--provider' => PassportServiceProvider::class,
+            '--tag' => 'passport-migrations',
+        ]);
     }
 
     /**
@@ -146,35 +146,51 @@ class InstallCommand extends Command
     private function extendUserModel()
     {
         // Check that file exists
-        if (file_exists(app_path('User.php'))) {
-            // Get model's content as string
-            $str = file_get_contents(app_path('User.php'));
-
-            if ($str !== false) {
-                // Replace inherited class
-                if (
-                    strpos($str, 'extends \Thtg88\MmCms\Models\User') === false
-                    && strpos($str, 'extends Authenticatable') !== false
-                ) {
-                    $str = str_replace('extends Authenticatable', "extends \Thtg88\MmCms\Models\User", $str);
-                }
-                // Replace traits
-                if (
-                    strpos($str, 'use \Laravel\Passport\HasApiTokens, Notifiable;') === false
-                    && strpos($str, 'use Notifiable;') !== false
-                ) {
-                    $str = str_replace('use Notifiable;', 'use \Laravel\Passport\HasApiTokens, Notifiable;', $str);
-                }
-
-                file_put_contents(app_path('User.php'), $str);
-            }
-        } else {
+        if (! file_exists(app_path('User.php'))) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'User.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
             $this->warn('Change "extends Authenticatable" to "extends \Thtg88\MmCms\Models\User",');
             $this->warn('and "use Notifiable;" to "use \Laravel\Passport\HasApiTokens, Notifiable;" in your User model');
+
+            return;
         }
+
+        // Get model's content as string
+        $str = file_get_contents(app_path('User.php'));
+
+        if ($str === false) {
+            return;
+        }
+
+        // Replace inherited class
+        if (
+            strpos($str, 'extends \Thtg88\MmCms\Models\User') === false
+            && strpos($str, 'extends Authenticatable') !== false
+        ) {
+            $str = str_replace(
+                'extends Authenticatable',
+                "extends \Thtg88\MmCms\Models\User",
+                $str
+            );
+        }
+
+        // Replace traits
+        if (
+            strpos(
+                $str,
+                'use \Laravel\Passport\HasApiTokens, Notifiable;'
+            ) === false
+            && strpos($str, 'use Notifiable;') !== false
+        ) {
+            $str = str_replace(
+                'use Notifiable;',
+                'use \Laravel\Passport\HasApiTokens, Notifiable;',
+                $str
+            );
+        }
+
+        file_put_contents(app_path('User.php'), $str);
     }
 
     /**
@@ -186,7 +202,8 @@ class InstallCommand extends Command
     {
         $composer = $this->findComposer();
         $process = new Process($composer.' dump-autoload');
-        // Setting timeout to null to prevent installation from stopping at a certain point in time
+        // Setting timeout to null
+        // to prevent installation from stopping at a certain point in time
         $process->setTimeout(null);
         $process->setWorkingDirectory(base_path())->run();
     }
@@ -194,68 +211,47 @@ class InstallCommand extends Command
     /**
      * Add Laravel Passport routes.
      *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
-    private function addPassportRoutes(FileSystem $filesystem)
+    private function addPassportRoutes()
     {
-        // Check that Auth service provider exists
-        if (file_exists(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php'))) {
-            // Get Auth service provider content as string
-            $str = file_get_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php'));
-
-            if ($str !== false) {
-                // Add Passport routes
-                if (
-                    strpos($str, 'Passport::routes();') === false
-                    && strpos($str, '$this->registerPolicies();') !== false
-                ) {
-                    $passport_str = '$this->registerPolicies();'.PHP_EOL.PHP_EOL;
-                    $passport_str .= "\t\t\Laravel\Passport\Passport::routes();";
-                    $str = str_replace('$this->registerPolicies();', $passport_str, $str);
-                }
-
-                file_put_contents(app_path('Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php'), $str);
-            }
-        } else {
+        // Check that Route service provider exists
+        if (! file_exists(
+            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+        )) {
             // Warn the user to do changes manually
-            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'AuthServiceProvider.php". Did you move this file?');
+            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
-            $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Auth service provider.');
+            $this->warn('Add "\Laravel\Passport\Passport::routes();" after "$this->registerPolicies();" in the Route service provider.');
+
+            return;
         }
-    }
 
-    /**
-     * Add Barryvdh Laravel CORS middleware.
-     *
-     * @param \Illuminate\Filesystem\Filesystem $filesystem
-     * @return void
-     */
-    private function addLaravelCorsMiddleware(FileSystem $filesystem)
-    {
-        // Check that HTTP Kernel exists
-        if (file_exists(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'))) {
-            // Get HTTP kernel content as string
-            $str = file_get_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'));
+        // Get Route service provider content as string
+        $str = file_get_contents(
+            app_path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
+        );
 
-            // Replace middleware import for all routes
-            if (
-                $str !== false
-                && strpos($str, '\Barryvdh\Cors\HandleCors::class,') === false
-                && strpos($str, 'protected $middleware = [') !== false
-            ) {
-                $middleware_str = 'protected $middleware = ['.PHP_EOL;
-                $middleware_str .= "\t\t\Barryvdh\Cors\HandleCors::class,";
-                $str = str_replace('protected $middleware = [', $middleware_str, $str);
-
-                file_put_contents(app_path('Http'.DIRECTORY_SEPARATOR.'Kernel.php'), $str);
-            }
-        } else {
-            // Warn the suer of the manual change needed
-            $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Kernel.php". Did you move this file?');
-            $this->warn('You will need to update this manually.');
-            $this->warn('Add "\Barryvdh\Cors\HandleCors::class," after "protected $middleware = [" in the HTTP kernel.');
+        if ($str === false) {
+            return;
         }
+
+        // Add Passport routes
+        if (
+            strpos($str, 'Passport::routes();') === false
+            && strpos($str, '$this->mapWebRoutes();') !== false
+        ) {
+            $passport_str = '$this->mapWebRoutes();'.PHP_EOL.PHP_EOL;
+            $passport_str .= "        \Laravel\Passport\Passport::routes();";
+            $str = str_replace('$this->mapWebRoutes();', $passport_str, $str);
+        }
+
+        file_put_contents(
+            app_path(
+                'Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php'
+            ),
+            $str
+        );
     }
 
     /**
@@ -266,59 +262,48 @@ class InstallCommand extends Command
     private function addExceptionRenderers()
     {
         // Check that exception handler is in the standard Laravel place
-        if (file_exists(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'))) {
-            // Get exceptions handler content as string
-            $str = file_get_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'));
-
-            if (
-                $str !== false
-                && strpos($str, 'if($exception->getStatusCode() == 403)') === false
-                && strpos($str, 'return parent::render($request, $exception);') !== false
-            ) {
-                // Adding content
-                $render_str = 'if($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Resource not found.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["resource_not_found" => [$msg]]], 404);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\Access\AuthorizationException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Illuminate\Auth\AuthenticationException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'$msg = $exception->getMessage() ?: "Unauthenticated.";'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["unauthenticated" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'return response()->json(["errors" => ["method_not_allowed" => ["Method not allowed."]]], 405);'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'else if($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException)'.PHP_EOL;
-                $render_str .= "\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 403)'.PHP_EOL;
-                $render_str .= "\t\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Forbidden.";'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["forbidden" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t\t".'if($exception->getStatusCode() == 401)'.PHP_EOL;
-                $render_str .= "\t\t\t".'{'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'$msg = $exception->getMessage() ?: "Unauthorized.";'.PHP_EOL;
-                $render_str .= "\t\t\t\t".'return response()->json(["errors" => ["unauthorized" => [$msg]]], 403);'.PHP_EOL;
-                $render_str .= "\t\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'}'.PHP_EOL;
-                $render_str .= "\t\t".'return parent::render($request, $exception);';
-
-                $str = str_replace('return parent::render($request, $exception);', $render_str, $str);
-
-                file_put_contents(app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'), $str);
-            }
-        } else {
+        if (! file_exists(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+        )) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'Exceptions'.DIRECTORY_SEPARATOR.'Handler.php". Did you move this file?');
             $this->warn('You will need to update this manually in order for the exceptions to be caught and converted into JSON.');
+
+            return;
         }
+
+        // Get exceptions handler content as string
+        $str = file_get_contents(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
+        );
+
+        if (
+            $str === false ||
+            strpos(
+                $str,
+                'use Thtg88\MmCms\Exceptions\Handler as ExceptionHandler;'
+            ) !== false
+        ) {
+            return;
+        }
+
+        // Adding content
+        $str = str_replace(
+            'use Throwable;',
+            'use Thtg88\MmCms\Exceptions\Handler as ExceptionHandler;'.PHP_EOL.
+                'use Throwable;',
+            $str
+        );
+        $str = str_replace(
+            'use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;',
+            '',
+            $str
+        );
+
+        file_put_contents(
+            app_path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php'),
+            $str
+        );
     }
 
     /**
@@ -326,34 +311,44 @@ class InstallCommand extends Command
      *
      * @return void
      */
-    private function setPassportAuthDriver(Filesystem $filesystem)
+    private function setPassportAuthDriver()
     {
         // Check that auth config is in the standard Laravel place
-        if (file_exists(config_path('auth.php'))) {
-            // Get auth config content as string
-            $str = file_get_contents(config_path('auth.php'));
-
-            if (
-                $str !== false
-                && (
-                    strpos($str, "'api' => [".PHP_EOL."            'driver' => 'token',") !== false
-                    || strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'token',") !== false
-                )
-                && strpos($str, "'api' => [".PHP_EOL."            'driver' => 'passport',") === false
-                && strpos($str, "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',") === false
-            ) {
-                $replace_str = "'api' => [".PHP_EOL."\t\t\t'driver' => 'passport',";
-
-                $str = str_replace("'api' => [".PHP_EOL."            'driver' => 'token',", $replace_str, $str);
-                $str = str_replace("'api' => [".PHP_EOL."\t\t\t'driver' => 'token',", $replace_str, $str);
-
-                file_put_contents(config_path('auth.php'), $str);
-            }
-        } else {
+        if (! file_exists(config_path('auth.php'))) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
             $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
+
+            return;
         }
+
+        // Get auth config content as string
+        $str = file_get_contents(config_path('auth.php'));
+
+        if (
+            $str === false ||
+            strpos(
+                $str,
+                "'api' => [".PHP_EOL."            'driver' => 'token',"
+            ) === false ||
+            strpos(
+                $str,
+                "'api' => [".PHP_EOL."            'driver' => 'passport',"
+            ) !== false
+        ) {
+            return;
+        }
+
+        $replace_str = "'api' => [".PHP_EOL.
+            "            'driver' => 'passport',";
+
+        $str = str_replace(
+            "'api' => [".PHP_EOL."            'driver' => 'token',",
+            $replace_str,
+            $str
+        );
+
+        file_put_contents(config_path('auth.php'), $str);
     }
 
     /**
@@ -366,16 +361,18 @@ class InstallCommand extends Command
         if (file_exists(base_path('.htaccess'))) {
             // Warn user that file already exists
             $this->info('htaccess file already exists, skipping...');
-        } else {
-            // Create .htaccess file
-            $str = "";
-            $str .= "<IfModule mod_rewrite.c>\n";
-            $str .= "\tRewriteEngine on\n\n";
-            $str .= "\tRewriteCond %{REQUEST_URI} !public/\n";
-            $str .= "\tRewriteRule (.*) /public/$1 [L]\n";
-            $str .= "</IfModule>\n";
 
-            file_put_contents(base_path('.htaccess'), $str);
+            return;
         }
+
+        // Create .htaccess file
+        $str = "";
+        $str .= "<IfModule mod_rewrite.c>".PHP_EOL;
+        $str .= "    RewriteEngine on".PHP_EOL.PHP_EOL;
+        $str .= "    RewriteCond %{REQUEST_URI} !public/".PHP_EOL;
+        $str .= "    RewriteRule (.*) /public/$1 [L]".PHP_EOL;
+        $str .= "</IfModule>".PHP_EOL;
+
+        file_put_contents(base_path('.htaccess'), $str);
     }
 }

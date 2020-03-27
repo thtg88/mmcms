@@ -3,8 +3,9 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\JournalEntry;
@@ -91,6 +92,18 @@ class User extends Authenticatable
     public function getWith()
     {
         return $this->with;
+    }
+
+    // MUTATORS
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
     }
 
     // RELATIONSHIPS
