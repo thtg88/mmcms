@@ -1,6 +1,8 @@
 <?php
 
-use Thtg88\MmCms\Http\Controllers\Concerns;
+namespace Thtg88\MmCms\Http\Controllers\Concerns;
+
+use Illuminate\Container\Container;
 
 /**
  * Add bindings functionality to controllers.
