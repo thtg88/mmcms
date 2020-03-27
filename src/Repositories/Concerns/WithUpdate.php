@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use App\Models\JournalEntry;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Thtg88\MmCms\Models\JournalEntry;
 
 trait WithUpdate
 {
@@ -40,7 +40,7 @@ trait WithUpdate
             $journal_entry_classname = JournalEntry::class;
 
             if ($model instanceof $journal_entry_classname === false) {
-                app('JournalEntryHelper')->createJournalEntry(
+                $this->journal_entry_helper->createJournalEntry(
                     null,
                     $model,
                     $data

@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use App\Models\JournalEntry;
 use DB;
 use Illuminate\Support\Facades\Config;
+use Thtg88\MmCms\Models\JournalEntry;
 
 trait WithCreate
 {
@@ -27,7 +27,7 @@ trait WithCreate
                 $model !== null &&
                 $model instanceof $journal_entry_classname === false
             ) {
-                app('JournalEntryHelper')->createJournalEntry(
+                $this->journal_entry_helper->createJournalEntry(
                     'create',
                     $model,
                     $data
@@ -80,8 +80,8 @@ trait WithCreate
             }
         }
 
-            app('JournalEntryHelper')->createJournalEntry(
         if (Config::get('app.journal_mode') === true) {
+            $this->journal_entry_helper->createJournalEntry(
                 'create-bulk',
                 null,
                 [
