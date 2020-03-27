@@ -7,7 +7,7 @@ use Thtg88\MmCms\Http\Requests\StoreRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
-class StoreContentTypeRequest extends StoreRequest
+class StoreRequest extends StoreRequest
 {
     /**
      * Create a new request instance.
