@@ -8,7 +8,7 @@ use Thtg88\MmCms\Repositories\ContentFieldRepository;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
-class StoreContentFieldRequest extends StoreRequest
+class StoreRequest extends StoreRequest
 {
     /**
      * Create a new request instance.
