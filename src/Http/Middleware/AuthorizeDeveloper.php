@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
-// Repositories
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class AuthorizeDeveloper
@@ -36,7 +36,9 @@ class AuthorizeDeveloper
         }
 
         // Get developer role
-        $developer_role = $this->roles->findByModelName(config('mmcms.roles.developer_role_name'));
+        $developer_role = $this->roles->findByModelName(
+            Config::get('mmcms.roles.developer_role_name')
+        );
 
         if ($developer_role === null) {
             abort(403, 'This action is unauthorized!');

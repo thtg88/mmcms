@@ -2,9 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
+use Illuminate\Config\Repository as Config;
+use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\UserRepository;
-use Illuminate\Validation\Rule;
 
 class RegisterRequest extends Request
 {
@@ -49,7 +50,7 @@ class RegisterRequest extends Request
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 
-        if (config('mmcms.recaptcha.mode') === true) {
+        if (Config::get('mmcms.recaptcha.mode') === true) {
             $all_rules['g_recaptcha_response'] = 'bail|required|captcha';
         }
 

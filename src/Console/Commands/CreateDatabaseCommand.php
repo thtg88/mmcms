@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use DB;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 use PDO;
 use Symfony\Component\Console\Input\InputArgument;
@@ -41,7 +43,7 @@ class CreateDatabaseCommand extends Command
     public function handle()
     {
         // Get default database connection from config
-        $default_database_connection = config('database.default');
+        $default_database_connection = Config::get('database.default');
 
         // Get database name from arguments
         $database_name = $this->argument('name');
@@ -108,18 +110,18 @@ class CreateDatabaseCommand extends Command
     {
         // We reset default database name to "postgres"
         // as we can not create the database we can not connect to yet :\
-        config(['database.connections.pgsql.database' => 'postgres']);
+        Config::set('database.connections.pgsql.database', 'postgres');
 
         // Get databases names
         $databases = array_map(
             static function ($database) {
                 return $database->datname;
             },
-            \DB::select('SELECT datname FROM pg_database')
+            DB::select('SELECT datname FROM pg_database')
         );
 
         if (array_search($database_name, $databases) === false) {
-            \DB::statement('CREATE DATABASE '.$database_name.';');
+            DB::statement('CREATE DATABASE '.$database_name.';');
             return true;
         }
 
@@ -135,16 +137,16 @@ class CreateDatabaseCommand extends Command
     protected function createMySql($database_name)
     {
         $pdo = $this->getPDOConnection(
-            config('database.connections.mysql.host'),
-            config('database.connections.mysql.port'),
-            config('database.connections.mysql.username'),
-            config('database.connections.mysql.password')
+            Config::get('database.connections.mysql.host'),
+            Config::get('database.connections.mysql.port'),
+            Config::get('database.connections.mysql.username'),
+            Config::get('database.connections.mysql.password')
         );
 
         $pdo->exec(
             'CREATE DATABASE IF NOT EXISTS '.$database_name.
-            ' CHARACTER SET '.config('database.connections.mysql.charset').
-            ' COLLATE '.config('database.connections.mysql.collation').';'
+            ' CHARACTER SET '.Config::get('database.connections.mysql.charset').
+            ' COLLATE '.Config::get('database.connections.mysql.collation').';'
         );
 
         return true;

@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use DB;
+use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 
 class DropDatabaseCommand extends Command
@@ -48,10 +50,10 @@ class DropDatabaseCommand extends Command
         }
 
         // Get default database connection from config
-        $default_database_connection = config('database.default');
+        $default_database_connection = Config::get('database.default');
 
         // Get database name from default database connection
-        $database_name = config(
+        $database_name = Config::get(
             'database.connections.'.$default_database_connection.'.database'
         );
 
@@ -87,7 +89,7 @@ class DropDatabaseCommand extends Command
             $default_database_connection
         );
 
-        \DB::statement('CREATE DATABASE '.$database_name.';');
+        DB::statement('CREATE DATABASE '.$database_name.';');
     }
 
     /**
@@ -101,18 +103,18 @@ class DropDatabaseCommand extends Command
     {
         // We reset default database name to "postgres"
         // as we can not delete the database we are connected to
-        config(['database.connections.pgsql.database' => 'postgres']);
+        Config::set('database.connections.pgsql.database', 'postgres');
 
         // Get databases names
         $databases = array_map(
             static function ($database) {
                 return $database->datname;
             },
-            \DB::select('SELECT datname FROM pg_database')
+            DB::select('SELECT datname FROM pg_database')
         );
 
         if (array_search($database_name, $databases) !== false) {
-            \DB::statement('DROP DATABASE '.$database_name.';');
+            DB::statement('DROP DATABASE '.$database_name.';');
             return;
         }
 
@@ -136,11 +138,11 @@ class DropDatabaseCommand extends Command
             static function ($database) {
                 return $database->Database;
             },
-            \DB::select('SHOW DATABASES;')
+            DB::select('SHOW DATABASES;')
         );
 
         if (array_search($database_name, $databases) !== false) {
-            \DB::statement('DROP DATABASE '.$database_name.';');
+            DB::statement('DROP DATABASE '.$database_name.';');
             return;
         }
 
