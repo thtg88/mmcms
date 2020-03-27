@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
+use Illuminate\Config\Repository as Config;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\Console\Input\InputOption;
@@ -47,7 +48,7 @@ class InstallCommand extends Command
         $this->info('Publishing the mmCMS assets, database, and config files');
         $this->publishVendorTags();
 
-        if (empty(config('app.key'))) {
+        if (empty(Config::get('app.key'))) {
             // Generate app key
             $this->info('Generating app key');
             $this->call('key:generate');

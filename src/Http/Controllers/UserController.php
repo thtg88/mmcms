@@ -2,10 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
-// Repositories
+use Illuminate\Config\Repository as Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
-// Requests
 use Thtg88\MmCms\Http\Requests\User\DestroyUserRequest;
 use Thtg88\MmCms\Http\Requests\User\StoreUserRequest;
 use Thtg88\MmCms\Http\Requests\User\UpdateUserRequest;
@@ -42,7 +41,9 @@ class UserController extends Controller
 
         if (!array_key_exists('role_id', $input)) {
             // Get user role
-            $user_role = $this->roles->findByModelName(config('mmcms.roles.user_role_name'));
+            $user_role = $this->roles->findByModelName(
+                Config::get('mmcms.roles.user_role_name')
+            );
 
             if ($user_role !== null) {
                 // If found - assign it to the user registering

@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class ContentType extends Model
 {
     /**
@@ -62,7 +64,7 @@ class ContentType extends Model
     public function content_migration_method()
     {
         return $this->belongsTo(
-            config('mmcms.models.namespace').'ContentMigrationMethod',
+            Config::get('mmcms.models.namespace').'ContentMigrationMethod',
             'content_migration_method_id',
             'id'
         );
@@ -71,8 +73,8 @@ class ContentType extends Model
     public function content_validation_rules()
     {
         return $this->hasManyThrough(
-            config('mmcms.models.namespace').'ContentValidationRule',
-            config('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            Config::get('mmcms.models.namespace').'ContentValidationRule',
+            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
             'content_type_id',
             'id',
             'content_validation_rule_id',

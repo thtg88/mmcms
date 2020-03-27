@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Traits;
 
+use Illuminate\Config\Repository as Config;
+
 trait HasSeo
 {
     /**
@@ -12,7 +14,7 @@ trait HasSeo
     public function seo_entry()
     {
         return $this->morphOne(
-            config('mmcms.models.namespace').'SeoEntry',
+            Config::get('mmcms.models.namespace').'SeoEntry',
             'target',
             'target_table'
         );

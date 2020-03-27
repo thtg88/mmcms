@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class Role extends Model
 {
     /**
@@ -56,6 +58,10 @@ class Role extends Model
 
     public function users()
     {
-        return $this->hasMany(config('mmcms.models.namespace').'User', 'role_id', 'id');
+        return $this->hasMany(
+            Config::get('mmcms.models.namespace').'User',
+            'role_id',
+            'id'
+        );
     }
 }

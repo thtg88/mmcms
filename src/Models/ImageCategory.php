@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class ImageCategory extends Model
 {
     protected $table = 'image_categories';
@@ -36,7 +38,7 @@ class ImageCategory extends Model
     public function images()
     {
         return $this->hasMany(
-            config('mmcms.models.namespace').'Image',
+            Config::get('mmcms.models.namespace').'Image',
             'target_table',
             'target_table'
         );

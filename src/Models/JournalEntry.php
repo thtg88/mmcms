@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCMs\Models;
 
+use Illuminate\Config\Repository as Config;
+
 class JournalEntry extends Model
 {
     protected $table = 'journal_entries';
@@ -59,6 +61,10 @@ class JournalEntry extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('mmcms.modules.namespace').'\User', 'user_id', 'id');
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'User',
+            'user_id',
+            'id'
+        );
     }
 }
