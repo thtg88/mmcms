@@ -1,5 +1,7 @@
 <?php
 
+namespace Thtg88\MmCms\Repositories\Concerns;
+
 use Illuminate\Database\Support\Collection;
 
 trait WithDateFilter
