@@ -5,7 +5,7 @@ namespace Thtg88\MmCms\Http\Requests\ContentMigrationMethod;
 use Thtg88\MmCms\Http\Requests\DestroyRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 
-class DestroyContentMigrationMethodRequest extends DestroyRequest
+class DestroyRequest extends DestroyRequest
 {
     /**
      * Create a new request instance.
