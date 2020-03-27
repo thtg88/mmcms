@@ -62,8 +62,11 @@ trait WithUpdate
      * @param array $exclude A set of columns to exclude from the prune e.g. if the update is meant to update associations as well.
      * @return array
      */
-    protected function pruneData(array $data, Model $model, array $exclude = [])
-    {
+    protected function pruneData(
+        array $data,
+        Model $model,
+        array $exclude = []
+    ): array {
         // Get the model fillables
         $model_fillables = $model->getFillable();
 
