@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Services;
 
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;

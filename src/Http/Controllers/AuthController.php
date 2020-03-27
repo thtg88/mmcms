@@ -4,7 +4,7 @@ namespace Thtg88\MmCms\Http\Controllers;
 
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Thtg88\MmCms\Http\Controllers\Controller;

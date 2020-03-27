@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Services;
 
 use Carbon\Carbon;
-use Illuminate\Config\Repository as Config;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
