@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Listeners;
 
-use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
+use Thtg88\MmCms\Events\ContentFieldDestroyed;
 
 class MakeContentFieldDropColumnMigration
 {

@@ -21,7 +21,8 @@ trait WithCreate
         $model = $this->model->create($data);
 
         if (Config::get('app.journal_mode') === true) {
-            // Create journal entry only if not creating journal entry, lol (infinite recursion)
+            // Create journal entry only if not creating journal entry,
+            // lol (infinite recursion)
             $journal_entry_classname = JournalEntry::class;
 
             if (
