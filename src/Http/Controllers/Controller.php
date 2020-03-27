@@ -33,6 +33,16 @@ class Controller extends BaseController
     protected $service;
 
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->addBindings();
+    }
+
+    /**
      * Display a listing of the resource filtered by a given start and end date.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
