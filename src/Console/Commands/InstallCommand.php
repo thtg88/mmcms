@@ -202,7 +202,7 @@ class InstallCommand extends Command
     private function dumpComposerAutoload()
     {
         $composer = $this->findComposer();
-        $process = new Process($composer.' dump-autoload');
+        $process = new Process([$composer.' dump-autoload']);
         // Setting timeout to null
         // to prevent installation from stopping at a certain point in time
         $process->setTimeout(null);
