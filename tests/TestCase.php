@@ -2,47 +2,95 @@
 
 namespace Thtg88\MmCms\Tests;
 
+use Illuminate\Config\Repository;
+use Illuminate\Container\Container;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Thtg88\MmCms\MmCmsFacade;
 use Thtg88\MmCms\MmCmsServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class TestCase extends OrchestraTestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        if (!is_dir(base_path('routes'))) {
-            mkdir(base_path('routes'));
-        }
+        // if (!is_dir(base_path('routes'))) {
+        //     mkdir(base_path('routes'));
+        // }
 
-        if (!file_exists(base_path('routes/api.php'))) {
-            file_put_contents(
-                base_path('routes/api.php'),
-                "<?php\n\n"
-            );
-        }
+        // if (!file_exists(base_path('routes/api.php'))) {
+        //     file_put_contents(
+        //         base_path('routes/api.php'),
+        //         "<?php\n\n"
+        //     );
+        // }
 
         // $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
         // $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\View\Middleware\ShareErrorsFromSession');
 
-        $migrator = app('migrator');
+        // $migrator = Container::getInstance()->make('migrator');
 
-        // if (!$migrator->repositoryExists()) {
-        $this->artisan('migrate:install');
-        // }
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
 
-        $migrator->run([realpath(__DIR__.'/migrations')]);
+            $table->index('email');
+        });
 
-        $this->artisan('migrate', ['--path' => realpath(__DIR__.'/migrations')]);
+        // In the context of TestBench,
+        // migrations get run in the TestBench core folder
+        $this->artisan('migrate', [
+            '--path' => [
+                '../../../../database/migrations',
+                '../../../laravel/passport/database/migrations',
+            ],
+        ]);
 
-        $this->artisan('migrate', ['--path' => realpath('vendor/laravel/passport/database/migrations')]);
+        MmCmsFacade::routes();
 
         $this->artisan('mmcms:install');
 
-        if (file_exists(base_path('routes/api.php'))) {
-            require base_path('routes/api.php');
-        }
+        $this->artisan('route:list');
+        die();
+
+        // if (file_exists(base_path('routes/api.php'))) {
+        //     require base_path('routes/api.php');
+        // }
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->artisan('db:wipe');
+    }
+
+    protected function getEnvironmentSetUp($app)
+    {
+        $config = $app->make(Repository::class);
+
+        // $config->set('auth.defaults.provider', 'users');
+        //
+        // if (($userClass = $this->getUserClass()) !== null) {
+        //     $config->set('auth.providers.users.model', $userClass);
+        // }
+
+        // $config->set('auth.guards.api', ['driver' => 'passport', 'provider' => 'users']);
+
+        $app['config']->set('database.default', 'testbench');
+
+        $app['config']->set('database.connections.testbench', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
     }
 
     /**
@@ -60,10 +108,10 @@ class TestCase extends OrchestraTestCase
      * @param \Illuminate\Foundation\Application $app
      * @return array
      */
-    protected function getPackageAliases($app)
-    {
-        return [
-            'MmCms' => MmCmsFacade::class,
-        ];
-    }
+    // protected function getPackageAliases($app)
+    // {
+    //     return [
+    //         'MmCms' => MmCmsFacade::class,
+    //     ];
+    // }
 }
