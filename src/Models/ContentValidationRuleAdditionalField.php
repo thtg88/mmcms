@@ -31,6 +31,7 @@ class ContentValidationRuleAdditionalField extends Model
         'content_validation_rule_id',
         'display_name',
         'name',
+        'updated_at',
     ];
 
     /**

@@ -16,6 +16,7 @@ class JournalEntry extends Model
      */
     protected $fillable = [
         'action',
+        'content',
         'created_at',
         'deleted_at',
         'target_id',
@@ -23,7 +24,6 @@ class JournalEntry extends Model
         'updated_at',
         'user_id',
         'user_ip_address',
-        'content',
     ];
 
     /**

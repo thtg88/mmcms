@@ -21,7 +21,7 @@ class CreateContentValidationRuleAdditionalFieldsTable extends Migration
             $table->string('name');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             $table->index('content_validation_rule_id', 'content_validation_rule_id_index');
             $table->index('content_validation_rule_additional_field_type_id', 'content_validation_rule_additional_field_type_id_index');

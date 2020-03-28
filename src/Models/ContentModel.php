@@ -32,6 +32,7 @@ class ContentModel extends Model
         'model_name',
         'name',
         'table_name',
+        'updated_at',
     ];
 
     /**

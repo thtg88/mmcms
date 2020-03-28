@@ -24,6 +24,7 @@ class SeoEntry extends Model
         'twitter_description',
         'twitter_image',
         'twitter_title',
+        'updated_at',
     ];
 
     protected $visible = [

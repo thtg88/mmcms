@@ -31,7 +31,7 @@ class CreateSeoEntriesTable extends Migration
             $table->text('json_schema')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             $table->index('target_id');
             $table->index('target_table');

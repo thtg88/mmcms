@@ -27,6 +27,7 @@ class ContentTypeContentValidationRule extends Model
         'content_type_id',
         'content_validation_rule_id',
         'created_at',
+        'updated_at',
     ];
 
     /**

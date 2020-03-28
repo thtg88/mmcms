@@ -31,6 +31,7 @@ class ContentValidationRule extends Model
         'description',
         'name',
         'priority',
+        'updated_at',
     ];
 
     /**
