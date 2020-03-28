@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-    backupGlobals="false"
-    backupStaticAttributes="false"
-    colors="true"
-    verbose="true"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    processIsolation="false"
-    stopOnFailure="false">
-    <testsuites>
-        <testsuite name="MmCms Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
-        </whitelist>
-    </filter>
+<phpunit backupGlobals="false"
+       backupStaticAttributes="false"
+       beStrictAboutTestsThatDoNotTestAnything="false"
+       bootstrap="tests/bootstrap.php"
+       colors="true"
+       convertErrorsToExceptions="true"
+       convertNoticesToExceptions="true"
+       convertWarningsToExceptions="true"
+       processIsolation="false"
+       stopOnFailure="false"
+>
+  <testsuites>
+      <testsuite name="mmCMS Test Suite">
+          <directory suffix=".php">./tests/Feature</directory>
+      </testsuite>
+  </testsuites>
+  <filter>
+      <whitelist processUncoveredFilesFromWhitelist="true">
+          <directory suffix=".php">./src/</directory>
+      </whitelist>
+  </filter>
+  <php>
+      <ini name="memory_limit" value="512M" />
+      <env name="APP_KEY" value="AckfSECXIvnK5r28GVIWUAxmbBSjTsmF"/>
+  </php>
 </phpunit>
