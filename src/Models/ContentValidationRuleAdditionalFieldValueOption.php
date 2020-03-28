@@ -30,6 +30,7 @@ class ContentValidationRuleAdditionalFieldValueOption extends Model
         'created_at',
         'is_empty_option',
         'text',
+        'updated_at',
         'value',
     ];
 

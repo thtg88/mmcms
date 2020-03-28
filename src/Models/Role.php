@@ -30,6 +30,7 @@ class Role extends Model
         'display_name',
         'name',
         'priority',
+        'updated_at',
     ];
 
     /**
