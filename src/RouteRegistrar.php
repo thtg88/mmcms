@@ -46,33 +46,35 @@ class RouteRegistrar
 
     public function forAuth()
     {
-        // Auth routes...
-        $this->router->post('auth/register', [
-            'uses' => 'AuthController@register',
-            'as' => 'register'
-        ]);
-        $this->router->post('auth/login', [
-            'uses' => 'AuthController@login',
-            'as' => 'login'
-        ]);
-        $this->router->post('auth/token', [
-            'uses' => 'AuthController@token',
-            'as' => 'token'
-        ]);
+        $this->router->group(['as' => 'mmcms.auth.'], function ($router) {
+            // Auth routes...
+            $router->post('auth/register', [
+                'uses' => 'AuthController@register',
+                'as' => 'register'
+            ]);
+            $router->post('auth/login', [
+                'uses' => 'AuthController@login',
+                'as' => 'login'
+            ]);
+            $router->post('auth/token', [
+                'uses' => 'AuthController@token',
+                'as' => 'token'
+            ]);
 
-        $this->router->group(['middleware' => 'auth:api'], function ($router) {
-            $router->delete('auth/logout', [
-                'uses' => 'AuthController@logout',
-                'as' => 'logout'
-            ]);
-            $router->get('auth/me', [
-                'uses' => 'AuthController@me',
-                'as' => 'me'
-            ]);
-            $router->put('auth/me', [
-                'uses' => 'AuthController@updateProfile',
-                'as' => 'update-profile'
-            ]);
+            $router->group(['middleware' => 'auth:api'], function ($router) {
+                $router->delete('auth/logout', [
+                    'uses' => 'AuthController@logout',
+                    'as' => 'logout'
+                ]);
+                $router->get('auth/me', [
+                    'uses' => 'AuthController@me',
+                    'as' => 'me'
+                ]);
+                $router->put('auth/me', [
+                    'uses' => 'AuthController@updateProfile',
+                    'as' => 'update-profile'
+                ]);
+            });
         });
     }
 
