@@ -30,11 +30,13 @@ class JournalEntryHelper
      * Create a new helper instance.
      *
      * @param \Thtg88\MmCms\Repositories\JournalEntryRepository $journal_entries
-     * @param string	$current_request_ip
+     * @param string $current_request_ip
      * @return void
      */
-    public function __construct(JournalEntryRepository $journal_entries, $current_request_ip)
-    {
+    public function __construct(
+        JournalEntryRepository $journal_entries,
+        $current_request_ip
+    ) {
         $this->journal_entries = $journal_entries;
         $this->current_request_ip = $current_request_ip;
     }
