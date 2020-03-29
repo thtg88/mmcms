@@ -11,12 +11,12 @@ class LoginRequest extends Request
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
+     * @param \Thtg88\MmCms\Repositories\UserRepository $repository
      * @return	void
      */
-    public function __construct(UserRepository $users)
+    public function __construct(UserRepository $repository)
     {
-        $this->repository = $users;
+        $this->repository = $repository;
     }
 
     /**
@@ -40,9 +40,10 @@ class LoginRequest extends Request
             'email' => [
                 'required',
                 'email',
-                Rule::exists($this->repository->getName(), 'email')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::exists($this->repository->getModelTable(), 'email')
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'password' => 'required|min:6',
         ];
