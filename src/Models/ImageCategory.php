@@ -24,6 +24,7 @@ class ImageCategory extends Model
         'name',
         'sequence',
         'target_table',
+        'updated_at',
     ];
 
     // ACCESSORS OF EXISTING FIELDS

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
+use Thtg88\MmCms\Repositories\JournalEntryRepository;
 
 class Repository implements RepositoryInterface
 {
@@ -98,8 +99,16 @@ class Repository implements RepositoryInterface
         // Omit trashed model by default
         $this->with_trashed = false;
 
-        $this->journal_entry_helper = Container::getInstance()
-            ->make(JournalEntryHelper::class);
+        // Don't attach journal entry helper in JournalEntryRepository
+        // Otherwise this will cause infinite recursion
+        if (get_class($this) !== JournalEntryRepository::class) {
+            $container = Container::getInstance();
+
+            $this->journal_entry_helper = new JournalEntryHelper(
+                $container->make(JournalEntryRepository::class),
+                $container['request']->ip()
+            );
+        }
     }/**
      * Return the repository model.
      *

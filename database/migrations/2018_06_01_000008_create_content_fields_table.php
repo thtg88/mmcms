@@ -23,7 +23,7 @@ class CreateContentFieldsTable extends Migration
             $table->boolean('is_resource_name')->default(0);
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             $table->index('content_model_id');
             $table->index('content_type_id');

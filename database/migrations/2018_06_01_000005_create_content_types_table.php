@@ -21,7 +21,7 @@ class CreateContentTypesTable extends Migration
             $table->text('description')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             $table->index('content_migration_method_id');
         });

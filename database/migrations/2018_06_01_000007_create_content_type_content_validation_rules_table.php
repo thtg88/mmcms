@@ -19,7 +19,7 @@ class CreateContentTypeContentValidationRulesTable extends Migration
             $table->unsignedInteger('content_validation_rule_id');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->nullable();
 
             $table->index('content_type_id');
             $table->index('content_validation_rule_id', 'content_type_validation_rules_rule_id_index');

@@ -85,10 +85,6 @@ class AuthController extends Controller
             'updated_at',
         ]);
 
-        if (array_key_exists('password', $input)) {
-            $input['password'] = bcrypt($input['password']);
-        }
-
         // Get a random user to see if there is any
         $random_user = $this->repository->findRandom();
         if ($random_user === null) {
