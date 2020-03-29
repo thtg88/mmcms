@@ -7,7 +7,7 @@ use Illuminate\Container\Container;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Thtg88\MmCms\MmCmsFacade;
+use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
 
 class TestCase extends OrchestraTestCase
@@ -53,7 +53,7 @@ class TestCase extends OrchestraTestCase
             ],
         ]);
 
-        MmCmsFacade::routes();
+        MmCms::routes();
 
         $this->artisan('mmcms:install');
 
