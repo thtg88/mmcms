@@ -92,7 +92,7 @@ class AuthController extends Controller
 
             // Get developer role
             $developer_role = $this->roles->findByModelName(
-                Config::get('mmcms.roles.developer_role_name')
+                Config::get('mmcms.roles.names.developer')
             );
             if ($developer_role !== null) {
                 // If found - assign it to the user registering
@@ -103,7 +103,7 @@ class AuthController extends Controller
         if (!array_key_exists('role_id', $input)) {
             // Get user role
             $user_role = $this->roles->findByModelName(
-                Config::get('mmcms.roles.user_role_name')
+                Config::get('mmcms.roles.names.user')
             );
 
             if ($user_role !== null) {
@@ -336,7 +336,7 @@ class AuthController extends Controller
 
         // Get admin role
         $admin_role = $this->roles->findByModelName(
-            Config::get('mmcms.roles.user_role_name')
+            Config::get('mmcms.roles.names.user')
         );
 
         $except = [

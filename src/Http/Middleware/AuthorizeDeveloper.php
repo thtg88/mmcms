@@ -46,7 +46,7 @@ class AuthorizeDeveloper
 
         // Get developer role
         $developer_role = $this->roles->findByModelName(
-            Config::get('mmcms.roles.developer_role_name')
+            Config::get('mmcms.roles.names.developer')
         );
 
         if ($developer_role === null) {
