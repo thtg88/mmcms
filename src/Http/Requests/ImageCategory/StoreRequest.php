@@ -67,7 +67,7 @@ class StoreRequest extends BaseStoreRequest
             && is_string($input['name'])
             && is_string($input['target_table'])
         ) {
-            $all_rules['name'][] = Rule::unique($this->repository->getName(), 'name')
+            $all_rules['name'][] = Rule::unique($this->repository->getModelTable(), 'name')
                 ->where(function ($query) use ($input) {
                     $query->whereNull('deleted_at')
                         ->where('target_table', $input['target_table']);

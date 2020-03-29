@@ -31,7 +31,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'email')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'email')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),

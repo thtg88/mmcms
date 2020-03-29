@@ -49,14 +49,14 @@ class StoreRequest extends BaseStoreRequest
             'content_model_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->content_models->getName(), 'id')->where(function ($query) {
+                Rule::exists($this->repository->getModelTable(), 'id')->where(function ($query) {
                     $query->whereNull('deleted_at');
                 }),
             ],
             'content_type_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->content_types->getName(), 'id')->where(function ($query) {
+                Rule::exists($this->repository->getModelTable(), 'id')->where(function ($query) {
                     $query->whereNull('deleted_at');
                 }),
             ],
@@ -82,11 +82,11 @@ class StoreRequest extends BaseStoreRequest
 
         if (array_key_exists('content_model_id', $input) && !empty($input['content_model_id']) && is_numeric($input['content_model_id'])) {
             // Add unique-ness of fields within model
-            $input['display_name'] = Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
+            $input['display_name'] = Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
                 $query->whereNull('deleted_at')
                     ->where('content_model_id', $input['content_model_id']);
             });
-            $input['name'] = Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+            $input['name'] = Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
                 $query->whereNull('deleted_at')
                     ->where('content_model_id', $input['content_model_id']);
             });

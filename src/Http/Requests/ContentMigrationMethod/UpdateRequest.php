@@ -31,7 +31,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'display_name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),
@@ -40,7 +40,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),
