@@ -44,7 +44,8 @@
         "mockery/mockery": "^1.3",
         "brainmaestro/composer-git-hooks": "^2.8",
         "phpstan/phpstan": "^0.12.14",
-        "orchestra/testbench": "^5.1"
+        "orchestra/testbench": "^5.1",
+        "tightenco/tlint": "^4.0"
     },
     "extra": {
         "hooks": {
@@ -55,13 +56,16 @@
         "laravel": {
             "providers": [
                 "Thtg88\\MmCms\\MmCmsServiceProvider"
-            ],
-            "aliases": {
-                "Debugbar": "Thtg88\\MmCms\\MmCmsFacade"
-            }
+            ]
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "[[ -d .git ]] && vendor/bin/cghooks add --no-lock || true"
+        ],
+        "post-update-cmd": [
+            "[[ -d .git ]] && vendor/bin/cghooks update || true"
+        ],
         "check-style": [
             "vendor/bin/php-cs-fixer fix --using-cache=no --diff --dry-run",
             "vendor/bin/tlint lint resources/views"
