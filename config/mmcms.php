@@ -16,6 +16,7 @@ return [
     'roles' => [
         'ids' => [
             'administrator' => (int) env('MMCMS_ROLES_ADMINISTRATOR_ID', 2),
+            'default' => (int) env('MMCMS_ROLES_DEFAULT_ID', 3),
             'developer' => (int) env('MMCMS_ROLES_DEVELOPER_ID', 1),
             'user' => (int) env('MMCMS_ROLES_USER_ID', 3),
         ],
