@@ -57,9 +57,6 @@ class TestCase extends OrchestraTestCase
 
         $this->artisan('mmcms:install');
 
-        $this->artisan('route:list');
-        die();
-
         // if (file_exists(base_path('routes/api.php'))) {
         //     require base_path('routes/api.php');
         // }
