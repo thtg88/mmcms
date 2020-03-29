@@ -30,7 +30,6 @@ class CreateImagesTable extends Migration
             $table->index('image_category_id');
             $table->index('target_id');
             $table->index('target_table');
-            $table->index('url');
         });
     }
 
