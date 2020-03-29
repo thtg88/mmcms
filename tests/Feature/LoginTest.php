@@ -6,13 +6,6 @@ use Thtg88\MmCms\Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    /**
-     * The route URL.
-     *
-     * @var string
-     */
-    protected $url;
-
     protected function setUp(): void
     {
         parent::setUp();
