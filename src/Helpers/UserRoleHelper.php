@@ -100,7 +100,10 @@ class UserRoleHelper
      */
     public function authorizeAdministrator($user_id)
     {
-        return $this->authorize($user_id, Config::get('mmcms.roles.administrator_role_name'));
+        return $this->authorize(
+            $user_id,
+            Config::get('mmcms.roles.names.administrator')
+        );
     }
 
     /**
@@ -111,6 +114,6 @@ class UserRoleHelper
      */
     public function authorizeDeveloper($user_id)
     {
-        return $this->authorize($user_id, Config::get('mmcms.roles.developer_role_name'));
+        return $this->authorize($user_id, Config::get('mmcms.roles.names.developer'));
     }
 }
