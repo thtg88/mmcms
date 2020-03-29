@@ -16,22 +16,6 @@ class TestCase extends OrchestraTestCase
     {
         parent::setUp();
 
-        // if (!is_dir(base_path('routes'))) {
-        //     mkdir(base_path('routes'));
-        // }
-
-        // if (!file_exists(base_path('routes/api.php'))) {
-        //     file_put_contents(
-        //         base_path('routes/api.php'),
-        //         "<?php\n\n"
-        //     );
-        // }
-
-        // $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\Session\Middleware\StartSession');
-        // $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware('Illuminate\View\Middleware\ShareErrorsFromSession');
-
-        // $migrator = Container::getInstance()->make('migrator');
-
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -56,10 +40,6 @@ class TestCase extends OrchestraTestCase
         MmCms::routes();
 
         $this->artisan('mmcms:install');
-
-        // if (file_exists(base_path('routes/api.php'))) {
-        //     require base_path('routes/api.php');
-        // }
     }
 
     protected function tearDown(): void
@@ -99,16 +79,4 @@ class TestCase extends OrchestraTestCase
     {
         return [MmCmsServiceProvider::class];
     }
-
-    /**
-     * Load package alias
-     * @param \Illuminate\Foundation\Application $app
-     * @return array
-     */
-    // protected function getPackageAliases($app)
-    // {
-    //     return [
-    //         'MmCms' => MmCmsFacade::class,
-    //     ];
-    // }
 }
