@@ -64,9 +64,9 @@ class TestCase extends OrchestraTestCase
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
         $this->artisan('db:wipe');
+
+        parent::tearDown();
     }
 
     protected function getEnvironmentSetUp($app)
