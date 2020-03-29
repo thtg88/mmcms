@@ -20,23 +20,16 @@ class LoginTest extends TestCase
         $this->url = route('mmcms.auth.login');
     }
 
-    /**
-     * Check that the login fails.
-     * @return void
-     */
-    public function testLoginFail()
+    /** @test */
+    public function empty_payload_has_required_validation_errors(): void
     {
-        $input = [];
-
-        $response = $this->json('POST', $this->url, $input);
-
-        $response
-            ->assertStatus(422)
+        $response = $this->json('post', $this->url);
+        $response->assertStatus(422)
             ->assertJson([
                 'errors' => [
                     'email' => ['The email field is required.'],
                     'password' => ['The password field is required.'],
-                ],
+                ]
             ]);
     }
 
