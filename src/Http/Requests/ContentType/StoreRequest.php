@@ -48,7 +48,7 @@ class StoreRequest extends BaseStoreRequest
             'content_migration_method_id' => [
                 'nullable',
                 'integer',
-                Rule::exists($this->content_migration_methods->getName(), 'id')->where(function ($query) {
+                Rule::exists($this->repository->getModelTable(), 'id')->where(function ($query) {
                     $query->whereNull('deleted_at');
                 }),
             ],
@@ -56,7 +56,7 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
                     $query->whereNull('deleted_at');
                 }),
             ],

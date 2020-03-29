@@ -111,7 +111,7 @@ class UpdateRequest extends BaseUpdateRequest
                 && is_string($name)
             )
         ) {
-            $rules['name'][] = Rule::unique($this->repository->getName(), 'name')
+            $rules['name'][] = Rule::unique($this->repository->getModelTable(), 'name')
                 ->where(function ($query) use ($target_table) {
                     $query->whereNull('deleted_at')
                         ->where('target_table', $target_table);
