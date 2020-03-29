@@ -56,10 +56,7 @@
         "laravel": {
             "providers": [
                 "Thtg88\\MmCms\\MmCmsServiceProvider"
-            ],
-            "aliases": {
-                "Debugbar": "Thtg88\\MmCms\\MmCmsFacade"
-            }
+            ]
         }
     },
     "scripts": {
