@@ -62,6 +62,12 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "[[ -d .git ]] && vendor/bin/cghooks add --no-lock || true"
+        ],
+        "post-update-cmd": [
+            "[[ -d .git ]] && vendor/bin/cghooks update || true"
+        ],
         "check-style": [
             "vendor/bin/php-cs-fixer fix --using-cache=no --diff --dry-run",
             "vendor/bin/tlint lint resources/views"
