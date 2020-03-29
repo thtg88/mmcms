@@ -25,7 +25,7 @@ class RouteRegistrar
     }
 
     /**
-     * Register routes for transient tokens, clients, and personal access tokens.
+     * Register routes for the package.
      *
      * @return void
      */
