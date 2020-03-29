@@ -13,6 +13,8 @@ use Thtg88\MmCms\Tests\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
 {
+    use WithFaker;
+
     /**
      * The route URL.
      *
