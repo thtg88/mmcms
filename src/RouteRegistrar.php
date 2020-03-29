@@ -44,7 +44,10 @@ class RouteRegistrar
         $this->forUsers();
     }
 
-    public function forAuth()
+    /**
+     * @return void
+     */
+    public function forAuth(): void
     {
         $this->router->group(['as' => 'mmcms.auth.'], function ($router) {
             // Auth routes...
@@ -78,7 +81,10 @@ class RouteRegistrar
         });
     }
 
-    public function forContentFields()
+    /**
+     * @return void
+     */
+    public function forContentFields(): void
     {
         $this->router->group(['as' => 'mmcms.content-fields.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -114,7 +120,10 @@ class RouteRegistrar
         });
     }
 
-    public function forContentMigrationMethods()
+    /**
+     * @return void
+     */
+    public function forContentMigrationMethods(): void
     {
         $this->router->group(['as' => 'mmcms.content-migration-methods.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -149,7 +158,10 @@ class RouteRegistrar
         });
     }
 
-    public function forContentModels()
+    /**
+     * @return void
+     */
+    public function forContentModels(): void
     {
         $this->router->group(['as' => 'mmcms.content-models.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -184,7 +196,10 @@ class RouteRegistrar
         });
     }
 
-    public function forContentTypes()
+    /**
+     * @return void
+     */
+    public function forContentTypes(): void
     {
         $this->router->group(['as' => 'mmcms.content-types.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -219,7 +234,10 @@ class RouteRegistrar
         });
     }
 
-    public function forContentValidationRuleAdditionalFieldTypes()
+    /**
+     * @return void
+     */
+    public function forContentValidationRuleAdditionalFieldTypes(): void
     {
         $this->router->group(['as' => 'mmcms.content-validation-rule-additional-field-types.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -254,7 +272,10 @@ class RouteRegistrar
         });
     }
 
-    public function forImageCategories()
+    /**
+     * @return void
+     */
+    public function forImageCategories(): void
     {
         $this->router->group(['as' => 'mmcms.image-categories.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -271,7 +292,10 @@ class RouteRegistrar
         });
     }
 
-    public function forImages()
+    /**
+     * @return void
+     */
+    public function forImages(): void
     {
         $this->router->group(['as' => 'mmcms.images.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -289,7 +313,10 @@ class RouteRegistrar
         });
     }
 
-    public function forRoles()
+    /**
+     * @return void
+     */
+    public function forRoles(): void
     {
         $this->router->group(['as' => 'mmcms.roles.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -324,7 +351,10 @@ class RouteRegistrar
         });
     }
 
-    public function forSeoEntries()
+    /**
+     * @return void
+     */
+    public function forSeoEntries(): void
     {
         $this->router->group(['as' => 'mmcms.seo-entries.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
@@ -343,7 +373,10 @@ class RouteRegistrar
         });
     }
 
-    public function forUsers()
+    /**
+     * @return void
+     */
+    public function forUsers(): void
     {
         $this->router->group(['as' => 'mmcms.users.'], function ($router) {
             $router->group(['middleware' => 'auth:api'], function ($router) {
