@@ -14,8 +14,92 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.16.1] - 2020-03-29
+### Added
+- `post-install-cmd` and `post-update-cmd` composer scripts
+### Changed
+- Make sure tests are stan-ed
+
+## [0.16.0] - 2020-03-29
+### Added
+- First feature test
+- Orchestra TestBench dev dependency for running tests
+
+## [0.15.0] - 2020-03-27
+### Added
+- PHPStan support
+### Changed
+- Several changes resulting from PHPStan
+
+## [0.14.0] - 2020-03-27
+### Removed
+- Laravel 6 support
+
+## [0.13.0] - 2020-03-27
+### Changed
+- Controllers now use Service pattern
+
+## [0.12.0] - 2020-03-26
+### Changed
+- Several changes around HTTP Controller layer
+
+## [0.11.1] - 2020-03-26
+### Added
+- Base Service layer
+
+## [0.11.0] - 2020-03-26
+### Changed
+- Several changes around HTTP FormRequest layer
+
+## [0.10.0] - 2020-03-26
+### Added
+- Database handling commands
+
+## [0.9.0] - 2020-03-26
+### Added
+- Scaffold commands
+
+## [0.8.1] - 2020-03-26
+### Changed
+- Refactored `InstallCommand`
+
+## [0.8.0] - 2020-03-26
+### Changed
+- Improved HTTP exceptions support
+- Make InstallCommand extend mmCMS handler instead of re-writing it
+
+## [0.7.0] - 2020-03-26
+### Added
+- Base exception handler
+
+## [0.6.0] - 2020-03-26
+### Added
+- Support for Laravel 7
+
+## [0.5.0] - 2020-03-08
+### Added
+- `check-style` composer script
+- `fix-style` composer script
+- `test` composer script
+- PHP CS Fixer support
+### Changed
+- Tests namespace
+- Upgraded Laravel Passport to v8
+- Upgraded Laravel CORS to Fruitcake v1
+### Removed
+- Tlint dev dependency
+- `stan` composer script
+
+## [0.4.2] - 2019-01-20
+### Changed
+- Assign user role to newly created user if N/A
+
+## [0.4.1] - 2019-01-19
+### Added
+- Sort name and direction support for pagination
+
 ## [0.4.0] - 2018-11-25
-## Added
+### Added
 - Refresh token endpoint
 
 ## [0.3.3] - 2018-11-22
