@@ -44,7 +44,7 @@ class UpdateProfileRequest extends Request
                 'required',
                 'email',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'email')->where(function ($query) use ($user) {
+                Rule::unique($this->repository->getModelTable(), 'email')->where(function ($query) use ($user) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $user->id);
                 }),

@@ -1,8 +1,8 @@
 <?php
 
-namespace Thtg88\MmCms\Tests;
+namespace Thtg88\MmCms\Tests\Feature;
 
-// use MmCms;
+use Thtg88\MmCms\Tests\TestCase;
 
 class LoginTest extends TestCase
 {
@@ -13,7 +13,7 @@ class LoginTest extends TestCase
      */
     protected $url;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -34,8 +34,8 @@ class LoginTest extends TestCase
             ->assertStatus(422)
             ->assertJson([
                 'errors' => [
-                    'email' => 'The email field is required.',
-                    'password' => 'The password field is required.'
+                    'email' => ['The email field is required.'],
+                    'password' => ['The password field is required.'],
                 ],
             ]);
     }

@@ -32,6 +32,7 @@ class Image extends Model
         'title',
         'target_id',
         'target_table',
+        'updated_at',
         'url',
     ];
 

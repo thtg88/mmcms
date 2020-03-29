@@ -31,7 +31,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'base_route_name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'base_route_name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),
@@ -44,7 +44,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'model_name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'model_name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),
@@ -53,7 +53,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),
@@ -62,7 +62,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getName(), 'table_name')->where(function ($query) {
+                Rule::unique($this->repository->getModelTable(), 'table_name')->where(function ($query) {
                     $query->whereNull('deleted_at')
                         ->where('id', '<>', $this->route('id'));
                 }),

@@ -33,6 +33,7 @@ class ContentField extends Model
         'helper_text',
         'is_resource_name',
         'name',
+        'updated_at',
     ];
 
     /**

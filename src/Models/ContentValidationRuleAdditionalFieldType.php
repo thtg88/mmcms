@@ -27,6 +27,7 @@ class ContentValidationRuleAdditionalFieldType extends Model
         'created_at',
         'display_name',
         'name',
+        'updated_at',
     ];
 
     /**
