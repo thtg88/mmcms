@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Tests\Feature;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\TestCase;
@@ -72,20 +73,35 @@ class LoginTest extends TestCase
             ]);
     }
 
-    /**
-     * Check that the login succeeds with correct input.
-     * @return void
-     */
-    // public function testLoginSuccess()
-    // {
-    //     $input = [];
-    //
-    //     $response = $this->json('POST', $this->url, $input);
-    //
-    //     $response
-    //         ->assertStatus(201)
-    //         ->assertJson([
-    //             'created' => true,
-    //         ]);
-    // }
+    /** @test */
+    public function successful_login()
+    {
+        // Create test user
+        $password = Str::random(8);
+        $model = factory(User::class)->create([
+            'password' => $password,
+        ]);
+
+        // Test successful login
+        $response = $this->json('post', $this->url, [
+            'email' => $model->email,
+            'password' => $password,
+        ]);
+        $response//->assertStatus(200)
+            ->assertJson(['foo' => 'bar']);
+        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($model);
+
+        Auth::logout();
+
+        // Test successful login with wrong email casing
+        $response = $this->json('post', $this->url, [
+            'email' => strtoupper($model->email),
+            'password' => $password,
+        ]);
+        $response->assertStatus(200)
+            ->assertJson(['foo' => 'bar']);
+        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($model);
+    }
 }
