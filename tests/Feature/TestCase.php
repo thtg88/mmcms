@@ -63,15 +63,14 @@ class TestCase extends BaseTestCase
 
     protected function getEnvironmentSetUp($app)
     {
-        $config = $app->make(Repository::class);
+        // $app['config']->set('auth.defaults.provider', 'users');
 
-        // $config->set('auth.defaults.provider', 'users');
-        //
-        // if (($userClass = $this->getUserClass()) !== null) {
-        //     $config->set('auth.providers.users.model', $userClass);
-        // }
+        // $app['config']->set('auth.providers.users.model', User::class);
 
-        // $config->set('auth.guards.api', ['driver' => 'passport', 'provider' => 'users']);
+        // $app['config']->set('auth.guards.api', [
+        //     'driver' => 'passport',
+        //     'provider' => 'users',
+        // ]);
 
         $app['config']->set('database.default', 'testbench');
 
