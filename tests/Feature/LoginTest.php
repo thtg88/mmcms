@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Tests\Feature;
 
-use Thtg88\MmCms\Tests\TestCase;
+use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class LoginTest extends TestCase
 {
