@@ -9,12 +9,13 @@ class MmCms
     /**
      * Binds the mmCMS routes into the controller.
      *
+     * @param callable|null $callback
      * @param array $options
      * @return void
      */
-    public static function routes(array $options = [])
+    public static function routes($callback = null, array $options = [])
     {
-        $callback = function ($router) {
+        $callback = $callback ?: function ($router) {
             $router->all();
         };
 
