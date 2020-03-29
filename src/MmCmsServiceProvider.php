@@ -6,6 +6,7 @@ use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Thtg88\MmCms\Console\Commands\CreateDatabaseCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
@@ -58,6 +59,7 @@ class MmCmsServiceProvider extends ServiceProvider
         // Commands
         if ($this->app->runningInConsole()) {
             $this->commands([
+                CreateDatabaseCommand::class,
                 InstallCommand::class,
                 PublishModuleCommand::class,
                 RepositoryMakeCommand::class,
