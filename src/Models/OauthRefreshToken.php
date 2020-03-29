@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Passport\Passport;
 
 class OauthRefreshToken extends Model
@@ -22,30 +23,13 @@ class OauthRefreshToken extends Model
     public $incrementing = false;
 
     /**
-     * The guarded attributes on the model.
-     *
-     * @var array
-     */
-    protected $guarded = [
-        //
-    ];
-
-    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
+        'expires_at' => 'datetime',
         'revoked' => 'bool',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'expires_at',
     ];
 
     /**
@@ -56,20 +40,11 @@ class OauthRefreshToken extends Model
     public $timestamps = false;
 
     /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //
-    ];
-
-    /**
      * Get the access token that the refresh token belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function access_token()
+    public function access_token(): BelongsTo
     {
         return $this->belongsTo(Passport::clientModel());
     }
