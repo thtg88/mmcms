@@ -79,6 +79,8 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        $app['config']->set('mmcms.passport.oauth_url', '');
     }
 
     /**
