@@ -6,6 +6,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
@@ -52,6 +53,21 @@ class TestCase extends BaseTestCase
         MmCms::routes();
 
         $this->artisan('mmcms:install');
+
+        $oauth_clients = DB::select(
+            'select * from oauth_clients where password_client = 1'
+        );
+
+        $app = Container::getInstance();
+
+        $app['config']->set('mmcms.passport', [
+            'password_client_id' => count($oauth_clients) === 0 ?
+                null :
+                $oauth_clients[0]->id,
+            'password_client_secret' => count($oauth_clients) === 0 ?
+                null :
+                $oauth_clients[0]->secret,
+        ]);
     }
 
     protected function tearDown(): void
