@@ -180,27 +180,25 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
-        try {
-            $oauth_data = [
-                'form_params' => [
-                    'grant_type' => 'password',
-                    'client_id' => Config::get(
-                        'mmcms.passport.password_client_id'
-                    ),
-                    'client_secret' => Config::get(
-                        'mmcms.passport.password_client_secret'
-                    ),
-                    'username' => $request->get('email'),
-                    'password' => $request->get('password'),
-                    'remember' => $request->get('remember'),
-                    'scope' => '',
-                ],
-                'headers' => [
-                    // This allows loopback on custom localhost domains
-                    'Host' => $request->server('SERVER_NAME'),
-                ]
-            ];
+        $oauth_data = [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => Config::get('mmcms.passport.password_client_id'),
+                'client_secret' => Config::get(
+                    'mmcms.passport.password_client_secret'
+                ),
+                'username' => $request->get('email'),
+                'password' => $request->get('password'),
+                'remember' => $request->get('remember'),
+                'scope' => '',
+            ],
+            // This allows loopback on custom localhost domains
+            'headers' => [
+                'Host' => $request->server('SERVER_NAME'),
+            ],
+        ];
 
+        try {
             // Request OAuth token
             $response = $this->http_client->post(
                 Config::get('mmcms.passport.oauth_url').'/oauth/token',
