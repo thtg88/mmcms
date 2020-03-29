@@ -24,6 +24,8 @@ class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->withFactories(__DIR__.'/../../database/factories');
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
