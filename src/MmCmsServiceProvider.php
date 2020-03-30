@@ -6,6 +6,9 @@ use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
+use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
+use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 use Thtg88\MmCms\Console\Commands\CreateDatabaseCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
@@ -63,6 +66,12 @@ class MmCmsServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 PublishModuleCommand::class,
                 RepositoryMakeCommand::class,
+                // The following need to be booted
+                // to run the InstallCommand properly,
+                // as the InstallCommand runs the passport install command
+                PassportClientCommand::class,
+                PassportInstallCommand::class,
+                PassportKeysCommand::class,
             ]);
         }
 
