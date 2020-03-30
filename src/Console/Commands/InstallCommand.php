@@ -75,7 +75,7 @@ class InstallCommand extends Command
 
         $this->info('Configuring Anhskohbo NoCaptcha');
         $this->call('vendor:publish', [
-            '--provider' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider'
+            '--provider' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider',
         ]);
 
         // Attempting to set mmCMS User model as parent to App\User

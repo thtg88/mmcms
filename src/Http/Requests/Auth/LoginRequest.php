@@ -48,4 +48,23 @@ class LoginRequest extends Request
             'password' => 'required|min:6',
         ];
     }
+
+    /**
+     * Get the validated data from the request.
+     *
+     * @return array
+     */
+    public function validated()
+    {
+        if ($this->invalid()) {
+            throw new ValidationException($this);
+        }
+
+        $data = $this->validator->validated();
+
+        // Make sure we can login with case insensitive email
+        $data['email'] = strtolower($data['email']);
+
+        return $data;
+    }
 }
