@@ -6,6 +6,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Container\Container;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Thtg88\MmCms\MmCms;
@@ -111,5 +112,10 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [MmCmsServiceProvider::class];
+    }
+
+    protected function passportAuthLogout(): void
+    {
+        Auth::user()->token()->revoke();
     }
 }
