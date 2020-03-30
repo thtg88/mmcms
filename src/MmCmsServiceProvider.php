@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms;
 
+use GuzzleHttp\Client;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
@@ -33,6 +34,14 @@ class MmCmsServiceProvider extends ServiceProvider
 
         $this->app->singleton('mmcms', function () {
             return new MmCms();
+        });
+
+        $this->app->bind('OauthHttpClient', function () {
+            return new Client([
+                'base_uri' => Config::get('mmcms.passport.oauth_url'),
+                'verify' => Config::get('app.env') !== 'local' &&
+                    Config::get('app.env') !== 'testing',
+            ]);
         });
 
         // Register custom validator

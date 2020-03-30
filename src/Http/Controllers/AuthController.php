@@ -20,13 +20,6 @@ use Thtg88\MmCms\Repositories\UserRepository;
 class AuthController extends Controller
 {
     /**
-     * The HTTP client implementation.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $http_client;
-
-    /**
      * The OAuth refresh tokens repository implementation.
      *
      * @var \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository
@@ -63,12 +56,6 @@ class AuthController extends Controller
         $this->repository = $repository;
         $this->oauth_refresh_tokens = $oauth_refresh_tokens;
         $this->roles = $roles;
-
-        $this->http_client = new Client([
-            'base_uri' => Config::get('mmcms.passport.oauth_url'),
-            'verify' => Config::get('app.env') !== 'local' &&
-                Config::get('app.env') !== 'testing',
-        ]);
     }
 
     /**
@@ -142,7 +129,7 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
@@ -199,7 +186,7 @@ class AuthController extends Controller
 
         try {
             // Request OAuth token
-            $response = $this->http_client->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
@@ -288,7 +275,7 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
