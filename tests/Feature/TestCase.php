@@ -29,38 +29,45 @@ class TestCase extends BaseTestCase
 
         $this->withFactories(__DIR__.'/../../database/factories');
 
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-
-            $table->index('email');
-        });
-
-        // In the context of TestBench,
-        // migrations get run in the TestBench core folder
-        $this->artisan('migrate', [
-            '--path' => [
-                '../../../../database/migrations',
-                '../../../laravel/passport/database/migrations',
-            ],
-        ]);
-
         MmCms::routes();
 
-        $this->artisan('mmcms:install');
+        $app = Container::getInstance();
+
+        if (
+            ! Schema::hasTable('users') ||
+            ! Schema::hasTable('oauth_clients')
+        ) {
+            Schema::create('users', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->string('email');
+                $table->timestamp('email_verified_at')->nullable();
+                $table->string('password');
+                $table->rememberToken();
+                $table->timestamps();
+
+                $table->index('email');
+            });
+
+            // In the context of TestBench,
+            // migrations get run in the TestBench core folder
+            $this->artisan('migrate', [
+                '--path' => [
+                    '../../../../database/migrations',
+                    '../../../laravel/passport/database/migrations',
+                ],
+            ]);
+
+            $this->artisan('mmcms:install');
+        }
+
 
         $oauth_clients = DB::select(
             'select * from oauth_clients where password_client = 1'
         );
 
-        $app = Container::getInstance();
-
         $app['config']->set('mmcms.passport', [
+            'oauth_url' => 'http://localhost',
             'password_client_id' => count($oauth_clients) === 0 ?
                 null :
                 $oauth_clients[0]->id,
@@ -72,8 +79,6 @@ class TestCase extends BaseTestCase
 
     protected function tearDown(): void
     {
-        $this->artisan('db:wipe');
-
         parent::tearDown();
     }
 
@@ -95,8 +100,6 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
-
-        $app['config']->set('mmcms.passport.oauth_url', '');
     }
 
     /**
