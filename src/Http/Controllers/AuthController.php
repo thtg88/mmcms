@@ -66,6 +66,7 @@ class AuthController extends Controller
 
         $this->http_client = new Client([
             'verify' => Config::get('app.env') !== 'local'
+            'base_uri' => Config::get('mmcms.passport.oauth_url'),
         ]);
     }
 
@@ -140,10 +141,7 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(
-                Config::get('mmcms.passport.oauth_url').'/oauth/token',
-                $oauth_data
-            );
+            $response = $this->http_client->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
@@ -200,10 +198,7 @@ class AuthController extends Controller
 
         try {
             // Request OAuth token
-            $response = $this->http_client->post(
-                Config::get('mmcms.passport.oauth_url').'/oauth/token',
-                $oauth_data
-            );
+            $response = $this->http_client->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
@@ -292,10 +287,7 @@ class AuthController extends Controller
             ];
 
             // Request OAuth token
-            $response = $this->http_client->post(
-                Config::get('mmcms.passport.oauth_url').'/oauth/token',
-                $oauth_data
-            );
+            $response = $this->http_client->post('/oauth/token', $oauth_data);
 
             // Get response
             // $response->getBody() is a stream
