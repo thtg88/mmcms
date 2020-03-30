@@ -44,7 +44,7 @@ class UserService extends ResourceService
         if (! array_key_exists('role_id', $data) || empty($data['role_id'])) {
             // Get user role
             $user_role = $this->roles->findByModelName(
-                Config::get('mmcms.roles.user_role_name')
+                Config::get('mmcms.roles.names.user')
             );
 
             if ($user_role !== null) {

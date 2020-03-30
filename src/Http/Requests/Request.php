@@ -65,7 +65,7 @@ class Request extends FormRequest
     protected function authorizeDeveloper()
     {
         return $this->authorizeRole(
-            Config::get('mmcms.roles.developer_role_name')
+            Config::get('mmcms.roles.names.developer')
         );
     }
 

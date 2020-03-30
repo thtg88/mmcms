@@ -46,7 +46,7 @@ class AuthorizeAdministrator
 
         // Get administrator role
         $administrator_role = $this->roles->findByModelName(
-            Config::get('mmcms.roles.administrator_role_name')
+            Config::get('mmcms.roles.names.administrator')
         );
 
         if ($administrator_role === null) {

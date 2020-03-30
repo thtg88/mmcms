@@ -14,9 +14,17 @@ return [
         'namespace' => 'Thtg88\\MmCms'
     ],
     'roles' => [
-        'administrator_role_name' => env('MMCMS_ROLES_ADMINISTRATOR_NAME', 'admin'),
-        'developer_role_name' => env('MMCMS_ROLES_DEVELOPER_NAME', 'dev'),
-        'user_role_name' => env('MMCMS_ROLES_USER_NAME', 'user'),
+        'ids' => [
+            'administrator' => (int) env('MMCMS_ROLES_ADMINISTRATOR_ID', 2),
+            'default' => (int) env('MMCMS_ROLES_DEFAULT_ID', 3),
+            'developer' => (int) env('MMCMS_ROLES_DEVELOPER_ID', 1),
+            'user' => (int) env('MMCMS_ROLES_USER_ID', 3),
+        ],
+        'names' => [
+            'administrator' => env('MMCMS_ROLES_ADMINISTRATOR_NAME', 'admin'),
+            'developer' => env('MMCMS_ROLES_DEVELOPER_NAME', 'dev'),
+            'user' => env('MMCMS_ROLES_USER_NAME', 'user'),
+        ],
     ],
     'passport' => [
         'oauth_url' => env('MMCMS_OAUTH_URL', 'http://localhost'),
