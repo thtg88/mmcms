@@ -5,6 +5,7 @@ namespace Thtg88\MmCms;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
@@ -16,6 +17,7 @@ use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
+use Thtg88\MmCms\Validators\CustomValidator;
 
 class MmCmsServiceProvider extends ServiceProvider
 {
@@ -32,6 +34,18 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->singleton('mmcms', function () {
             return new MmCms();
         });
+
+        // Register custom validator
+        Validator::resolver(
+            static function ($translator, $data, $rules, $messages) {
+                return new CustomValidator(
+                    $translator,
+                    $data,
+                    $rules,
+                    $messages
+                );
+            }
+        );
 
         // Config
         $this->publishes([
