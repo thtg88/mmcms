@@ -61,7 +61,7 @@ class ExistsCaseInsensitive extends Exists
     public function __toString()
     {
         return rtrim(sprintf(
-            'exists_case_insensitive:%s,%s,%s',
+            'mmcms::exists_case_insensitive:%s,%s,%s',
             $this->table,
             $this->column,
             $this->formatWheres()
