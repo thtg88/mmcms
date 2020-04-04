@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -112,6 +113,13 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [MmCmsServiceProvider::class];
+    }
+
+    protected function passportActingAs(User $user): self
+    {
+        Passport::actingAs($user);
+
+        return $this;
     }
 
     protected function passportAuthLogout(): void
