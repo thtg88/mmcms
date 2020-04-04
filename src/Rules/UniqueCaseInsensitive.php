@@ -14,7 +14,7 @@ class UniqueCaseInsensitive extends Unique
     public function __toString()
     {
         return rtrim(sprintf(
-            'unique_case_insensitive:%s,%s,%s,%s,%s',
+            'mmcms::unique_case_insensitive:%s,%s,%s,%s,%s',
             $this->table,
             $this->column,
             $this->ignore ? '"'.addslashes($this->ignore).'"' : 'NULL',
