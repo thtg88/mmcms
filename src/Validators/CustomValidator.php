@@ -21,8 +21,8 @@ class CustomValidator extends Validator
     public function validateUniqueCaseInsensitive(
         $attribute,
         $value,
-        $parameters
-    ) {
+        array $parameters
+    ): bool {
         if (! is_string($value)) {
             return false;
         }
