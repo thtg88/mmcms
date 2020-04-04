@@ -31,8 +31,6 @@ trait WithOauthHttpClientMock
             }
         }
 
-        Passport::actingAs($user);
-
         $app = Container::getInstance();
 
         // Mock OAuth Passport HTTP Client
