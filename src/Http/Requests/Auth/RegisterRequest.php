@@ -3,9 +3,9 @@
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
 use Illuminate\Support\Facades\Config;
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class RegisterRequest extends Request
 {
