@@ -103,6 +103,17 @@ class ResourceService implements ResourceServiceInterface
     }
 
     /**
+     * Return all the model instances.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function index(IndexRequestInterface $request): Collection
+    {
+        return $this->repository->all();
+    }
+
+    /**
      * Restore a model instance from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request

@@ -11,10 +11,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
-use Thtg88\MmCms\Http\Requests\IndexRequest;
 use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
 use Thtg88\MmCms\Http\Requests\ShowRequest;
@@ -80,10 +80,10 @@ class Controller extends BaseController
     /**
      * Display a listing of the resources.
      *
-     * @param \Thtg88\MmCms\Http\Requests\IndexRequest $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
      * @return \Illuminate\Http\Response
      */
-    public function index(IndexRequest $request)
+    public function index(IndexRequestInterface $request)
     {
         $resources = $this->service->getRepository()->all();
 
