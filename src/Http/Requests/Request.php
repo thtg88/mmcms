@@ -16,6 +16,13 @@ class Request extends FormRequest
     protected $repository;
 
     /**
+     * The model implementation.
+     *
+     * @var \Illuminate\Database\Eloquent\Model
+     */
+    protected $resource;
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -118,13 +125,13 @@ class Request extends FormRequest
         // Get id from route
         $resource_id = $this->route('id');
 
-        // Find trashed resource
         if ($with_trashed === true) {
-            return $this->repository->withTrashed()
+            $this->resource = $this->repository->withTrashed()
                 ->find($resource_id);
+        } else {
+            $this->resource = $this->repository->find($resource_id);
         }
 
-        // Find resource
-        return $this->repository->find($resource_id);
+        return $this->resource;
     }
 }
