@@ -18,7 +18,7 @@ trait WithOauthHttpClientMock
         string $email,
         bool $skip_existence_check = false
     ): self {
-        if ($skip_existence_check === true) {
+        if ($skip_existence_check === false) {
             $user = app()->make(UserRepository::class)
                 ->findByModelName(strtolower($email));
 
