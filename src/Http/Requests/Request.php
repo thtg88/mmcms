@@ -58,52 +58,6 @@ class Request extends FormRequest
     }
 
     /**
-     * Return whether the user is a developer or not.
-     *
-     * @return bool
-     */
-    protected function authorizeDeveloper()
-    {
-        return $this->authorizeRole(
-            Config::get('mmcms.roles.names.developer')
-        );
-    }
-
-    /**
-     * Return whether the user is the owner of the resource concerning the
-     * request or not.
-     *
-     * @return bool
-     */
-    protected function authorizeRole($role_name)
-    {
-        if (empty($role_name)) {
-            return false;
-        }
-
-        if (! is_string($role_name)) {
-            return false;
-        }
-
-        // Get user
-        $user = $this->user();
-
-        if ($user === null) {
-            return false;
-        }
-
-        if ($user->role === null) {
-            return false;
-        }
-
-        if ($user->role->name !== $role_name) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Determine if the resource from the route's id exists.
      *
      * @return bool
