@@ -95,10 +95,10 @@ class Controller extends BaseController
     /**
      * Display a paginated listing of the resources.
      *
-     * @param \Thtg88\MmCms\Http\Requests\PaginateRequest $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return \Illuminate\Http\Response
      */
-    public function paginate(PaginateRequest $request)
+    public function paginate(PaginateRequestInterface $request)
     {
         $resources = $this->service->paginate($request);
 

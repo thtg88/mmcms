@@ -13,7 +13,7 @@ class PaginateRequest extends Request implements PaginateRequestInterface
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->can('viewAny', $this->model_classname);
     }
 
     /**
