@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
@@ -16,16 +17,27 @@ use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Policies\RolePolicy;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
 class MmCmsServiceProvider extends ServiceProvider
 {
     /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        Role::class => RolePolicy::class,
+    ];
+
+    /**
      * Bootstrap the application services.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $loader = AliasLoader::getInstance();
         $loader->alias('MmCms', MmCmsFacade::class);
@@ -92,6 +104,8 @@ class MmCmsServiceProvider extends ServiceProvider
         // $this->publishes([
         //     __DIR__.'/../reousrces/assets' => public_path('vendor/mmcms'),
         // ], 'assets');
+
+        $this->registerPolicies();
     }
 
     /**
@@ -99,7 +113,7 @@ class MmCmsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->register(CurrentTimeServiceProvider::class);
 
@@ -122,8 +136,30 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->alias(MmCms::class, 'mmcms');
     }
 
-    public function provides()
+    public function provides(): array
     {
         return ['mmcms'];
+    }
+
+    /**
+     * Register the application's policies.
+     *
+     * @return void
+     */
+    public function registerPolicies(): void
+    {
+        foreach ($this->policies() as $key => $value) {
+            Gate::policy($key, $value);
+        }
+    }
+
+    /**
+     * Get the policies defined on the provider.
+     *
+     * @return array
+     */
+    public function policies(): array
+    {
+        return $this->policies;
     }
 }

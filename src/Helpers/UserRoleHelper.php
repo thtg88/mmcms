@@ -4,7 +4,7 @@ namespace Thtg88\MmCms\Helpers;
 
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Repositories\RoleRepository;
-use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Models\User;
 
 /**
  * Helper methods for user role.
@@ -19,23 +19,14 @@ class UserRoleHelper
     protected $roles;
 
     /**
-     * The user repository implementation.
-     *
-     * @var \Thtg88\MmCms\Repositories\UserRepository
-     */
-    protected $users;
-
-    /**
      * Create a new helper instance.
      *
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
-     * @param \Thtg88\MmCms\Repositories\UserRepository $users
      * @return void
      */
-    public function __construct(RoleRepository $roles, UserRepository $users)
+    public function __construct(RoleRepository $roles)
     {
         $this->roles = $roles;
-        $this->users = $users;
     }
 
     /**
@@ -45,63 +36,49 @@ class UserRoleHelper
      * e.g. if the given role is lower from the one the user owns,
      * this function will return true.
      *
-     * @param int $user_id The id of the user.
-     * @param int $role_name The name of the role.
-     * @return	boolean
+     * @param \Thtg88\MmCms\Models\User $user
+     * @param string $role_name The name of the role.
+     * @return bool
      */
-    public function authorize($user_id, $role_name)
+    public function authorize(User $user, $role_name): bool
     {
-        // Assume id is numeric and not empty
-        if (empty($user_id) || !is_numeric($user_id)) {
+        // Assume name is string and not empty
+        if (empty($role_name) || ! is_string($role_name)) {
             return false;
         }
 
-        // Assume id is numeric and not empty
-        if (empty($role_name) || !is_string($role_name)) {
-            return false;
-        }
-
-        // Get user
-        $user = $this->users->find($user_id);
-
-        if ($user === null) {
-            // If user not found
-            return false;
-        }
-
+        // If user role not found
         if ($user->role === null) {
-            // If user not found
             return false;
         }
 
         // Get role
         $role = $this->roles->findByModelName($role_name);
 
+        // If role not found
         if ($role === null) {
-            // If role not found
             return false;
         }
 
-        if ($user->role !== null && $user->role->priority <= $role->priority) {
-            // If priority of user's role is lower
-            // or equal to the given role's priority,
-            // Allow action
-            return true;
+        // If priority of user's role is greater
+        // than the given role's priority, disallow action
+        if ($user->role->priority > $role->priority) {
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     /**
-     * Return whether a user from a given id is authorized for an administrator role.
+     * Return whether a given user is authorized for an administrator role.
      *
-     * @param int $user_id The id of the user.
-     * @return	boolean
+     * @param \Thtg88\MmCms\Models\User $user
+     * @return boolean
      */
-    public function authorizeAdministrator($user_id)
+    public function authorizeAdministrator(User $user)
     {
         return $this->authorize(
-            $user_id,
+            $user,
             Config::get('mmcms.roles.names.administrator')
         );
     }
@@ -109,11 +86,14 @@ class UserRoleHelper
     /**
      * Return whether a user from a given id is authorized for a developer role.
      *
-     * @param int $user_id The id of the user.
-     * @return	boolean
+     * @param \Thtg88\MmCms\Models\User $user
+     * @return boolean
      */
-    public function authorizeDeveloper($user_id)
+    public function authorizeDeveloper(User $user)
     {
-        return $this->authorize($user_id, Config::get('mmcms.roles.names.developer'));
+        return $this->authorize(
+            $user,
+            Config::get('mmcms.roles.names.developer')
+        );
     }
 }
