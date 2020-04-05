@@ -17,6 +17,8 @@ use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Policies\RolePolicy;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
 class MmCmsServiceProvider extends ServiceProvider
@@ -26,7 +28,9 @@ class MmCmsServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [];
+    protected $policies = [
+        Role::class => RolePolicy::class,
+    ];
 
     /**
      * Bootstrap the application services.
