@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Repositories\Concerns;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Config;
 
 trait WithPagination
@@ -16,7 +17,7 @@ trait WithPagination
      * @param string $sort_column The optional sort column
      * @param string $sort_direction The optional sort direction
      * @param array $wheres Additional where clauses
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate(
         $page_size = 10,
@@ -25,15 +26,15 @@ trait WithPagination
         $sort_column = null,
         $sort_direction = null,
         array $wheres = []
-    ) {
+    ): LengthAwarePaginator {
         // Assume page_size as numeric and > 0
         if (empty($page_size) || ! is_numeric($page_size) || $page_size < 1) {
-            return new Collection();
+            return new LengthAwarePaginator();
         }
 
         // Assume page as numeric and > 0
         if (! empty($page) && (! is_numeric($page) || $page < 1)) {
-            return new Collection();
+            return new LengthAwarePaginator();
         }
 
         $page_size = floor($page_size);
@@ -75,8 +76,8 @@ trait WithPagination
 
         return $result->paginate(
             $page_size,
-            Config::get('app.pagination.columns'),
-            Config::get('app.pagination.page_name'),
+            Config::get('mmcms.pagination.columns'),
+            Config::get('mmcms.pagination.page_name'),
             $page
         );
     }
