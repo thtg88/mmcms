@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Services;
 
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Helpers\FileHelper;
@@ -68,7 +69,7 @@ class ImageService extends ResourceService
      * @param int $id
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function destroy(DestroyRequestInterface $request, $id)
+    public function destroy(DestroyRequestInterface $request, $id): Model
     {
         $resource = $this->repository->destroy($id);
 
