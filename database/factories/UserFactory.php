@@ -11,7 +11,7 @@ $factory->define(User::class, static function (Faker $faker) {
         'email' => $faker->safeEmail(),
         'name' => $faker->name(),
         'password' => Str::random(8),
-        'role_id' => config('app.roles.default_role_id'),
+        'role_id' => config('mmcms.roles.default_role_id'),
     ];
 });
 
@@ -20,13 +20,13 @@ $factory->state(User::class, 'email_verified', [
 ]);
 
 $factory->state(User::class, 'admin', [
-    'role_id' => config('app.roles.ids.administrator'),
+    'role_id' => config('mmcms.roles.ids.administrator'),
 ]);
 
 $factory->state(User::class, 'dev', [
-    'role_id' => config('app.roles.ids.developer'),
+    'role_id' => config('mmcms.roles.ids.developer'),
 ]);
 
 $factory->state(User::class, 'user', [
-    'role_id' => config('app.roles.ids.user'),
+    'role_id' => config('mmcms.roles.ids.user'),
 ]);
