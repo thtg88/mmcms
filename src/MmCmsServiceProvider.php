@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use Illuminate\Container\Container;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
@@ -20,6 +21,13 @@ use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
 class MmCmsServiceProvider extends ServiceProvider
 {
+    /**
+     * The policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [];
+
     /**
      * Bootstrap the application services.
      *
@@ -92,6 +100,8 @@ class MmCmsServiceProvider extends ServiceProvider
         // $this->publishes([
         //     __DIR__.'/../reousrces/assets' => public_path('vendor/mmcms'),
         // ], 'assets');
+
+        $this->registerPolicies();
     }
 
     /**
@@ -125,5 +135,27 @@ class MmCmsServiceProvider extends ServiceProvider
     public function provides()
     {
         return ['mmcms'];
+    }
+
+    /**
+     * Register the application's policies.
+     *
+     * @return void
+     */
+    public function registerPolicies(): void
+    {
+        foreach ($this->policies() as $key => $value) {
+            Gate::policy($key, $value);
+        }
+    }
+
+    /**
+     * Get the policies defined on the provider.
+     *
+     * @return array
+     */
+    public function policies(): array
+    {
+        return $this->policies;
     }
 }
