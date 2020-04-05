@@ -17,7 +17,8 @@ trait ActingAsAdminTest
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
 
-        $response = $this->actingAs($user)->get($this->getRoute());
+        $response = $this->passportActingAs($user)
+            ->json('get', $this->getRoute());
         $response->assertStatus(403);
     }
 }

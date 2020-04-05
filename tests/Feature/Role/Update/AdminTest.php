@@ -25,7 +25,7 @@ class AdminTest extends TestCase implements UpdateTestContract
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->put($this->getRoute([$model->id]), [
+        $response = $this->passportActingAs($user)->json('put', $this->getRoute([$model->id]), [
             'name' => [Str::random(5)],
         ]);
         $response->assertStatus(302);
@@ -46,7 +46,7 @@ class AdminTest extends TestCase implements UpdateTestContract
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->put($this->getRoute([$model->id]), [
+        $response = $this->passportActingAs($user)->json('put', $this->getRoute([$model->id]), [
             'name' => Str::random(256),
         ]);
         $response->assertStatus(302);
@@ -68,7 +68,7 @@ class AdminTest extends TestCase implements UpdateTestContract
         $model = factory($this->model_classname)->create();
         $other_model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->put($this->getRoute([$model->id]), [
+        $response = $this->passportActingAs($user)->json('put', $this->getRoute([$model->id]), [
             'name' => $other_model->name,
         ]);
         $response->assertStatus(302);
@@ -91,8 +91,8 @@ class AdminTest extends TestCase implements UpdateTestContract
 
         $data = factory($this->model_classname)->raw();
 
-        $response = $this->actingAs($user)
-            ->put($this->getRoute([$model->id]), $data);
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), $data);
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
 
