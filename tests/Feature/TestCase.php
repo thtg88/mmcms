@@ -9,8 +9,11 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Factory;
+use Laravel\Passport\Passport;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -101,6 +104,21 @@ class TestCase extends BaseTestCase
             'database' => ':memory:',
             'prefix'   => '',
         ]);
+
+        $app['config']->set('mmcms.recaptcha.mode', false);
+
+        $app->singleton('validator', function ($app) {
+            $validator = new Factory($app['translator'], $app);
+
+            // The validation presence verifier is responsible for determining the existence of
+            // values in a given data collection which is typically a relational database or
+            // other persistent data stores. It is used to check for "uniqueness" as well.
+            if (isset($app['db'], $app['validation.presence'])) {
+                $validator->setPresenceVerifier($app['validation.presence']);
+            }
+
+            return $validator;
+        });
     }
 
     /**
@@ -112,6 +130,13 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [MmCmsServiceProvider::class];
+    }
+
+    protected function passportActingAs(User $user): self
+    {
+        Passport::actingAs($user);
+
+        return $this;
     }
 
     protected function passportAuthLogout(): void
