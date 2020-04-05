@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class LoginRequest extends Request
 {
@@ -40,7 +40,7 @@ class LoginRequest extends Request
             'email' => [
                 'required',
                 'email',
-                Rule::exists($this->repository->getModelTable(), 'email')
+                Rule::existsCaseInsensitive($this->repository->getModelTable())
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),

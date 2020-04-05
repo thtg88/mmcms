@@ -77,7 +77,8 @@ class LoginTest extends TestCase
         ]);
 
         // Test successful login
-        $response = $this->mockOauthHttpClient($model->email)
+        $response = $this->mockOauthHttpClient($model->email, true)
+            ->passportActingAs($model)
             ->json('post', $this->url, [
                 'email' => $model->email,
                 'password' => $password,

@@ -3,9 +3,9 @@
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
 use Illuminate\Support\Facades\Config;
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class RegisterRequest extends Request
 {
@@ -42,9 +42,10 @@ class RegisterRequest extends Request
                 'required',
                 'email',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'email')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
