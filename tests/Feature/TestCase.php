@@ -16,16 +16,9 @@ use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     use WithFaker;
-
-    /**
-     * The route URL.
-     *
-     * @var string
-     */
-    protected $url;
 
     protected function setUp(): void
     {
@@ -143,4 +136,12 @@ class TestCase extends BaseTestCase
     {
         Auth::user()->token()->revoke();
     }
+
+    /**
+     * Return the route to use for these tests from a given parameters array.
+     *
+     * @param array $parameters
+     * @return string
+     */
+    abstract protected function getRoute(array $parameters = []): string;
 }
