@@ -20,13 +20,6 @@ abstract class TestCase extends BaseTestCase
 {
     use WithFaker;
 
-    /**
-     * The route URL.
-     *
-     * @var string
-     */
-    protected $url;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -143,4 +136,12 @@ abstract class TestCase extends BaseTestCase
     {
         Auth::user()->token()->revoke();
     }
+
+    /**
+     * Return the route to use for these tests from a given parameters array.
+     *
+     * @param array $parameters
+     * @return string
+     */
+    abstract protected function getRoute(array $parameters = []): string;
 }
