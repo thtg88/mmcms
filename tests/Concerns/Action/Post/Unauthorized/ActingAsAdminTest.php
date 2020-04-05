@@ -7,7 +7,7 @@ use Thtg88\MmCms\Models\User;
 trait ActingAsAdminTest
 {
     /**
-     * Test unauthorized acting as system admin.
+     * Test unauthorized acting as admin.
      *
      * @return void
      * @group crud
