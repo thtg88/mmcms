@@ -39,6 +39,14 @@ interface ResourceServiceInterface
     /**
      * Return all the model instances.
      *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function index(IndexRequestInterface $request);
+
+    /**
+     * Return the paginated model instances.
+     *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
      * @return \Illuminate\Support\Collection
      */
