@@ -18,7 +18,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $response = $this->json('post', $this->url);
+        $response = $this->json('post', $this->getRoute());
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
@@ -31,7 +31,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => Str::random(256),
             'name' => Str::random(256),
         ]);
@@ -46,7 +46,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function password_too_short_validation(): void
     {
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'password' => Str::random(5),
         ]);
 
@@ -59,7 +59,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function password_confirmation_validation(): void
     {
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'password' => Str::random(8),
             'password_confirmation' => Str::random(8),
         ]);
@@ -75,7 +75,7 @@ class RegisterTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => $user->email,
         ]);
         $response->assertStatus(422)
@@ -84,7 +84,7 @@ class RegisterTest extends TestCase
             ]);
 
         // Test unique does not care of casing
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => strtoupper($user->email),
         ]);
         $response->assertStatus(422)
@@ -100,7 +100,7 @@ class RegisterTest extends TestCase
         $data['password_confirmation'] = $data['password'];
 
         $response = $this->mockOauthHttpClient($data['email'], true)
-            ->json('post', $this->url, $data);
+            ->json('post', $this->getRoute(), $data);
         $response->assertStatus(200)
             ->assertJson([
                 'token_type' => 'Bearer',
@@ -130,10 +130,14 @@ class RegisterTest extends TestCase
         $this->assertInstanceOf(Role::class, $model->role);
     }
 
-    protected function setUp(): void
+    /**
+     * Return the route to use for these tests from a given parameters array.
+     *
+     * @param array $parameters
+     * @return string
+     */
+    protected function getRoute(array $parameters = []): string
     {
-        parent::setUp();
-
-        $this->url = route('mmcms.auth.register');
+        return route('mmcms.auth.register');
     }
 }
