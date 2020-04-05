@@ -39,22 +39,7 @@ class AuthorizeAdministrator
         // Get current user from request object
         $user = $request->user();
 
-        if ($user->role === null) {
-            Container::getInstance()
-                ->abort(403, 'This action is unauthorized.', []);
-        }
-
-        // Get administrator role
-        $administrator_role = $this->roles->findByModelName(
-            Config::get('mmcms.roles.names.administrator')
-        );
-
-        if ($administrator_role === null) {
-            Container::getInstance()
-                ->abort(403, 'This action is unauthorized!', []);
-        }
-
-        if ($user->role->priority > $administrator_role->priority) {
+        if ($this->user_role_helper->authorizeAdministrator($user) === false) {
             Container::getInstance()
                 ->abort(403, 'This action is unauthorized!!', []);
         }
