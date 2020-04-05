@@ -35,7 +35,7 @@ trait WithUpdate
         // Save data
         $result = $model->fill($data)->save();
 
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             // Create journal entry only if not creating journal entry i.e. infinite recursion
             $journal_entry_classname = JournalEntry::class;
 

@@ -37,7 +37,7 @@ trait WithDestroy
         //         class_uses($this->model)
         //     )
         // ) {
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             $this->journal_entry_helper->createJournalEntry(
                 'delete',
                 $model
@@ -87,7 +87,7 @@ trait WithDestroy
         //         class_uses($this->model)
         //     )
         // ) {
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             $this->journal_entry_helper->createJournalEntry(
                 'delete-bulk',
                 null,
@@ -127,7 +127,7 @@ trait WithDestroy
         // Restore model
         $model->restore();
 
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             // Create journal entry only if not creating journal entry i.e. infinite recursion
             $journal_entry_classname = JournalEntry::class;
 
