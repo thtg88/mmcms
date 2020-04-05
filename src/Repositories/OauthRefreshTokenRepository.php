@@ -25,7 +25,7 @@ class OauthRefreshTokenRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\OauthRefreshToken $model
-     * @return	void
+     * @return void
      */
     public function __construct(OauthRefreshToken $model)
     {

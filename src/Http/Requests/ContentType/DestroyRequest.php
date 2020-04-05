@@ -10,8 +10,8 @@ class DestroyRequest extends BaseDestroyRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ContentTypeRepository	$repository
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $repository
+     * @return void
      */
     public function __construct(ContentTypeRepository $repository)
     {
@@ -25,10 +25,6 @@ class DestroyRequest extends BaseDestroyRequest
      */
     public function authorize()
     {
-        if ($this->authorizeDeveloper() === false) {
-            return false;
-        }
-
         return $this->authorizeResourceExist();
     }
 }

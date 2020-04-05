@@ -11,11 +11,12 @@ class UpdateRequest extends BaseUpdateRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository	$repository
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ContentValidationRuleAdditionalFieldTypeRepository $repository
+     * @return void
      */
-    public function __construct(ContentValidationRuleAdditionalFieldTypeRepository $repository)
-    {
+    public function __construct(
+        ContentValidationRuleAdditionalFieldTypeRepository $repository
+    ) {
         $this->repository = $repository;
     }
 
@@ -26,10 +27,6 @@ class UpdateRequest extends BaseUpdateRequest
      */
     public function authorize()
     {
-        if ($this->authorizeDeveloper() === false) {
-            return false;
-        }
-
         return $this->authorizeResourceExist();
     }
 
@@ -45,19 +42,21 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
         ];
 

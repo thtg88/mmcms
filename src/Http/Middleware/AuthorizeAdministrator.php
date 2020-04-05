@@ -5,26 +5,26 @@ namespace Thtg88\MmCms\Http\Middleware;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Config;
-use Thtg88\MmCms\Repositories\RoleRepository;
+use Thtg88\MmCms\Helpers\UserRoleHelper;
 
 class AuthorizeAdministrator
 {
     /**
      * The role repository implementation.
      *
-     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     * @var \Thtg88\MmCms\Helpers\UserRoleHelper
      */
-    protected $roles;
+    protected $user_role_helper;
 
     /**
      * Create a new middleware instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\RoleRepository	$roles
-     * @return	void
+     * @param \Thtg88\MmCms\Helpers\UserRoleHelper $user_role_helper
+     * @return void
      */
-    public function __construct(RoleRepository $roles)
+    public function __construct(UserRoleHelper $user_role_helper)
     {
-        $this->roles = $roles;
+        $this->user_role_helper = $user_role_helper;
     }
 
     /**
@@ -39,22 +39,7 @@ class AuthorizeAdministrator
         // Get current user from request object
         $user = $request->user();
 
-        if ($user->role === null) {
-            Container::getInstance()
-                ->abort(403, 'This action is unauthorized.', []);
-        }
-
-        // Get administrator role
-        $administrator_role = $this->roles->findByModelName(
-            Config::get('mmcms.roles.names.administrator')
-        );
-
-        if ($administrator_role === null) {
-            Container::getInstance()
-                ->abort(403, 'This action is unauthorized!', []);
-        }
-
-        if ($user->role->priority > $administrator_role->priority) {
+        if ($this->user_role_helper->authorizeAdministrator($user) === false) {
             Container::getInstance()
                 ->abort(403, 'This action is unauthorized!!', []);
         }

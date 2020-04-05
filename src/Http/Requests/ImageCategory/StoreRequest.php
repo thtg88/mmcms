@@ -12,9 +12,9 @@ class StoreRequest extends BaseStoreRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ImageCategoryRepository	$repository
-     * @param	\Thtg88\MmCms\Helpers\DatabaseHelper	$database_helper
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @return void
      */
     public function __construct(ImageCategoryRepository $repository, DatabaseHelper $database_helper)
     {

@@ -318,10 +318,10 @@ class RouteRegistrar
      */
     public function forRoles(): void
     {
-        $this->router->group(['as' => 'mmcms.roles.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Role routes...
+        $this->router->group(['as' => 'mmcms.roles.'], static function ($router) {
+            $router->group(
+                ['middleware' => 'auth:api'],
+                static function ($router) {
                     $router->get('roles', [
                         'uses' => 'RoleController@index',
                         'as' => 'index'
@@ -346,8 +346,8 @@ class RouteRegistrar
                         'uses' => 'RoleController@destroy',
                         'as' => 'destroy'
                     ]);
-                });
-            });
+                }
+            );
         });
     }
 
