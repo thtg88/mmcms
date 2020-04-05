@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Services;
 
 use Illuminate\Container\Container;
+use Illuminate\Database\Eloquent\Model;
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
@@ -47,7 +48,7 @@ class ContentFieldService extends ResourceService
      * @param int $id
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function destroy(DestroyRequestInterface $request, $id)
+    public function destroy(DestroyRequestInterface $request, $id): Model
     {
         $resource = $this->repository->destroy($id);
 
