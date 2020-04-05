@@ -97,17 +97,29 @@ class RegisterTest extends TestCase
     public function successful_registration(): void
     {
         $data = factory(User::class)->raw();
+        $data['password_confirmation'] = $data['password'];
 
         $response = $this->mockOauthHttpClient($data['email'], true)
             ->json('post', $this->url, $data);
+        $response->assertStatus(200)
+            ->assertJson([
+                'token_type' => 'Bearer',
+                'expires_in' => 31536000,
+                'access_token' => 'access-token',
+                'refresh_token' => 'refresh-token',
+                'resource' => [
+                    'email' => $data['email'],
+                    'name' => $data['name'],
+                ],
+            ]);
 
         $model = app()->make(UserRepository::class)
             ->findByModelName($data['email']);
 
         $this->passportActingAs($model);
 
-        $response->assertStatus(200)
-            ->assertJson(['foo' => 'bar']);
+        $response->assertJson(['resource' => ['id' => $model->id]]);
+
         $this->assertAuthenticated();
         $this->assertAuthenticatedAs($model);
         $this->assertTrue($model !== null);
