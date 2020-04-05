@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Services\Concerns;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 
@@ -194,12 +195,12 @@ trait WithPagination
     }
 
     /**
-     * Return all the model instances.
+     * Return the paginated model instances.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function paginate(PaginateRequestInterface $request)
+    public function paginate(PaginateRequestInterface $request): LengthAwarePaginator
     {
         // Get input
         $input = $request->only([
