@@ -19,10 +19,14 @@ $factory->state(User::class, 'email_verified', [
     'email_verified_at' => now(),
 ]);
 
-$factory->state(User::class, 'administrator', [
+$factory->state(User::class, 'admin', [
     'role_id' => config('app.roles.ids.administrator'),
 ]);
 
-$factory->state(User::class, 'developer', [
+$factory->state(User::class, 'dev', [
     'role_id' => config('app.roles.ids.developer'),
+]);
+
+$factory->state(User::class, 'user', [
+    'role_id' => config('app.roles.ids.user'),
 ]);

@@ -112,7 +112,7 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($model);
     }
 
-    protected function getRoute(array $parameters = []): string
+    public function getRoute(array $parameters = []): string
     {
         return route('mmcms.auth.login');
     }
