@@ -44,7 +44,8 @@ class MmCmsServiceProvider extends ServiceProvider
 
         // Config
         $this->publishes([
-            __DIR__.'/../config/mmcms.php' => Container::getInstance()->configPath('mmcms.php'),
+            __DIR__.'/../config/mmcms.php' => Container::getInstance()
+                ->configPath('mmcms.php'),
         ], 'mmcms-config');
 
         // Routes
@@ -53,7 +54,8 @@ class MmCmsServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
-            __DIR__.'/../database/migrations' => Container::getInstance()->databasePath('migrations'),
+            __DIR__.'/../database/migrations' => Container::getInstance()
+                ->databasePath('migrations'),
         ], 'mmcms-migrations');
 
         // Translations
