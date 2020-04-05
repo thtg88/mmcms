@@ -143,5 +143,5 @@ abstract class TestCase extends BaseTestCase
      * @param array $parameters
      * @return string
      */
-    abstract protected function getRoute(array $parameters = []): string;
+    abstract public function getRoute(array $parameters = []): string;
 }

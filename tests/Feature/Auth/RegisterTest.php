@@ -136,7 +136,7 @@ class RegisterTest extends TestCase
      * @param array $parameters
      * @return string
      */
-    protected function getRoute(array $parameters = []): string
+    public function getRoute(array $parameters = []): string
     {
         return route('mmcms.auth.register');
     }
