@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\Role;
 
-/**
- *
- */
 class RoleRepository extends Repository
 {
     protected static $model_name = 'name';
