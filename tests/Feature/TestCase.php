@@ -16,7 +16,7 @@ use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
     use WithFaker;
 
