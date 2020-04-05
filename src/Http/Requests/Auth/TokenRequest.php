@@ -10,8 +10,8 @@ class TokenRequest extends Request
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\UserRepository	$users
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\UserRepository $users
+     * @return void
      */
     public function __construct(UserRepository $users)
     {

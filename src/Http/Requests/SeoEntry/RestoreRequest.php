@@ -10,8 +10,8 @@ class RestoreRequest extends Request
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\SeoEntryRepository	$repository
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
+     * @return void
      */
     public function __construct(SeoEntryRepository $repository)
     {

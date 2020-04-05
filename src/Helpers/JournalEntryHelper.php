@@ -47,7 +47,7 @@ class JournalEntryHelper
      * @param	string	$action	The action performing while creating the entry.
      * @param	Illuminate\Database\Eloquent\Model	$model	The model the action is performed on.
      * @param	array	$content	The action content data.
-     * @return	\Thtg88\MmCms\JournalEntry
+     * @return \Thtg88\MmCms\JournalEntry
      */
     public function createJournalEntry($action, Model $model, array $content = null)
     {

@@ -109,7 +109,7 @@ class MakeContentModelStoreRequest
         $content .= "     * Create a new request instance.".PHP_EOL;
         $content .= "     *".PHP_EOL;
         $content .= "     * @param	\Thtg88\MmCms\Repositories\\".$model_name."Repository	\$repository".PHP_EOL;
-        $content .= "     * @return	void".PHP_EOL;
+        $content .= "     * @return void".PHP_EOL;
         $content .= "     */".PHP_EOL;
         $content .= "    public function __construct(".$model_name."Repository \$repository)".PHP_EOL;
         $content .= "    {".PHP_EOL;

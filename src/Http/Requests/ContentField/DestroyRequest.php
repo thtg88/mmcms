@@ -10,8 +10,8 @@ class DestroyRequest extends BaseDestroyRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ContentFieldRepository	$repository
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $repository
+     * @return void
      */
     public function __construct(ContentFieldRepository $repository)
     {
