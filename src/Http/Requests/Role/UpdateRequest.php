@@ -4,10 +4,14 @@ namespace Thtg88\MmCms\Http\Requests\Role;
 
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
+use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class UpdateRequest extends BaseUpdateRequest
 {
+    /** @var string */
+    protected $model_classname = Role::class;
+
     /**
      * Create a new request instance.
      *

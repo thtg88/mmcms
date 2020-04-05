@@ -16,7 +16,7 @@ interface ArchiveTest
      *
      * @return void
      */
-    public function testEmptyPayloadHasNoErrors();
+    public function empty_payload_has_no_errors(): void;
 
     /**
      * Test successful update.

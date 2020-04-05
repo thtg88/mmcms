@@ -31,12 +31,11 @@ trait Test
     }
 
     /**
-     * Test an empty payload does not have any validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testEmptyPayloadHasNoErrors()
+    public function empty_payload_has_no_errors(): void
     {
         $model = factory($this->model_classname)->create();
 

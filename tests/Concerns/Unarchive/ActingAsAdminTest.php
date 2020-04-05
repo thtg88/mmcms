@@ -38,12 +38,11 @@ trait ActingAsAdminTest
     }
 
     /**
-     * Test an empty payload does not have any validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testEmptyPayloadHasNoErrors()
+    public function empty_payload_has_no_errors(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
