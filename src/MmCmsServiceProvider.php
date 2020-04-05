@@ -57,10 +57,14 @@ class MmCmsServiceProvider extends ServiceProvider
         ], 'mmcms-migrations');
 
         // Translations
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'mmcms');
-        // $this->publishes([
-        //     __DIR__.'/../resources/lang' => resource_path('lang/vendor/mmcms'),
-        // ], 'translations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'mmcms');
+        $this->publishes(
+            [
+                __DIR__.'/../resources/lang' => Container::getInstance()
+                    ->resourcePath('lang/vendor/mmcms'),
+            ],
+            'mmcms-translations'
+        );
 
         // Views
         // $this->loadViewsFrom(__DIR__.'/../views', 'mmcms');
