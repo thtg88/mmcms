@@ -35,17 +35,19 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'priority' => [
                 'required',
