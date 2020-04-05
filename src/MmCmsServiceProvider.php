@@ -33,7 +33,7 @@ class MmCmsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $loader = AliasLoader::getInstance();
         $loader->alias('MmCms', MmCmsFacade::class);
@@ -109,7 +109,7 @@ class MmCmsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->register(CurrentTimeServiceProvider::class);
 
@@ -132,7 +132,7 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->alias(MmCms::class, 'mmcms');
     }
 
-    public function provides()
+    public function provides(): array
     {
         return ['mmcms'];
     }
