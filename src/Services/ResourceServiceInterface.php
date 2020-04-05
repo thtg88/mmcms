@@ -48,7 +48,7 @@ interface ResourceServiceInterface
      * Return the paginated model instances.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate(PaginateRequestInterface $request);
 
@@ -65,7 +65,7 @@ interface ResourceServiceInterface
      * Return the model instances matching the given search query.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface $request
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function search(SearchRequestInterface $request);
 
