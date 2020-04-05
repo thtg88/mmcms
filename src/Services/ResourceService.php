@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Services;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
@@ -60,7 +61,7 @@ class ResourceService implements ResourceServiceInterface
      * @param int $id The id of the model.
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function destroy(DestroyRequestInterface $request, $id)
+    public function destroy(DestroyRequestInterface $request, $id): Model
     {
         return $this->repository->destroy($id);
     }
