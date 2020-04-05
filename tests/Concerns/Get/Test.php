@@ -12,7 +12,7 @@ trait Test
      */
     public function testSuccessfulGet()
     {
-        $response = $this->get($this->getRoute());
+        $response = $this->json('get', $this->getRoute());
         $response->assertStatus(200);
     }
 }
