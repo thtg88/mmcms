@@ -5,26 +5,26 @@ namespace Thtg88\MmCms\Http\Middleware;
 use Closure;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Config;
-use Thtg88\MmCms\Repositories\RoleRepository;
+use Thtg88\MmCms\Helpers\UserRoleHelper;
 
 class AuthorizeAdministrator
 {
     /**
      * The role repository implementation.
      *
-     * @var \Thtg88\MmCms\Repositories\RoleRepository
+     * @var \Thtg88\MmCms\Helpers\UserRoleHelper
      */
-    protected $roles;
+    protected $user_role_helper;
 
     /**
      * Create a new middleware instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\RoleRepository	$roles
-     * @return	void
+     * @param \Thtg88\MmCms\Helpers\UserRoleHelper $user_role_helper
+     * @return void
      */
-    public function __construct(RoleRepository $roles)
+    public function __construct(UserRoleHelper $user_role_helper)
     {
-        $this->roles = $roles;
+        $this->user_role_helper = $user_role_helper;
     }
 
     /**
