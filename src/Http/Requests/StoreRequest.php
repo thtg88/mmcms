@@ -13,6 +13,6 @@ class StoreRequest extends Request implements StoreRequestInterface
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->can('create', $this->model_classname);
     }
 }

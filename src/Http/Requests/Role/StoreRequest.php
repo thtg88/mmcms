@@ -4,10 +4,14 @@ namespace Thtg88\MmCms\Http\Requests\Role;
 
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Repositories\RoleRepository;
 
 class StoreRequest extends BaseStoreRequest
 {
+    /** @var string */
+    protected $model_classname = Role::class;
+
     /**
      * Create a new request instance.
      *
