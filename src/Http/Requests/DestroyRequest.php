@@ -13,6 +13,10 @@ class DestroyRequest extends Request implements DestroyRequestInterface
      */
     public function authorize()
     {
-        return $this->authorizeResourceExist();
+        if ($this->authorizeResourceExist() === false) {
+            return false;
+        }
+
+        return $this->user()->can('delete', $this->resource);
     }
 }
