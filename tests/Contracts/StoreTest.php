@@ -9,14 +9,14 @@ interface StoreTest
      *
      * @return void
      */
-    public function testEmptyPayloadHasRequiredValidationErrors();
+    public function empty_payload_has_required_validation_errors();
 
     /**
      * Test successful store.
      *
      * @return void
      */
-    public function testSuccessfulStore();
+    public function successful_store();
 
     /**
      * Return the route to use for these tests from a given parameters array.
