@@ -105,6 +105,8 @@ class TestCase extends BaseTestCase
             'prefix'   => '',
         ]);
 
+        $app['config']->set('mmcms.recaptcha.mode', false);
+
         $app->singleton('validator', function ($app) {
             $validator = new Factory($app['translator'], $app);
 
