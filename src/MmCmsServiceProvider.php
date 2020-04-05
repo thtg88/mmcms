@@ -44,7 +44,8 @@ class MmCmsServiceProvider extends ServiceProvider
 
         // Config
         $this->publishes([
-            __DIR__.'/../config/mmcms.php' => Container::getInstance()->configPath('mmcms.php'),
+            __DIR__.'/../config/mmcms.php' => Container::getInstance()
+                ->configPath('mmcms.php'),
         ], 'mmcms-config');
 
         // Routes
@@ -53,14 +54,19 @@ class MmCmsServiceProvider extends ServiceProvider
         // Migrations
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->publishes([
-            __DIR__.'/../database/migrations' => Container::getInstance()->databasePath('migrations'),
+            __DIR__.'/../database/migrations' => Container::getInstance()
+                ->databasePath('migrations'),
         ], 'mmcms-migrations');
 
         // Translations
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'mmcms');
-        // $this->publishes([
-        //     __DIR__.'/../resources/lang' => resource_path('lang/vendor/mmcms'),
-        // ], 'translations');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'mmcms');
+        $this->publishes(
+            [
+                __DIR__.'/../resources/lang' => Container::getInstance()
+                    ->resourcePath('lang/vendor/mmcms'),
+            ],
+            'mmcms-translations'
+        );
 
         // Views
         // $this->loadViewsFrom(__DIR__.'/../views', 'mmcms');
@@ -69,23 +75,17 @@ class MmCmsServiceProvider extends ServiceProvider
         // ], 'views');
 
         // Commands
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                CreateDatabaseCommand::class,
-                InstallCommand::class,
-                PublishModuleCommand::class,
-                RepositoryMakeCommand::class,
-                // The following need to be booted
-                // to run the InstallCommand properly,
-                // as the InstallCommand runs the passport install command
-                PassportClientCommand::class,
-                PassportInstallCommand::class,
-                PassportKeysCommand::class,
-            ]);
-        }
-
         $this->commands([
+            CreateDatabaseCommand::class,
+            InstallCommand::class,
+            PublishModuleCommand::class,
             RepositoryMakeCommand::class,
+            // The following need to be booted
+            // to run the InstallCommand properly,
+            // as the InstallCommand runs the passport install command
+            PassportClientCommand::class,
+            PassportInstallCommand::class,
+            PassportKeysCommand::class,
         ]);
 
         // Assets
