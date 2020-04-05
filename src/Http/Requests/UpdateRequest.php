@@ -13,6 +13,10 @@ class UpdateRequest extends Request implements UpdateRequestInterface
      */
     public function authorize()
     {
-        return $this->authorizeResourceExist();
+        if ($this->authorizeResourceExist() === false) {
+            return false;
+        }
+
+        return $this->user()->can('update', $this->resource);
     }
 }
