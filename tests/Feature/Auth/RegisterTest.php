@@ -75,8 +75,6 @@ class RegisterTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->withoutExceptionHandling();
-
         $response = $this->json('post', $this->url, [
             'email' => $user->email,
         ]);
@@ -100,7 +98,7 @@ class RegisterTest extends TestCase
     {
         $data = factory(User::class)->raw();
 
-        $response = $this->mockOauthHttpClient($data['email'])
+        $response = $this->mockOauthHttpClient($data['email'], true)
             ->json('post', $this->url, $data);
 
         $model = app()->make(UserRepository::class)
