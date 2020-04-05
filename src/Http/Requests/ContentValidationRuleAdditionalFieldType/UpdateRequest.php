@@ -27,10 +27,6 @@ class UpdateRequest extends BaseUpdateRequest
      */
     public function authorize()
     {
-        if ($this->authorizeDeveloper() === false) {
-            return false;
-        }
-
         return $this->authorizeResourceExist();
     }
 
