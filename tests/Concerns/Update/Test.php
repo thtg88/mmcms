@@ -7,19 +7,18 @@ use Illuminate\Support\Str;
 trait Test
 {
     /**
-     * Test an empty payload has required validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testNonExistingModelAuthorizationErrors()
+    public function non_existing_model_authorization_errors(): void
     {
         // Test random string as id
-        $response = $this->put($this->getRoute([Str::random(5)]));
+        $response = $this->json('put', $this->getRoute([Str::random(5)]));
         $response->assertStatus(403);
 
         // Test random number as id
-        $response = $this->put($this->getRoute([rand(1000, 9999)]));
+        $response = $this->json('put', $this->getRoute([rand(1000, 9999)]));
         $response->assertStatus(403);
 
         // Test deleted user
@@ -27,7 +26,7 @@ trait Test
         app()->make($this->repository_classname)
             ->destroy($model->id);
 
-        $response = $this->put($this->getRoute([$model->id]));
+        $response = $this->json('put', $this->getRoute([$model->id]));
         $response->assertStatus(403);
     }
 
@@ -41,7 +40,7 @@ trait Test
     {
         $model = factory($this->model_classname)->create();
 
-        $response = $this->put($this->getRoute([$model->id]));
+        $response = $this->json('put', $this->getRoute([$model->id]));
 
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();

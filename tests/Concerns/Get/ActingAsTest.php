@@ -16,8 +16,8 @@ trait ActingAsTest
     {
         $user = factory(User::class)->states('email_verified')->create();
 
-        $response = $this->actingAs($user)
-            ->get($this->getRoute());
+        $response = $this->passportActingAs($user)
+            ->json('get', $this->getRoute());
 
         $response->assertStatus(200);
     }

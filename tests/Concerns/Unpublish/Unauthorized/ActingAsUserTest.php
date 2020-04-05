@@ -7,18 +7,18 @@ use Thtg88\MmCms\Models\User;
 trait ActingAsUserTest
 {
     /**
-     * Test unauthorized acting as parent.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testUnauthorizedActingAsParent()
+    public function unauthorized_acting_as_user(): void
     {
         $user = factory(User::class)->states('email_verified', 'user')
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->post($this->getRoute([$model->id]));
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute([$model->id]));
         $response->assertStatus(403);
     }
 }
