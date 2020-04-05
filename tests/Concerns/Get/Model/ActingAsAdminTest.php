@@ -18,7 +18,8 @@ trait ActingAsAdminTest
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->get($this->getRoute([$model->id]));
+        $response = $this->passportActingAs($user)
+            ->json('get', $this->getRoute([$model->id]));
         $response->assertStatus(200);
     }
 }

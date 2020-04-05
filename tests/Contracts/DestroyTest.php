@@ -9,14 +9,14 @@ interface DestroyTest
      *
      * @return void
      */
-    public function testNonExistingModelAuthorizationErrors();
+    public function non_existing_model_authorization_errors();
 
     /**
      * Test successful destroy.
      *
      * @return void
      */
-    public function testSuccessfulDestroy();
+    public function successful_destroy();
 
     /**
      * Return the route to use for these tests from a given parameters array.

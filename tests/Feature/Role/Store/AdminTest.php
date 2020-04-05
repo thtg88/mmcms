@@ -22,7 +22,7 @@ class AdminTest extends TestCase implements StoreTestContract
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
-        $response = $this->actingAs($user)->post($this->getRoute());
+        $response = $this->passportActingAs($user)->json('post', $this->getRoute());
         $response->assertStatus(302);
         $response->assertSessionHasErrors([
             'name' => 'The name field is required.',
@@ -39,7 +39,7 @@ class AdminTest extends TestCase implements StoreTestContract
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
             'name' => [Str::random(5)],
         ]);
         $response->assertStatus(302);
@@ -58,7 +58,7 @@ class AdminTest extends TestCase implements StoreTestContract
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
             'name' => Str::random(256),
         ]);
         $response->assertStatus(302);
@@ -79,7 +79,7 @@ class AdminTest extends TestCase implements StoreTestContract
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->post($this->getRoute(), [
+        $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
             'name' => $model->name,
         ]);
         $response->assertStatus(302);
@@ -100,7 +100,8 @@ class AdminTest extends TestCase implements StoreTestContract
             ->create();
         $data = factory($this->model_classname)->raw();
 
-        $response = $this->actingAs($user)->post($this->getRoute(), $data);
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), $data);
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
 

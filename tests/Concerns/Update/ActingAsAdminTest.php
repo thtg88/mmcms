@@ -8,12 +8,11 @@ use Illuminate\Support\Str;
 trait ActingAsAdminTest
 {
     /**
-     * Test an empty payload has required validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testNonExistingModelAuthorizationErrors()
+    public function non_existing_model_authorization_errors(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
@@ -23,18 +22,18 @@ trait ActingAsAdminTest
             ->destroy($deleted_model->id);
 
         // Test random string as id
-        $response = $this->actingAs($user)
-            ->put($this->getRoute([Str::random(5)]));
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([Str::random(5)]));
         $response->assertStatus(403);
 
         // Test random number as id
-        $response = $this->actingAs($user)
-            ->put($this->getRoute([rand(1000, 9999)]));
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([rand(1000, 9999)]));
         $response->assertStatus(403);
 
         // Test deleted model
-        $response = $this->actingAs($user)
-            ->put($this->getRoute([$deleted_model->id]));
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$deleted_model->id]));
         $response->assertStatus(403);
     }
 
@@ -50,7 +49,8 @@ trait ActingAsAdminTest
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->actingAs($user)->put($this->getRoute([$model->id]));
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]));
         $response->assertStatus(302);
         $response->assertSessionHasNoErrors();
     }
