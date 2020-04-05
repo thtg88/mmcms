@@ -13,7 +13,7 @@ class LoginTest extends TestCase
     /** @test */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $response = $this->json('post', $this->url);
+        $response = $this->json('post', $this->getRoute());
         $response->assertStatus(422)
             ->assertJson([
                 'errors' => [
@@ -33,7 +33,7 @@ class LoginTest extends TestCase
         ]);
 
         // Test wrong email and password
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => $this->faker->email(),
             'password' => 'wrong-password',
         ]);
@@ -45,7 +45,7 @@ class LoginTest extends TestCase
             ]);
 
         // Test wrong password
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => $model->email,
             'password' => 'wrong-password',
         ]);
@@ -55,7 +55,7 @@ class LoginTest extends TestCase
             ]);
 
         // Test wrong email
-        $response = $this->json('post', $this->url, [
+        $response = $this->json('post', $this->getRoute(), [
             'email' => $this->faker->email(),
             'password' => $password,
         ]);
@@ -79,7 +79,7 @@ class LoginTest extends TestCase
         // Test successful login
         $response = $this->mockOauthHttpClient($model->email, true)
             ->passportActingAs($model)
-            ->json('post', $this->url, [
+            ->json('post', $this->getRoute(), [
                 'email' => $model->email,
                 'password' => $password,
             ]);
@@ -97,7 +97,7 @@ class LoginTest extends TestCase
 
         // Test successful login with wrong email casing
         $response = $this->mockOauthHttpClient(strtoupper($model->email))
-            ->json('post', $this->url, [
+            ->json('post', $this->getRoute(), [
                 'email' => strtoupper($model->email),
                 'password' => $password,
             ]);
@@ -112,10 +112,8 @@ class LoginTest extends TestCase
         $this->assertAuthenticatedAs($model);
     }
 
-    protected function setUp(): void
+    protected function getRoute(array $parameters = []): string
     {
-        parent::setUp();
-
-        $this->url = route('mmcms.auth.login');
+        return route('mmcms.auth.login');
     }
 }
