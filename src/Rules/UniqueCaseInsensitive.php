@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Illuminate\Validation\Rules\Unique;
 
+/**
+ * Validate the uniqueness of an attribute value in a case-insesitive way,
+ * on a given database table.
+ *
+ * If a database column is not specified, the attribute will be used.
+ *
+ */
 class UniqueCaseInsensitive extends Unique implements Rule
 {
     use ValidatesAttributes;
@@ -17,6 +24,9 @@ class UniqueCaseInsensitive extends Unique implements Rule
      * @var string
      */
     protected $attribute;
+
+    /** @var array */
+    protected $implicitAttributes = [];
 
     /**
      * Validate the uniqueness of an attribute value in a case-insesitive way,
