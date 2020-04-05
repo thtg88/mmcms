@@ -7,12 +7,11 @@ use Illuminate\Support\Str;
 trait Test
 {
     /**
-     * Test an empty payload has required validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testNonExistingModelAuthorizationErrors()
+    public function non_existing_model_authorization_errors(): void
     {
         // Test random string as id
         $response = $this->put($this->getRoute([Str::random(5)]));

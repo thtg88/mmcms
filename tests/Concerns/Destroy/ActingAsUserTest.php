@@ -8,12 +8,11 @@ use Illuminate\Support\Str;
 trait ActingAsUserTest
 {
     /**
-     * Test an empty payload has required validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testNonExistingModelAuthorizationErrors()
+    public function non_existing_model_authorization_errors(): void
     {
         $user = factory(User::class)->states('email_verified', 'user')
             ->create();
@@ -38,12 +37,11 @@ trait ActingAsUserTest
     }
 
     /**
-     * Test successful destroy.
-     *
      * @return void
      * @group crud
+     * @group crud
      */
-    public function testSuccessfulDestroy()
+    public function successful_destroy(): void
     {
         $user = factory(User::class)->states('email_verified', 'user')
             ->create();

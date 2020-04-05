@@ -8,12 +8,11 @@ use Illuminate\Support\Str;
 trait ActingAsAdminTest
 {
     /**
-     * Test an empty payload has required validation errors.
-     *
      * @return void
      * @group crud
+     * @test
      */
-    public function testNonExistingModelAuthorizationErrors()
+    public function non_existing_model_authorization_errors(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
