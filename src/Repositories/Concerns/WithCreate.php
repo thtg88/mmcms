@@ -20,7 +20,7 @@ trait WithCreate
         // Create model
         $model = $this->model->create($data);
 
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             // Create journal entry only if not creating journal entry,
             // lol (infinite recursion)
             $journal_entry_classname = JournalEntry::class;
@@ -73,7 +73,7 @@ trait WithCreate
         // to avoid hitting issues on certain DBs
         $chunked_data = array_chunk(
             $data,
-            Config::get('app.create_bulk_chunk_size'),
+            Config::get('mmcms.create_bulk_chunk_size'),
             true
         );
 
@@ -86,7 +86,7 @@ trait WithCreate
             }
         }
 
-        if (Config::get('app.journal_mode') === true) {
+        if (Config::get('mmcms.journal_mode') === true) {
             $this->journal_entry_helper->createJournalEntry(
                 'create-bulk',
                 null,

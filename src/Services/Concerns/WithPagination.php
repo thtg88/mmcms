@@ -226,7 +226,7 @@ trait WithPagination
             $input['page_size'] === null ||
             filter_var($input['page_size'], FILTER_VALIDATE_INT) === false
         ) {
-            $input['page_size'] = Config::get('app.pagination.page_size');
+            $input['page_size'] = Config::get('mmcms.pagination.page_size');
         }
 
         $input['q'] = $this->getSearchValue($request);
