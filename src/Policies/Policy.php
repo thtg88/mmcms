@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Thtg88\MmCms\Helpers\UserRoleHelper;
 use Thtg88\MmCms\Models\User;
 
-class Policy
+abstract class Policy
 {
     use HandlesAuthorization;
 
