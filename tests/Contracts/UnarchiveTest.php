@@ -9,7 +9,7 @@ interface UnarchiveTest
      *
      * @return void
      */
-    public function testNonExistingModelAuthorizationErrors();
+    public function non_existing_model_authorization_errors();
 
     /**
      * Test an empty payload does not have any validation errors.
