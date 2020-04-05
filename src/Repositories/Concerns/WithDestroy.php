@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Models\JournalEntry;
 
@@ -13,7 +14,7 @@ trait WithDestroy
      * @param int $id The id of the model.
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function destroy($id)
+    public function destroy($id): Model
     {
         // Get model
         $model = $this->find($id);
