@@ -5,7 +5,7 @@ namespace Thtg88\MmCms\Tests\Concerns\Update;
 use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
 
-trait ActingAsAdminTest
+trait ActingAsDevTest
 {
     /**
      * @return void
@@ -14,7 +14,7 @@ trait ActingAsAdminTest
      */
     public function non_existing_model_authorization_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
+        $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
 
         $deleted_model = factory($this->model_classname)->create();
@@ -44,13 +44,13 @@ trait ActingAsAdminTest
      */
     public function empty_payload_has_no_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
+        $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $model = factory($this->model_classname)->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]));
-        $response->assertStatus(302);
-        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200)
+            ->assertJsonMissing(['errors']);
     }
 }
