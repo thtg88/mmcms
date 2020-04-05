@@ -25,10 +25,6 @@ class DestroyRequest extends BaseDestroyRequest
      */
     public function authorize()
     {
-        if ($this->authorizeDeveloper() === false) {
-            return false;
-        }
-
         return $this->authorizeResourceExist();
     }
 }
