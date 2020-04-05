@@ -75,23 +75,17 @@ class MmCmsServiceProvider extends ServiceProvider
         // ], 'views');
 
         // Commands
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                CreateDatabaseCommand::class,
-                InstallCommand::class,
-                PublishModuleCommand::class,
-                RepositoryMakeCommand::class,
-                // The following need to be booted
-                // to run the InstallCommand properly,
-                // as the InstallCommand runs the passport install command
-                PassportClientCommand::class,
-                PassportInstallCommand::class,
-                PassportKeysCommand::class,
-            ]);
-        }
-
         $this->commands([
+            CreateDatabaseCommand::class,
+            InstallCommand::class,
+            PublishModuleCommand::class,
             RepositoryMakeCommand::class,
+            // The following need to be booted
+            // to run the InstallCommand properly,
+            // as the InstallCommand runs the passport install command
+            PassportClientCommand::class,
+            PassportInstallCommand::class,
+            PassportKeysCommand::class,
         ]);
 
         // Assets
