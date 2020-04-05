@@ -75,8 +75,6 @@ class RegisterTest extends TestCase
     {
         $user = factory(User::class)->create();
 
-        $this->withoutExceptionHandling();
-
         $response = $this->json('post', $this->url, [
             'email' => $user->email,
         ]);
