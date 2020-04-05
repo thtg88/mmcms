@@ -22,7 +22,7 @@ class AuthorizeDeveloper
      * @param \Thtg88\MmCms\Helpers\UserRoleHelper $user_role_helper
      * @return void
      */
-    public function __construct(RoleRepository $user_role_helper)
+    public function __construct(UserRoleHelper $user_role_helper)
     {
         $this->user_role_helper = $user_role_helper;
     }
