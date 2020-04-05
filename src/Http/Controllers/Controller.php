@@ -196,7 +196,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json(['success', true, 'resource', $resource]);
+            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**
