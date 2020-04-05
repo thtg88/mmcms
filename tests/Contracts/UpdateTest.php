@@ -16,14 +16,14 @@ interface UpdateTest
      *
      * @return void
      */
-    public function testEmptyPayloadHasNoErrors();
+    public function empty_payload_has_no_errors(): void;
 
     /**
      * Test successful update.
      *
      * @return void
      */
-    public function testSuccessfulUpdate();
+    public function successful_update(): void;
 
     /**
      * Return the route to use for these tests from a given parameters array.
