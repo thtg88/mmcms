@@ -12,9 +12,9 @@ class UpdateRequest extends BaseUpdateRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ContentTypeRepository	$repository
-     * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$content_migration_methods
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $repository
+     * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $content_migration_methods
+     * @return void
      */
     public function __construct(ContentTypeRepository $repository, ContentMigrationMethodRepository $content_migration_methods)
     {

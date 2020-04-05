@@ -12,7 +12,7 @@ class LoginRequest extends Request
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository
-     * @return	void
+     * @return void
      */
     public function __construct(UserRepository $repository)
     {

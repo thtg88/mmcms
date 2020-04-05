@@ -12,9 +12,9 @@ class UpdateRequest extends BaseUpdateRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ImageRepository	$repository
-     * @param	\Thtg88\MmCms\Helpers\DatabaseHelper	$database_helper
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ImageRepository $repository
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @return void
      */
     public function __construct(ImageRepository $repository, DatabaseHelper $database_helper)
     {

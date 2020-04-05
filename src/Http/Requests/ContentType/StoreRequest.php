@@ -12,14 +12,15 @@ class StoreRequest extends BaseStoreRequest
     /**
      * Create a new request instance.
      *
-     * @param	\Thtg88\MmCms\Repositories\ContentTypeRepository	$repository
-     * @param	\Thtg88\MmCms\Repositories\ContentMigrationMethodRepository	$content_migration_methods
-     * @return	void
+     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $repository
+     * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $content_migration_methods
+     * @return void
      */
-    public function __construct(ContentTypeRepository $repository, ContentMigrationMethodRepository $content_migration_methods)
-    {
+    public function __construct(
+        ContentTypeRepository $repository,
+        ContentMigrationMethodRepository $content_migration_methods
+    ) {
         $this->repository = $repository;
-
         $this->content_migration_methods = $content_migration_methods;
     }
 
@@ -48,17 +49,19 @@ class StoreRequest extends BaseStoreRequest
             'content_migration_method_id' => [
                 'nullable',
                 'integer',
-                Rule::exists($this->repository->getModelTable(), 'id')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::exists($this->repository->getModelTable(), 'id')
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'priority' => [
                 'required',
