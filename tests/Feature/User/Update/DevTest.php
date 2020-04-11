@@ -2,9 +2,6 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Update;
 
-use Thtg88\MmCms\Models\Role;
-use Thtg88\MmCms\Models\User;
-use Illuminate\Support\Str;
 use Thtg88\MmCms\Tests\Concerns\Update\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\User\WithModelData;
