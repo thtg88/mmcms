@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests\User;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\UserRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
 {
@@ -29,12 +29,14 @@ class UpdateRequest extends BaseUpdateRequest
         $all_rules = [
             'email' => [
                 'required',
+                'string',
                 'email',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'email')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
