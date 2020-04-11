@@ -2,10 +2,11 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Store;
 
-use Thtg88\MmCms\Models\Role;
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Repositories\RoleRepository;
 
 trait WithSuccessfulTests
 {
@@ -123,6 +124,56 @@ trait WithSuccessfulTests
         $response->assertJsonValidationErrors([
             'email' => 'The email has already been taken.',
         ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
+    public function integer_validation(): void
+    {
+        $user = factory(User::class)
+            ->states('email_verified', $this->getUserRoleFactoryStateName())
+            ->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['role_id' => [Str::random(8)]]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The role id must be an integer.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
+    public function role_id_exists_validation(): void
+    {
+        $user = factory(User::class)
+            ->states('email_verified', $this->getUserRoleFactoryStateName())
+            ->create();
+
+        $deleted_role = factory(Role::class)->create();
+        app()->make(RoleRepository::class)->destroy($deleted_role->id);
+
+        // Test random id invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['role_id' => rand(1000, 9999)]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The selected role id is invalid.',
+            ]);
+
+        // Test deleted role invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['role_id' => $deleted_role->id]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The selected role id is invalid.',
+            ]);
     }
 
     /**
