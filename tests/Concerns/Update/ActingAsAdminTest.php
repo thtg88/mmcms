@@ -50,7 +50,13 @@ trait ActingAsAdminTest
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]));
-        $response->assertStatus(302);
-        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'resource' => [
+                    'id' => $model->id,
+                    'created_at' => $model->created_at->toISOString(),
+                ],
+            ]);
     }
 }
