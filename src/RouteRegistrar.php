@@ -31,383 +31,491 @@ class RouteRegistrar
      */
     public function all()
     {
-        $this->forAuth();
-        $this->forContentFields();
-        $this->forContentMigrationMethods();
-        $this->forContentModels();
-        $this->forContentTypes();
-        $this->forContentValidationRuleAdditionalFieldTypes();
-        $this->forImageCategories();
-        $this->forImages();
-        $this->forRoles();
-        $this->forSeoEntries();
-        $this->forUsers();
+        $this->router->group(['as' => 'mmcms.'], function ($router) {
+            $this->forAuth($router);
+            $this->forContentFields($router);
+            $this->forContentMigrationMethods($router);
+            $this->forContentModels($router);
+            $this->forContentTypes($router);
+            $this->forContentValidationRuleAdditionalFieldTypes($router);
+            $this->forImageCategories($router);
+            $this->forImages($router);
+            $this->forRoles($router);
+            $this->forSeoEntries($router);
+            $this->forUsers($router);
+        });
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forAuth(): void
+    public function forAuth($router): void
     {
-        $this->router->group(['as' => 'mmcms.auth.'], function ($router) {
-            // Auth routes...
-            $router->post('auth/register', [
-                'uses' => 'AuthController@register',
-                'as' => 'register'
-            ]);
-            $router->post('auth/login', [
-                'uses' => 'AuthController@login',
-                'as' => 'login'
-            ]);
-            $router->post('auth/token', [
-                'uses' => 'AuthController@token',
-                'as' => 'token'
-            ]);
-
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->delete('auth/logout', [
-                    'uses' => 'AuthController@logout',
-                    'as' => 'logout'
+        $router->group(
+            ['as' => 'auth.', 'prefix' => 'auth'],
+            static function ($router) {
+                $router->post('register', [
+                    'uses' => 'AuthController@register',
+                    'as' => 'register',
                 ]);
-                $router->get('auth/me', [
-                    'uses' => 'AuthController@me',
-                    'as' => 'me'
+                $router->post('login', [
+                    'uses' => 'AuthController@login',
+                    'as' => 'login',
                 ]);
-                $router->put('auth/me', [
-                    'uses' => 'AuthController@updateProfile',
-                    'as' => 'update-profile'
+                $router->post('token', [
+                    'uses' => 'AuthController@token',
+                    'as' => 'token',
                 ]);
-            });
-        });
+
+                $router->group(
+                    ['middleware' => 'auth:api'],
+                    static function ($router) {
+                        $router->delete('logout', [
+                            'uses' => 'AuthController@logout',
+                            'as' => 'logout',
+                        ]);
+                        $router->get('me', [
+                            'uses' => 'AuthController@me',
+                            'as' => 'me',
+                        ]);
+                        $router->put('me', [
+                            'uses' => 'AuthController@updateProfile',
+                            'as' => 'update-profile',
+                        ]);
+                    }
+                );
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forContentFields(): void
+    public function forContentFields($router): void
     {
-        $this->router->group(['as' => 'mmcms.content-fields.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Content Field routes...
-                    $router->get('content-fields', [
-                        'uses' => 'ContentFieldController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('content-fields/paginate', [
-                        'uses' => 'ContentFieldController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('content-fields/{id}', [
-                        'uses' => 'ContentFieldController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('content-fields', [
-                        'uses' => 'ContentFieldController@store',
-                        'as' => 'store'
-                    ]);
-                    // TODO: missing Request class
-                    $router->put('content-fields/{id}', [
-                        'uses' => 'ContentFieldController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('content-fields/{id}', [
-                        'uses' => 'ContentFieldController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'content-fields.',
+                'middleware' => ['auth:api', 'authorize.developer'],
+                'prefix' => 'content-fields',
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'ContentFieldController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentFieldController@show',
+                    'as' => 'show',
+                ]);
+                // TODO: missing Request class
+                $router->put('{id}', [
+                    'uses' => 'ContentFieldController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentFieldController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentFieldController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentFieldController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forContentMigrationMethods(): void
+    public function forContentMigrationMethods($router): void
     {
-        $this->router->group(['as' => 'mmcms.content-migration-methods.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Content Migration Method routes...
-                    $router->get('content-migration-methods', [
-                        'uses' => 'ContentMigrationMethodController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('content-migration-methods/paginate', [
-                        'uses' => 'ContentMigrationMethodController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('content-migration-methods/{id}', [
-                        'uses' => 'ContentMigrationMethodController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('content-migration-methods', [
-                        'uses' => 'ContentMigrationMethodController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('content-migration-methods/{id}', [
-                        'uses' => 'ContentMigrationMethodController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('content-migration-methods/{id}', [
-                        'uses' => 'ContentMigrationMethodController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'content-migration-methods.',
+                'prefix' => 'content-migration-methods',
+                'middleware' => ['auth:api', 'authorize.developer'],
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'ContentMigrationMethodController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentMigrationMethodController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ContentMigrationMethodController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentMigrationMethodController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentMigrationMethodController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentMigrationMethodController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forContentModels(): void
+    public function forContentModels($router): void
     {
-        $this->router->group(['as' => 'mmcms.content-models.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Content Model routes...
-                    $router->get('content-models', [
-                        'uses' => 'ContentModelController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('content-models/paginate', [
-                        'uses' => 'ContentModelController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('content-models/{id}', [
-                        'uses' => 'ContentModelController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('content-models', [
-                        'uses' => 'ContentModelController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('content-models/{id}', [
-                        'uses' => 'ContentModelController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('content-models/{id}', [
-                        'uses' => 'ContentModelController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'content-models.',
+                'middleware' => ['auth:api', 'authorize.developer'],
+                'prefix' => 'content-models',
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'ContentModelController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentModelController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ContentModelController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentModelController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentModelController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentModelController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forContentTypes(): void
+    public function forContentTypes($router): void
     {
-        $this->router->group(['as' => 'mmcms.content-types.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Content Type routes...
-                    $router->get('content-types', [
-                        'uses' => 'ContentTypeController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('content-types/paginate', [
-                        'uses' => 'ContentTypeController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('content-types/{id}', [
-                        'uses' => 'ContentTypeController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('content-types', [
-                        'uses' => 'ContentTypeController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('content-types/{id}', [
-                        'uses' => 'ContentTypeController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('content-types/{id}', [
-                        'uses' => 'ContentTypeController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'content-types.',
+                'middleware' => ['auth:api', 'authorize.developer'],
+                'prefix' => 'content-types',
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'ContentTypeController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentTypeController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ContentTypeController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentTypeController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentTypeController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentTypeController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forContentValidationRuleAdditionalFieldTypes(): void
+    public function forContentValidationRuleAdditionalFieldTypes($router): void
     {
-        $this->router->group(['as' => 'mmcms.content-validation-rule-additional-field-types.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    // Content Validation Rule Additional Field Type routes...
-                    $router->get('content-validation-rule-additional-field-types', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('content-validation-rule-additional-field-types/paginate', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('content-validation-rule-additional-field-types/{id}', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('content-validation-rule-additional-field-types', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('content-validation-rule-additional-field-types/{id}', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('content-validation-rule-additional-field-types/{id}', [
-                        'uses' => 'ContentValidationRuleAdditionalFieldTypeController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'mmcms.content-validation-rule-additional-field-types.',
+                'prefix' => 'mmcms.content-validation-rule-additional-field-types',
+                'middleware' => ['auth:api', 'authorize.developer'],
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forImageCategories(): void
+    public function forImageCategories($router): void
     {
-        $this->router->group(['as' => 'mmcms.image-categories.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.developer']], function ($router) {
-                    $router->post('image-categories/{id}/restore', 'ImageCategoryController@restore');
-                    $router->get('image-categories/paginate', 'ImageCategoryController@paginate');
-                    $router->delete('image-categories/{id}', 'ImageCategoryController@destroy');
-                    $router->get('image-categories/{id}', 'ImageCategoryController@show');
-                    $router->put('image-categories/{id}', 'ImageCategoryController@update');
-                    // $router->get('image-categories', 'ImageCategoryController@index');
-                    $router->post('image-categories', 'ImageCategoryController@store');
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'image-categories.',
+                'middleware' => ['auth:api', 'authorize.developer'],
+                'prefix' => 'image-categories',
+            ],
+            static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ImageCategoryController@restore',
+                    'as' => 'restore',
+                ]);
+                $router->get('paginate', [
+                    'uses' => 'ImageCategoryController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ImageCategoryController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ImageCategoryController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ImageCategoryController@update',
+                    'as' => 'update',
+                ]);
+                // $router->get('/', [
+                //     'uses' => 'ImageCategoryController@index',
+                //     'as' => 'index',
+                // ]);
+                $router->post('/', [
+                    'uses' => 'ImageCategoryController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forImages(): void
+    public function forImages($router): void
     {
-        $this->router->group(['as' => 'mmcms.images.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
-                    // $router->get('images/paginate', 'ImageController@paginate');
-                    $router->delete('images/{id}', 'ImageController@destroy');
-                });
-                $router->get('images/{id}', 'ImageController@show');
-                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
-                    $router->put('images/{id}', 'ImageController@update');
-                    // $router->get('images', 'ImageController@index');
-                    $router->post('images', 'ImageController@store');
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'images.',
+                'middleware' => ['auth:api'],
+                'prefix' => 'images',
+            ],
+            static function ($router) {
+                // $router->get('paginate', [
+                //     'as' => 'paginate',
+                //     'middleware' => 'authorize.administrator',
+                //     'uses' => 'ImageController@paginate',
+                // ]);
+                $router->delete('{id}', [
+                    'as' => 'destroy',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'ImageController@destroy',
+                ]);
+                $router->get('{id}', [
+                    'as' => 'show',
+                    'uses' => 'ImageController@show',
+                ]);
+                $router->put('{id}', [
+                    'as' => 'update',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'ImageController@update',
+                ]);
+                // $router->get('/', [
+                //     'as' => 'index',
+                //     'middleware' => 'authorize.administrator',
+                //     'uses' => 'ImageController@index',
+                // ]);
+                $router->post('/', [
+                    'as' => 'store',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'ImageController@store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forRoles(): void
+    public function forRoles($router): void
     {
-        $this->router->group(['as' => 'mmcms.roles.'], static function ($router) {
-            $router->group(
-                ['middleware' => 'auth:api'],
-                static function ($router) {
-                    $router->get('roles', [
-                        'uses' => 'RoleController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('roles/paginate', [
-                        'uses' => 'RoleController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('roles/{id}', [
-                        'uses' => 'RoleController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('roles', [
-                        'uses' => 'RoleController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('roles/{id}', [
-                        'uses' => 'RoleController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('roles/{id}', [
-                        'uses' => 'RoleController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                }
-            );
-        });
+        $router->group(
+            [
+                'as' => 'roles.',
+                'middleware' => 'auth:api',
+                'prefix' => 'roles',
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'uses' => 'RoleController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'RoleController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'RoleController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'RoleController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'RoleController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'RoleController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forSeoEntries(): void
+    public function forSeoEntries($router): void
     {
-        $this->router->group(['as' => 'mmcms.seo-entries.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
-                    $router->post('seo-entries/{id}/restore', 'SeoEntryController@restore');
-                    $router->get('seo-entries/paginate', 'SeoEntryController@paginate');
-                    $router->delete('seo-entries/{id}', 'SeoEntryController@destroy');
-                });
-                $router->get('seo-entries/{id}', 'SeoEntryController@show');
-                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
-                    $router->put('seo-entries/{id}', 'SeoEntryController@update');
-                    $router->get('seo-entries', 'SeoEntryController@index');
-                    $router->post('seo-entries', 'SeoEntryController@store');
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'seo-entries.',
+                'middleware' => ['auth:api'],
+                'prefix' => 'seo-entries',
+            ],
+            static function ($router) {
+                $router->post('{id}/restore', [
+                    'as' => 'restore',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@restore',
+                ]);
+                $router->get('paginate', [
+                    'as' => 'paginate',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@paginate',
+                ]);
+                $router->delete('{id}', [
+                    'as' => 'destroy',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@destroy',
+                ]);
+                $router->get('{id}', [
+                    'as' => 'show',
+                    'uses' => 'SeoEntryController@show',
+                ]);
+                $router->put('{id}', [
+                    'as' => 'update',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@update',
+                ]);
+                $router->get('/', [
+                    'as' => 'index',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@index',
+                ]);
+                $router->post('/', [
+                    'as' => 'store',
+                    'middleware' => 'authorize.administrator',
+                    'uses' => 'SeoEntryController@store',
+                ]);
+            }
+        );
     }
 
     /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
      * @return void
      */
-    public function forUsers(): void
+    public function forUsers($router): void
     {
-        $this->router->group(['as' => 'mmcms.users.'], function ($router) {
-            $router->group(['middleware' => 'auth:api'], function ($router) {
-                $router->group(['middleware' => ['authorize.administrator']], function ($router) {
-                    // User routes...
-                    $router->get('users', [
-                        'uses' => 'UserController@index',
-                        'as' => 'index'
-                    ]);
-                    $router->get('users/paginate', [
-                        'uses' => 'UserController@paginate',
-                        'as' => 'paginate'
-                    ]);
-                    $router->get('users/{id}', [
-                        'uses' => 'UserController@show',
-                        'as' => 'show'
-                    ]);
-                    $router->post('users', [
-                        'uses' => 'UserController@store',
-                        'as' => 'store'
-                    ]);
-                    $router->put('users/{id}', [
-                        'uses' => 'UserController@update',
-                        'as' => 'update'
-                    ]);
-                    $router->delete('users/{id}', [
-                        'uses' => 'UserController@destroy',
-                        'as' => 'destroy'
-                    ]);
-                });
-            });
-        });
+        $router->group(
+            [
+                'as' => 'users.',
+                'middleware' => 'auth:api',
+                'prefix' => 'users',
+            ],
+            static function ($router) {
+                $router->get('paginate', [
+                    'as' => 'paginate',
+                    'uses' => 'UserController@paginate',
+                ]);
+                $router->get('{id}', [
+                    'as' => 'show',
+                    'uses' => 'UserController@show',
+                ]);
+                $router->put('{id}', [
+                    'as' => 'update',
+                    'uses' => 'UserController@update',
+                ]);
+                $router->delete('{id}', [
+                    'as' => 'destroy',
+                    'uses' => 'UserController@destroy',
+                ]);
+                $router->get('/', [
+                    'as' => 'index',
+                    'uses' => 'UserController@index',
+                ]);
+                $router->post('/', [
+                    'as' => 'store',
+                    'uses' => 'UserController@store',
+                ]);
+            }
+        );
     }
 }
