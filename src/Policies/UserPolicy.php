@@ -13,6 +13,6 @@ class UserPolicy extends Policy
      */
     public function getDefaultAuthorizationRole(): string
     {
-        return Config::get('mmcms.roles.names.developer');
+        return Config::get('mmcms.roles.names.administrator');
     }
 }
