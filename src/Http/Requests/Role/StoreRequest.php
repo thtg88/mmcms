@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\Role;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Repositories\RoleRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
@@ -35,7 +35,7 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable())
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),
@@ -44,7 +44,7 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable())
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),
