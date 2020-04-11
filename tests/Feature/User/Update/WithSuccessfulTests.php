@@ -2,6 +2,11 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Update;
 
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Repositories\RoleRepository;
+use Thtg88\MmCms\Models\User;
+use Illuminate\Support\Str;
+
 trait WithSuccessfulTests
 {
     /**
