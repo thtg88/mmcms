@@ -2,10 +2,11 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Store;
 
-use Thtg88\MmCms\Models\Role;
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Repositories\RoleRepository;
 
 trait WithSuccessfulTests
 {
