@@ -29,12 +29,12 @@ trait WithPagination
     ): LengthAwarePaginator {
         // Assume page_size as numeric and > 0
         if (empty($page_size) || ! is_numeric($page_size) || $page_size < 1) {
-            return new LengthAwarePaginator();
+            return new LengthAwarePaginator([], 0, 1);
         }
 
         // Assume page as numeric and > 0
         if (! empty($page) && (! is_numeric($page) || $page < 1)) {
-            return new LengthAwarePaginator();
+            return new LengthAwarePaginator([], 0, $page_size);
         }
 
         $page_size = floor($page_size);
