@@ -149,6 +149,7 @@ trait WithSuccessfulTests
             'success' => true,
             'resource' => [
                 'id' => $model->id,
+                'created_at' => $model->created_at->toISOString(),
                 'email' => $data['email'],
                 'name' => $data['name'],
             ],
