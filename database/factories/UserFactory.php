@@ -11,7 +11,7 @@ $factory->define(User::class, static function (Faker $faker) {
         'email' => $faker->safeEmail(),
         'name' => $faker->name(),
         'password' => Str::random(8),
-        'role_id' => config('mmcms.roles.default_role_id'),
+        'role_id' => config('mmcms.roles.ids.default'),
     ];
 });
 
