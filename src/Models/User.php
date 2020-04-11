@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -90,31 +92,31 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function getWith()
+    public function getWith(): array
     {
         return $this->with;
     }
 
     // MUTATORS
 
-    public function setEmailAttribute($value)
+    public function setEmailAttribute($value): void
     {
         $this->attributes['email'] = strtolower($value);
     }
 
-    public function setPasswordAttribute($value)
+    public function setPasswordAttribute($value): void
     {
         $this->attributes['password'] = Hash::make($value);
     }
 
     // RELATIONSHIPS
 
-    public function journal_entries()
+    public function journal_entries(): MorphMany
     {
         return $this->morphMany(JournalEntry::class, 'target');
     }
 
-    public function role()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id', 'id');
     }
