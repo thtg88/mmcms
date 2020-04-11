@@ -150,6 +150,37 @@ trait WithSuccessfulTests
      * @group crud
      * @test
      */
+    public function role_id_exists_validation(): void
+    {
+        $user = factory(User::class)
+            ->states('email_verified', $this->getUserRoleFactoryStateName())
+            ->create();
+
+        $deleted_role = factory(Role::class)->create();
+        app()->make(RoleRepository::class)->destroy($deleted_role->id);
+
+        // Test random id invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['role_id' => rand(1000, 9999)]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The selected role id is invalid.',
+            ]);
+
+        // Test deleted role invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['role_id' => $deleted_role->id]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The selected role id is invalid.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_store(): void
     {
         $user = factory(User::class)
