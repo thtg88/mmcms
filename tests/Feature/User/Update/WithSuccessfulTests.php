@@ -85,6 +85,28 @@ trait WithSuccessfulTests
      * @group crud
      * @test
      */
+    public function integer_validation(): void
+    {
+        $user = factory(User::class)
+            ->states('email_verified', $this->getUserRoleFactoryStateName())
+            ->create();
+        $model = factory($this->model_classname)->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'role_id' => [Str::random(8)],
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'role_id' => 'The role id must be an integer.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_update(): void
     {
         $user = factory(User::class)
