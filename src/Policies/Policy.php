@@ -33,11 +33,12 @@ abstract class Policy
      * Determine whether the user can view any models.
      *
      * @param \Thtg88\MmCms\Models\User $user
-     * @return mixed
+     * @return bool
      */
     public function viewAny(User $user)
     {
-        return $this->user_role_helper->authorizeDeveloper($user);
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
@@ -45,22 +46,24 @@ abstract class Policy
      *
      * @param \Thtg88\MmCms\Models\User $user
      * @param \Illuminate\Eloquent\Database\Model $model
-     * @return mixed
+     * @return bool
      */
     public function view(User $user, Model $model)
     {
-        return $this->user_role_helper->authorizeDeveloper($user);
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
      * Determine whether the user can create models.
      *
      * @param \Thtg88\MmCms\Models\User $user
-     * @return mixed
+     * @return bool
      */
     public function create(User $user)
     {
-        return $this->user_role_helper->authorizeDeveloper($user);
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
@@ -68,15 +71,12 @@ abstract class Policy
      *
      * @param \Thtg88\MmCms\Models\User $user
      * @param \Illuminate\Eloquent\Database\Model $model
-     * @return mixed
+     * @return bool
      */
     public function update(User $user, Model $model)
     {
-        if ($this->user_role_helper->authorizeDeveloper($user) === false) {
-            return false;
-        }
-
-        return true;
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
@@ -84,15 +84,12 @@ abstract class Policy
      *
      * @param \Thtg88\MmCms\Models\User $user
      * @param \Illuminate\Eloquent\Database\Model $model
-     * @return mixed
+     * @return bool
      */
     public function delete(User $user, Model $model)
     {
-        if ($this->user_role_helper->authorizeDeveloper($user) === false) {
-            return false;
-        }
-
-        return true;
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
@@ -100,15 +97,12 @@ abstract class Policy
      *
      * @param \Thtg88\MmCms\Models\User $user
      * @param \Illuminate\Eloquent\Database\Model $model
-     * @return mixed
+     * @return bool
      */
     public function restore(User $user, Model $model)
     {
-        if ($this->user_role_helper->authorizeDeveloper($user) === false) {
-            return false;
-        }
-
-        return true;
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
 
     /**
@@ -116,14 +110,18 @@ abstract class Policy
      *
      * @param \Thtg88\MmCms\Models\User $user
      * @param \Illuminate\Eloquent\Database\Model $model
-     * @return mixed
+     * @return bool
      */
     public function forceDelete(User $user, Model $model)
     {
-        if ($this->user_role_helper->authorizeDeveloper($user) === false) {
-            return false;
-        }
-
-        return true;
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
     }
+
+    /**
+     * Get the default authorized role for the policy.
+     *
+     * @return string
+     */
+    abstract public function getDefaultAuthorizationRole(): string;
 }
