@@ -45,7 +45,6 @@ class UpdateRequest extends BaseUpdateRequest
                     }),
             ],
             'name' => 'required|string|max:255',
-            'password' => 'required|confirmed|string|min:6|max:255',
             'role_id' => [
                 'required',
                 'integer',
