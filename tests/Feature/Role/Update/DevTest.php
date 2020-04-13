@@ -82,6 +82,46 @@ class DevTest extends TestCase implements UpdateTestContract
      * @group crud
      * @test
      */
+    public function integer_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $model = factory($this->model_classname)->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'priority' => [Str::random(8)],
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'priority' => 'The priority must be an integer.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
+    public function integer_min_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $model = factory($this->model_classname)->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), ['priority' => 0]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'priority' => 'The priority must be at least 1.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_update(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')

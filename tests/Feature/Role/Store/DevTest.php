@@ -88,6 +88,41 @@ class DevTest extends TestCase implements StoreTestContract
      * @group crud
      * @test
      */
+    public function integer_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['priority' => [Str::random(8)]]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'priority' => 'The priority must be an integer.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
+    public function integer_min_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['priority' => 0]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'priority' => 'The priority must be at least 1.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_store(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')
