@@ -111,7 +111,7 @@ trait WithDestroy
     public function restore($id)
     {
         // Get model
-        $model = $this->find($id);
+        $model = $this->withTrashed()->find($id);
 
         if ($model === null) {
             return null;
