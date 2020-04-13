@@ -43,6 +43,9 @@ trait ActingAsDevTest
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute([$model->id]));
+
+        $model = $model->refresh();
+
         $response->assertStatus(200)
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
@@ -52,6 +55,6 @@ trait ActingAsDevTest
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);
-        $this->assertTrue($model->refresh()->deleted_at === null);
+        $this->assertTrue($model->deleted_at === null);
     }
 }
