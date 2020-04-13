@@ -8,17 +8,15 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
-use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
 use Thtg88\MmCms\Http\Requests\ShowRequest;
-use Thtg88\MmCms\Http\Requests\UserDateFilterRequest;
 use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
@@ -31,7 +29,7 @@ class Controller extends BaseController
     /**
      * The service implementation.
      *
-     * @var \App\Http\Requests\Contracts\ResourceServiceInterface
+     * @var \Thtg88\MmCms\Http\Requests\Contracts\ResourceServiceInterface
      */
     protected $service;
 
@@ -63,8 +61,8 @@ class Controller extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Http\Requests\Contracts\DestroyRequestInterface $request
-     * @param int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyRequestInterface $request, $id)
@@ -108,6 +106,22 @@ class Controller extends BaseController
     }
 
     /**
+     * Restore the specified resource from storage.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(RestoreRequestInterface $request, $id)
+    {
+        $resource = $this->service->restore($request, $id);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
+    }
+
+    /**
      * Search for the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\SearchRequest $request
@@ -131,23 +145,44 @@ class Controller extends BaseController
      */
     public function show(ShowRequest $request, $id)
     {
-        $resource_name = ucwords(
-            str_replace(
-                '_',
-                ' ',
-                Str::singular($this->service->getRepository()->getName())
-            )
-        );
-
         $resource = $this->service->show($id);
-
-        if ($resource === null) {
-            abort(404, $resource_name.' not found.');
-        }
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json(['resource' => $resource]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRequestInterface $request)
+    {
+        // Store resource
+        $resource = $this->service->store($request);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequestInterface $request, $id)
+    {
+        // Update resource
+        $resource = $this->service->update($request, $id);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**
@@ -164,39 +199,6 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json(['resources' => $resources]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \App\Http\Requests\Contracts\StoreRequestInterface $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreRequestInterface $request)
-    {
-        // Store resource
-        $resource = $this->service->store($request);
-
-        return Container::getInstance()
-            ->make(ResponseFactory::class, [])
-            ->json(['success' => true, 'resource' => $resource]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\Contracts\UpdateRequestInterface $request
-     * @param int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateRequestInterface $request, $id)
-    {
-        // Update resource
-        $resource = $this->service->update($request, $id);
-
-        return Container::getInstance()
-            ->make(ResponseFactory::class, [])
-            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**

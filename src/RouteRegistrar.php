@@ -399,6 +399,10 @@ class RouteRegistrar
                 'prefix' => 'roles',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'RoleController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'RoleController@paginate',
                     'as' => 'paginate',
@@ -491,6 +495,10 @@ class RouteRegistrar
                 'prefix' => 'users',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'UserController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'as' => 'paginate',
                     'uses' => 'UserController@paginate',
