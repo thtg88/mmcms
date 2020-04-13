@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
-use Thtg88\MmCms\Http\Requests\Request;
+use Thtg88\MmCms\Http\Requests\RestoreRequest as BaseRestoreRequest;
 use Thtg88\MmCms\Repositories\ImageCategoryRepository;
 
-class RestoreRequest extends Request
+class RestoreRequest extends BaseRestoreRequest
 {
     /**
      * Create a new request instance.
@@ -16,15 +16,5 @@ class RestoreRequest extends Request
     public function __construct(ImageCategoryRepository $repository)
     {
         $this->repository = $repository;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->authorizeResourceDeletedExist();
     }
 }
