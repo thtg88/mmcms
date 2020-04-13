@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Str;
 use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
@@ -129,19 +128,7 @@ class Controller extends BaseController
      */
     public function show(ShowRequest $request, $id)
     {
-        $resource_name = ucwords(
-            str_replace(
-                '_',
-                ' ',
-                Str::singular($this->service->getRepository()->getName())
-            )
-        );
-
         $resource = $this->service->show($id);
-
-        if ($resource === null) {
-            abort(404, $resource_name.' not found.');
-        }
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
