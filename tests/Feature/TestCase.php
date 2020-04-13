@@ -28,8 +28,6 @@ abstract class TestCase extends BaseTestCase
 
         MmCms::routes();
 
-        $app = Container::getInstance();
-
         if (
             ! Schema::hasTable('users') ||
             ! Schema::hasTable('oauth_clients')
@@ -63,7 +61,7 @@ abstract class TestCase extends BaseTestCase
             'select * from oauth_clients where password_client = 1'
         );
 
-        $app['config']->set('mmcms.passport', [
+        $this->app['config']->set('mmcms.passport', [
             'oauth_url' => 'http://localhost',
             'password_client_id' => count($oauth_clients) === 0 ?
                 null :
