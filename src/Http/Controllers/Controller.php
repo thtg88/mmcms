@@ -15,10 +15,8 @@ use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
-use Thtg88\MmCms\Http\Requests\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
 use Thtg88\MmCms\Http\Requests\ShowRequest;
-use Thtg88\MmCms\Http\Requests\UserDateFilterRequest;
 use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
