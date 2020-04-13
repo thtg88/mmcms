@@ -31,7 +31,7 @@ class Controller extends BaseController
     /**
      * The service implementation.
      *
-     * @var \App\Http\Requests\Contracts\ResourceServiceInterface
+     * @var \Thtg88\MmCms\Http\Requests\Contracts\ResourceServiceInterface
      */
     protected $service;
 
@@ -63,8 +63,8 @@ class Controller extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Http\Requests\Contracts\DestroyRequestInterface $request
      * @param int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyRequestInterface $request, $id)
