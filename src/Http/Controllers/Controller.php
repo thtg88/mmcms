@@ -60,8 +60,8 @@ class Controller extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param int  $id
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyRequestInterface $request, $id)
@@ -136,25 +136,9 @@ class Controller extends BaseController
     }
 
     /**
-     * Display a listing of the resource belonging to the user,
-     * filtered by a given start and end date.
-     *
-     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
-     * @return \Illuminate\Http\Response
-     */
-    public function userDateFilter(DateFilterRequestInterface $request)
-    {
-        $resources = $this->service->userDateFilter($request);
-
-        return Container::getInstance()
-            ->make(ResponseFactory::class, [])
-            ->json(['resources' => $resources]);
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\Contracts\StoreRequestInterface $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequestInterface $request)
@@ -170,8 +154,8 @@ class Controller extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\Contracts\UpdateRequestInterface $request
-     * @param int  $id
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequestInterface $request, $id)
@@ -182,6 +166,22 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json(['success' => true, 'resource' => $resource]);
+    }
+
+    /**
+     * Display a listing of the resource belonging to the user,
+     * filtered by a given start and end date.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     * @return \Illuminate\Http\Response
+     */
+    public function userDateFilter(DateFilterRequestInterface $request)
+    {
+        $resources = $this->service->userDateFilter($request);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resources' => $resources]);
     }
 
     /**
