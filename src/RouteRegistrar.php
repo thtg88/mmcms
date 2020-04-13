@@ -399,6 +399,10 @@ class RouteRegistrar
                 'prefix' => 'roles',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'RoleController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'RoleController@paginate',
                     'as' => 'paginate',
