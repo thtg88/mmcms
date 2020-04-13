@@ -328,10 +328,10 @@ class RouteRegistrar
                     'uses' => 'ImageCategoryController@update',
                     'as' => 'update',
                 ]);
-                // $router->get('/', [
-                //     'uses' => 'ImageCategoryController@index',
-                //     'as' => 'index',
-                // ]);
+                $router->get('/', [
+                    'uses' => 'ImageCategoryController@index',
+                    'as' => 'index',
+                ]);
                 $router->post('/', [
                     'uses' => 'ImageCategoryController@store',
                     'as' => 'store',
