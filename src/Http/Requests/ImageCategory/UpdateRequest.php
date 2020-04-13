@@ -16,20 +16,12 @@ class UpdateRequest extends BaseUpdateRequest
      * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(ImageCategoryRepository $repository, DatabaseHelper $database_helper)
-    {
+    public function __construct(
+        ImageCategoryRepository $repository,
+        DatabaseHelper $database_helper
+    ) {
         $this->repository = $repository;
         $this->database_helper = $database_helper;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->authorizeResourceExist();
     }
 
     /**
@@ -39,12 +31,6 @@ class UpdateRequest extends BaseUpdateRequest
      */
     public function rules()
     {
-        // Get resource id
-        $resource_id = $this->route('id');
-
-        // Get resource
-        $resource = $this->repository->find($resource_id);
-
         // Get all tables
         $table_names = $this->database_helper->getTableNames();
 
@@ -77,42 +63,42 @@ class UpdateRequest extends BaseUpdateRequest
 
         if (
             array_key_exists('target_table', $input)
-            && !empty($input['target_table'])
+            && ! empty($input['target_table'])
             && is_string($input['target_table'])
         ) {
             $target_table = $input['target_table'];
         } else {
-            $target_table = $resource->target_table;
+            $target_table = $this->resource->target_table;
         }
 
         if (
             array_key_exists('name', $input)
-            && !empty($input['name'])
+            && ! empty($input['name'])
             && is_string($input['name'])
         ) {
             $name = $input['name'];
         } else {
-            $name = $resource->name;
+            $name = $this->resource->name;
         }
 
         if (
             (
                 array_key_exists('name', $input)
-                && !empty($input['name'])
+                && ! empty($input['name'])
                 && is_string($input['name'])
-                && !empty($target_table)
+                && ! empty($target_table)
                 && is_string($target_table)
             )
             || (
                 array_key_exists('target_table', $input)
-                && !empty($input['target_table'])
+                && ! empty($input['target_table'])
                 && is_string($input['target_table'])
-                && !empty($name)
+                && ! empty($name)
                 && is_string($name)
             )
         ) {
-            $rules['name'][] = Rule::unique($this->repository->getModelTable(), 'name')
-                ->where(function ($query) use ($target_table) {
+            $rules['name'][] = Rule::unique($this->repository->getModelTable())
+                ->where(static function ($query) use ($target_table) {
                     $query->whereNull('deleted_at')
                         ->where('target_table', $target_table);
                 });
