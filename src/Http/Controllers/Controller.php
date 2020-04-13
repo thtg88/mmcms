@@ -12,6 +12,7 @@ use Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
@@ -102,6 +103,22 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json($resources);
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore(RestoreRequestInterface $request, $id)
+    {
+        $resource = $this->service->restore($request, $id);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['success' => true, 'resource' => $resource]);
     }
 
     /**
