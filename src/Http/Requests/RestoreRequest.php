@@ -13,6 +13,10 @@ class RestoreRequest extends Request implements RestoreRequestInterface
      */
     public function authorize()
     {
-        return $this->authorizeResourceDeletedExist();
+        if ($this->authorizeResourceDeletedExist() === false) {
+            return false;
+        }
+
+        return $this->user()->can('restore', $this->resource);
     }
 }
