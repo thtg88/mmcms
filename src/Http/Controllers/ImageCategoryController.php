@@ -3,10 +3,14 @@
 namespace Thtg88\MmCms\Http\Controllers;
 
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\ImageCategory\DestroyRequest;
+use Thtg88\MmCms\Http\Requests\ImageCategory\IndexRequest;
+use Thtg88\MmCms\Http\Requests\ImageCategory\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\ImageCategory\RestoreRequest;
 use Thtg88\MmCms\Http\Requests\ImageCategory\StoreRequest;
 use Thtg88\MmCms\Http\Requests\ImageCategory\UpdateRequest;
@@ -21,6 +25,8 @@ class ImageCategoryController extends Controller
      */
     protected $bindings = [
         DestroyRequestInterface::class => DestroyRequest::class,
+        IndexRequestInterface::class => IndexRequest::class,
+        PaginateRequestInterface::class => PaginateRequest::class,
         RestoreRequestInterface::class => RestoreRequest::class,
         StoreRequestInterface::class => StoreRequest::class,
         UpdateRequestInterface::class => UpdateRequest::class,

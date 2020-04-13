@@ -1,12 +1,12 @@
 <?php
 
-namespace Thtg88\MmCms\Tests\Feature\Role\Update;
+namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Update;
 
 use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Tests\Concerns\Update\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Contracts\UpdateTest as UpdateTestContract;
-use Thtg88\MmCms\Tests\Feature\Role\WithModelData;
+use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements UpdateTestContract
@@ -27,10 +27,12 @@ class DevTest extends TestCase implements UpdateTestContract
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'name' => [Str::random(5)],
+                'target_table' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name must be a string.',
+                'target_table' => 'The target table must be a string.',
             ]);
     }
 
@@ -70,10 +72,32 @@ class DevTest extends TestCase implements UpdateTestContract
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'name' => $other_model->name,
+                'target_table' => $other_model->target_table,
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name has already been taken.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
+    public function valid_target_table_errors(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $model = factory($this->model_classname)->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'target_table' => Str::random(10),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'target_table' => 'The selected target table is invalid.',
             ]);
     }
 
@@ -90,11 +114,11 @@ class DevTest extends TestCase implements UpdateTestContract
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
-                'priority' => [Str::random(8)],
+                'sequence' => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'priority' => 'The priority must be an integer.',
+                'sequence' => 'The sequence must be an integer.',
             ]);
     }
 
@@ -110,10 +134,10 @@ class DevTest extends TestCase implements UpdateTestContract
         $model = factory($this->model_classname)->create();
 
         $response = $this->passportActingAs($user)
-            ->json('put', $this->getRoute([$model->id]), ['priority' => 0]);
+            ->json('put', $this->getRoute([$model->id]), ['sequence' => 0]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'priority' => 'The priority must be at least 1.',
+                'sequence' => 'The sequence must be at least 1.',
             ]);
     }
 
@@ -138,8 +162,9 @@ class DevTest extends TestCase implements UpdateTestContract
                 'resource' => [
                     'id' => $model->id,
                     'created_at' => $model->created_at->toISOString(),
-                    'display_name' => $data['display_name'],
                     'name' => $data['name'],
+                    'sequence' => $data['sequence'],
+                    'target_table' => $data['target_table'],
                 ],
             ]);
 

@@ -304,7 +304,7 @@ class RouteRegistrar
         $router->group(
             [
                 'as' => 'image-categories.',
-                'middleware' => ['auth:api', 'authorize.developer'],
+                'middleware' => ['auth:api'],
                 'prefix' => 'image-categories',
             ],
             static function ($router) {
@@ -328,10 +328,10 @@ class RouteRegistrar
                     'uses' => 'ImageCategoryController@update',
                     'as' => 'update',
                 ]);
-                // $router->get('/', [
-                //     'uses' => 'ImageCategoryController@index',
-                //     'as' => 'index',
-                // ]);
+                $router->get('/', [
+                    'uses' => 'ImageCategoryController@index',
+                    'as' => 'index',
+                ]);
                 $router->post('/', [
                     'uses' => 'ImageCategoryController@store',
                     'as' => 'store',

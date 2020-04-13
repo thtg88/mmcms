@@ -1,11 +1,11 @@
 <?php
 
-namespace Thtg88\MmCms\Tests\Feature\Role\Store;
+namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Store;
 
 use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Tests\Contracts\StoreTest as StoreTestContract;
-use Thtg88\MmCms\Tests\Feature\Role\WithModelData;
+use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
@@ -26,6 +26,8 @@ class DevTest extends TestCase implements StoreTestContract
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name field is required.',
+                'sequence' => 'The sequence field is required.',
+                'target_table' => 'The target table field is required.',
             ]);
     }
 
@@ -39,10 +41,14 @@ class DevTest extends TestCase implements StoreTestContract
         $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['name' => [Str::random(5)]]);
+            ->json('post', $this->getRoute(), [
+                'name' => [Str::random(5)],
+                'target_table' => [Str::random(5)],
+            ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name must be a string.',
+                'target_table' => 'The target table must be a string.',
             ]);
     }
 
@@ -68,6 +74,25 @@ class DevTest extends TestCase implements StoreTestContract
      * @group crud
      * @test
      */
+    public function valid_target_table_errors(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'target_table' => Str::random(10),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'target_table' => 'The selected target table is invalid.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function unique_validation(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')
@@ -76,11 +101,12 @@ class DevTest extends TestCase implements StoreTestContract
 
         $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
             'name' => $model->name,
+            'target_table' => $model->target_table,
         ]);
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors([
-            'name' => 'The name has already been taken.',
-        ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'name' => 'The name has already been taken.',
+            ]);
     }
 
     /**
@@ -94,10 +120,10 @@ class DevTest extends TestCase implements StoreTestContract
             ->create();
 
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['priority' => [Str::random(8)]]);
+            ->json('post', $this->getRoute(), ['sequence' => [Str::random(8)]]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'priority' => 'The priority must be an integer.',
+                'sequence' => 'The sequence must be an integer.',
             ]);
     }
 
@@ -111,10 +137,10 @@ class DevTest extends TestCase implements StoreTestContract
         $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['priority' => 0]);
+            ->json('post', $this->getRoute(), ['sequence' => 0]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'priority' => 'The priority must be at least 1.',
+                'sequence' => 'The sequence must be at least 1.',
             ]);
     }
 
@@ -131,19 +157,19 @@ class DevTest extends TestCase implements StoreTestContract
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);
-        $response->assertStatus(200)
-            ->assertJson([
-                'success' => true,
-                'resource' => [
-                    'display_name' => $data['display_name'],
-                    'name' => $data['name'],
-                ],
-            ]);
+        $response->assertStatus(200);
 
         $model = app()->make($this->repository_classname)
             ->findByModelName($data['name']);
 
-        $response->assertJson(['resource' => ['id' => $model->id]]);
+        $response->assertJson([
+            'success' => true,
+            'resource' => [
+                'id' => $model->id,
+                'target_table' => $data['target_table'],
+                'name' => $data['name'],
+            ],
+        ]);
 
         $this->assertTrue($model !== null);
         $this->assertInstanceOf($this->model_classname, $model);
