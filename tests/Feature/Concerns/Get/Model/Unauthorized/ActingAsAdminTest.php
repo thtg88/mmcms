@@ -7,12 +7,11 @@ use Thtg88\MmCms\Models\User;
 trait ActingAsAdminTest
 {
     /**
-     * Test unauthorized request acting as admin.
-     *
      * @return void
      * @group get-tests
+     * @test
      */
-    public function testUnauthorizedActingAsSystemAdmin()
+    public function unauthorized_acting_as_system_admin(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();
