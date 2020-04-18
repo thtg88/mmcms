@@ -85,16 +85,7 @@ class Repository implements RepositoryInterface
      */
     public function __construct()
     {
-        // Get model class name
-        $class_name = get_class($this->model);
-
-        // Get target table for model
-        $target_table = $this->model->getTable();
-
-        // Merge into morph map for accessibility across the Thtg88\MmCms when retrieving
-        Relation::morphMap([
-            $target_table => $class_name,
-        ]);
+        $this->updateMorphMap();
 
         // Omit trashed model by default
         $this->with_trashed = false;
@@ -203,6 +194,22 @@ class Repository implements RepositoryInterface
     public function withoutTrashed()
     {
         $this->with_trashed = false;
+
+        return $this;
+    }
+
+    /**
+     * Update `Relation::morphMap` for the internal model.
+     *
+     * @return self
+     */
+    protected function updateMorphMap(): self
+    {
+        // Merge model class name into morph map for accessibility
+        // across the Thtg88\MmCms when retrieving
+        Relation::morphMap([
+            $this->model->getTable() => get_class($this->model),
+        ]);
 
         return $this;
     }
