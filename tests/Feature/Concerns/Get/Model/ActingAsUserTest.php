@@ -7,12 +7,11 @@ use Thtg88\MmCms\Models\User;
 trait ActingAsUserTest
 {
     /**
-     * Test successful get request acting as user.
-     *
      * @return void
      * @group get-tests
+     * @test
      */
-    public function testSuccessfulGetActingAsUser()
+    public function successful_get_acting_as_user(): void
     {
         $user = factory(User::class)->states('email_verified', 'user')
             ->create();
