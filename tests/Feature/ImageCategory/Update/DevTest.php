@@ -4,8 +4,8 @@ namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Update;
 
 use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
-use Thtg88\MmCms\Tests\Concerns\Update\ActingAsDevTest;
-use Thtg88\MmCms\Tests\Contracts\UpdateTest as UpdateTestContract;
+use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsDevTest;
+use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 

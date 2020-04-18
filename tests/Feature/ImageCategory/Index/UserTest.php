@@ -2,7 +2,7 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Index;
 
-use Thtg88\MmCms\Tests\Concerns\Get\Unauthorized\ActingAsUserTest;
+use Thtg88\MmCms\Tests\Feature\Concerns\Get\Unauthorized\ActingAsUserTest;
 use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
