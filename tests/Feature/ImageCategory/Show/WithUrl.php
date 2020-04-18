@@ -1,6 +1,6 @@
 <?php
 
-namespace Thtg88\MmCms\Tests\Feature\ImageCategoryShow;
+namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Show;
 
 trait WithUrl
 {
