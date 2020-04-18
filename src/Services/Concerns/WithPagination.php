@@ -236,7 +236,7 @@ trait WithPagination
             $this->repository = $this->repository->withTrashed();
 
             $wheres[] = [
-                'field' => 'deleted_at',
+                'name' => 'deleted_at',
                 'operator' => '<>',
                 'value' => null,
             ];
