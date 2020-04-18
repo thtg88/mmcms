@@ -13,10 +13,10 @@ use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 use Thtg88\MmCms\Http\Requests\SearchRequest;
-use Thtg88\MmCms\Http\Requests\ShowRequest;
 use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
@@ -139,11 +139,11 @@ class Controller extends BaseController
     /**
      * Display the specified resource.
      *
-     * @param \Thtg88\MmCms\Http\Requests\ShowRequest $request
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ShowRequest $request, $id)
+    public function show(ShowRequestInterface $request, $id)
     {
         $resource = $this->service->show($id);
 
