@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Update;
 
-use Thtg88\MmCms\Tests\Concerns\Update\ActingAsAdminTest;
-use Thtg88\MmCms\Tests\Contracts\UpdateTest as UpdateTestContract;
+use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsAdminTest;
+use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\User\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 

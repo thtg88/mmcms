@@ -4,7 +4,7 @@ namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Store;
 
 use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
-use Thtg88\MmCms\Tests\Contracts\StoreTest as StoreTestContract;
+use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
