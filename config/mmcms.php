@@ -11,7 +11,12 @@ return [
         'namespace' => 'Thtg88\\MmCms\\Models\\',
     ],
     'modules' => [
-        'namespace' => 'Thtg88\\MmCms'
+        'namespace' => 'Thtg88\\MmCms',
+        'seo' => [
+            'allowed_target_tables' => [
+                'users',
+            ],
+        ],
     ],
     'roles' => [
         'ids' => [
