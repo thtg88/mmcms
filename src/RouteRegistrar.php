@@ -193,6 +193,10 @@ class RouteRegistrar
                 'prefix' => 'content-models',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentModelController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentModelController@paginate',
                     'as' => 'paginate',
