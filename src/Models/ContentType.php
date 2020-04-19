@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Config;
 
 class ContentType extends Model
@@ -62,7 +64,7 @@ class ContentType extends Model
 
     // RELATIONSHIPS
 
-    public function content_migration_method()
+    public function content_migration_method(): BelongsTo
     {
         return $this->belongsTo(
             Config::get('mmcms.models.namespace').'ContentMigrationMethod',
@@ -71,7 +73,7 @@ class ContentType extends Model
         );
     }
 
-    public function content_validation_rules()
+    public function content_validation_rules(): HasManyThrough
     {
         return $this->hasManyThrough(
             Config::get('mmcms.models.namespace').'ContentValidationRule',
