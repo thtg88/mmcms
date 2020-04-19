@@ -19,9 +19,11 @@ use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Policies\ImageCategoryPolicy;
 use Thtg88\MmCms\Policies\RolePolicy;
+use Thtg88\MmCms\Policies\SeoEntryPolicy;
 use Thtg88\MmCms\Policies\UserPolicy;
 use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
@@ -35,6 +37,7 @@ class MmCmsServiceProvider extends ServiceProvider
     protected $policies = [
         ImageCategory::class => ImageCategoryPolicy::class,
         Role::class => RolePolicy::class,
+        SeoEntry::class => SeoEntryPolicy::class,
         User::class => UserPolicy::class,
     ];
 
