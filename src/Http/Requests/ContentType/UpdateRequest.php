@@ -16,21 +16,13 @@ class UpdateRequest extends BaseUpdateRequest
      * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $content_migration_methods
      * @return void
      */
-    public function __construct(ContentTypeRepository $repository, ContentMigrationMethodRepository $content_migration_methods)
-    {
+    public function __construct(
+        ContentTypeRepository $repository,
+        ContentMigrationMethodRepository $content_migration_methods
+    ) {
         $this->repository = $repository;
 
         $this->content_migration_methods = $content_migration_methods;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->authorizeResourceExist();
     }
 
     /**
@@ -48,18 +40,20 @@ class UpdateRequest extends BaseUpdateRequest
             'content_migration_method_id' => [
                 'nullable',
                 'integer',
-                Rule::exists($this->repository->getModelTable(), 'id')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                Rule::exists($this->repository->getModelTable(), 'id')
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'priority' => [
                 'required',

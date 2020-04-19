@@ -4,11 +4,15 @@ namespace Thtg88\MmCms\Http\Requests\ContentType;
 
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 
 class StoreRequest extends BaseStoreRequest
 {
+    /** @var string */
+    protected $model_classname = ContentType::class;
+
     /**
      * Create a new request instance.
      *
@@ -48,7 +52,7 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable())
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),
