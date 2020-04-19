@@ -12,8 +12,9 @@ class UsersTableSeeder extends Seeder
     {
         // Check if user exist
         $user = User::where('name', 'Admin Adminson')->first();
+
+        // if not - create
         if ($user === null) {
-            // if not - create
             User::create([
                 'name' => 'Admin Adminson',
                 'email' => 'admin@domain.com',
