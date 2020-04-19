@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
@@ -17,15 +16,11 @@ class StoreRequest extends BaseStoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(
-        SeoEntryRepository $repository,
-        DatabaseHelper $database_helper
-    ) {
+    public function __construct(SeoEntryRepository $repository)
+    {
         $this->repository = $repository;
-        $this->database_helper = $database_helper;
     }
 
     /**
@@ -39,7 +34,7 @@ class StoreRequest extends BaseStoreRequest
         $input = $this->all();
 
         // Get all tables
-        $table_names = $this->database_helper->getTableNames();
+        $table_names = config('mmcms.modules.seo.allowed_target_tables');
 
         $all_rules = [
             'target_id' => [

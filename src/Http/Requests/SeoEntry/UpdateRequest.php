@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
 use Illuminate\Validation\Rule;
-use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
@@ -13,15 +12,11 @@ class UpdateRequest extends BaseUpdateRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(
-        SeoEntryRepository $repository,
-        DatabaseHelper $database_helper
-    ) {
+    public function __construct(SeoEntryRepository $repository)
+    {
         $this->repository = $repository;
-        $this->database_helper = $database_helper;
     }
 
     /**
@@ -34,8 +29,7 @@ class UpdateRequest extends BaseUpdateRequest
         // Get input
         $input = $this->all();
 
-        // Get all tables
-        $table_names = $this->database_helper->getTableNames();
+        $table_names = config('mmcms.modules.seo.allowed_target_tables');
 
         // We define the real table name in order to check if the target exists
         // First we check if the provided input contains a table name
