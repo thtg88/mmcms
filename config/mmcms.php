@@ -18,6 +18,9 @@ return [
             ],
         ],
     ],
+    'repositories' => [
+        'namespace' => 'Thtg88\\MmCms\\Repositories\\',
+    ],
     'roles' => [
         'ids' => [
             'administrator' => (int) env('MMCMS_ROLES_ADMINISTRATOR_ID', 2),
