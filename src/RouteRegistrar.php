@@ -102,6 +102,10 @@ class RouteRegistrar
                 'prefix' => 'content-fields',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentFieldController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentFieldController@paginate',
                     'as' => 'paginate',
