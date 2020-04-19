@@ -11,7 +11,7 @@ trait ActingAsAdminTest
      * @group get-tests
      * @test
      */
-    public function unauthorized_acting_as_system_admin(): void
+    public function unauthorized_acting_as_admin(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();

@@ -141,9 +141,13 @@ class RouteRegistrar
             [
                 'as' => 'content-migration-methods.',
                 'prefix' => 'content-migration-methods',
-                'middleware' => ['auth:api', 'authorize.developer'],
+                'middleware' => ['auth:api'],
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentMigrationMethodController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentMigrationMethodController@paginate',
                     'as' => 'paginate',
