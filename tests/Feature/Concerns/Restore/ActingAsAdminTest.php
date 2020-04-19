@@ -33,7 +33,7 @@ trait ActingAsAdminTest
      * @group crud
      * @test
      */
-    public function successful_destroy(): void
+    public function successful_restore(): void
     {
         $user = factory(User::class)->states('email_verified', 'admin')
             ->create();

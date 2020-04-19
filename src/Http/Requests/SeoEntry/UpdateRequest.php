@@ -16,20 +16,12 @@ class UpdateRequest extends BaseUpdateRequest
      * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(SeoEntryRepository $repository, DatabaseHelper $database_helper)
-    {
+    public function __construct(
+        SeoEntryRepository $repository,
+        DatabaseHelper $database_helper
+    ) {
         $this->repository = $repository;
         $this->database_helper = $database_helper;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return $this->authorizeResourceExist();
     }
 
     /**
@@ -42,25 +34,20 @@ class UpdateRequest extends BaseUpdateRequest
         // Get input
         $input = $this->all();
 
-        // Get resource id
-        $resource_id = $this->route('id');
-
-        // Get resource
-        $resource = $this->repository->find($resource_id, false, true);
-
         // Get all tables
         $table_names = $this->database_helper->getTableNames();
 
         // We define the real table name in order to check if the target exists
-        $real_table_name = null;
-
         // First we check if the provided input contains a table name
-        if (array_key_exists('target_table', $input) && in_array($input['target_table'], $table_names, true)) {
+        if (
+            array_key_exists('target_table', $input) &&
+            in_array($input['target_table'], $table_names, true)
+        ) {
             // If so, this is the table name we are going to use for our validation
             $real_table_name = $input['target_table'];
         } else {
             // Otherwise use the existing table name
-            $real_table_name = $resource->target_table;
+            $real_table_name = $this->resource->target_table;
         }
 
         $all_rules = [
@@ -74,7 +61,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'in:'.implode(',', $table_names),
             ],
             'facebook_description' => 'nullable|string|max:255',
-            'facebook_image' => 'nullable|string|max:255',
+            'facebook_image' => 'nullable|string|max:2000',
             'facebook_title' => 'nullable|string|max:255',
             'json_schema' => 'nullable|string|json',
             'meta_description' => 'nullable|string|max:255',
@@ -83,7 +70,7 @@ class UpdateRequest extends BaseUpdateRequest
             'meta_title' => 'nullable|string|max:255',
             'page_title' => 'nullable|string|max:255',
             'twitter_description' => 'nullable|string|max:255',
-            'twitter_image' => 'nullable|string|max:255',
+            'twitter_image' => 'nullable|string|max:2000',
             'twitter_title' => 'nullable|string|max:255',
         ];
 
@@ -99,7 +86,7 @@ class UpdateRequest extends BaseUpdateRequest
         ) {
             // If it's in the list of tables, we want to check it's a valid id in that table
             $rules['target_id'][] = Rule::exists($real_table_name, 'id')
-                ->where(function ($query) {
+                ->where(static function ($query) {
                     $query->whereNull('deleted_at');
                 });
         }
