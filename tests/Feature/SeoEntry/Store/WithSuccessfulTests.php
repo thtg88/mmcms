@@ -80,7 +80,7 @@ trait WithSuccessfulTests
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'facebook_description' => Str::random(256),
-                'facebook_image' => Str::random(256),
+                'facebook_image' => Str::random(2001),
                 'facebook_title' => Str::random(256),
                 'meta_description' => Str::random(256),
                 'meta_robots_follow' => Str::random(256),
@@ -88,13 +88,13 @@ trait WithSuccessfulTests
                 'meta_title' => Str::random(256),
                 'page_title' => Str::random(256),
                 'twitter_description' => Str::random(256),
-                'twitter_image' => Str::random(256),
+                'twitter_image' => Str::random(2001),
                 'twitter_title' => Str::random(256),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'facebook_description' => 'The facebook description may not be greater than 255 characters.',
-                'facebook_image' => 'The facebook image may not be greater than 255 characters.',
+                'facebook_image' => 'The facebook image may not be greater than 2000 characters.',
                 'facebook_title' => 'The facebook title may not be greater than 255 characters.',
                 'meta_description' => 'The meta description may not be greater than 255 characters.',
                 'meta_robots_follow' => 'The meta robots follow may not be greater than 255 characters.',
@@ -102,7 +102,7 @@ trait WithSuccessfulTests
                 'meta_title' => 'The meta title may not be greater than 255 characters.',
                 'page_title' => 'The page title may not be greater than 255 characters.',
                 'twitter_description' => 'The twitter description may not be greater than 255 characters.',
-                'twitter_image' => 'The twitter image may not be greater than 255 characters.',
+                'twitter_image' => 'The twitter image may not be greater than 2000 characters.',
                 'twitter_title' => 'The twitter title may not be greater than 255 characters.',
             ]);
     }
