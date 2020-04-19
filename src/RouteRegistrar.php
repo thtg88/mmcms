@@ -234,7 +234,7 @@ class RouteRegistrar
         $router->group(
             [
                 'as' => 'content-types.',
-                'middleware' => ['auth:api', 'authorize.developer'],
+                'middleware' => ['auth:api'],
                 'prefix' => 'content-types',
             ],
             static function ($router) {
