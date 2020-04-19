@@ -8,7 +8,7 @@ use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Models\SeoEntry;
 
 $factory->define(SeoEntry::class, static function (Faker $faker) {
-    $table_names = $this->database_helper->getTableNames();
+    $table_names = app()->make(DatabaseHelper::class)->getTableNames();
 
     $table_names_count = count($table_names);
 
