@@ -61,7 +61,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'in:'.implode(',', $table_names),
             ],
             'facebook_description' => 'nullable|string|max:255',
-            'facebook_image' => 'nullable|string|max:255',
+            'facebook_image' => 'nullable|string|max:2000',
             'facebook_title' => 'nullable|string|max:255',
             'json_schema' => 'nullable|string|json',
             'meta_description' => 'nullable|string|max:255',
@@ -70,7 +70,7 @@ class UpdateRequest extends BaseUpdateRequest
             'meta_title' => 'nullable|string|max:255',
             'page_title' => 'nullable|string|max:255',
             'twitter_description' => 'nullable|string|max:255',
-            'twitter_image' => 'nullable|string|max:255',
+            'twitter_image' => 'nullable|string|max:2000',
             'twitter_title' => 'nullable|string|max:255',
         ];
 
