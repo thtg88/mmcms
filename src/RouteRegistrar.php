@@ -238,6 +238,10 @@ class RouteRegistrar
                 'prefix' => 'content-types',
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentTypeController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentTypeController@paginate',
                     'as' => 'paginate',
