@@ -149,6 +149,24 @@ trait WithSuccessfulTests
      * @group crud
      * @test
      */
+    public function json_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+            ->create();
+
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['json_schema' => [Str::random(8)]]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'json_schema' => 'The json schema must be a valid JSON string.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_store(): void
     {
         $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
