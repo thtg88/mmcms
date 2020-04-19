@@ -158,7 +158,9 @@ class DevTest extends TestCase implements StoreTestContract
 
         // Test random id invalid
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['content_migration_method_id' => rand(1000, 9999)]);
+            ->json('post', $this->getRoute(), [
+                'content_migration_method_id' => rand(1000, 9999),
+            ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_migration_method_id' => 'The selected content migration method id is invalid.',
