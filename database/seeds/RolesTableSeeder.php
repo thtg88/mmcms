@@ -10,37 +10,32 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        // Check if dev role exist
-        $role = Role::where('name', 'dev')->first();
-        if ($role === null) {
-            // if not - create
-            Role::create([
+        $data = [
+            [
                 'name' => 'dev',
                 'display_name' => 'Developer',
                 'priority' => 1,
-            ]);
-        }
-
-        // Check if admin role exist
-        $role = Role::where('name', 'admin')->first();
-        if ($role === null) {
-            // if not - create
-            Role::create([
+            ],
+            [
                 'name' => 'admin',
                 'display_name' => 'Administrator',
                 'priority' => 2,
-            ]);
-        }
-
-        // Check if user role exist
-        $role = Role::where('name', 'user')->first();
-        if ($role === null) {
-            // if not - create
-            Role::create([
+            ],
+            [
                 'name' => 'user',
                 'display_name' => 'User',
                 'priority' => 3,
-            ]);
+            ],
+        ];
+
+        foreach ($data as $model_data) {
+            // Check if dev role exist
+            $role = Role::where('name', $model_data['name'])->first();
+
+            // if not - create
+            if ($role === null) {
+                Role::create($model_data);
+            }
         }
     }
 }

@@ -10,70 +10,26 @@ class ContentMigrationMethodsTableSeeder extends Seeder
      */
     public function run()
     {
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'boolean')->first();
+        $data = [
+            ['name' => 'boolean', 'display_name' => 'Boolean'],
+            ['name' => 'dateTime', 'display_name' => 'Date Time'],
+            ['name' => 'decimal', 'display_name' => 'Decimal'],
+            ['name' => 'string', 'display_name' => 'String'],
+            ['name' => 'text', 'display_name' => 'Text'],
+            ['name' => 'unsignedInteger', 'display_name' => 'Unsigned Integer'],
+        ];
 
-        if ($resource === null) {
+        foreach ($data as $model_data) {
+            // Check if resource exist
+            $resource = ContentMigrationMethod::where(
+                'name',
+                $model_data['name']
+            )->first();
+
             // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'boolean',
-                'display_name' => 'Boolean',
-            ]);
-        }
-
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'dateTime')->first();
-
-        if ($resource === null) {
-            // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'dateTime',
-                'display_name' => 'Date Time',
-            ]);
-        }
-
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'decimal')->first();
-
-        if ($resource === null) {
-            // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'decimal',
-                'display_name' => 'Decimal',
-            ]);
-        }
-
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'string')->first();
-
-        if ($resource === null) {
-            // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'string',
-                'display_name' => 'String',
-            ]);
-        }
-
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'text')->first();
-
-        if ($resource === null) {
-            // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'text',
-                'display_name' => 'Text',
-            ]);
-        }
-
-        // Check if resource exist
-        $resource = ContentMigrationMethod::where('name', 'unsignedInteger')->first();
-
-        if ($resource === null) {
-            // if not - create
-            ContentMigrationMethod::create([
-                'name' => 'unsignedInteger',
-                'display_name' => 'Unsigned Integer',
-            ]);
+            if ($resource === null) {
+                ContentMigrationMethod::create($model_data);
+            }
         }
     }
 }
