@@ -17,10 +17,12 @@ use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
+use Thtg88\MmCms\Models\ContentMigrationMethod;
 use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Policies\ContentMigrationMethodPolicy;
 use Thtg88\MmCms\Policies\ImageCategoryPolicy;
 use Thtg88\MmCms\Policies\RolePolicy;
 use Thtg88\MmCms\Policies\SeoEntryPolicy;
@@ -35,6 +37,7 @@ class MmCmsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
+        ContentMigrationMethod::class => ContentMigrationMethodPolicy::class,
         ImageCategory::class => ImageCategoryPolicy::class,
         Role::class => RolePolicy::class,
         SeoEntry::class => SeoEntryPolicy::class,
