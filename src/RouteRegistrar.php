@@ -446,17 +446,14 @@ class RouteRegistrar
             static function ($router) {
                 $router->post('{id}/restore', [
                     'as' => 'restore',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@restore',
                 ]);
                 $router->get('paginate', [
                     'as' => 'paginate',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@paginate',
                 ]);
                 $router->delete('{id}', [
                     'as' => 'destroy',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@destroy',
                 ]);
                 $router->get('{id}', [
@@ -465,17 +462,14 @@ class RouteRegistrar
                 ]);
                 $router->put('{id}', [
                     'as' => 'update',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@update',
                 ]);
                 $router->get('/', [
                     'as' => 'index',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@index',
                 ]);
                 $router->post('/', [
                     'as' => 'store',
-                    'middleware' => 'authorize.administrator',
                     'uses' => 'SeoEntryController@store',
                 ]);
             }

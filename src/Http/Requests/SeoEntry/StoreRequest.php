@@ -5,10 +5,14 @@ namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
 
 class StoreRequest extends BaseStoreRequest
 {
+    /** @var string */
+    protected $model_classname = SeoEntry::class;
+
     /**
      * Create a new request instance.
      *
@@ -16,20 +20,12 @@ class StoreRequest extends BaseStoreRequest
      * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(SeoEntryRepository $repository, DatabaseHelper $database_helper)
-    {
+    public function __construct(
+        SeoEntryRepository $repository,
+        DatabaseHelper $database_helper
+    ) {
         $this->repository = $repository;
         $this->database_helper = $database_helper;
-    }
-
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
     }
 
     /**
@@ -69,11 +65,16 @@ class StoreRequest extends BaseStoreRequest
             'twitter_title' => 'nullable|string|max:255',
         ];
 
-        if (array_key_exists('target_table', $input) && in_array($input['target_table'], $table_names, true)) {
-            $all_rules['target_id'][] = Rule::exists($input['target_table'], 'id')
-                ->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                });
+        if (
+            array_key_exists('target_table', $input) &&
+            in_array($input['target_table'], $table_names, true)
+        ) {
+            $all_rules['target_id'][] = Rule::exists(
+                $input['target_table'],
+                'id'
+            )->where(static function ($query) {
+                $query->whereNull('deleted_at');
+            });
         }
 
         return $all_rules;
