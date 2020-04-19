@@ -2,8 +2,10 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentType\Update;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\ContentMigrationMethod;
+use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentType\WithModelData;
@@ -27,10 +29,12 @@ class DevTest extends TestCase implements UpdateTestContract
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'name' => [Str::random(5)],
+                'description' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name must be a string.',
+                'description' => 'The description must be a string.',
             ]);
     }
 
@@ -75,6 +79,16 @@ class DevTest extends TestCase implements UpdateTestContract
             ->assertJsonValidationErrors([
                 'name' => 'The name has already been taken.',
             ]);
+
+        // Check case-insensitive name
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'name' => strtoupper($other_model->name),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'name' => 'The name has already been taken.',
+            ]);
     }
 
     /**
@@ -90,10 +104,12 @@ class DevTest extends TestCase implements UpdateTestContract
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
+                'content_migration_method_id' => [Str::random(8)],
                 'priority' => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The content migration method id must be an integer.',
                 'priority' => 'The priority must be an integer.',
             ]);
     }
@@ -122,6 +138,44 @@ class DevTest extends TestCase implements UpdateTestContract
      * @group crud
      * @test
      */
+    public function content_migration_method_id_exists_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+        $model = factory($this->model_classname)->create();
+
+        $deleted_content_migration_method = factory(
+            ContentMigrationMethod::class
+        )->create();
+        app()->make(ContentMigrationMethodRepository::class)
+            ->destroy($deleted_content_migration_method->id);
+
+        // Test random id invalid
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'content_migration_method_id' => rand(1000, 9999),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The selected content migration method id is invalid.',
+            ]);
+
+        // Test deleted content_migration_method invalid
+        $response = $this->passportActingAs($user)
+            ->json('put', $this->getRoute([$model->id]), [
+                'content_migration_method_id' => $deleted_content_migration_method->id,
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The selected content migration method id is invalid.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_update(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')
@@ -138,14 +192,20 @@ class DevTest extends TestCase implements UpdateTestContract
                 'resource' => [
                     'id' => $model->id,
                     'created_at' => $model->created_at->toISOString(),
-                    'display_name' => $data['display_name'],
+                    'content_migration_method_id' => $data['content_migration_method_id'],
+                    'description' => $data['description'],
                     'name' => $data['name'],
+                    'priority' => $data['priority'],
                 ],
             ]);
 
         $model = $model->refresh();
 
         $this->assertTrue($model !== null);
+        $this->assertInstanceOf(
+            ContentMigrationMethod::class,
+            $model->content_migration_method
+        );
         $this->assertInstanceOf($this->model_classname, $model);
         // Check all attributes match
         foreach ($data as $key => $value) {
