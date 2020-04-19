@@ -275,6 +275,10 @@ class RouteRegistrar
                 'middleware' => ['auth:api', 'authorize.developer'],
             ],
             static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentValidationRuleAdditionalFieldTypeController@restore',
+                    'as' => 'restore',
+                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@paginate',
                     'as' => 'paginate',
