@@ -2,8 +2,10 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentType\Store;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\ContentMigrationMethod;
+use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentType\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
@@ -26,6 +28,7 @@ class DevTest extends TestCase implements StoreTestContract
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'name' => 'The name field is required.',
+                'priority' => 'The priority field is required.',
             ]);
     }
 
@@ -39,9 +42,13 @@ class DevTest extends TestCase implements StoreTestContract
         $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['name' => [Str::random(5)]]);
+            ->json('post', $this->getRoute(), [
+                'description' => [Str::random(5)],
+                'name' => [Str::random(5)],
+            ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
+                'description' => 'The description must be a string.',
                 'name' => 'The name must be a string.',
             ]);
     }
@@ -74,13 +81,24 @@ class DevTest extends TestCase implements StoreTestContract
             ->create();
         $model = factory($this->model_classname)->create();
 
-        $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
-            'name' => $model->name,
-        ]);
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors([
-            'name' => 'The name has already been taken.',
-        ]);
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'name' => $model->name,
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'name' => 'The name has already been taken.',
+            ]);
+
+        // Check unique case insensitive
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'name' => strtoupper($model->name),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'name' => 'The name has already been taken.',
+            ]);
     }
 
     /**
@@ -94,9 +112,13 @@ class DevTest extends TestCase implements StoreTestContract
             ->create();
 
         $response = $this->passportActingAs($user)
-            ->json('post', $this->getRoute(), ['priority' => [Str::random(8)]]);
+            ->json('post', $this->getRoute(), [
+                'content_migration_method_id' => [Str::random(8)],
+                'priority' => [Str::random(8)],
+            ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The content migration method id must be an integer.',
                 'priority' => 'The priority must be an integer.',
             ]);
     }
@@ -123,6 +145,41 @@ class DevTest extends TestCase implements StoreTestContract
      * @group crud
      * @test
      */
+    public function content_migration_method_id_exists_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+
+        $deleted_content_migration_method = factory(
+            ContentMigrationMethod::class
+        )->create();
+        app()->make(ContentMigrationMethodRepository::class)
+            ->destroy($deleted_content_migration_method->id);
+
+        // Test random id invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), ['content_migration_method_id' => rand(1000, 9999)]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The selected content migration method id is invalid.',
+            ]);
+
+        // Test deleted content_migration_method invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'content_migration_method_id' => $deleted_content_migration_method->id,
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_migration_method_id' => 'The selected content migration method id is invalid.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_store(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')
@@ -131,19 +188,21 @@ class DevTest extends TestCase implements StoreTestContract
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);
-        $response->assertStatus(200)
-            ->assertJson([
-                'success' => true,
-                'resource' => [
-                    'display_name' => $data['display_name'],
-                    'name' => $data['name'],
-                ],
-            ]);
+        $response->assertStatus(200);
 
         $model = app()->make($this->repository_classname)
             ->findByModelName($data['name']);
 
-        $response->assertJson(['resource' => ['id' => $model->id]]);
+        $response->assertJson([
+            'success' => true,
+            'resource' => [
+                'id' => $model->id,
+                'created_at' => $model->created_at->toISOString(),
+                'description' => $data['description'],
+                'name' => $data['name'],
+                'priority' => $data['priority'],
+            ],
+        ]);
 
         $this->assertTrue($model !== null);
         $this->assertInstanceOf($this->model_classname, $model);
