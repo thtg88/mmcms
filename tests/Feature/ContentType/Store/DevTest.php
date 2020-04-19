@@ -205,6 +205,10 @@ class DevTest extends TestCase implements StoreTestContract
         ]);
 
         $this->assertTrue($model !== null);
+        $this->assertInstanceOf(
+            ContentMigrationMethod::class,
+            $model->content_migration_method
+        );
         $this->assertInstanceOf($this->model_classname, $model);
         // Check all attributes match
         foreach ($data as $key => $value) {
