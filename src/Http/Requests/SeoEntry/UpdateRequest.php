@@ -16,8 +16,10 @@ class UpdateRequest extends BaseUpdateRequest
      * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
      * @return void
      */
-    public function __construct(SeoEntryRepository $repository, DatabaseHelper $database_helper)
-    {
+    public function __construct(
+        SeoEntryRepository $repository,
+        DatabaseHelper $database_helper
+    ) {
         $this->repository = $repository;
         $this->database_helper = $database_helper;
     }
