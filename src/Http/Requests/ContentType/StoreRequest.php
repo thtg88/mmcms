@@ -2,11 +2,11 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentType;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {

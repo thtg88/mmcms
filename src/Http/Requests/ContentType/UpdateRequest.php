@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentType;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
 {
@@ -49,7 +49,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable())
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
                     ->where(function ($query) {
                         $query->whereNull('deleted_at')
                             ->where('id', '<>', $this->route('id'));
