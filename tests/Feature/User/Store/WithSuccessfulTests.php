@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Store;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\User;
