@@ -2,11 +2,11 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentType;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
@@ -43,10 +43,12 @@ class StoreRequest extends BaseStoreRequest
             'content_migration_method_id' => [
                 'nullable',
                 'integer',
-                Rule::exists($this->repository->getModelTable(), 'id')
-                    ->where(static function ($query) {
-                        $query->whereNull('deleted_at');
-                    }),
+                Rule::exists(
+                    $this->content_migration_methods->getModelTable(),
+                    'id'
+                )->where(static function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
             ],
             'name' => [
                 'required',
