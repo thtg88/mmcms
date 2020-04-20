@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
 {
@@ -31,10 +31,11 @@ class UpdateRequest extends BaseUpdateRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'base_route_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'description' => [
                 'nullable',
@@ -44,28 +45,31 @@ class UpdateRequest extends BaseUpdateRequest
                 'nullable',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'model_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
             'table_name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'table_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
+                Rule::uniqueCaseInsensitive($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
         ];
 

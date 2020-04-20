@@ -2,11 +2,11 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentField;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
@@ -42,7 +42,7 @@ class StoreRequest extends BaseStoreRequest
             'content_model_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->repository->getModelTable(), 'id')
+                Rule::exists($this->content_models->getModelTable(), 'id')
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),
@@ -50,7 +50,7 @@ class StoreRequest extends BaseStoreRequest
             'content_type_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->repository->getModelTable(), 'id')
+                Rule::exists($this->content_types->getModelTable(), 'id')
                     ->where(static function ($query) {
                         $query->whereNull('deleted_at');
                     }),
@@ -81,17 +81,18 @@ class StoreRequest extends BaseStoreRequest
             is_numeric($input['content_model_id'])
         ) {
             // Add unique-ness of fields within model
-            $input['display_name'] = Rule::unique(
+            $input['display_name'] = Rule::uniqueCaseInsensitive(
                 $this->repository->getModelTable()
             )->where(static function ($query) {
                 $query->whereNull('deleted_at')
                     ->where('content_model_id', $input['content_model_id']);
             });
-            $input['name'] = Rule::unique($this->repository->getModelTable())
-                ->where(static function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('content_model_id', $input['content_model_id']);
-                });
+            $input['name'] = Rule::uniqueCaseInsensitive(
+                $this->repository->getModelTable()
+            )->where(static function ($query) {
+                $query->whereNull('deleted_at')
+                    ->where('content_model_id', $input['content_model_id']);
+            });
         }
 
         return $all_rules;

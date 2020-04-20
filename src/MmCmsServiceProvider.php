@@ -18,12 +18,14 @@ use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
+use Thtg88\MmCms\Models\ContentModel;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Policies\ContentMigrationMethodPolicy;
+use Thtg88\MmCms\Policies\ContentModelPolicy;
 use Thtg88\MmCms\Policies\ContentTypePolicy;
 use Thtg88\MmCms\Policies\ImageCategoryPolicy;
 use Thtg88\MmCms\Policies\RolePolicy;
@@ -40,6 +42,7 @@ class MmCmsServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ContentMigrationMethod::class => ContentMigrationMethodPolicy::class,
+        ContentModel::class => ContentModelPolicy::class,
         ContentType::class => ContentTypePolicy::class,
         ImageCategory::class => ImageCategoryPolicy::class,
         Role::class => RolePolicy::class,
