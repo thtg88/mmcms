@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\ContentModel;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Rules\Rule;
 
