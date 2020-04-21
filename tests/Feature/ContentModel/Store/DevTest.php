@@ -2,8 +2,10 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentModel\Store;
 
-use Thtg88\MmCms\Models\User;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\ContentModel\WithModelData;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
@@ -11,6 +13,13 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 class DevTest extends TestCase implements StoreTestContract
 {
     use WithModelData, WithUrl;
+
+    /**
+     * The files expected to have been created in the successful tests.
+     *
+     * @var array
+     */
+    protected $expected_files = [];
 
     /**
      * @return void
@@ -113,6 +122,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function successful_store(): void
     {
+        $this->withoutExceptionHandling();
         $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $data = factory($this->model_classname)->raw();
@@ -143,6 +153,50 @@ class DevTest extends TestCase implements StoreTestContract
             $this->assertEquals($data[$key], $model->$key);
         }
 
-        // TODO: test files have been created
+        // check new table exists
+        $this->assertTrue(Schema::hasTable($data['table_name']));
+
+        $this->expected_files = [
+            database_path(
+                'migrations'.DIRECTORY_SEPARATOR.now()->format('Y_m_d_His').
+                '_create_'.$data['table_name'].'_table.php'
+            ),
+            app_path($data['model_name'].'.php'),
+            app_path(
+                'Repositories'.DIRECTORY_SEPARATOR.$data['model_name'].
+                'Repository.php'
+            ),
+            app_path(
+                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
+                $data['model_name'].DIRECTORY_SEPARATOR.'DestroyRequest.php'
+            ),
+            app_path(
+                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
+                $data['model_name'].DIRECTORY_SEPARATOR.'StoreRequest.php'
+            ),
+            app_path(
+                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
+                $data['model_name'].DIRECTORY_SEPARATOR.'UpdateRequest.php'
+            ),
+            app_path(
+                'Http'.DIRECTORY_SEPARATOR.'Controllers'.
+                DIRECTORY_SEPARATOR.$data['model_name'].'Controller.php'
+            ),
+        ];
+
+        // check new files have been created
+        foreach ($this->expected_files as $_file) {
+            $this->assertTrue(file_exists($_file));
+        }
+    }
+
+    protected function tearDown(): void
+    {
+        // Remove created files
+        if (count($this->expected_files) > 0) {
+            app()->make(Filesystem::class)->delete($this->expected_files);
+        }
+
+        parent::tearDown();
     }
 }

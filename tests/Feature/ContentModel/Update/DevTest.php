@@ -131,7 +131,5 @@ class DevTest extends TestCase implements UpdateTestContract
         foreach ($data as $key => $value) {
             $this->assertEquals($data[$key], $model->$key);
         }
-
-        // TODO: test files have been created
     }
 }
