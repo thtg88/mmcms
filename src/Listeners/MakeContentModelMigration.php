@@ -51,7 +51,8 @@ class MakeContentModelMigration
             ]);
 
             // Then we get the last migration so we can insert our custom fields
-            $migrations = $this->filesystem->files(Container::getInstance()->databasePath('migrations'));
+            $migrations = $this->filesystem
+                ->files(Container::getInstance()->databasePath('migrations'));
 
             if (count($migrations) > 0) {
                 $last_migration = $migrations[count($migrations) - 1].'';
@@ -63,11 +64,18 @@ class MakeContentModelMigration
                         $replace_content = '';
                         $replace_content .= "\$table->timestamp('deleted_at')->nullable();\n";
                         $replace_content .= "            \$table->timestamp('created_at')->nullable();\n";
-                        $replace_content .= "            \$table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));";
+                        $replace_content .= "            \$table->timestamp('updated_at')->nullable();";
 
-                        $last_migration_content = str_replace('$table->timestamps();', $replace_content, $last_migration_content);
+                        $last_migration_content = str_replace(
+                            '$table->timestamps();',
+                            $replace_content,
+                            $last_migration_content
+                        );
 
-                        file_put_contents($last_migration, $last_migration_content);
+                        file_put_contents(
+                            $last_migration,
+                            $last_migration_content
+                        );
                     }
                 }
             }

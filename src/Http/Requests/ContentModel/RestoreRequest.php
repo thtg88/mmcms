@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentModel;
 
-use Thtg88\MmCms\Http\Requests\DestroyRequest as BaseDestroyRequest;
+use Thtg88\MmCms\Http\Requests\RestoreRequest as BaseRestoreRequest;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 
-class DestroyRequest extends BaseDestroyRequest
+class RestoreRequest extends BaseRestoreRequest
 {
     /**
      * Create a new request instance.

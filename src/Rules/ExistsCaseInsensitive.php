@@ -4,6 +4,7 @@ namespace Thtg88\MmCms\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Illuminate\Validation\Rules\Exists;
 
@@ -94,7 +95,7 @@ class ExistsCaseInsensitive extends Exists implements Rule
     public function message(): string
     {
         return __('mmcms::validation.exists_case_insensitive', [
-             'attribute' => $this->attribute,
+             'attribute' => str_replace('_', ' ', Str::snake($this->attribute)),
          ]);
     }
 
