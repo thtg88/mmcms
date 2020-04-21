@@ -8,13 +8,6 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
-use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
-use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
-use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
-use Thtg88\MmCms\Console\Commands\CreateDatabaseCommand;
-use Thtg88\MmCms\Console\Commands\InstallCommand;
-use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
-use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
 use Thtg88\MmCms\MmCms as MmCmsFacade;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
@@ -49,6 +42,7 @@ class MmCmsServiceProvider extends ServiceProvider
         SeoEntry::class => SeoEntryPolicy::class,
         User::class => UserPolicy::class,
     ];
+    use Concerns\WithCommands,
 
     /**
      * Bootstrap the application services.
@@ -104,26 +98,13 @@ class MmCmsServiceProvider extends ServiceProvider
         //     __DIR__.'/../reousrces/views' => resource_path('views/vendor/mmcms'),
         // ], 'views');
 
-        // Commands
-        $this->commands([
-            CreateDatabaseCommand::class,
-            InstallCommand::class,
-            PublishModuleCommand::class,
-            RepositoryMakeCommand::class,
-            // The following need to be booted
-            // to run the InstallCommand properly,
-            // as the InstallCommand runs the passport install command
-            PassportClientCommand::class,
-            PassportInstallCommand::class,
-            PassportKeysCommand::class,
-        ]);
-
         // Assets
         // $this->publishes([
         //     __DIR__.'/../reousrces/assets' => public_path('vendor/mmcms'),
         // ], 'assets');
 
         $this->registerPolicies();
+        $this->bootCommands();
     }
 
     /**
