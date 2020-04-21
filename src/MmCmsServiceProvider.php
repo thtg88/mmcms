@@ -14,6 +14,7 @@ use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 class MmCmsServiceProvider extends ServiceProvider
 {
     use Concerns\WithCommands,
+        Concerns\WithProvidedEvents,
         Concerns\WithProvidedPolicies;
 
     /**
@@ -76,6 +77,7 @@ class MmCmsServiceProvider extends ServiceProvider
         // ], 'assets');
 
         $this->bootCommands();
+        $this->bootEvents();
         $this->bootPolicies();
     }
 
