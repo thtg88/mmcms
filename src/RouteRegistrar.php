@@ -98,7 +98,7 @@ class RouteRegistrar
         $router->group(
             [
                 'as' => 'content-fields.',
-                'middleware' => ['auth:api', 'authorize.developer'],
+                'middleware' => ['auth:api'],
                 'prefix' => 'content-fields',
             ],
             static function ($router) {
