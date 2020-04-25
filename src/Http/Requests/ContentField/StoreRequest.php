@@ -77,7 +77,7 @@ class StoreRequest extends BaseStoreRequest
 
         if (
             array_key_exists('content_model_id', $input) &&
-            !empty($input['content_model_id']) &&
+            ! empty($input['content_model_id']) &&
             is_numeric($input['content_model_id'])
         ) {
             // Add unique-ness of fields within model
