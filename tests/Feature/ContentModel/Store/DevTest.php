@@ -6,20 +6,14 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Tests\Feature\Concerns\WithExpectedFiles;
 use Thtg88\MmCms\Tests\Feature\ContentModel\WithModelData;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl;
-
-    /**
-     * The files expected to have been created in the successful tests.
-     *
-     * @var array
-     */
-    protected $expected_files = [];
+    use WithModelData, WithUrl, WithExpectedFiles;
 
     /**
      * @return void
@@ -182,20 +176,6 @@ class DevTest extends TestCase implements StoreTestContract
                 DIRECTORY_SEPARATOR.$data['model_name'].'Controller.php'
             ),
         ];
-
-        // check new files have been created
-        foreach ($this->expected_files as $_file) {
-            $this->assertTrue(file_exists($_file));
-        }
-    }
-
-    protected function tearDown(): void
-    {
-        // Remove created files
-        if (count($this->expected_files) > 0) {
-            app()->make(Filesystem::class)->delete($this->expected_files);
-        }
-
-        parent::tearDown();
+        $this->assertExpectedFilesExist();
     }
 }
