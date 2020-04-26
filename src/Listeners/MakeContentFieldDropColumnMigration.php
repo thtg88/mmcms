@@ -2,41 +2,24 @@
 
 namespace Thtg88\MmCms\Listeners;
 
-use Illuminate\Container\Container;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
 
 class MakeContentFieldDropColumnMigration
 {
-    /**
-     * The file system implementation.
-     *
-     * @var \Illuminate\Filesystem\Filesystem
-     */
-    protected $filesystem;
-
-    /**
-     * Create the event listener.
-     *
-     * @param \Illuminate\Filesystem\Filesystem
-     * @return void
-     */
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-    }
+    use Concerns\WithExistingMigrationCheck;
 
     /**
      * Handle the event.
      *
-     * @param ContentFieldDestroyed $event
+     * @param \Thtg88\MmCms\Events\ContentFieldDestroyed $event
      * @return void
      */
     public function handle(ContentFieldDestroyed $event)
     {
         $table_name = $event->content_field->content_model->table_name;
-        $migration_name = 'remove_'.$event->content_field->name.'_column_from_'.$table_name.'_table';
+        $migration_name = 'remove_'.$event->content_field->name.'_column_from_'.
+            $table_name.'_table';
 
         // If migration N/A we make it
         Artisan::call('make:migration', [
@@ -44,21 +27,19 @@ class MakeContentFieldDropColumnMigration
             '--table' => $table_name,
         ]);
 
-        // Then we get the last migration so we can insert our custom fields
-        $migrations = $this->filesystem
-            ->files(Container::getInstance()->databasePath('migrations'));
+        $migration_paths = $this->getMigrationPaths($migration_name);
 
-        if (count($migrations) === 0) {
+        if (
+            $migration_paths['migration_path'] !== $migration_paths['new_migration_path'] &&
+            rename(
+                $migration_paths['migration_path'],
+                $migration_paths['new_migration_path']
+            ) === false
+        ) {
             return;
         }
 
-        // We append te value with an empty string
-        // so the file gets cast to one
-        $last_migration = $migrations[count($migrations) - 1].'';
-
-        if (strpos($last_migration, $migration_name) === false) {
-            return;
-        }
+        $last_migration = $migration_paths['new_migration_path'];
 
         $last_migration_content = file_get_contents($last_migration);
 
