@@ -74,7 +74,7 @@ class MakeContentFieldMigration
         $replace_content = '';
         $replace_content .= "public function up()".PHP_EOL;
         $replace_content .= "    {".PHP_EOL;
-        $replace_content .= "         Schema::table('".$table_name."', function (Blueprint \$table) {".PHP_EOL;
+        $replace_content .= "        Schema::table('".$table_name."', function (Blueprint \$table) {".PHP_EOL;
         $replace_content .= "            \$table->".$event->content_field->content_type->content_migration_method->name;
         $replace_content .= "('".$event->content_field->name."')->nullable();";
 
@@ -93,7 +93,7 @@ class MakeContentFieldMigration
         $replace_content = '';
         $replace_content .= "public function down()".PHP_EOL;
         $replace_content .= "    {".PHP_EOL;
-        $replace_content .= "         Schema::table('".$table_name."', function (Blueprint \$table) {".PHP_EOL;
+        $replace_content .= "        Schema::table('".$table_name."', function (Blueprint \$table) {".PHP_EOL;
         $replace_content .= "            \$table->dropColumn('".$event->content_field->name."');";
 
         $last_migration_content = str_replace(
