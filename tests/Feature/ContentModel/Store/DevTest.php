@@ -122,7 +122,6 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function successful_store(): void
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->states('email_verified', 'dev')
             ->create();
         $data = factory($this->model_classname)->raw();
