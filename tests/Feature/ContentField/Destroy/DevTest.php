@@ -54,40 +54,6 @@ class DevTest extends TestCase implements DestroyTestContract
 
         $this->expected_files = [
             database_path(
-                'migrations'.DIRECTORY_SEPARATOR.$model_migration_time.
-                '_create_'.$model->content_model->table_name.'_table.php'
-            ),
-            app_path($model->content_model->model_name.'.php'),
-            app_path(
-                'Repositories'.DIRECTORY_SEPARATOR.
-                $model->content_model->model_name.'Repository.php'
-            ),
-            app_path(
-                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
-                $model->content_model->model_name.DIRECTORY_SEPARATOR.
-                'DestroyRequest.php'
-            ),
-            app_path(
-                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
-                $model->content_model->model_name.DIRECTORY_SEPARATOR.
-                'StoreRequest.php'
-            ),
-            app_path(
-                'Http'.DIRECTORY_SEPARATOR.'Requests'.DIRECTORY_SEPARATOR.
-                $model->content_model->model_name.DIRECTORY_SEPARATOR.
-                'UpdateRequest.php'
-            ),
-            app_path(
-                'Http'.DIRECTORY_SEPARATOR.'Controllers'.
-                DIRECTORY_SEPARATOR.$model->content_model->model_name.
-                'Controller.php'
-            ),
-            database_path(
-                'migrations'.DIRECTORY_SEPARATOR.$add_column_migration_time.
-                '_add_'.$model->name.'_column_to_'.
-                $model->content_model->table_name.'_table.php'
-            ),
-            database_path(
                 'migrations'.DIRECTORY_SEPARATOR.$remove_column_migration_time.
                 '_remove_'.$model->name.'_column_from_'.
                 $model->content_model->table_name.'_table.php'
