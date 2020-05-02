@@ -110,11 +110,6 @@ class RouteRegistrar
                     'uses' => 'ContentFieldController@show',
                     'as' => 'show',
                 ]);
-                // TODO: missing Request class
-                $router->put('{id}', [
-                    'uses' => 'ContentFieldController@update',
-                    'as' => 'update',
-                ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentFieldController@destroy',
                     'as' => 'destroy',
