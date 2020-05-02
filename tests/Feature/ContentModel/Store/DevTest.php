@@ -151,8 +151,9 @@ class DevTest extends TestCase implements StoreTestContract
 
         $this->expected_files = [
             database_path(
-                'migrations'.DIRECTORY_SEPARATOR.now()->format('Y_m_d_His').
-                '_create_'.$data['table_name'].'_table.php'
+                'migrations'.DIRECTORY_SEPARATOR.
+                $this->getLatestMigratingMigrationTimestamp().'_create_'.
+                $data['table_name'].'_table.php'
             ),
             app_path($data['model_name'].'.php'),
             app_path(
