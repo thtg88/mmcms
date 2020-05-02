@@ -5,7 +5,6 @@ namespace Thtg88\MmCms\Tests\Feature\ContentField\Destroy;
 use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Container\Container;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Artisan;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Concerns\Destroy\ActingAsDevTest;
@@ -60,28 +59,5 @@ class DevTest extends TestCase implements DestroyTestContract
             ),
         ];
         $this->assertExpectedFilesExist();
-    }
-
-    protected function getConsoleOutputLines(): array
-    {
-        return explode(DIRECTORY_SEPARATOR, Artisan::output());
-    }
-
-    protected function getMigratingMigration(): string
-    {
-        return str_replace(
-            'Migrating: ',
-            '',
-            $this->getConsoleOutputLines()[0]
-        );
-    }
-
-    protected function getLatestMigratingMigrationTimestamp(): string
-    {
-        return implode('_', array_slice(
-            explode('_', $this->getMigratingMigration()),
-            0,
-            4
-        ));
     }
 }
