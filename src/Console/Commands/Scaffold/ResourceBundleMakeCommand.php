@@ -11,7 +11,7 @@ class ResourceBundleMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:resource-bundle {model_name}';
+    protected $signature = 'mmcms:make:resource-bundle {model_name}';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class ResourceBundleMakeCommand extends Command
         $model_name = $this->argument('model_name');
 
         $this->call('make:model', ['name' => 'Models\\'.$model_name]);
-        $this->call('make:repository', ['name' => $model_name.'Repository']);
-        $this->call('make:http-bundle', ['model_name' => $model_name]);
+        $this->call('mmcms:make:repository', ['name' => $model_name.'Repository']);
+        $this->call('mmcms:make:http-bundle', ['model_name' => $model_name]);
     }
 }

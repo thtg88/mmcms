@@ -13,7 +13,7 @@ class ResourceRequestMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'make:resource-request
+    protected $signature = 'mmcms:make:request
                             {name : The model name the class is targeting}
                             {--method= : The method name (e.g. store, update, destroy, etc.)}';
 

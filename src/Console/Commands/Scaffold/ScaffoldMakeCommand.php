@@ -12,7 +12,7 @@ class ScaffoldMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:scaffold {model_name}';
+    protected $signature = 'mmcms:make:scaffold {model_name}';
 
     /**
      * The console command description.
@@ -48,8 +48,10 @@ class ScaffoldMakeCommand extends Command
         $this->call('make:seeder', [
             'name' => Str::plural($model_name).'TableSeeder',
         ]);
-        $this->call('make:repository', ['name' => $model_name.'Repository']);
-        $this->call('make:http-bundle', ['model_name' => $model_name]);
+        $this->call('mmcms:make:repository', [
+            'name' => $model_name.'Repository',
+        ]);
+        $this->call('mmcms:make:http-bundle', ['model_name' => $model_name]);
         $this->call('make:factory', ['name' => $model_name.'Factory']);
         $this->call('make:test', ['name' => $model_name.'\\CreateTest']);
         $this->call('make:test', ['name' => $model_name.'\\DestroyTest']);
