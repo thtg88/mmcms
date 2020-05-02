@@ -15,7 +15,7 @@ class AddIsMandatoryColumnToContentFieldsTable extends Migration
     {
         if (Schema::hasColumn('content_fields', 'is_mandatory') === false) {
             Schema::table('content_fields', function (Blueprint $table) {
-                $table->timestamp('is_mandatory')->default(false)->before('created_at');
+                $table->boolean('is_mandatory')->default(false)->before('created_at');
             });
         }
     }
