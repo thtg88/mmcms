@@ -31,6 +31,7 @@ class ContentField extends Model
         'created_at',
         'display_name',
         'helper_text',
+        'is_mandatory',
         'is_resource_name',
         'name',
         'updated_at',
@@ -49,6 +50,7 @@ class ContentField extends Model
         'display_name',
         'helper_text',
         'id',
+        'is_mandatory',
         'is_resource_name',
         'name',
     ];

@@ -68,6 +68,10 @@ class StoreRequest extends BaseStoreRequest
                 'required',
                 'boolean',
             ],
+            'is_mandatory' => [
+                'required',
+                'boolean',
+            ],
             'name' => [
                 'required',
                 'string',

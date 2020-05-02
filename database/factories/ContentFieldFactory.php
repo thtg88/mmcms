@@ -26,6 +26,7 @@ $factory->define(ContentField::class, static function (Faker $faker) {
             return ucwords($data['name']);
         },
         'helper_text' => $faker->sentence,
+        'is_mandatory' => rand(0, 1) === 1,
         'is_resource_name' => rand(0, 1) === 1,
         'name' => $faker->word,
     ];
