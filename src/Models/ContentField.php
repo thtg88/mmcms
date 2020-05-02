@@ -56,6 +56,21 @@ class ContentField extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'content_model_id' => 'integer',
+        'content_type_id' => 'integer',
+        'is_mandatory' => 'boolean',
+        'is_resource_name' => 'boolean',
+        'created_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
+    /**
      * The relations to eager load on every query.
      *
      * @var array
