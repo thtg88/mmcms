@@ -8,14 +8,14 @@ use Illuminate\Support\Carbon;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Concerns\Destroy\ActingAsDevTest;
-use Thtg88\MmCms\Tests\Feature\Concerns\WithExpectedFiles;
+use Thtg88\MmCms\Tests\Feature\Concerns\WithGeneratedFiles;
 use Thtg88\MmCms\Tests\Feature\Contracts\DestroyTest as DestroyTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentField\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements DestroyTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest, WithExpectedFiles;
+    use WithModelData, WithUrl, ActingAsDevTest, WithGeneratedFiles;
 
     /**
      * @return void
@@ -51,13 +51,13 @@ class DevTest extends TestCase implements DestroyTestContract
                 ->find($model->id)
         );
 
-        $this->expected_files = [
+        $this->generated_files = [
             database_path(
                 'migrations'.DIRECTORY_SEPARATOR.$remove_column_migration_time.
                 '_remove_'.$model->name.'_column_from_'.
                 $model->content_model->table_name.'_table.php'
             ),
         ];
-        $this->assertExpectedFilesExist();
+        $this->assertGeneratedFilesExist();
     }
 }

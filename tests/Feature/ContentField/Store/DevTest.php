@@ -8,14 +8,14 @@ use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
-use Thtg88\MmCms\Tests\Feature\Concerns\WithExpectedFiles;
+use Thtg88\MmCms\Tests\Feature\Concerns\WithGeneratedFiles;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentField\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl, WithExpectedFiles;
+    use WithModelData, WithUrl, WithGeneratedFiles;
 
     /**
      * @return void
@@ -277,7 +277,7 @@ class DevTest extends TestCase implements StoreTestContract
             $this->assertEquals($data[$key], $model->$key);
         }
 
-        $this->expected_files = [
+        $this->generated_files = [
             database_path(
                 'migrations'.DIRECTORY_SEPARATOR.
                 $this->getLatestMigratingMigrationTimestamp().'_add_'.
@@ -285,6 +285,6 @@ class DevTest extends TestCase implements StoreTestContract
                 '_table.php'
             ),
         ];
-        $this->assertExpectedFilesExist();
+        $this->assertGeneratedFilesExist();
     }
 }

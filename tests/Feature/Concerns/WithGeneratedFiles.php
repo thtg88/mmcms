@@ -5,18 +5,18 @@ namespace Thtg88\MmCms\Tests\Feature\Concerns;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
 
-trait WithExpectedFiles
+trait WithGeneratedFiles
 {
     /**
      * The files expected to have been created in the successful tests.
      *
      * @var array
      */
-    protected $expected_files = [];
+    protected $generated_files = [];
 
-    public function assertExpectedFilesExist(): void
+    public function assertGeneratedFilesExist(): void
     {
-        foreach ($this->expected_files as $_file) {
+        foreach ($this->generated_files as $_file) {
             $this->assertTrue(file_exists($_file));
         }
     }
@@ -26,16 +26,16 @@ trait WithExpectedFiles
      *
      * @return void
      */
-    protected function deleteExpectedFiles(): void
+    protected function deleteGeneratedFiles(): void
     {
-        if (count($this->expected_files) > 0) {
-            app()->make(Filesystem::class)->delete($this->expected_files);
+        if (count($this->generated_files) > 0) {
+            app()->make(Filesystem::class)->delete($this->generated_files);
         }
     }
 
     protected function tearDown(): void
     {
-        $this->deleteExpectedFiles();
+        $this->deleteGeneratedFiles();
 
         parent::tearDown();
     }

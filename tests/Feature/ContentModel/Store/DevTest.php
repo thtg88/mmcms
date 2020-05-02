@@ -6,14 +6,14 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\User;
-use Thtg88\MmCms\Tests\Feature\Concerns\WithExpectedFiles;
+use Thtg88\MmCms\Tests\Feature\Concerns\WithGeneratedFiles;
 use Thtg88\MmCms\Tests\Feature\ContentModel\WithModelData;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl, WithExpectedFiles;
+    use WithModelData, WithUrl, WithGeneratedFiles;
 
     /**
      * @return void
@@ -149,7 +149,7 @@ class DevTest extends TestCase implements StoreTestContract
         // check new table exists
         $this->assertTrue(Schema::hasTable($data['table_name']));
 
-        $this->expected_files = [
+        $this->generated_files = [
             database_path(
                 'migrations'.DIRECTORY_SEPARATOR.
                 $this->getLatestMigratingMigrationTimestamp().'_create_'.
@@ -177,6 +177,6 @@ class DevTest extends TestCase implements StoreTestContract
                 DIRECTORY_SEPARATOR.$data['model_name'].'Controller.php'
             ),
         ];
-        $this->assertExpectedFilesExist();
+        $this->assertGeneratedFilesExist();
     }
 }
