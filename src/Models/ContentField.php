@@ -31,6 +31,7 @@ class ContentField extends Model
         'created_at',
         'display_name',
         'helper_text',
+        'is_mandatory',
         'is_resource_name',
         'name',
         'updated_at',
@@ -49,8 +50,24 @@ class ContentField extends Model
         'display_name',
         'helper_text',
         'id',
+        'is_mandatory',
         'is_resource_name',
         'name',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'content_model_id' => 'integer',
+        'content_type_id' => 'integer',
+        'is_mandatory' => 'boolean',
+        'is_resource_name' => 'boolean',
+        'created_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

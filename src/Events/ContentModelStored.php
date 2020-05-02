@@ -9,12 +9,17 @@ class ContentModelStored
 {
     use Dispatchable;
 
+    /**
+     * The content model model instance.
+     *
+     * @var \Thtg88\MmCms\Models\ContentModel
+     */
     public $content_model;
 
     /**
      * Create a new event instance.
      *
-     * @param ContentModel $content_model
+     * @param \Thtg88\MmCms\Models\ContentModel $content_model
      * @return void
      */
     public function __construct(ContentModel $content_model)

@@ -11,14 +11,14 @@ class Model extends BaseModel
     use SoftDeletes;
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = [
-        'created_at',
-        'deleted_at',
-        'updated_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

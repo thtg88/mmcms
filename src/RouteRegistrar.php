@@ -98,14 +98,10 @@ class RouteRegistrar
         $router->group(
             [
                 'as' => 'content-fields.',
-                'middleware' => ['auth:api', 'authorize.developer'],
+                'middleware' => ['auth:api'],
                 'prefix' => 'content-fields',
             ],
             static function ($router) {
-                $router->post('{id}/restore', [
-                    'uses' => 'ContentFieldController@restore',
-                    'as' => 'restore',
-                ]);
                 $router->get('paginate', [
                     'uses' => 'ContentFieldController@paginate',
                     'as' => 'paginate',
@@ -122,10 +118,6 @@ class RouteRegistrar
                 $router->delete('{id}', [
                     'uses' => 'ContentFieldController@destroy',
                     'as' => 'destroy',
-                ]);
-                $router->get('/', [
-                    'uses' => 'ContentFieldController@index',
-                    'as' => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentFieldController@store',
