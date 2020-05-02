@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Http\Requests\ContentField;
 
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\ContentField;
 use Thtg88\MmCms\Repositories\ContentFieldRepository;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
@@ -10,6 +11,9 @@ use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
+    /** @var string */
+    protected $model_classname = ContentField::class;
+
     /**
      * Create a new request instance.
      *
@@ -35,9 +39,6 @@ class StoreRequest extends BaseStoreRequest
      */
     public function rules()
     {
-        // Get input
-        $input = $this->all();
-
         $all_rules = [
             'content_model_id' => [
                 'required',
@@ -80,22 +81,22 @@ class StoreRequest extends BaseStoreRequest
         ];
 
         if (
-            array_key_exists('content_model_id', $input) &&
-            ! empty($input['content_model_id']) &&
-            is_numeric($input['content_model_id'])
+            $this->content_model_id !== null &&
+            ! empty($this->content_model_id) &&
+            is_numeric($this->content_model_id)
         ) {
             // Add unique-ness of fields within model
-            $input['display_name'] = Rule::uniqueCaseInsensitive(
+            $all_rules['display_name'] = Rule::uniqueCaseInsensitive(
                 $this->repository->getModelTable()
-            )->where(static function ($query) {
+            )->where(function ($query) {
                 $query->whereNull('deleted_at')
-                    ->where('content_model_id', $input['content_model_id']);
+                    ->where('content_model_id', $this->content_model_id);
             });
-            $input['name'] = Rule::uniqueCaseInsensitive(
+            $all_rules['name'] = Rule::uniqueCaseInsensitive(
                 $this->repository->getModelTable()
-            )->where(static function ($query) {
+            )->where(function ($query) {
                 $query->whereNull('deleted_at')
-                    ->where('content_model_id', $input['content_model_id']);
+                    ->where('content_model_id', $this->content_model_id);
             });
         }
 
