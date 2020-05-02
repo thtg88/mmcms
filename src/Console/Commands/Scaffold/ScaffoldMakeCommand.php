@@ -53,11 +53,28 @@ class ScaffoldMakeCommand extends Command
         ]);
         $this->call('mmcms:make:http-bundle', ['model_name' => $model_name]);
         $this->call('make:factory', ['name' => $model_name.'Factory']);
-        $this->call('make:test', ['name' => $model_name.'\\CreateTest']);
-        $this->call('make:test', ['name' => $model_name.'\\DestroyTest']);
-        $this->call('make:test', ['name' => $model_name.'\\EditTest']);
-        $this->call('make:test', ['name' => $model_name.'\\IndexTest']);
-        $this->call('make:test', ['name' => $model_name.'\\StoreTest']);
-        $this->call('make:test', ['name' => $model_name.'\\UpdateTest']);
+
+        $test_methods = [
+            'Create',
+            'Destroy',
+            'Edit',
+            'Index',
+            'Paginate',
+            'Store',
+            'Update',
+        ];
+        $user_roles = [
+            'Admin',
+            'Dev',
+            'User',
+        ];
+        foreach ($test_methods as $test_method) {
+            foreach ($user_roles as $user_role) {
+                $this->call('make:test', [
+                    'name' => $model_name.'\\'.$test_method.'\\'.$user_role.
+                        'Test',
+                ]);
+            }
+        }
     }
 }
