@@ -178,15 +178,23 @@ class AuthController extends Controller
                 'remember' => $request->get('remember'),
                 'scope' => '',
             ],
-            // This allows loopback on custom localhost domains
-            'headers' => [
-                'Host' => $request->server('SERVER_NAME'),
-            ],
         ];
+        // This allows loopback on custom localhost domains
+        if (
+            Config::get('app.env') === 'local' ||
+            Config::get('app.env') === 'testing'
+        ) {
+            $oauth_data['headers'] = [
+                'Host' => $request->server('SERVER_NAME'),
+            ];
+        }
 
         try {
             // Request OAuth token
-            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post(
+                '/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
