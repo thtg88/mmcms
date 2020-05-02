@@ -15,7 +15,7 @@ class CreateDatabaseCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db:create {name}';
+    protected $signature = 'mmcms:db:create {name}';
 
     /**
      * The console command description.

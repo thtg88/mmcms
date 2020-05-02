@@ -13,7 +13,7 @@ class DropDatabaseCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'db:drop';
+    protected $signature = 'mmcms:db:drop';
 
     /**
      * The console command description.

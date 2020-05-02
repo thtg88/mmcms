@@ -12,7 +12,7 @@ class RepositoryMakeCommand extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'make:repository {name : The name of the class}';
+    protected $signature = 'mmcms:make:repository {name : The name of the class}';
 
     /**
      * The console command description.

@@ -29,7 +29,7 @@ class MakeContentModelUpdateRequest
             return;
         }
 
-        Artisan::call('make:resource-request', [
+        Artisan::call('mmcms:make:request', [
             'name' => $model_name,
             '--method' => 'update',
         ]);

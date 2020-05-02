@@ -11,7 +11,7 @@ class HttpRequestsMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:http-requests {model_name}';
+    protected $signature = 'mmcms:make:http-requests {model_name}';
 
     /**
      * The console command description.
@@ -50,7 +50,7 @@ class HttpRequestsMakeCommand extends Command
         ];
 
         foreach ($methods as $method) {
-            $this->call('make:resource-request', [
+            $this->call('mmcms:make:request', [
                 'name' => $model_name,
                 '--method' => $method,
             ]);

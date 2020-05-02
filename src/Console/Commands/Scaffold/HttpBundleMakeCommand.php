@@ -11,7 +11,7 @@ class HttpBundleMakeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:http-bundle {model_name}';
+    protected $signature = 'mmcms:make:http-bundle {model_name}';
 
     /**
      * The console command description.
@@ -40,8 +40,8 @@ class HttpBundleMakeCommand extends Command
         // Get model name from arguments
         $model_name = $this->argument('model_name');
 
-        $this->call('make:service', ['name' => $model_name.'Service']);
-        $this->call('make:http-requests', ['model_name' => $model_name]);
+        $this->call('mmcms:make:service', ['name' => $model_name.'Service']);
+        $this->call('mmcms:make:http-requests', ['model_name' => $model_name]);
         $this->call('make:controller', [
             'name' => $model_name.'Controller',
             '--resource' => true,
