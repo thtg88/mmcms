@@ -13,6 +13,13 @@ class ShowRequest extends Request implements ShowRequestInterface
      */
     public function authorize()
     {
+        if (
+            $this->get('recovery') == 1 &&
+            $this->authorizeResourceDeletedExist() === true
+        ) {
+            return $this->user()->can('view', $this->resource);
+        }
+
         if ($this->authorizeResourceExist() === false) {
             return false;
         }

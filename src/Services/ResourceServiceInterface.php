@@ -8,6 +8,7 @@ use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
 
@@ -73,10 +74,11 @@ interface ResourceServiceInterface
     /**
      * Returns a model from a given id.
      *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
      * @param int $id The id of the instance.
      * @return \Illuminate\Database\Eloquent\Model
      */
-    public function show($id);
+    public function show(ShowRequestInterface $request, $id);
 
     /**
      * Create a new model instance in storage from the given data array.

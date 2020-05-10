@@ -53,7 +53,7 @@ class Request extends FormRequest
     protected function authorizeOwner()
     {
         // Get resource
-        $resource = $this->repository->find($this->route('id'));
+        $resource = $this->findResource();
 
         // Needs to be an existing resource
         if ($resource === null) {
@@ -71,10 +71,7 @@ class Request extends FormRequest
      */
     public function authorizeResourceExist()
     {
-        // Find resource
-        $resource = $this->findResource();
-
-        return $resource !== null;
+        return $this->findResource() !== null;
     }
 
     /**
@@ -84,10 +81,7 @@ class Request extends FormRequest
      */
     public function authorizeResourceDeletedExist()
     {
-        // Find resource
-        $resource = $this->findResource(true);
-
-        return $resource !== null;
+        return $this->findResource(true) !== null;
     }
 
     /**
@@ -101,10 +95,12 @@ class Request extends FormRequest
         // Find resource
         $resource = $this->findResource();
 
+        $user = $this->user();
+
         return (
             $resource !== null &&
-            $this->user() !== null &&
-            $resource->user_id == $this->user()->id
+            $user !== null &&
+            $resource->user_id == $user->id
         );
     }
 

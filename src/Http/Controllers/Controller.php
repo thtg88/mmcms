@@ -145,7 +145,7 @@ class Controller extends BaseController
      */
     public function show(ShowRequestInterface $request, $id)
     {
-        $resource = $this->service->show($id);
+        $resource = $this->service->show($request, $id);
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
