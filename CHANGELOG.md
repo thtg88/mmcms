@@ -5,14 +5,86 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/) (or at least it tries to).
 
 ## [Unreleased]
-### Added
-- Recovery resource support
 ### Fixed
 - Set auth driver to passport in config in InstallCommand
 - Set event listeners in EventServiceProvider in InstallCommand
 - Replace content replace with stubs for event listeners
 ### Removed
 - Unique index for user email in create users table migration in install command
+
+## [0.27.0] - 2020-05-10
+### Added
+- Show resource recovery
+
+## [0.26.3] - 2020-05-02
+### Changed
+- Passport experiments
+
+## [0.26.0] - 2020-05-02
+### Changed
+- Moved commands under `mmcms:` namespace
+
+## [0.25.1] - 2020-05-02
+### Fixed
+- Is Mandatory field in content field migration
+
+## [0.25.0] - 2020-05-02
+### Changed
+- Content Field general improvements
+### Removed
+- Content Field update routes
+
+## [0.24.0] - 2020-04-21
+### Changed
+- Content Model general improvements
+- Refactoring service provider using multiple traits
+
+## [0.23.1] - 2020-04-19
+### Added
+- SEO entry allowed tables in request validation
+
+## [0.23.0] - 2020-04-19
+### Fixed
+- Content Type validation
+
+## [0.22.0] - 2020-04-19
+### Added
+- SEO policy support
+- Repository namespace config variable
+
+## [0.21.1] - 2020-04-18
+### Fixed
+- Recovery pagination filter
+
+## [0.21.0] - 2020-04-18
+### Added
+- Image Category show support
+
+## [0.20.0] - 2020-04-13
+### Changed
+- Image Category general improvements
+
+## [0.19.0] - 2020-04-13
+### Added
+- Recovery resource support
+
+## [0.18.1] - 2020-04-11
+### Fixed
+- User tests
+
+## [0.18.0] - 2020-04-11
+### Added
+- `role_id` validation rules for store and update user
+### Changed
+- Downgrade minimum role for UserPolicy to `administrator`
+
+## [0.17.0] - 2020-04-05
+### Added
+- Exists case insensitive validation rule
+- Unique case insensitive validation rule
+### Changed
+- Email is now case insensitive on login
+- Email is now case insensitive on registration
 
 ## [0.16.1] - 2020-03-29
 ### Added
