@@ -36,6 +36,7 @@ class RouteRegistrar
             $this->forContentFields($router);
             $this->forContentMigrationMethods($router);
             $this->forContentModels($router);
+            $this->forContentTypeContentValidationRules($router);
             $this->forContentTypes($router);
             $this->forContentValidationRuleAdditionalFieldTypes($router);
             $this->forImageCategories($router);
@@ -251,6 +252,31 @@ class RouteRegistrar
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentTypeController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
+    }
+
+    /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
+     * @return void
+     */
+    public function forContentTypeContentValidationRules($router): void
+    {
+        $router->group(
+            [
+                'as' => 'content-type-content-validation-rules.',
+                'middleware' => ['auth:api'],
+                'prefix' => 'content-type-content-validation-rules',
+            ],
+            static function ($router) {
+                $router->delete('{id}', [
+                    'uses' => 'ContentTypeContentValidationRuleController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentTypeContentValidationRuleController@store',
                     'as' => 'store',
                 ]);
             }

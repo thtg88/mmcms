@@ -2,6 +2,9 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Config;
+
 class ContentTypeContentValidationRule extends Model
 {
     /**
@@ -52,4 +55,22 @@ class ContentTypeContentValidationRule extends Model
     ];
 
     // RELATIONSHIPS
+
+    public function content_type(): BelongsTo
+    {
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'ContentType',
+            'content_type_id',
+            'id'
+        );
+    }
+
+    public function content_validation_rule(): BelongsTo
+    {
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'ContentValidationRule',
+            'content_validation_rule_id',
+            'id'
+        );
+    }
 }
