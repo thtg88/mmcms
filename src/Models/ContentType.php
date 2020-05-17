@@ -45,6 +45,7 @@ class ContentType extends Model
     protected $visible = [
         'content_migration_method',
         'content_migration_method_id',
+        'content_type_content_validation_rules',
         'content_validation_rules',
         'created_at',
         'description',
