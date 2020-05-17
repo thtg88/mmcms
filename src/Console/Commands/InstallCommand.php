@@ -15,7 +15,9 @@ class InstallCommand extends Command
 {
     use Seedable;
 
-    protected $seedersPath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'seeds'.DIRECTORY_SEPARATOR.'';
+    protected $seedersPath = __DIR__.DIRECTORY_SEPARATOR.'..'.
+        DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.
+        'database'.DIRECTORY_SEPARATOR.'seeds'.DIRECTORY_SEPARATOR.'';
 
     /**
      * The console command name.
