@@ -29,6 +29,7 @@ class ContentType extends Model
      */
     protected $fillable = [
         'content_migration_method_id',
+        'content_validation_rule_id',
         'created_at',
         'description',
         'name',
@@ -44,6 +45,8 @@ class ContentType extends Model
     protected $visible = [
         'content_migration_method',
         'content_migration_method_id',
+        'content_validation_rule',
+        'content_validation_rule_id',
         'content_validation_rules',
         'created_at',
         'description',
@@ -59,7 +62,6 @@ class ContentType extends Model
      */
     protected $with = [
         'content_migration_method',
-        'content_validation_rules',
     ];
 
     // RELATIONSHIPS
@@ -69,6 +71,15 @@ class ContentType extends Model
         return $this->belongsTo(
             Config::get('mmcms.models.namespace').'ContentMigrationMethod',
             'content_migration_method_id',
+            'id'
+        );
+    }
+
+    public function content_validation_rule(): BelongsTo
+    {
+        return $this->belongsTo(
+            Config::get('mmcms.models.namespace').'ContentValidationRule',
+            'content_validation_rule_id',
             'id'
         );
     }

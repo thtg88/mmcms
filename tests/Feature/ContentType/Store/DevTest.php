@@ -4,8 +4,10 @@ namespace Thtg88\MmCms\Tests\Feature\ContentType\Store;
 
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
+use Thtg88\MmCms\Models\ContentValidationRule;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
+use Thtg88\MmCms\Repositories\ContentValidationRuleRepository;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentType\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
@@ -114,11 +116,13 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'content_migration_method_id' => [Str::random(8)],
+                'content_validation_rule_id' => [Str::random(8)],
                 'priority' => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_migration_method_id' => 'The content migration method id must be an integer.',
+                'content_validation_rule_id' => 'The content validation rule id must be an integer.',
                 'priority' => 'The priority must be an integer.',
             ]);
     }
@@ -182,6 +186,43 @@ class DevTest extends TestCase implements StoreTestContract
      * @group crud
      * @test
      */
+    public function content_validation_rule_id_exists_validation(): void
+    {
+        $user = factory(User::class)->states('email_verified', 'dev')
+            ->create();
+
+        $deleted_content_validation_rule = factory(
+            ContentValidationRule::class
+        )->create();
+        app()->make(ContentValidationRuleRepository::class)
+            ->destroy($deleted_content_validation_rule->id);
+
+        // Test random id invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'content_validation_rule_id' => rand(1000, 9999),
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_validation_rule_id' => 'The selected content validation rule id is invalid.',
+            ]);
+
+        // Test deleted content_validation_rule invalid
+        $response = $this->passportActingAs($user)
+            ->json('post', $this->getRoute(), [
+                'content_validation_rule_id' => $deleted_content_validation_rule->id,
+            ]);
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'content_validation_rule_id' => 'The selected content validation rule id is invalid.',
+            ]);
+    }
+
+    /**
+     * @return void
+     * @group crud
+     * @test
+     */
     public function successful_store(): void
     {
         $user = factory(User::class)->states('email_verified', 'dev')
@@ -210,6 +251,10 @@ class DevTest extends TestCase implements StoreTestContract
         $this->assertInstanceOf(
             ContentMigrationMethod::class,
             $model->content_migration_method
+        );
+        $this->assertInstanceOf(
+            ContentValidationRule::class,
+            $model->content_validation_rule
         );
         $this->assertInstanceOf($this->model_classname, $model);
         // Check all attributes match

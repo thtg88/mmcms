@@ -17,6 +17,7 @@ class MmCmsDatabaseSeeder extends Seeder
     public function run()
     {
         $this->seed('ContentMigrationMethodsTableSeeder');
+        $this->seed('ContentValidationRulesTableSeeder');
         $this->seed('ContentTypesTableSeeder');
         $this->seed('RolesTableSeeder');
         $this->seed('UsersTableSeeder');

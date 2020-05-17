@@ -5,6 +5,7 @@ namespace Thtg88\MmCms\Http\Requests\ContentType;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
+use Thtg88\MmCms\Repositories\ContentValidationRuleRepository;
 use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
@@ -14,15 +15,18 @@ class UpdateRequest extends BaseUpdateRequest
      *
      * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $repository
      * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $content_migration_methods
+     * @param \Thtg88\MmCms\Repositories\ContentValidationRuleRepository $content_validation_rules
      * @return void
      */
     public function __construct(
         ContentTypeRepository $repository,
-        ContentMigrationMethodRepository $content_migration_methods
+        ContentMigrationMethodRepository $content_migration_methods,
+        ContentValidationRuleRepository $content_validation_rules
     ) {
         $this->repository = $repository;
 
         $this->content_migration_methods = $content_migration_methods;
+        $this->content_validation_rules = $content_validation_rules;
     }
 
     /**
@@ -42,6 +46,16 @@ class UpdateRequest extends BaseUpdateRequest
                 'integer',
                 Rule::exists(
                     $this->content_migration_methods->getModelTable(),
+                    'id'
+                )->where(static function ($query) {
+                    $query->whereNull('deleted_at');
+                }),
+            ],
+            'content_validation_rule_id' => [
+                'nullable',
+                'integer',
+                Rule::exists(
+                    $this->content_validation_rules->getModelTable(),
                     'id'
                 )->where(static function ($query) {
                     $query->whereNull('deleted_at');
