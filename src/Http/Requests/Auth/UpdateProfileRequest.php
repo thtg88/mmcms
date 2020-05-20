@@ -36,18 +36,16 @@ class UpdateProfileRequest extends Request
      */
     public function rules()
     {
-        // Get user
-        $user = $this->user();
-
         $all_rules = [
             'email' => [
                 'required',
                 'email',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'email')->where(function ($query) use ($user) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $user->id);
-                }),
+                Rule::unique($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->user()->id);
+                    }),
             ],
             'name' => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',

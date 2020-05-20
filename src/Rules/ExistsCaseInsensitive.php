@@ -42,7 +42,7 @@ class ExistsCaseInsensitive extends Exists implements Rule
     {
         $this->attribute = $attribute;
 
-        if (! is_string($value)) {
+        if (! is_string($value) && ! is_array($value)) {
             return false;
         }
 
@@ -75,21 +75,30 @@ class ExistsCaseInsensitive extends Exists implements Rule
         // Make both column and value the same casing
         $column = DB::raw('LOWER('.$column.')');
 
-        return is_array($value) ?
-            $verifier->getMultiCount(
+        if (is_array($value)) {
+            $value = array_map(
+                static function ($item) {
+                    return strtolower($item);
+                },
+                $value
+            );
+
+            return $verifier->getMultiCount(
                 $table,
                 $column,
                 $value,
                 $extra
-            ) :
-            $verifier->getCount(
-                $table,
-                $column,
-                strtolower($value),
-                null,
-                null,
-                $extra
-            );
+            ) >= $expected;
+        }
+
+        return $verifier->getCount(
+            $table,
+            $column,
+            strtolower($value),
+            null,
+            null,
+            $extra
+        ) >= $expected;
     }
 
     public function message(): string
