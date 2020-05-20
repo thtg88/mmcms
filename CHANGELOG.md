@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.28.2] - 2020-05-20
+### Changed
+- Improvements on `ExistsCaseInsensitive` validation rule
+
 ## [0.28.1] - 2020-05-17
 ### Changed
 - Eager-load `content_type_content_validation_rules`
