@@ -98,7 +98,6 @@ class DevTest extends TestCase implements UpdateTestContract
                 'resource' => [
                     'id' => $model->id,
                     'created_at' => $model->created_at->toISOString(),
-                    'display_name' => $data['display_name'],
                     'name' => $data['name'],
                 ],
             ]);

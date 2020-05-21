@@ -100,7 +100,6 @@ class DevTest extends TestCase implements StoreTestContract
             ->assertJson([
                 'success' => true,
                 'resource' => [
-                    'display_name' => $data['display_name'],
                     'name' => $data['name'],
                 ],
             ]);
