@@ -8,6 +8,7 @@ use Thtg88\MmCms\Models\ContentMigrationMethod;
 use Thtg88\MmCms\Models\ContentModel;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Models\ContentTypeContentValidationRule;
+use Thtg88\MmCms\Models\ContentValidationRule;
 use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\SeoEntry;
@@ -17,6 +18,7 @@ use Thtg88\MmCms\Policies\ContentMigrationMethodPolicy;
 use Thtg88\MmCms\Policies\ContentModelPolicy;
 use Thtg88\MmCms\Policies\ContentTypePolicy;
 use Thtg88\MmCms\Policies\ContentTypeContentValidationRulePolicy;
+use Thtg88\MmCms\Policies\ContentValidationRulePolicy;
 use Thtg88\MmCms\Policies\ImageCategoryPolicy;
 use Thtg88\MmCms\Policies\RolePolicy;
 use Thtg88\MmCms\Policies\SeoEntryPolicy;
@@ -35,6 +37,7 @@ trait WithProvidedPolicies
         ContentModel::class => ContentModelPolicy::class,
         ContentType::class => ContentTypePolicy::class,
         ContentTypeContentValidationRule::class => ContentTypeContentValidationRulePolicy::class,
+        ContentValidationRule::class => ContentValidationRulePolicy::class,
         ImageCategory::class => ImageCategoryPolicy::class,
         Role::class => RolePolicy::class,
         SeoEntry::class => SeoEntryPolicy::class,

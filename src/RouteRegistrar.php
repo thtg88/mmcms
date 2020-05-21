@@ -39,6 +39,7 @@ class RouteRegistrar
             $this->forContentTypeContentValidationRules($router);
             $this->forContentTypes($router);
             $this->forContentValidationRuleAdditionalFieldTypes($router);
+            $this->forContentValidationRules($router);
             $this->forImageCategories($router);
             $this->forImages($router);
             $this->forRoles($router);
@@ -322,6 +323,51 @@ class RouteRegistrar
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@store',
+                    'as' => 'store',
+                ]);
+            }
+        );
+    }
+
+    /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
+     * @return void
+     */
+    public function forContentValidationRules($router): void
+    {
+        $router->group(
+            [
+                'as' => 'content-validation-rules.',
+                'middleware' => ['auth:api'],
+                'prefix' => 'content-validation-rules',
+            ],
+            static function ($router) {
+                $router->post('{id}/restore', [
+                    'uses' => 'ContentValidationRuleController@restore',
+                    'as' => 'restore',
+                ]);
+                $router->get('paginate', [
+                    'uses' => 'ContentValidationRuleController@paginate',
+                    'as' => 'paginate',
+                ]);
+                $router->get('{id}', [
+                    'uses' => 'ContentValidationRuleController@show',
+                    'as' => 'show',
+                ]);
+                $router->put('{id}', [
+                    'uses' => 'ContentValidationRuleController@update',
+                    'as' => 'update',
+                ]);
+                $router->delete('{id}', [
+                    'uses' => 'ContentValidationRuleController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->get('/', [
+                    'uses' => 'ContentValidationRuleController@index',
+                    'as' => 'index',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentValidationRuleController@store',
                     'as' => 'store',
                 ]);
             }
