@@ -28,6 +28,7 @@ class ContentValidationRule extends Model
     protected $fillable = [
         'content_migration_method_id',
         'created_at',
+        'deleted_at',
         'description',
         'name',
         'priority',

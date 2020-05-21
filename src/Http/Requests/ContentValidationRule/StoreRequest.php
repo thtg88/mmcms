@@ -4,10 +4,14 @@ namespace Thtg88\MmCms\Http\Requests\ContentValidationRule;
 
 use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
+use Thtg88\MmCms\Models\ContentValidationRule;
 use Thtg88\MmCms\Repositories\ContentValidationRuleRepository;
 
 class StoreRequest extends BaseStoreRequest
 {
+    /** @var string */
+    protected $model_classname = ContentValidationRule::class;
+
     /**
      * Create a new request instance.
      *
@@ -27,26 +31,14 @@ class StoreRequest extends BaseStoreRequest
     public function rules()
     {
         return [
-            'display_name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
-            ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
-            ],
-            'priority' => [
-                'required',
-                'integer',
-                'min:1',
+                Rule::unique($this->repository->getModelTable())
+                    ->where(static function ($query) {
+                        $query->whereNull('deleted_at');
+                    }),
             ],
         ];
     }

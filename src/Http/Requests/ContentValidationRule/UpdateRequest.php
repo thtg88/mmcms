@@ -27,28 +27,15 @@ class UpdateRequest extends BaseUpdateRequest
     public function rules()
     {
         $all_rules = [
-            'display_name' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique($this->repository->getModelTable(), 'display_name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
-            ],
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique($this->repository->getModelTable(), 'name')->where(function ($query) {
-                    $query->whereNull('deleted_at')
-                        ->where('id', '<>', $this->route('id'));
-                }),
-            ],
-            'priority' => [
-                'required',
-                'integer',
-                'min:1',
+                Rule::unique($this->repository->getModelTable())
+                    ->where(function ($query) {
+                        $query->whereNull('deleted_at')
+                            ->where('id', '<>', $this->route('id'));
+                    }),
             ],
         ];
 
