@@ -24,7 +24,7 @@ class SearchRequest extends Request implements SearchRequestInterface
     public function rules()
     {
         return [
-            'q' => 'requrired|string|min:2|max:255',
+            'q' => 'required|string|min:2|max:255',
         ];
     }
 }

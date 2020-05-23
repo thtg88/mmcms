@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.30.1] - 2020-05-23
+### Fixed
+- Search request validation rule
+
 ## [0.30.0] - 2020-05-23
 ### Added
 - Content Validation Rules search functionality
