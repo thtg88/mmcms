@@ -67,6 +67,18 @@ abstract class Policy
     }
 
     /**
+     * Determine whether the user can search models.
+     *
+     * @param \Thtg88\MmCms\Models\User $user
+     * @return bool
+     */
+    public function search(User $user)
+    {
+        return $this->user_role_helper
+            ->authorize($user, $this->getDefaultAuthorizationRole());
+    }
+
+    /**
      * Determine whether the user can update the model.
      *
      * @param \Thtg88\MmCms\Models\User $user

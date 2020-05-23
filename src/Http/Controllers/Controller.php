@@ -13,10 +13,10 @@ use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface;
-use Thtg88\MmCms\Http\Requests\SearchRequest;
 use Thtg88\MmCms\Http\Requests\UserIndexRequest;
 
 class Controller extends BaseController
@@ -124,10 +124,10 @@ class Controller extends BaseController
     /**
      * Search for the specified resource in storage.
      *
-     * @param \Thtg88\MmCms\Http\Requests\SearchRequest $request
+     * @param \Thtg88\MmCms\Http\Requests\SearchRequestInterface $request
      * @return \Illuminate\Http\Response
      */
-    public function search(SearchRequest $request)
+    public function search(SearchRequestInterface $request)
     {
         $resources = $this->service->getRepository()->search($request->q);
 
