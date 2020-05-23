@@ -12,6 +12,6 @@ trait WithUrl
      */
     public function getRoute(array $parameters = []): string
     {
-        return route('mmcms.content-validation-rules.search');
+        return route('mmcms.content-validation-rules.search').'?q=test';
     }
 }
