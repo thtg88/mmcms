@@ -350,6 +350,10 @@ class RouteRegistrar
                     'uses' => 'ContentValidationRuleController@paginate',
                     'as' => 'paginate',
                 ]);
+                $router->get('search', [
+                    'uses' => 'ContentValidationRuleController@search',
+                    'as' => 'search',
+                ]);
                 $router->get('{id}', [
                     'uses' => 'ContentValidationRuleController@show',
                     'as' => 'show',
