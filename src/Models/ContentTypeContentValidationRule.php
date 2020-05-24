@@ -40,6 +40,7 @@ class ContentTypeContentValidationRule extends Model
      */
     protected $visible = [
         'content_type_id',
+        'content_validation_rule',
         'content_validation_rule_id',
         'created_at',
         'id',
@@ -51,7 +52,7 @@ class ContentTypeContentValidationRule extends Model
      * @var array
      */
     protected $with = [
-        //
+        'content_validation_rule',
     ];
 
     // RELATIONSHIPS
