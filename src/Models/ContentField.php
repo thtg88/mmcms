@@ -84,21 +84,34 @@ class ContentField extends Model
 
     // RELATIONSHIPS
 
-    public function content_model()
+    public function content_field_content_validation_rules(): HasMany
     {
-        return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentModel',
-            'content_model_id',
+        return $this->hasMany(
+            ContentFieldContentValidationRule::class,
+            'content_field_id',
             'id'
         );
     }
 
-    public function content_type()
+    public function content_validation_rules(): HasManyThrough
     {
-        return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentType',
-            'content_type_id',
+        return $this->hasManyThrough(
+            ContentValidationRule::class,
+            ContentFieldContentValidationRule::class,
+            'content_field_id',
+            'id',
+            'content_validation_rule_id',
             'id'
         );
+    }
+
+    public function content_model(): BelongsTo
+    {
+        return $this->belongsTo(ContentModel::class, 'content_model_id', 'id');
+    }
+
+    public function content_type(): BelongsTo
+    {
+        return $this->belongsTo(ContentType::class, 'content_type_id', 'id');
     }
 }
