@@ -79,6 +79,7 @@ class ContentField extends Model
      * @var array
      */
     protected $with = [
+        'content_field_content_validation_rules',
         'content_type',
     ];
 
