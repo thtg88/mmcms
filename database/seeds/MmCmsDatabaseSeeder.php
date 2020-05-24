@@ -18,6 +18,7 @@ class MmCmsDatabaseSeeder extends Seeder
     {
         $this->seed('ContentMigrationMethodsTableSeeder');
         $this->seed('ContentTypesTableSeeder');
+        $this->seed('ContentValidationRulesTableSeeder');
         $this->seed('RolesTableSeeder');
         $this->seed('UsersTableSeeder');
     }
