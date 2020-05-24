@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 
 class ContentModel extends Model
@@ -62,12 +63,8 @@ class ContentModel extends Model
 
     // RELATIONSHIPS
 
-    public function content_fields()
+    public function content_fields(): HasMany
     {
-        return $this->hasMany(
-            Config::get('mmcms.models.namespace').'ContentField',
-            'content_model_id',
-            'id'
-        );
+        return $this->hasMany(ContentField::class, 'content_model_id', 'id');
     }
 }

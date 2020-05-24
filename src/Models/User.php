@@ -9,8 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
-use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\JournalEntry;
+use Thtg88\MmCms\Models\Role;
 
 class User extends Authenticatable
 {

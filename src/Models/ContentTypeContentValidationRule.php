@@ -58,17 +58,13 @@ class ContentTypeContentValidationRule extends Model
 
     public function content_type(): BelongsTo
     {
-        return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentType',
-            'content_type_id',
-            'id'
-        );
+        return $this->belongsTo(ContentType::class, 'content_type_id', 'id');
     }
 
     public function content_validation_rule(): BelongsTo
     {
         return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentValidationRule',
+            ContentValidationRule::class,
             'content_validation_rule_id',
             'id'
         );

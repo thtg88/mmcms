@@ -69,7 +69,7 @@ class ContentType extends Model
     public function content_migration_method(): BelongsTo
     {
         return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentMigrationMethod',
+            ContentMigrationMethod::class,
             'content_migration_method_id',
             'id'
         );
@@ -78,7 +78,7 @@ class ContentType extends Model
     public function content_type_content_validation_rules(): HasMany
     {
         return $this->hasMany(
-            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            ContentTypeContentValidationRule::class,
             'content_type_id',
             'id'
         );
@@ -87,8 +87,8 @@ class ContentType extends Model
     public function content_validation_rules(): HasManyThrough
     {
         return $this->hasManyThrough(
-            Config::get('mmcms.models.namespace').'ContentValidationRule',
-            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            ContentValidationRule::class,
+            ContentTypeContentValidationRule::class,
             'content_type_id',
             'id',
             'content_validation_rule_id',

@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Config;
 
 class ContentValidationRuleAdditionalFieldValueOption extends Model
@@ -59,11 +60,11 @@ class ContentValidationRuleAdditionalFieldValueOption extends Model
 
     // RELATIONSHIPS
 
-    public function content_types()
+    public function content_types(): HasManyThrough
     {
         return $this->hasManyThrough(
-            Config::get('mmcms.models.namespace').'ContentType',
-            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            ContentType::class,
+            ContentTypeContentValidationRule::class,
             'content_validation_rule_id',
             'content_type_id',
             'id',
