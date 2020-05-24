@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Concerns;
 
 use Illuminate\Support\Facades\Gate;
+use Thtg88\MmCms\Models\ContentFieldContentValidationRule;
 use Thtg88\MmCms\Models\ContentField;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
 use Thtg88\MmCms\Models\ContentModel;
@@ -13,6 +14,7 @@ use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Policies\ContentFieldContentValidationRulePolicy;
 use Thtg88\MmCms\Policies\ContentFieldPolicy;
 use Thtg88\MmCms\Policies\ContentMigrationMethodPolicy;
 use Thtg88\MmCms\Policies\ContentModelPolicy;
@@ -32,6 +34,7 @@ trait WithProvidedPolicies
      * @var array
      */
     protected $policies = [
+        ContentFieldContentValidationRule::class => ContentFieldContentValidationRulePolicy::class,
         ContentField::class => ContentFieldPolicy::class,
         ContentMigrationMethod::class => ContentMigrationMethodPolicy::class,
         ContentModel::class => ContentModelPolicy::class,

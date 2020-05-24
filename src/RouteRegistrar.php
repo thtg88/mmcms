@@ -33,6 +33,7 @@ class RouteRegistrar
     {
         $this->router->group(['as' => 'mmcms.'], function ($router) {
             $this->forAuth($router);
+            $this->forContentFieldContentValidationRules($router);
             $this->forContentFields($router);
             $this->forContentMigrationMethods($router);
             $this->forContentModels($router);
@@ -87,6 +88,31 @@ class RouteRegistrar
                         ]);
                     }
                 );
+            }
+        );
+    }
+
+    /**
+     * @param \Illuminate\Contracts\Routing\Registrar $router
+     * @return void
+     */
+    public function forContentFieldContentValidationRules($router): void
+    {
+        $router->group(
+            [
+                'as' => 'content-field-content-validation-rules.',
+                'middleware' => ['auth:api'],
+                'prefix' => 'content-field-content-validation-rules',
+            ],
+            static function ($router) {
+                $router->delete('{id}', [
+                    'uses' => 'ContentFieldContentValidationRuleController@destroy',
+                    'as' => 'destroy',
+                ]);
+                $router->post('/', [
+                    'uses' => 'ContentFieldContentValidationRuleController@store',
+                    'as' => 'store',
+                ]);
             }
         );
     }

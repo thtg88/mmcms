@@ -56,11 +56,32 @@ class ContentValidationRule extends Model
 
     // RELATIONSHIPS
 
-    public function content_types()
+    public function content_fields(): HasManyThrough
     {
         return $this->hasManyThrough(
-            Config::get('mmcms.models.namespace').'ContentType',
-            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            ContentField::class,
+            ContentFieldContentValidationRule::class,
+            'content_validation_rule_id',
+            'content_field_id',
+            'id',
+            'id'
+        );
+    }
+
+    public function content_field_content_validation_rules(): HasMany
+    {
+        return $this->hasMany(
+            ContentFieldContentValidationRule::class,
+            'content_validation_rule_id',
+            'id'
+        );
+    }
+
+    public function content_types(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            ContentType::class,
+            ContentTypeContentValidationRule::class,
             'content_validation_rule_id',
             'content_type_id',
             'id',
