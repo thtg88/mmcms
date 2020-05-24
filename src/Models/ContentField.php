@@ -46,6 +46,7 @@ class ContentField extends Model
      * @var array
      */
     protected $visible = [
+        'content_field_content_validation_rules',
         'content_model_id',
         'content_type',
         'content_type_id',
