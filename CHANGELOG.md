@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.31.5] - 2020-05-24
+### Fixed
+- Eager load `content_field_content_validation_rules` relationship
+
 ## [0.31.4] - 2020-05-24
 ### Fixed
 - Eager load `content_field_content_validation_rules` relationship
