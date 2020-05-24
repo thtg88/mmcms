@@ -10,6 +10,7 @@ use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
 use Thtg88\MmCms\Console\Commands\Scaffold\ResourceRequestMakeCommand;
+use Thtg88\MmCms\Console\Commands\SeedCommand;
 
 trait WithCommands
 {
@@ -27,6 +28,7 @@ trait WithCommands
             PublishModuleCommand::class,
             RepositoryMakeCommand::class,
             ResourceRequestMakeCommand::class,
+            SeedCommand::class,
             // The following need to be booted
             // to run the InstallCommand properly,
             // as the InstallCommand runs the passport install command
