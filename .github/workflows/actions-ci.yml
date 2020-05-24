@@ -2,10 +2,9 @@ name: mmCMS CI
 
 on:
   push:
-    branches: [ master ]
   pull_request:
-    branches:
-      - '*'
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -14,6 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Cache dependencies
+      uses: actions/cache@v1
+      with:
+        path: ~/.composer/cache/files
+        key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
     - name: Validate composer.json and composer.lock
       run: composer validate
