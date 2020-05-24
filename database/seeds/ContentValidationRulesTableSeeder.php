@@ -11,13 +11,17 @@ class ContentValidationRulesTableSeeder extends Seeder
     public function run()
     {
         $data = [
+            ['name' => 'required'],
+            ['name' => 'nullable'],
             ['name' => 'boolean'],
             ['name' => 'date'],
             ['name' => 'numeric'],
             ['name' => 'integer'],
             ['name' => 'string'],
             ['name' => 'text'],
-            ['name' => 'unsignedInteger'],
+            ['name' => 'min:1'],
+            ['name' => 'max:255'],
+            ['name' => 'max:65535'],
         ];
 
         foreach ($data as $model_data) {
