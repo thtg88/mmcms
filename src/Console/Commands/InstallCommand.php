@@ -84,8 +84,7 @@ class InstallCommand extends Command
         $this->info('Adding Exception renderers');
         $this->addExceptionRenderers();
 
-        $this->info('Seeding data into the database');
-        $this->seed('MmCmsDatabaseSeeder');
+        $this->call('mmcms:seed');
 
         $this->info('Adding the storage symlink to your public folder');
         $this->call('storage:link');
