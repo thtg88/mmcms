@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Config;
 
 class Role extends Model
@@ -57,12 +58,8 @@ class Role extends Model
 
     // RELATIONSHIPS
 
-    public function users()
+    public function users(): HasMany
     {
-        return $this->hasMany(
-            Config::get('mmcms.models.namespace').'User',
-            'role_id',
-            'id'
-        );
+        return $this->hasMany(User::class, 'role_id', 'id');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Config;
 
 class ContentValidationRule extends Model
@@ -66,10 +68,10 @@ class ContentValidationRule extends Model
         );
     }
 
-    public function content_type_content_validation_rules()
+    public function content_type_content_validation_rules(): HasMany
     {
         return $this->hasMany(
-            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            ContentTypeContentValidationRule::class,
             'content_validation_rule_id',
             'id'
         );

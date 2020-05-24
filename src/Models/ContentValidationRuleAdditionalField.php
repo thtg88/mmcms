@@ -2,6 +2,7 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Config;
 
 class ContentValidationRuleAdditionalField extends Model
@@ -58,10 +59,10 @@ class ContentValidationRuleAdditionalField extends Model
 
     // RELATIONSHIPS
 
-    public function content_validation_rule_additional_field_type()
+    public function content_validation_rule_additional_field_type(): BelongsTo
     {
         return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentValidationRuleAdditionalFieldType',
+            ContentValidationRuleAdditionalFieldType::class,
             'content_validation_rule_additional_validation_field_type_id',
             'id'
         );

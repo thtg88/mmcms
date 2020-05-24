@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Config;
 
 class JournalEntry extends Model
@@ -54,17 +56,13 @@ class JournalEntry extends Model
 
     // RELATIONSHIPS
 
-    public function target()
+    public function target(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'User',
-            'user_id',
-            'id'
-        );
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
