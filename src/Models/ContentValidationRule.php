@@ -26,12 +26,10 @@ class ContentValidationRule extends Model
      * @var array
      */
     protected $fillable = [
-        'content_migration_method_id',
         'created_at',
         'deleted_at',
         'description',
         'name',
-        'priority',
         'updated_at',
     ];
 
@@ -41,13 +39,10 @@ class ContentValidationRule extends Model
      * @var array
      */
     protected $visible = [
-        'content_migration_method',
-        'content_migration_method_id',
         'created_at',
         'id',
         'description',
         'name',
-        'priority',
     ];
 
     /**
@@ -55,20 +50,9 @@ class ContentValidationRule extends Model
      *
      * @var array
      */
-    protected $with = [
-        'content_migration_method',
-    ];
+    protected $with = [];
 
     // RELATIONSHIPS
-
-    public function content_migration_method()
-    {
-        return $this->belongsTo(
-            Config::get('mmcms.models.namespace').'ContentMigrationMethod',
-            'content_migration_method_id',
-            'id'
-        );
-    }
 
     public function content_types()
     {
@@ -78,6 +62,15 @@ class ContentValidationRule extends Model
             'content_validation_rule_id',
             'content_type_id',
             'id',
+            'id'
+        );
+    }
+
+    public function content_type_content_validation_rules()
+    {
+        return $this->hasMany(
+            Config::get('mmcms.models.namespace').'ContentTypeContentValidationRule',
+            'content_validation_rule_id',
             'id'
         );
     }
