@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Factory;
 use Laravel\Passport\Passport;
+use Thtg88\LaravelExistsWithoutSoftDeletedRule\LaravelExistsWithoutSoftDeletedRuleServiceProvider;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Models\User;
@@ -117,11 +118,14 @@ abstract class TestCase extends BaseTestCase
      * Load package service provider
      *
      * @param \Illuminate\Foundation\Application $app
-     * @return Thtg88\MmCms\MmCmsServiceProvider
+     * @return array
      */
     protected function getPackageProviders($app)
     {
-        return [MmCmsServiceProvider::class];
+        return [
+            LaravelExistsWithoutSoftDeletedRuleServiceProvider::class,
+            MmCmsServiceProvider::class,
+        ];
     }
 
     protected function passportActingAs(User $user): self
