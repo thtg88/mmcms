@@ -64,12 +64,10 @@ class StoreRequest extends BaseStoreRequest
             array_key_exists('target_table', $input) &&
             in_array($input['target_table'], $table_names, true)
         ) {
-            $all_rules['target_id'][] = Rule::exists(
+            $all_rules['target_id'][] = Rule::existsWithoutSoftDeleted(
                 $input['target_table'],
                 'id'
-            )->where(static function ($query) {
-                $query->whereNull('deleted_at');
-            });
+            );
         }
 
         return $all_rules;

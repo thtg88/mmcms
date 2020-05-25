@@ -62,14 +62,14 @@ class StoreRequest extends BaseStoreRequest
             'url' => 'required_without:data|string|max:2000',
         ];
 
-            $all_rules['target_id'][] = Rule::exists($input['target_table'], 'id')
-                ->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                });
         if (
             array_key_exists('target_table', $input) &&
             in_array($input['target_table'], $table_names, true)
         ) {
+            $all_rules['target_id'][] = Rule::existsWithoutSoftDeleted(
+                $input['target_table'],
+                'id'
+            );
         }
 
         return $all_rules;
