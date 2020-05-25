@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {

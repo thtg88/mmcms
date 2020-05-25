@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
 {

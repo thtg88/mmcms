@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\Image;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ImageRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
