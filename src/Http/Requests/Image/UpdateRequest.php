@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\Image;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\UpdateRequest as BaseUpdateRequest;
 use Thtg88\MmCms\Repositories\ImageRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class UpdateRequest extends BaseUpdateRequest
 {
@@ -89,10 +89,10 @@ class UpdateRequest extends BaseUpdateRequest
             )
         ) {
             // If it's in the list of tables, we want to check it's a valid id in that table
-            $rules['target_id'][] = Rule::exists($real_table_name, 'id')
-                ->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                });
+            $rules['target_id'][] = Rule::existsWithoutSoftDeleted(
+                $real_table_name,
+                'id'
+            );
         }
 
         return $rules;

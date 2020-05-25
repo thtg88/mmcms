@@ -52,10 +52,10 @@ class StoreRequest extends BaseStoreRequest
             'role_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->roles->getModelTable(), 'id')
-                    ->where(static function ($query) {
-                        $query->whereNull('deleted_at');
-                    }),
+                Rule::existsWithoutSoftDeleted(
+                    $this->roles->getModelTable(),
+                    'id'
+                ),
             ],
         ];
     }

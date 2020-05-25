@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Repositories\SeoEntryRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
@@ -64,12 +64,10 @@ class StoreRequest extends BaseStoreRequest
             array_key_exists('target_table', $input) &&
             in_array($input['target_table'], $table_names, true)
         ) {
-            $all_rules['target_id'][] = Rule::exists(
+            $all_rules['target_id'][] = Rule::existsWithoutSoftDeleted(
                 $input['target_table'],
                 'id'
-            )->where(static function ($query) {
-                $query->whereNull('deleted_at');
-            });
+            );
         }
 
         return $all_rules;

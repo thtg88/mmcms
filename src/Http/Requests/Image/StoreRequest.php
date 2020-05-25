@@ -2,10 +2,10 @@
 
 namespace Thtg88\MmCms\Http\Requests\Image;
 
-use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Http\Requests\StoreRequest as BaseStoreRequest;
 use Thtg88\MmCms\Repositories\ImageRepository;
+use Thtg88\MmCms\Rules\Rule;
 
 class StoreRequest extends BaseStoreRequest
 {
@@ -62,11 +62,14 @@ class StoreRequest extends BaseStoreRequest
             'url' => 'required_without:data|string|max:2000',
         ];
 
-        if (array_key_exists('target_table', $input) && in_array($input['target_table'], $table_names, true)) {
-            $all_rules['target_id'][] = Rule::exists($input['target_table'], 'id')
-                ->where(function ($query) {
-                    $query->whereNull('deleted_at');
-                });
+        if (
+            array_key_exists('target_table', $input) &&
+            in_array($input['target_table'], $table_names, true)
+        ) {
+            $all_rules['target_id'][] = Rule::existsWithoutSoftDeleted(
+                $input['target_table'],
+                'id'
+            );
         }
 
         return $all_rules;

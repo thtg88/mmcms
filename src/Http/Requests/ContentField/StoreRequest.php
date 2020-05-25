@@ -43,18 +43,18 @@ class StoreRequest extends BaseStoreRequest
             'content_model_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->content_models->getModelTable(), 'id')
-                    ->where(static function ($query) {
-                        $query->whereNull('deleted_at');
-                    }),
+                Rule::existsWithoutSoftDeleted(
+                    $this->content_models->getModelTable(),
+                    'id'
+                ),
             ],
             'content_type_id' => [
                 'required',
                 'integer',
-                Rule::exists($this->content_types->getModelTable(), 'id')
-                    ->where(static function ($query) {
-                        $query->whereNull('deleted_at');
-                    }),
+                Rule::existsWithoutSoftDeleted(
+                    $this->content_types->getModelTable(),
+                    'id'
+                ),
             ],
             'display_name' => [
                 'required',

@@ -40,12 +40,10 @@ class UpdateRequest extends BaseUpdateRequest
             'content_migration_method_id' => [
                 'nullable',
                 'integer',
-                Rule::exists(
+                Rule::existsWithoutSoftDeleted(
                     $this->content_migration_methods->getModelTable(),
                     'id'
-                )->where(static function ($query) {
-                    $query->whereNull('deleted_at');
-                }),
+                ),
             ],
             'name' => [
                 'required',
