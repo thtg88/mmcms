@@ -2,6 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
 use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
