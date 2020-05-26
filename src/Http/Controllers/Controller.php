@@ -121,16 +121,9 @@ class Controller extends BaseController
     {
         $resources = $this->service->paginate($request);
 
-        // TODO: remove commented code
-        return
-            // Container::getInstance()
-            // ->make(ResponseFactory::class, [])
-            // ->json(
-                Resource::collection(
-                // $this->resource_classname::collection(
-                    $resources
-                // )
-                );
+        return $this->resource_classname::collection(
+            $resources
+        );
     }
 
     /**
