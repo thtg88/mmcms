@@ -12,8 +12,8 @@ use Thtg88\MmCms\Http\Requests\ContentField\DestroyRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\ShowRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\StoreRequest;
+use Thtg88\MmCms\Http\Resources\ContentField\ShowResource;
 use Thtg88\MmCms\Services\ContentFieldService;
-use Thtg88\MmCms\Resources\ContentField\ShowResource;
 
 class ContentFieldController extends Controller
 {
