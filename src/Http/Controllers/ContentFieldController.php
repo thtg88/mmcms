@@ -11,6 +11,7 @@ use Thtg88\MmCms\Http\Requests\ContentField\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\ShowRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\StoreRequest;
 use Thtg88\MmCms\Services\ContentFieldService;
+use Thtg88\MmCms\Resources\ContentField\ShowResource;
 
 class ContentFieldController extends Controller
 {
@@ -37,5 +38,24 @@ class ContentFieldController extends Controller
         $this->service = $service;
 
         parent::__construct();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(ShowRequestInterface $request, $id)
+    {
+        $resource = $this->service->show($request, $id)->load([
+            'content_field_content_validation_rules.content_validation_rule',
+            'content_type',
+        ]);
+
+        return Container::getInstance()
+            ->make(ResponseFactory::class, [])
+            ->json(['resource' => new ShowResource($resource)]);
     }
 }
