@@ -36,11 +36,10 @@ class ContentField extends Model
      * The attributes that should be visible in arrays.
      *
      * @var array
+     * @todo remove once ready
      */
     protected $visible = [
-        'content_field_content_validation_rules',
         'content_model_id',
-        'content_type',
         'content_type_id',
         'created_at',
         'display_name',
@@ -64,16 +63,6 @@ class ContentField extends Model
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'content_field_content_validation_rules.content_validation_rule',
-        'content_type',
     ];
 
     // RELATIONSHIPS
