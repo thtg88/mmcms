@@ -24,13 +24,6 @@ class User extends Authenticatable
     protected $table = 'users';
 
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -68,14 +61,14 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast to native types.
      *
      * @var array
      */
-    protected $dates = [
-        'created_at',
-        'deleted_at',
-        'updated_at',
+    protected $casts = [
+        'created_at' => 'datetime',
+        'deleted_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**

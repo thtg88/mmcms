@@ -5,7 +5,6 @@ namespace Thtg88\MmCms\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Config;
 
 class ContentType extends Model
 {
@@ -15,13 +14,6 @@ class ContentType extends Model
      * @var string
      */
     protected $table = 'content_types';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

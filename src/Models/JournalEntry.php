@@ -4,12 +4,15 @@ namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\Config;
 
 class JournalEntry extends Model
 {
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
     protected $table = 'journal_entries';
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -43,15 +46,6 @@ class JournalEntry extends Model
         'user_id',
         'user_ip_address',
         'content',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //
     ];
 
     // RELATIONSHIPS

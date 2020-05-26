@@ -5,7 +5,6 @@ namespace Thtg88\MmCms\Models;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Config;
 
 class ContentField extends Model
 {
@@ -15,13 +14,6 @@ class ContentField extends Model
      * @var string
      */
     protected $table = 'content_fields';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -44,11 +36,10 @@ class ContentField extends Model
      * The attributes that should be visible in arrays.
      *
      * @var array
+     * @todo remove once ready
      */
     protected $visible = [
-        'content_field_content_validation_rules',
         'content_model_id',
-        'content_type',
         'content_type_id',
         'created_at',
         'display_name',
@@ -72,16 +63,6 @@ class ContentField extends Model
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'content_field_content_validation_rules.content_validation_rule',
-        'content_type',
     ];
 
     // RELATIONSHIPS
