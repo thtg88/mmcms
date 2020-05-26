@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Config;
 
 class Role extends Model
 {
@@ -13,13 +12,6 @@ class Role extends Model
      * @var string
      */
     protected $table = 'roles';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -45,15 +37,6 @@ class Role extends Model
         'display_name',
         'name',
         'priority',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //
     ];
 
     // RELATIONSHIPS

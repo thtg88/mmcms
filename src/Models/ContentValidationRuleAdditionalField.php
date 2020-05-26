@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Config;
 
 class ContentValidationRuleAdditionalField extends Model
 {
@@ -13,13 +12,6 @@ class ContentValidationRuleAdditionalField extends Model
      * @var string
      */
     protected $table = 'content_validation_rule_additional_fields';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
