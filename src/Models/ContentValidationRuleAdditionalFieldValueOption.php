@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Support\Facades\Config;
 
 class ContentValidationRuleAdditionalFieldValueOption extends Model
 {
@@ -13,13 +12,6 @@ class ContentValidationRuleAdditionalFieldValueOption extends Model
      * @var string
      */
     protected $table = 'content_validation_rule_additional_field_value_options';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -47,15 +39,6 @@ class ContentValidationRuleAdditionalFieldValueOption extends Model
         'is_empty_option',
         'text',
         'value',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //
     ];
 
     // RELATIONSHIPS

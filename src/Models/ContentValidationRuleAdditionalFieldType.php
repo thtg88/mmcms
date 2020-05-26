@@ -12,13 +12,6 @@ class ContentValidationRuleAdditionalFieldType extends Model
     protected $table = 'content_validation_rule_additional_field_types';
 
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -41,15 +34,4 @@ class ContentValidationRuleAdditionalFieldType extends Model
         'display_name',
         'name',
     ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        //
-    ];
-
-    // RELATIONSHIPS
 }

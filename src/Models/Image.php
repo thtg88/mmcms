@@ -4,7 +4,6 @@ namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\Config;
 
 class Image extends Model
 {
@@ -14,13 +13,6 @@ class Image extends Model
      * @var string
      */
     protected $table = 'images';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -59,6 +51,11 @@ class Image extends Model
         'url',
     ];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
     protected $with = [
         // 'image_category',
     ];

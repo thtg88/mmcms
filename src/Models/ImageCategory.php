@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\Config;
 
 class ImageCategory extends Model
 {
@@ -13,13 +12,6 @@ class ImageCategory extends Model
      * @var string
      */
     protected $table = 'image_categories';
-
-    /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.

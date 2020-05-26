@@ -14,13 +14,6 @@ class SeoEntry extends Model
     protected $table = 'seo_entries';
 
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
