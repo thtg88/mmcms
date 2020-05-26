@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.34.0] - 2020-05-26
+### Changed
+- Replace `$with` in `ContentField` model with API resources
+- Return API resource from base `Controller`
+
 ## [0.33.0] - 2020-05-25
 ### Added
 - `thtg88/laravel-exists-without-soft-deleted` package for validation of model existence without soft-deleted ones
