@@ -28,13 +28,6 @@ class Controller extends BaseController
         Concerns\WithBindings;
 
     /**
-     * The API resource class name.
-     *
-     * @var string
-     */
-    protected $resource_classname = Resource::class;
-
-    /**
      * The service implementation.
      *
      * @var \Thtg88\MmCms\Http\Requests\Contracts\ResourceServiceInterface
