@@ -37,19 +37,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be visible in arrays.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'created_at',
-        'email',
-        'id',
-        'name',
-        'role_id',
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
