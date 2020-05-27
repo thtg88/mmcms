@@ -37,20 +37,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be visible in arrays.
-     *
-     * @var array
-     */
-    protected $visible = [
-        'created_at',
-        'email',
-        'id',
-        'name',
-        'role',
-        'role_id',
-    ];
-
-    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -69,15 +55,6 @@ class User extends Authenticatable
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'role',
     ];
 
     /**
