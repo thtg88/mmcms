@@ -13,6 +13,7 @@ use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
 use Thtg88\MmCms\Http\Requests\Auth\RegisterRequest;
 use Thtg88\MmCms\Http\Requests\Auth\TokenRequest;
 use Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest;
+use Thtg88\MmCms\Http\Resources\UserResource;
 use Thtg88\MmCms\Repositories\OauthRefreshTokenRepository;
 use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Repositories\UserRepository;
@@ -102,7 +103,7 @@ class AuthController extends Controller
         }
 
         // Create user
-        $user = $this->repository->create($input);
+        $user = $this->repository->create($input)->load(['role']);
 
         try {
             Container::getInstance()->make('events', [])
@@ -137,7 +138,7 @@ class AuthController extends Controller
             // this behaviour is expected and documented by Guzzle
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
             $response_data = json_decode((string)$response->getBody(), true);
-            $response_data['resource'] = $user;
+            $response_data['resource'] = new UserResource($user);
             $response_status_code = 200;
         } catch (\Exception $e) {
             // If there was an error registering the user
@@ -196,7 +197,7 @@ class AuthController extends Controller
             // by casting it to string we force it to return the content
             // this behaviour is expected and documented by Guzzle
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
-            $response_data = json_decode((string)$response->getBody(), true);
+            $response_data = json_decode((string) $response->getBody(), true);
             $response_status_code = 200;
         } catch (\Exception $e) {
             $response_data = [
@@ -223,20 +224,14 @@ class AuthController extends Controller
         // Get access token
         $access_token = $request->user()->token();
 
-        $data = [
-            'revoked' => true,
-        ];
-
         // Revoke access token
-        $this->oauth_refresh_tokens->update($access_token->id, $data);
+        $this->oauth_refresh_tokens->update($access_token->id, [
+            'revoked' => true,
+        ]);
 
         $access_token->revoke();
 
-        $response_data = [
-            'success' => true
-        ];
-
-        return response()->json($response_data, 201);
+        return response()->json(['success' => true], 201);
     }
 
     /**
@@ -247,7 +242,9 @@ class AuthController extends Controller
      */
     public function me(Request $request)
     {
-        return response()->json(['resource' => $request->user(), ]);
+        return response()->json([
+            'resource' => new UserResource($request->user()->load(['role'])),
+        ]);
     }
 
     /**
@@ -310,7 +307,7 @@ class AuthController extends Controller
     public function updateProfile(UpdateProfileRequest $request)
     {
         // Get user
-        $user = $request->user();
+        $user = $request->user()->load(['role']);
 
         // Get input
         $input = $request->all();
@@ -325,10 +322,14 @@ class AuthController extends Controller
             'deleted_at',
         ];
 
-        if ($user->role === null || $admin_role === null || $user->role->priority > $admin_role->priority) {
+        if (
+            $user->role === null ||
+            $admin_role === null ||
+            $user->role->priority > $admin_role->priority
+        ) {
             if (array_key_exists('role_id', $input)) {
                 // Remove role_id from editable fields if user less then admin
-                $except = 'role_id';
+                $except[] = 'role_id';
             }
         }
 
@@ -338,6 +339,6 @@ class AuthController extends Controller
         // Update user
         $user = $this->repository->update($user->id, $input);
 
-        return response()->json(['resource' => $user, ]);
+        return response()->json(['resource' => new UserResource($user)]);
     }
 }
