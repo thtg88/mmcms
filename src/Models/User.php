@@ -46,7 +46,6 @@ class User extends Authenticatable
         'email',
         'id',
         'name',
-        'role',
         'role_id',
     ];
 
@@ -69,15 +68,6 @@ class User extends Authenticatable
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
         'updated_at' => 'datetime',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'role',
     ];
 
     /**
