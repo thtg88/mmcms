@@ -16,6 +16,7 @@ use Thtg88\MmCms\Http\Requests\User\ShowRequest;
 use Thtg88\MmCms\Http\Requests\User\StoreRequest;
 use Thtg88\MmCms\Http\Requests\User\RestoreRequest;
 use Thtg88\MmCms\Http\Requests\User\UpdateRequest;
+use Thtg88\MmCms\Http\Resources\UserResource;
 use Thtg88\MmCms\Services\UserService;
 
 class UserController extends Controller
@@ -34,6 +35,13 @@ class UserController extends Controller
         RestoreRequestInterface::class => RestoreRequest::class,
         UpdateRequestInterface::class => UpdateRequest::class,
     ];
+
+    /**
+     * The API resource class name.
+     *
+     * @var string
+     */
+    protected $resource_classname = UserResource::class;
 
     /**
      * Create a new controller instance.
