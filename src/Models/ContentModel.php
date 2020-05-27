@@ -35,22 +35,12 @@ class ContentModel extends Model
      */
     protected $visible = [
         'base_route_name',
-        'content_fields',
         'created_at',
         'description',
         'id',
         'model_name',
         'name',
         'table_name',
-    ];
-
-    /**
-     * The relations to eager load on every query.
-     *
-     * @var array
-     */
-    protected $with = [
-        'content_fields',
     ];
 
     // RELATIONSHIPS
