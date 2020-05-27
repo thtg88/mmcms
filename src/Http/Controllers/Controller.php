@@ -28,13 +28,6 @@ class Controller extends BaseController
         Concerns\WithBindings;
 
     /**
-     * The API resource class name.
-     *
-     * @var string
-     */
-    protected $resource_classname = Resource::class;
-
-    /**
      * The service implementation.
      *
      * @var \Thtg88\MmCms\Http\Requests\Contracts\ResourceServiceInterface
@@ -63,11 +56,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'resources' => $this->resource_classname::collection(
-                    $resources
-                ),
-            ]);
+            ->json(['resources' => Resource::collection($resources)]);
     }
 
     /**
@@ -82,14 +71,9 @@ class Controller extends BaseController
         // Destroy resource
         $resource = $this->service->destroy($request, $id);
 
-        $resource_classname = $this->resource_classname;
-
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'success' => true,
-                'resource' => new $resource_classname($resource),
-            ]);
+            ->json(['success' => true, 'resource' => new Resource($resource)]);
     }
 
     /**
@@ -104,11 +88,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'resources' => $this->resource_classname::collection(
-                    $resources
-                ),
-            ]);
+            ->json(['resources' => Resource::collection($resources)]);
     }
 
     /**
@@ -121,9 +101,7 @@ class Controller extends BaseController
     {
         $resources = $this->service->paginate($request);
 
-        return $this->resource_classname::collection(
-            $resources
-        );
+        return Resource::collection($resources);
     }
 
     /**
@@ -137,14 +115,9 @@ class Controller extends BaseController
     {
         $resource = $this->service->restore($request, $id);
 
-        $resource_classname = $this->resource_classname;
-
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'success' => true,
-                'resource' => new $resource_classname($resource),
-            ]);
+            ->json(['success' => true, 'resource' => new Resource($resource)]);
     }
 
     /**
@@ -159,11 +132,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'resources' => $this->resource_classname::collection(
-                    $resources
-                ),
-            ]);
+            ->json(['resources' => Resource::collection($resources)]);
     }
 
     /**
@@ -177,11 +146,9 @@ class Controller extends BaseController
     {
         $resource = $this->service->show($request, $id);
 
-        $resource_classname = $this->resource_classname;
-
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json(['resource' => new $resource_classname($resource)]);
+            ->json(['resource' => new Resource($resource)]);
     }
 
     /**
@@ -195,14 +162,9 @@ class Controller extends BaseController
         // Store resource
         $resource = $this->service->store($request);
 
-        $resource_classname = $this->resource_classname;
-
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'success' => true,
-                'resource' => new $resource_classname($resource),
-            ]);
+            ->json(['success' => true, 'resource' => new Resource($resource)]);
     }
 
     /**
@@ -217,14 +179,9 @@ class Controller extends BaseController
         // Update resource
         $resource = $this->service->update($request, $id);
 
-        $resource_classname = $this->resource_classname;
-
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'success' => true,
-                'resource' => new $resource_classname($resource),
-            ]);
+            ->json(['success' => true, 'resource' => new Resource($resource)]);
     }
 
     /**
@@ -240,11 +197,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'resources' => $this->resource_classname::collection(
-                    $resources
-                ),
-            ]);
+            ->json(['resources' => Resource::collection($resources)]);
     }
 
     /**
@@ -261,11 +214,7 @@ class Controller extends BaseController
 
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
-            ->json([
-                'resources' => $this->resource_classname::collection(
-                    $resources
-                ),
-            ]);
+            ->json(['resources' => Resource::collection($resources)]);
     }
 
     /**
