@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.35.0] - 2020-05-27
+### Changed
+- Load `role` relationship in `AuthController`
+- Replace `$with` in `User` model with API resources
+### Removed
+- Eager-loaded fields on `ContentModel` model
+- Eager-loaded fields on `User` model
+
 ## [0.34.0] - 2020-05-26
 ### Changed
 - Replace `$with` in `ContentField` model with API resources
