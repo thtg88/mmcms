@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.35.1] - 2020-05-31
+### Removed
+- `tightenco/tlint` dev dependency as not used
+
 ## [0.35.0] - 2020-05-27
 ### Changed
 - Load `role` relationship in `AuthController`
