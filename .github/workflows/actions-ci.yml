@@ -27,7 +27,7 @@ jobs:
       run: composer run-script stan
 
     - name: Remove old migrations from orchestra testbench Laravel folder
-      run: rm -rf vendor/testbench-core/laravel/database/migrations/*.php
+      run: rm -rf vendor/orchestra/testbench-core/laravel/database/migrations/*.php
 
     - name: Run test suite
       run: COMPOSER_PROCESS_TIMEOUT=600 composer run-script test
