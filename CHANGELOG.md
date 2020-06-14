@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.36.0] - 2020-06-14
+### Changed
+- Scaffold commands are now under `scaffold:` namespace
 ## [0.35.1] - 2020-05-31
 ### Removed
 - `tightenco/tlint` dev dependency as not used
