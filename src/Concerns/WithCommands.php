@@ -8,8 +8,6 @@ use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
 use Thtg88\MmCms\Console\Commands\CreateDatabaseCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
-use Thtg88\MmCms\Console\Commands\Scaffold\RepositoryMakeCommand;
-use Thtg88\MmCms\Console\Commands\Scaffold\ResourceRequestMakeCommand;
 use Thtg88\MmCms\Console\Commands\SeedCommand;
 
 trait WithCommands
@@ -26,8 +24,6 @@ trait WithCommands
             CreateDatabaseCommand::class,
             InstallCommand::class,
             PublishModuleCommand::class,
-            RepositoryMakeCommand::class,
-            ResourceRequestMakeCommand::class,
             SeedCommand::class,
             // The following need to be booted
             // to run the InstallCommand properly,

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Factory;
 use Laravel\Passport\Passport;
+use Thtg88\LaravelScaffoldCommands\LaravelScaffoldCommandsServiceProvider;
 use Thtg88\LaravelExistsWithoutSoftDeletedRule\LaravelExistsWithoutSoftDeletedRuleServiceProvider;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
@@ -123,6 +124,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
+            LaravelScaffoldCommandsServiceProvider::class,
             LaravelExistsWithoutSoftDeletedRuleServiceProvider::class,
             MmCmsServiceProvider::class,
         ];
