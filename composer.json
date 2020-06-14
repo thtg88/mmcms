@@ -9,12 +9,6 @@
             "email": "admin@marco-marassi.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../packages/laravel-scaffold-commands"
-        }
-    ],
     "require": {
         "anhskohbo/no-captcha": "^3.0",
         "fruitcake/laravel-cors": "^1.0",
@@ -34,7 +28,7 @@
         "laravel/passport": "^8.0",
         "nesbot/carbon": "^2.0.0",
         "thtg88/laravel-exists-without-soft-deleted-rule": "^0.2.0",
-        "thtg88/laravel-scaffold-commands": "dev-master"
+        "thtg88/laravel-scaffold-commands": "^0.1.0"
     },
     "autoload": {
         "psr-4": {
