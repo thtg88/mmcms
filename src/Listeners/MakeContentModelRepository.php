@@ -28,7 +28,7 @@ class MakeContentModelRepository
     {
         $repository_name = Str::studly($event->content_model->name).'Repository';
 
-        Artisan::call('mmcms:make:repository', [
+        Artisan::call('scaffold:repository', [
             'name' => $repository_name,
         ]);
     }

@@ -29,7 +29,7 @@ class MakeContentModelDestroyRequest
             return;
         }
 
-        Artisan::call('mmcms:make:request', [
+        Artisan::call('scaffold:request', [
             'name' => $model_name,
             '--method' => 'destroy',
         ]);
