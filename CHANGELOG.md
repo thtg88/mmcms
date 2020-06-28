@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.36.3] - 2020-06-28
+### Changed
+- Updated `thtg88/laravel-scaffold-commands` to `v0.2.2`
+
 ## [0.36.2] - 2020-06-14
 ### Added
 - Minimum version of PHP to `7.4.6`
