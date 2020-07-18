@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.36.4] - 2020-07-18
+### Fixed
+- `UniqueCaseInsensitive` validation rule issue with latest Laravel version
+
 ## [0.36.3] - 2020-06-28
 ### Changed
 - Updated `thtg88/laravel-scaffold-commands` to `v0.2.2`
