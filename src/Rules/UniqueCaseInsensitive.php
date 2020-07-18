@@ -56,17 +56,17 @@ class UniqueCaseInsensitive extends Unique implements Rule
             'mmcms::unique_case_insensitive'
         );
 
-        [$connection, $table] = $this->parseTable($this->table);
+        [$connection, $table, $idColumn] = $this->parseTable($this->table);
 
         // The second parameter position holds the name of the column that needs to
         // be verified as unique. If this parameter isn't specified we will just
         // assume that this column to be verified shares the attribute's name.
         $column = $this->getQueryColumn($parameters, $attribute);
 
-        [$idColumn, $id] = [null, null];
+        $id = null;
 
-        if (isset($this->ignore)) {
-            [$idColumn, $id] = $this->getUniqueIds($parameters);
+        if (isset($parameters[2])) {
+            [$idColumn, $id] = $this->getUniqueIds($idColumn, $parameters);
 
             if (! is_null($id)) {
                 $id = stripslashes($id);
