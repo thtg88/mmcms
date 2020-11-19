@@ -19,8 +19,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
@@ -38,8 +37,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'name' => [Str::random(5)],
@@ -59,8 +57,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), ['name' => Str::random(256)]);
         $response->assertStatus(422)
@@ -76,8 +73,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function valid_target_table_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'target_table' => Str::random(10),
@@ -95,9 +91,8 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
             'name' => $model->name,
@@ -116,8 +111,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), ['sequence' => [Str::random(8)]]);
@@ -134,8 +128,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function integer_min_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), ['sequence' => 0]);
         $response->assertStatus(422)
@@ -151,9 +144,8 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function successful_store(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $data = factory($this->model_classname)->raw();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);

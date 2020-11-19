@@ -13,8 +13,7 @@ trait ActingAsAdminTest
      */
     public function unauthorized_acting_as_admin(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
-            ->create();
+        $user = User::factory()->emailVerified()->admin()->create();
 
         $response = $this->passportActingAs($user)
             ->json('get', $this->getRoute());

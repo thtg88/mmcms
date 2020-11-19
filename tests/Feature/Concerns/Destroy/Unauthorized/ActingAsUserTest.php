@@ -13,9 +13,8 @@ trait ActingAsUserTest
      */
     public function unauthorized_acting_as_user(): void
     {
-        $user = factory(User::class)->states('email_verified', 'user')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->user()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('delete', $this->getRoute([$model->id]));

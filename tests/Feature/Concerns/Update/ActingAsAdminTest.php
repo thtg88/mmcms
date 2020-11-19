@@ -14,12 +14,11 @@ trait ActingAsAdminTest
      */
     public function non_existing_model_authorization_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
+        $user = User::factory()->emailVerified()->admin()->create();
+        $deleted_model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
             ->create();
 
-        $deleted_model = factory($this->model_classname)->create();
-        app()->make($this->repository_classname)
-            ->destroy($deleted_model->id);
 
         // Test random string as id
         $response = $this->passportActingAs($user)
@@ -44,9 +43,8 @@ trait ActingAsAdminTest
      */
     public function empty_payload_has_no_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->admin()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]));

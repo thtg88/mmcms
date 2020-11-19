@@ -1,23 +1,38 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\ContentModel;
 
-$factory->define(ContentModel::class, static function (Faker $faker) {
-    return [
-        'base_route_name' => static function (array $data) {
-            return Str::slug($data['name']);
-        },
-        'description' => $faker->sentence,
-        'model_name' => static function (array $data) {
-            return Str::studly($data['name']);
-        },
-        'name' => $faker->words(3, true),
-        'table_name' => static function (array $data) {
-            return Str::snake($data['name']);
-        },
-    ];
-});
+class ContentModelFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ContentModel::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'base_route_name' => static function (array $data) {
+                return Str::slug($data['name']);
+            },
+            'description' => $this->faker->sentence,
+            'model_name' => static function (array $data) {
+                return Str::studly($data['name']);
+            },
+            'name' => $this->faker->words(3, true),
+            'table_name' => static function (array $data) {
+                return Str::snake($data['name']);
+            },
+        ];
+    }
+}

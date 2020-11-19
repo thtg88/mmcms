@@ -22,9 +22,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -45,9 +44,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -66,10 +64,9 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
-        $other_model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $other_model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -98,9 +95,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -121,9 +117,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function integer_min_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), ['priority' => 0]);
@@ -140,15 +135,11 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function content_migration_method_id_exists_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $deleted_model = ContentMigrationMethod::factory()
+            ->softDeleted()
             ->create();
-        $model = factory($this->model_classname)->create();
-
-        $deleted_content_migration_method = factory(
-            ContentMigrationMethod::class
-        )->create();
-        app()->make(ContentMigrationMethodRepository::class)
-            ->destroy($deleted_content_migration_method->id);
 
         // Test random id invalid
         $response = $this->passportActingAs($user)
@@ -163,7 +154,7 @@ class DevTest extends TestCase implements UpdateTestContract
         // Test deleted content_migration_method invalid
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
-                'content_migration_method_id' => $deleted_content_migration_method->id,
+                'content_migration_method_id' => $deleted_model->id,
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
@@ -178,11 +169,10 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function successful_update(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
-        $data = factory($this->model_classname)->raw();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), $data);

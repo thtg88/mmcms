@@ -28,7 +28,7 @@ class LoginTest extends TestCase
     {
         // Create test user
         $password = 'password';
-        $model = factory(User::class)->create([
+        $model = User::factory()->create([
             'password' => $password,
         ]);
 
@@ -72,7 +72,7 @@ class LoginTest extends TestCase
     {
         // Create test user
         $password = Str::random(8);
-        $model = factory(User::class)->create([
+        $model = User::factory()->create([
             'password' => $password,
         ]);
 

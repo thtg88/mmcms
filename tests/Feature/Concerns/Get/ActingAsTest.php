@@ -13,7 +13,7 @@ trait ActingAsTest
      */
     public function successful_get(): void
     {
-        $user = factory(User::class)->states('email_verified')->create();
+        $user = User::factory()->emailVerified()->create();
 
         $response = $this->passportActingAs($user)
             ->json('get', $this->getRoute());

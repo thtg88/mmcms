@@ -21,8 +21,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
@@ -39,8 +38,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'description' => [Str::random(5)],
@@ -60,8 +58,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), ['name' => Str::random(256)]);
         $response->assertStatus(422)
@@ -77,9 +74,8 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -108,8 +104,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -130,8 +125,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function integer_min_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), ['priority' => 0]);
         $response->assertStatus(422)
@@ -147,14 +141,10 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function content_migration_method_id_exists_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
+        $user = User::factory()->emailVerified()->dev()->create();
+        $deleted_model = ContentMigrationMethod::factory()
+            ->softDeleted()
             ->create();
-
-        $deleted_content_migration_method = factory(
-            ContentMigrationMethod::class
-        )->create();
-        app()->make(ContentMigrationMethodRepository::class)
-            ->destroy($deleted_content_migration_method->id);
 
         // Test random id invalid
         $response = $this->passportActingAs($user)
@@ -169,7 +159,7 @@ class DevTest extends TestCase implements StoreTestContract
         // Test deleted content_migration_method invalid
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'content_migration_method_id' => $deleted_content_migration_method->id,
+                'content_migration_method_id' => $deleted_model->id,
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
@@ -184,9 +174,8 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function successful_store(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $data = factory($this->model_classname)->raw();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);

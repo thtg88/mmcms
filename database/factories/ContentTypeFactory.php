@@ -1,20 +1,35 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 
-$factory->define(ContentType::class, static function (Faker $faker) {
-    return [
-        'content_migration_method_id' => static function (array $data) {
-            return app()->make(ContentMigrationMethodRepository::class)
-                ->findRandom()
-                ->id;
-        },
-        'description' => $faker->sentence,
-        'name' => $faker->word,
-        'priority' => rand(1, 10),
-    ];
-});
+class ContentTypeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ContentType::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'content_migration_method_id' => static function (array $data) {
+                return app()->make(ContentMigrationMethodRepository::class)
+                    ->findRandom()
+                    ->id;
+            },
+            'description' => $this->faker->sentence,
+            'name' => $this->faker->word,
+            'priority' => rand(1, 10),
+        ];
+    }
+}

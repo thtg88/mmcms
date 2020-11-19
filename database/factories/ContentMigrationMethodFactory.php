@@ -1,13 +1,28 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
 
-$factory->define(ContentMigrationMethod::class, static function (Faker $faker) {
-    return [
-        'display_name' => ucwords($faker->word),
-        'name' => $faker->word,
-    ];
-});
+class ContentMigrationMethodFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ContentMigrationMethod::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'display_name' => ucwords($this->faker->word),
+            'name' => $this->faker->word,
+        ];
+    }
+}

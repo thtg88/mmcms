@@ -21,10 +21,10 @@ trait Test
         $response = $this->json('delete', $this->getRoute([rand(1000, 9999)]));
         $response->assertStatus(403);
 
-        // Test deleted user
-        $model = factory($this->model_classname)->create();
-        app()->make($this->repository_classname)
-            ->destroy($model->id);
+        // Test deleted model
+        $model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
+            ->create();
 
         $response = $this->json('delete', $this->getRoute([$model->id]));
         $response->assertStatus(403);
@@ -37,7 +37,7 @@ trait Test
      */
     public function successful_destroy(): void
     {
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->json('delete', $this->getRoute([$model->id]));
 

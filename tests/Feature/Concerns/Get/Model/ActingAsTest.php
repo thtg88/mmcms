@@ -14,11 +14,10 @@ trait ActingAsTest
      */
     public function non_existing_model_authorization_errors(): void
     {
-        $user = factory(User::class)->states('email_verified')->create();
-
-        $deleted_model = factory($this->model_classname)->create();
-        app()->make($this->repository_classname)
-            ->destroy($deleted_model->id);
+        $user = User::factory()->emailVerified()->create();
+        $deleted_model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
+            ->create();
 
         // Test random string as id
         $response = $this->passportActingAs($user)
@@ -43,10 +42,10 @@ trait ActingAsTest
      */
     public function successful_recovery_get(): void
     {
-        $user = factory(User::class)->states('email_verified')->create();
-        $model = factory($this->model_classname)->create([
-            'deleted_at' => now()->toDateTimeString(),
-        ]);
+        $user = User::factory()->emailVerified()->create();
+        $model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
+            ->create();
 
         $response = $this->passportActingAs($user)
             ->json('get', $this->getRoute([$model->id]).'?recovery=1');
@@ -60,8 +59,8 @@ trait ActingAsTest
      */
     public function successful_get(): void
     {
-        $user = factory(User::class)->states('email_verified')->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('get', $this->getRoute([$model->id]));

@@ -14,8 +14,7 @@ trait ActingAsAdminTest
      */
     public function non_existing_model_authorization_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
-            ->create();
+        $user = User::factory()->emailVerified()->admin()->create();
 
         // Test random string as id
         $response = $this->passportActingAs($user)
@@ -35,11 +34,10 @@ trait ActingAsAdminTest
      */
     public function successful_restore(): void
     {
-        $user = factory(User::class)->states('email_verified', 'admin')
+        $user = User::factory()->emailVerified()->admin()->create();
+        $model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
             ->create();
-        $model = factory($this->model_classname)->create([
-            'deleted_at' => now()->toDateTimeString(),
-        ]);
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute([$model->id]));

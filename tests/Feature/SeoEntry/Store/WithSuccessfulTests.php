@@ -14,7 +14,8 @@ trait WithSuccessfulTests
      */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute());
@@ -32,7 +33,8 @@ trait WithSuccessfulTests
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -75,7 +77,8 @@ trait WithSuccessfulTests
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -114,7 +117,8 @@ trait WithSuccessfulTests
      */
     public function valid_target_table_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -133,7 +137,8 @@ trait WithSuccessfulTests
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
 
         $response = $this->passportActingAs($user)
@@ -151,7 +156,8 @@ trait WithSuccessfulTests
      */
     public function json_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
 
         $response = $this->passportActingAs($user)
@@ -169,9 +175,10 @@ trait WithSuccessfulTests
      */
     public function successful_store(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_state = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_state()
             ->create();
-        $data = factory($this->model_classname)->raw();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);

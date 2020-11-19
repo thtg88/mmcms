@@ -24,8 +24,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function empty_payload_has_required_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
@@ -46,8 +45,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'display_name' => [Str::random(5)],
@@ -69,8 +67,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'display_name' => Str::random(256),
@@ -90,9 +87,8 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -127,8 +123,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -149,10 +144,9 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function content_model_id_exists_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
-        $deleted_content_model = factory(ContentModel::class)->create();
+        $deleted_content_model = ContentModel::factory()->create();
         app()->make(ContentModelRepository::class)
             ->destroy($deleted_content_model->id);
 
@@ -184,10 +178,9 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function content_type_id_exists_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
-        $deleted_content_type = factory(ContentType::class)->create();
+        $deleted_content_type = ContentType::factory()->create();
         app()->make(ContentTypeRepository::class)
             ->destroy($deleted_content_type->id);
 
@@ -219,8 +212,7 @@ class DevTest extends TestCase implements StoreTestContract
      */
     public function boolean_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
@@ -242,9 +234,8 @@ class DevTest extends TestCase implements StoreTestContract
     public function successful_store(): void
     {
         $this->withoutExceptionHandling();
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $data = factory($this->model_classname)->raw();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), $data);
