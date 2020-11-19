@@ -41,4 +41,4 @@ jobs:
       run: rm -rf vendor/orchestra/testbench-core/laravel/database/migrations/*.php
 
     - name: Run test suite
-      run: COMPOSER_PROCESS_TIMEOUT=600 composer run-script test
+      run: COMPOSER_PROCESS_TIMEOUT=600 composer run-script test -- --stop-on-failure
