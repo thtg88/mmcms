@@ -150,7 +150,7 @@ class DevTest extends TestCase implements StoreTestContract
                 $this->getLatestMigratingMigrationTimestamp().'_create_'.
                 $data['table_name'].'_table.php'
             ),
-            app_path($data['model_name'].'.php'),
+            app_path('Models'.DIRECTORY_SEPARATOR.$data['model_name'].'.php'),
             app_path(
                 'Repositories'.DIRECTORY_SEPARATOR.$data['model_name'].
                 'Repository.php'
