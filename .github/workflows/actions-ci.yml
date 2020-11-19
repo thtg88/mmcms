@@ -19,6 +19,18 @@ jobs:
 
     - uses: "ramsey/composer-install@v1"
 
+    - name: Show models folder
+      run: ls -la src/Models
+
+    - name: Show factories folder
+      run: ls -la database/factories
+
+    - name: Show UserFactory
+      run: ls -la database/Factories/UserFactory.php
+
+    - name: Show composer autoload
+      run: cat vendor/composer/autoload_classmap.php
+
     - name: Run linting
       run: composer run-script check-style
 
