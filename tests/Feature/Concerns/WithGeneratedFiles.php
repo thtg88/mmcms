@@ -17,7 +17,7 @@ trait WithGeneratedFiles
     public function assertGeneratedFilesExist(): void
     {
         foreach ($this->generated_files as $_file) {
-            $this->assertTrue(file_exists($_file));
+            $this->assertFileExists($_file);
         }
     }
 
