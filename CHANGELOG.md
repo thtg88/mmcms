@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.39.0] - 2020-11-19
+### Changed
+- mmCMS now requires `laravel/passport:^10.0` and `illuminate/*:^8.0`
+- Upgraded to class-based factories
+
 ## [0.38.0] - 2020-11-19
 ### Changed
 - mmCMS now requires `fruitcake/laravel-cors:^2.0`
