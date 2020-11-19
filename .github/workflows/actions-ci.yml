@@ -26,7 +26,7 @@ jobs:
       run: ls -la database/factories
 
     - name: Show UserFactory
-      run: ls -la database/Factories/UserFactory.php
+      run: ls -la database/factories/UserFactory.php
 
     - name: Show composer autoload
       run: cat vendor/composer/autoload_classmap.php
