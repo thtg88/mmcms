@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms\Database\Factories;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Str;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Models\SeoEntry;
 
