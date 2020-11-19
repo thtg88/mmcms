@@ -10,9 +10,9 @@
         }
     ],
     "require": {
-        "php": "^7.4.6",
+        "php": "^7.4.12|^8.0",
         "anhskohbo/no-captcha": "^3.0",
-        "fruitcake/laravel-cors": "^1.0",
+        "fruitcake/laravel-cors": "^2.0",
         "doctrine/dbal": "^2.9",
         "illuminate/bus": "^7.0.0 || ^8.0.0",
         "illuminate/config": "^7.0.0 || ^8.0.0",
