@@ -24,9 +24,8 @@ class DevTest extends TestCase implements DestroyTestContract
      */
     public function successful_destroy(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
         $model_migration_time = $this->getLatestMigratingMigrationTimestamp();
 
         Container::getInstance()->make('events', [])

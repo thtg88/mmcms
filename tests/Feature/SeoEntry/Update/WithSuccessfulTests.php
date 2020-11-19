@@ -14,9 +14,10 @@ trait WithSuccessfulTests
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'facebook_description' => [Str::random(5)],
@@ -58,9 +59,10 @@ trait WithSuccessfulTests
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'facebook_description' => Str::random(256),
@@ -98,9 +100,10 @@ trait WithSuccessfulTests
      */
     public function valid_target_table_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'target_table' => Str::random(10),
@@ -118,9 +121,10 @@ trait WithSuccessfulTests
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), ['target_id' => [Str::random(8)]]);
@@ -137,9 +141,10 @@ trait WithSuccessfulTests
      */
     public function json_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), ['json_schema' => [Str::random(8)]]);
@@ -156,10 +161,11 @@ trait WithSuccessfulTests
      */
     public function successful_update(): void
     {
-        $user = factory(User::class)->states('email_verified', $this->getUserRoleFactoryStateName())
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()
             ->create();
-        $model = factory($this->model_classname)->create();
-        $data = factory($this->model_classname)->raw();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), $data);

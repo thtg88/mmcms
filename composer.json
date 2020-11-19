@@ -38,6 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "Thtg88\\MmCms\\Database\\": "database/",
             "Thtg88\\MmCms\\Tests\\": "tests/"
         }
     },

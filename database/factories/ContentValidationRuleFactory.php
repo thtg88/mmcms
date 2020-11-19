@@ -1,12 +1,27 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Thtg88\MmCms\Models\ContentValidationRule;
 
-$factory->define(ContentValidationRule::class, static function (Faker $faker) {
-    return [
-        'name' => $faker->word,
-    ];
-});
+class ContentValidationRuleFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ContentValidationRule::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->word,
+        ];
+    }
+}

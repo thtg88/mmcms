@@ -14,8 +14,7 @@ trait ActingAsUserTest
      */
     public function non_existing_model_authorization_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'user')
-            ->create();
+        $user = User::factory()->emailVerified()->user()->create();
 
         // Test random string as id
         $response = $this->passportActingAs($user)
@@ -35,11 +34,10 @@ trait ActingAsUserTest
      */
     public function successful_restore(): void
     {
-        $user = factory(User::class)->states('email_verified', 'user')
+        $user = User::factory()->emailVerified()->user()->create();
+        $model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
             ->create();
-        $model = factory($this->model_classname)->create([
-            'deleted_at' => now()->toDateTimeString(),
-        ]);
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute([$model->id]));

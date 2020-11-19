@@ -20,9 +20,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -43,9 +42,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -64,10 +62,9 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
-        $other_model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $other_model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -87,9 +84,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function valid_target_table_errors(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -108,9 +104,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -129,9 +124,8 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function integer_min_validation(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), ['sequence' => 0]);
@@ -148,11 +142,10 @@ class DevTest extends TestCase implements UpdateTestContract
      */
     public function successful_update(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user = User::factory()->emailVerified()->dev()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
-        $data = factory($this->model_classname)->raw();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), $data);

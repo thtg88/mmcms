@@ -13,8 +13,7 @@ trait ActingAsDevTest
      */
     public function successful_get_as_dev(): void
     {
-        $user = factory(User::class)->states('email_verified', 'dev')
-            ->create();
+        $user = User::factory()->emailVerified()->dev()->create();
 
         $response = $this->passportActingAs($user)
             ->json('get', $this->getRoute());

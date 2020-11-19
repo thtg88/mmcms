@@ -1,32 +1,79 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\User;
 
-$factory->define(User::class, static function (Faker $faker) {
-    return [
-        'email' => $faker->safeEmail(),
-        'name' => $faker->name(),
-        'password' => Str::random(8),
-        'role_id' => config('mmcms.roles.ids.default'),
-    ];
-});
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-$factory->state(User::class, 'email_verified', [
-    'email_verified_at' => now(),
-]);
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'email' => $this->faker->safeEmail(),
+            'name' => $this->faker->name(),
+            'password' => Str::random(8),
+            'role_id' => config('mmcms.roles.ids.default'),
+        ];
+    }
 
-$factory->state(User::class, 'admin', [
-    'role_id' => config('mmcms.roles.ids.administrator'),
-]);
+    /**
+     * Represents a user with its email verified.
+     *
+     * @return self
+     */
+    public function emailVerified(): self
+    {
+        return $this->state([
+            'email_verified_at' => now(),
+        ]);
+    }
 
-$factory->state(User::class, 'dev', [
-    'role_id' => config('mmcms.roles.ids.developer'),
-]);
+    /**
+     * Represents an admin user.
+     *
+     * @return self
+     */
+    public function admin(): self
+    {
+        return $this->state([
+            'role_id' => config('mmcms.roles.ids.administrator'),
+        ]);
+    }
 
-$factory->state(User::class, 'user', [
-    'role_id' => config('mmcms.roles.ids.user'),
-]);
+    /**
+     * Represents a dev user.
+     *
+     * @return self
+     */
+    public function dev(): self
+    {
+        return $this->state([
+            'role_id' => config('mmcms.roles.ids.developer'),
+        ]);
+    }
+
+    /**
+     * Represents a user user.
+     *
+     * @return self
+     */
+    public function user(): self
+    {
+        return $this->state([
+            'role_id' => config('mmcms.roles.ids.user'),
+        ]);
+    }
+}

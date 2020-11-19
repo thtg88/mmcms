@@ -1,24 +1,39 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Thtg88\MmCms\Database\Factories;
 
-use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Models\ImageCategory;
 
-$factory->define(ImageCategory::class, static function (Faker $faker) {
-    return [
-        'name' => $faker->word,
-        'sequence' => rand(1, 10),
-        'target_table' => static function (array $data) {
-            $table_names = app()->make(DatabaseHelper::class)->getTableNames();
+class ImageCategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = ImageCategory::class;
 
-            $table_idx = rand(0, count($table_names) - 1);
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->word,
+            'sequence' => rand(1, 10),
+            'target_table' => static function (array $data) {
+                $table_names = app()->make(DatabaseHelper::class)->getTableNames();
 
-            $target_table = $table_names[$table_idx];
+                $table_idx = rand(0, count($table_names) - 1);
 
-            return $target_table;
-        },
-    ];
-});
+                $target_table = $table_names[$table_idx];
+
+                return $target_table;
+            },
+        ];
+    }
+}

@@ -32,9 +32,9 @@ trait Test
      */
     public function successful_restore(): void
     {
-        $model = factory($this->model_classname)->create([
-            'deleted_at' => now()->toDateTimeString(),
-        ]);
+        $model = call_user_func($this->model_classname.'::factory')
+            ->softDeleted()
+            ->create();
 
         $response = $this->json('post', $this->getRoute([$model->id]));
         $response->assertStatus(200)

@@ -73,7 +73,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function unique_validation(): void
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->json('post', $this->getRoute(), [
             'email' => $user->email,
@@ -96,7 +96,7 @@ class RegisterTest extends TestCase
     /** @test */
     public function successful_registration(): void
     {
-        $data = factory(User::class)->raw();
+        $data = User::factory()->raw();
         $data['password_confirmation'] = $data['password'];
 
         $response = $this->mockOauthHttpClient($data['email'], true)

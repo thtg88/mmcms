@@ -16,10 +16,9 @@ trait WithSuccessfulTests
      */
     public function strings_validation_errors(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -40,10 +39,9 @@ trait WithSuccessfulTests
      */
     public function too_long_strings_have_max_validation_errors(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -64,11 +62,10 @@ trait WithSuccessfulTests
      */
     public function unique_validation(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
-        $other_model = factory($this->model_classname)->create();
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $other_model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -87,10 +84,9 @@ trait WithSuccessfulTests
      */
     public function integer_validation(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
@@ -109,13 +105,10 @@ trait WithSuccessfulTests
      */
     public function role_id_exists_validation(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
-
-        $deleted_role = factory(Role::class)->create();
-        app()->make(RoleRepository::class)->destroy($deleted_role->id);
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
+        $deleted_role = Role::factory()->softDeleted()->create();
 
         // Test random id invalid
         $response = $this->passportActingAs($user)
@@ -145,13 +138,12 @@ trait WithSuccessfulTests
      */
     public function successful_update(): void
     {
-        $user = factory(User::class)
-            ->states('email_verified', $this->getUserRoleFactoryStateName())
-            ->create();
-        $model = factory($this->model_classname)->create();
+        $user_role_name = $this->getUserRoleFactoryStateName();
+        $user = User::factory()->emailVerified()->$user_role_name()->create();
+        $model = call_user_func($this->model_classname.'::factory')->create();
 
         // We do not need the password on update request
-        $data = factory($this->model_classname)->raw();
+        $data = call_user_func($this->model_classname.'::factory')->raw();
         unset($data['password']);
 
         $response = $this->passportActingAs($user)
