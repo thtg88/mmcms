@@ -2,8 +2,6 @@ name: mmCMS CI
 
 on:
   push:
-  schedule:
-    - cron: '0 0 * * *'
 
 jobs:
   build:
@@ -13,11 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
-      run: composer validate
+    - name: Configure PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.4
 
-    - name: Install dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+    - uses: "ramsey/composer-install@v1"
 
     - name: Run linting
       run: composer run-script check-style
