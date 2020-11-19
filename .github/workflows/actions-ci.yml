@@ -25,6 +25,18 @@ jobs:
     - name: Run static analysis
       run: composer run-script stan
 
+    - name: Remove old controllers from orchestra testbench Laravel folder
+      run: rm -rf vendor/orchestra/testbench-core/laravel/app/Http/Controllers/*.php
+
+    - name: Remove old requests from orchestra testbench Laravel folder
+      run: rm -rf vendor/orchestra/testbench-core/laravel/app/Http/Requests/*.php
+
+    - name: Remove old models from orchestra testbench Laravel folder
+      run: rm -rf vendor/orchestra/testbench-core/laravel/app/Models/*.php
+
+    - name: Remove old repositories from orchestra testbench Laravel folder
+      run: rm -rf vendor/orchestra/testbench-core/laravel/app/Repositories/*.php
+
     - name: Remove old migrations from orchestra testbench Laravel folder
       run: rm -rf vendor/orchestra/testbench-core/laravel/database/migrations/*.php
 
