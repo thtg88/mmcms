@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.38.0] - 2020-11-19
+### Changed
+- mmCMS now requires `fruitcake/laravel-cors:^2.0`
+
 ## [0.37.0] - 2020-11-19
 ### Added
 - Support to Laravel 8
