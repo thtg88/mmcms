@@ -115,7 +115,7 @@ class AuthController extends Controller
         try {
             // Request OAuth token
             $response = app('OauthHttpClient')->post(
-                '/oauth/token',
+                '/v1/oauth/token',
                 $oauth_data
             );
 
@@ -164,7 +164,7 @@ class AuthController extends Controller
         try {
             // Request OAuth token
             $response = app('OauthHttpClient')->post(
-                '/oauth/token',
+                '/v1/oauth/token',
                 $oauth_data
             );
 
@@ -249,7 +249,7 @@ class AuthController extends Controller
         try {
             // Request OAuth token
             $response = app('OauthHttpClient')->post(
-                '/oauth/token',
+                '/v1/oauth/token',
                 $oauth_data
             );
 
