@@ -2,11 +2,12 @@
 
 namespace Thtg88\MmCms\Http\Controllers;
 
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Http\Controllers\Controller;
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
 use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
@@ -62,8 +63,8 @@ class AuthController extends Controller
     /**
      * Register a new user.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Auth\RegisterRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Thtg88\MmCms\Http\Requests\Auth\RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)
     {
@@ -105,32 +106,18 @@ class AuthController extends Controller
         // Create user
         $user = $this->repository->create($input)->load(['role']);
 
+        $oauth_data = $this->getOauthAccessTokenData(
+            $request->get('email'),
+            $request->get('password'),
+            $request->server('SERVER_NAME')
+        );
+
         try {
-            Container::getInstance()->make('events', [])
-                ->dispatch(new Registered($user));
-
-            $oauth_data = [
-                'form_params' => [
-                    'grant_type' => 'password',
-                    'client_id' => Config::get(
-                        'mmcms.passport.password_client_id'
-                    ),
-                    'client_secret' => Config::get(
-                        'mmcms.passport.password_client_secret'
-                    ),
-                    'username' => $request->get('email'),
-                    'password' => $request->get('password'),
-                    'remember' => false,
-                    'scope' => '',
-                ],
-                'headers' => [
-                    // This allows loopback on custom localhost domains
-                    'Host' => $request->server('SERVER_NAME'),
-                ]
-            ];
-
             // Request OAuth token
-            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post(
+                '/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
@@ -139,51 +126,40 @@ class AuthController extends Controller
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
             $response_data = json_decode((string)$response->getBody(), true);
             $response_data['resource'] = new UserResource($user);
-            $response_status_code = 200;
         } catch (\Exception $e) {
             // If there was an error registering the user
             // Delete the newly created user
             // and send the error response to the client
             $this->repository->destroy($user->id);
 
-            $response_data = [
+            return response()->json([
                 'errors' => [
-                    'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
+                    'invalid_credentials' => $e->getCode().': '.
+                        $e->getMessage(),
                 ],
                 'message' => 'The user credentials were incorrect.'
-            ];
-
-            $response_status_code = 401;
+            ], 401);
         }
 
-        return response()->json($response_data, $response_status_code);
+        Container::getInstance()->make('events', [])
+            ->dispatch(new Registered($user));
+
+        return response()->json($response_data);
     }
 
     /**
      * Login a user.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Auth\LoginRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param \Thtg88\MmCms\Http\Requests\Auth\LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
     {
-        $oauth_data = [
-            'form_params' => [
-                'grant_type' => 'password',
-                'client_id' => Config::get('mmcms.passport.password_client_id'),
-                'client_secret' => Config::get(
-                    'mmcms.passport.password_client_secret'
-                ),
-                'username' => $request->get('email'),
-                'password' => $request->get('password'),
-                'remember' => $request->get('remember'),
-                'scope' => '',
-            ],
-            // This allows loopback on custom localhost domains
-            'headers' => [
-                'Host' => $request->server('SERVER_NAME'),
-            ],
-        ];
+        $oauth_data = $this->getOauthAccessTokenData(
+            $request->get('email'),
+            $request->get('password'),
+            $request->server('SERVER_NAME')
+        );
 
         try {
             // Request OAuth token
@@ -198,19 +174,16 @@ class AuthController extends Controller
             // this behaviour is expected and documented by Guzzle
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
             $response_data = json_decode((string) $response->getBody(), true);
-            $response_status_code = 200;
-        } catch (\Exception $e) {
-            $response_data = [
+        } catch (Exception $e) {
+            return response()->json([
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
                 ],
                 'message' => 'The user credentials were incorrect.'
-            ];
-
-            $response_status_code = 401;
+            ], 401);
         }
 
-        return response()->json($response_data, $response_status_code);
+        return response()->json($response_data);
     }
 
     /**
@@ -255,27 +228,30 @@ class AuthController extends Controller
      */
     public function token(TokenRequest $request)
     {
-        try {
-            $oauth_data = [
-                'form_params' => [
-                    'grant_type' => 'refresh_token',
-                    'client_id' => Config::get(
-                        'mmcms.passport.password_client_id'
-                    ),
-                    'client_secret' => Config::get(
-                        'mmcms.passport.password_client_secret'
-                    ),
-                    'refresh_token' => $request->get('refresh_token'),
-                    'scope' => '',
-                ],
-                'headers' => [
-                    // This allows loopback on custom localhost domains
-                    'Host' => $request->server('SERVER_NAME'),
-                ]
-            ];
+        $oauth_data = [
+            'form_params' => [
+                'grant_type' => 'refresh_token',
+                'client_id' => Config::get(
+                    'mmcms.passport.password_client_id'
+                ),
+                'client_secret' => Config::get(
+                    'mmcms.passport.password_client_secret'
+                ),
+                'refresh_token' => $request->get('refresh_token'),
+                'scope' => '',
+            ],
+            'headers' => [
+                // This allows loopback on custom localhost domains
+                'Host' => $request->server('SERVER_NAME'),
+            ]
+        ];
 
+        try {
             // Request OAuth token
-            $response = app('OauthHttpClient')->post('/oauth/token', $oauth_data);
+            $response = app('OauthHttpClient')->post(
+                '/oauth/token',
+                $oauth_data
+            );
 
             // Get response
             // $response->getBody() is a stream
@@ -340,5 +316,37 @@ class AuthController extends Controller
         $user = $this->repository->update($user->id, $input);
 
         return response()->json(['resource' => new UserResource($user)]);
+    }
+
+    /**
+     * Return the data for the OAuth access token request data.
+     *
+     * @param string $email
+     * @param string $password
+     * @param string $server_name
+     * @return array
+     */
+    protected function getOauthAccessTokenData(
+        string $email,
+        string $password,
+        string $server_name
+    ): array {
+        return [
+            'form_params' => [
+                'grant_type' => 'password',
+                'client_id' => Config::get(
+                    'mmcms.passport.password_client_id'
+                ),
+                'client_secret' => Config::get(
+                    'mmcms.passport.password_client_secret'
+                ),
+                'username' => $email,
+                'password' => $password,
+                'remember' => false,
+                'scope' => '',
+            ],
+            // This allows loopback on custom localhost domains
+            'headers' => ['Host' => $server_name],
+        ];
     }
 }
