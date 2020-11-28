@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.39.2] - 2020-11-19
+### Added
+- Timeout to OAuth HTTP client singleton
+### Fixed
+- OAuth token route in auth controller
+
 ## [0.39.1] - 2020-11-19
 ### Fixed
 - Laravel Passport invalid credentials error message
