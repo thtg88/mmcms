@@ -34,6 +34,7 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->bind('OauthHttpClient', function () {
             return new Client([
                 'base_uri' => Config::get('mmcms.passport.oauth_url'),
+                'timeout' => 30,
                 'verify' => Config::get('app.env') !== 'local' &&
                     Config::get('app.env') !== 'testing',
             ]);
