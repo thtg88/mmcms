@@ -3,6 +3,7 @@
 namespace Thtg88\MmCms;
 
 use Illuminate\Contracts\Routing\Registrar as Router;
+use Thtg88\MmCms\Http\Controllers\AccessTokenController;
 
 class RouteRegistrar
 {
@@ -31,6 +32,11 @@ class RouteRegistrar
      */
     public function all()
     {
+        $this->router->post(
+            'oauth/token',
+            [AccessTokenController::class, 'issueToken']
+        )->name('passport.token');
+
         $this->router->group(['as' => 'mmcms.'], function ($router) {
             $this->forAuth($router);
             $this->forContentFieldContentValidationRules($router);
