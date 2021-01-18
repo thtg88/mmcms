@@ -10,6 +10,7 @@ class ContentValidationRuleService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentValidationRuleRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentValidationRuleRepository $repository)

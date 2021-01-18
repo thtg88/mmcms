@@ -3,7 +3,6 @@
 namespace Thtg88\MmCms\Listeners;
 
 use Illuminate\Support\Facades\Artisan;
-use Thtg88\MmCms\Events\ContentModelStored;
 
 class DatabaseMigrate
 {

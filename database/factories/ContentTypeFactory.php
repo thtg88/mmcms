@@ -28,8 +28,8 @@ class ContentTypeFactory extends Factory
                     ->id;
             },
             'description' => $this->faker->sentence,
-            'name' => $this->faker->word,
-            'priority' => rand(1, 10),
+            'name'        => $this->faker->word,
+            'priority'    => rand(1, 10),
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Requests\ImageCategory;
 
-use Thtg88\MmCms\Models\ImageCategory;
 use Thtg88\MmCms\Http\Requests\PaginateRequest as BasePaginateRequest;
+use Thtg88\MmCms\Models\ImageCategory;
 
 class PaginateRequest extends BasePaginateRequest
 {

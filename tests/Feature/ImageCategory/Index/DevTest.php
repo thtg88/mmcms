@@ -8,5 +8,7 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase
 {
-    use WithModelData, WithUrl, ActingAsDevTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
 }

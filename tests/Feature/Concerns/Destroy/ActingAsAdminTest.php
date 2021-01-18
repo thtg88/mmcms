@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\Concerns\Destroy;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 
 trait ActingAsAdminTest
 {
@@ -51,7 +51,7 @@ trait ActingAsAdminTest
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

@@ -11,6 +11,7 @@ class RestoreRequest extends BaseRestoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository
+     *
      * @return void
      */
     public function __construct(UserRepository $repository)

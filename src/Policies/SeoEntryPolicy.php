@@ -11,8 +11,9 @@ class SeoEntryPolicy extends Policy
     /**
      * Determine whether the user can view the model.
      *
-     * @param \Thtg88\MmCms\Models\User $user
+     * @param \Thtg88\MmCms\Models\User           $user
      * @param \Illuminate\Eloquent\Database\Model $model
+     *
      * @return bool
      */
     public function view(User $user, Model $model)

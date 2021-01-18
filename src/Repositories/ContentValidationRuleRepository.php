@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\ContentValidationRule;
 
-/**
- *
- */
 class ContentValidationRuleRepository extends Repository
 {
     protected static $model_name = 'name';
@@ -23,6 +20,7 @@ class ContentValidationRuleRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\ContentValidationRule $model
+     *
      * @return void
      */
     public function __construct(ContentValidationRule $model)

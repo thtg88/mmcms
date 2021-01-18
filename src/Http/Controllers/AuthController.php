@@ -8,7 +8,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Thtg88\MmCms\Http\Controllers\Controller;
 use Thtg88\MmCms\Http\Requests\Auth\LoginRequest;
 use Thtg88\MmCms\Http\Requests\Auth\LogoutRequest;
 use Thtg88\MmCms\Http\Requests\Auth\RegisterRequest;
@@ -45,9 +44,10 @@ class AuthController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @param \Thtg88\MmCms\Repositories\UserRepository $repository
+     * @param \Thtg88\MmCms\Repositories\UserRepository              $repository
      * @param \Thtg88\MmCms\Repositories\OauthRefreshTokenRepository $oauth_refresh_tokens
-     * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     * @param \Thtg88\MmCms\Repositories\RoleRepository              $roles
+     *
      * @return void
      */
     public function __construct(
@@ -64,6 +64,7 @@ class AuthController extends Controller
      * Register a new user.
      *
      * @param \Thtg88\MmCms\Http\Requests\Auth\RegisterRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function register(RegisterRequest $request)
@@ -124,7 +125,7 @@ class AuthController extends Controller
             // by casting it to string we force it to return the content
             // this behaviour is expected and documented by Guzzle
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
-            $response_data = json_decode((string)$response->getBody(), true);
+            $response_data = json_decode((string) $response->getBody(), true);
             $response_data['resource'] = new UserResource($user);
         } catch (\Exception $e) {
             // If there was an error registering the user
@@ -137,7 +138,7 @@ class AuthController extends Controller
                     'invalid_credentials' => $e->getCode().': '.
                         $e->getMessage(),
                 ],
-                'message' => 'The user credentials were incorrect.'
+                'message' => 'The user credentials were incorrect.',
             ], 401);
         }
 
@@ -151,6 +152,7 @@ class AuthController extends Controller
      * Login a user.
      *
      * @param \Thtg88\MmCms\Http\Requests\Auth\LoginRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function login(LoginRequest $request)
@@ -179,7 +181,7 @@ class AuthController extends Controller
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
                 ],
-                'message' => 'The user credentials were incorrect.'
+                'message' => 'The user credentials were incorrect.',
             ], 401);
         }
 
@@ -189,7 +191,8 @@ class AuthController extends Controller
     /**
      * Logout a user.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Auth\LogoutRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\LogoutRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function logout(LogoutRequest $request)
@@ -211,6 +214,7 @@ class AuthController extends Controller
      * Return the current user data.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function me(Request $request)
@@ -223,7 +227,8 @@ class AuthController extends Controller
     /**
      * Refresh token.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Auth\TokenRequest  $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\TokenRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function token(TokenRequest $request)
@@ -231,19 +236,19 @@ class AuthController extends Controller
         $oauth_data = [
             'form_params' => [
                 'grant_type' => 'refresh_token',
-                'client_id' => Config::get(
+                'client_id'  => Config::get(
                     'mmcms.passport.password_client_id'
                 ),
                 'client_secret' => Config::get(
                     'mmcms.passport.password_client_secret'
                 ),
                 'refresh_token' => $request->get('refresh_token'),
-                'scope' => '',
+                'scope'         => '',
             ],
             'headers' => [
                 // This allows loopback on custom localhost domains
                 'Host' => $request->server('SERVER_NAME'),
-            ]
+            ],
         ];
 
         try {
@@ -258,14 +263,14 @@ class AuthController extends Controller
             // by casting it to string we force it to return the content
             // this behaviour is expected and documented by Guzzle
             // http://docs.guzzlephp.org/en/stable/quickstart.html#using-responses
-            $response_data = json_decode((string)$response->getBody(), true);
+            $response_data = json_decode((string) $response->getBody(), true);
             $response_status_code = 200;
         } catch (\Exception $e) {
             $response_data = [
                 'errors' => [
                     'invalid_credentials' => $e->getCode().': '.$e->getMessage(),
                 ],
-                'message' => 'The user credentials were incorrect.'
+                'message' => 'The user credentials were incorrect.',
             ];
 
             $response_status_code = 401;
@@ -277,7 +282,8 @@ class AuthController extends Controller
     /**
      * Update the current user data.
      *
-     * @param \Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest        $request
+     * @param \Thtg88\MmCms\Http\Requests\Auth\UpdateProfileRequest $request
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function updateProfile(UpdateProfileRequest $request)
@@ -324,6 +330,7 @@ class AuthController extends Controller
      * @param string $email
      * @param string $password
      * @param string $server_name
+     *
      * @return array
      */
     protected function getOauthAccessTokenData(
@@ -334,7 +341,7 @@ class AuthController extends Controller
         return [
             'form_params' => [
                 'grant_type' => 'password',
-                'client_id' => Config::get(
+                'client_id'  => Config::get(
                     'mmcms.passport.password_client_id'
                 ),
                 'client_secret' => Config::get(
@@ -343,7 +350,7 @@ class AuthController extends Controller
                 'username' => $email,
                 'password' => $password,
                 'remember' => false,
-                'scope' => '',
+                'scope'    => '',
             ],
             // This allows loopback on custom localhost domains
             'headers' => ['Host' => $server_name],

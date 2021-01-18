@@ -13,7 +13,6 @@ use Illuminate\Validation\Rules\Exists;
  * in a database table.
  *
  * If a database column is not specified, the attribute will be used.
- *
  */
 class ExistsCaseInsensitive extends Exists implements Rule
 {
@@ -34,15 +33,16 @@ class ExistsCaseInsensitive extends Exists implements Rule
      * in a database table.
      *
      * @param string $attribute
-     * @param mixed $value
-     * @param array $parameters
+     * @param mixed  $value
+     * @param array  $parameters
+     *
      * @return bool
      */
     public function passes($attribute, $value): bool
     {
         $this->attribute = $attribute;
 
-        if (! is_string($value) && ! is_array($value)) {
+        if (!is_string($value) && !is_array($value)) {
             return false;
         }
 
@@ -104,8 +104,8 @@ class ExistsCaseInsensitive extends Exists implements Rule
     public function message(): string
     {
         return __('mmcms::validation.exists_case_insensitive', [
-             'attribute' => str_replace('_', ' ', Str::snake($this->attribute)),
-         ]);
+            'attribute' => str_replace('_', ' ', Str::snake($this->attribute)),
+        ]);
     }
 
     /**

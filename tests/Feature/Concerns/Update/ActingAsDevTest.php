@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\Concerns\Update;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 
 trait ActingAsDevTest
 {

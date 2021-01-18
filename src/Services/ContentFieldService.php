@@ -16,6 +16,7 @@ class ContentFieldService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentFieldRepository $repository)
@@ -27,6 +28,7 @@ class ContentFieldService extends ResourceService
      * Store a newly created resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreRequestInterface $request)
@@ -45,7 +47,8 @@ class ContentFieldService extends ResourceService
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
-     * @param int $id
+     * @param int                                                           $id
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function destroy(DestroyRequestInterface $request, $id): Model

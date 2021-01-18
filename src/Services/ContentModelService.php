@@ -14,6 +14,7 @@ class ContentModelService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentModelRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentModelRepository $repository)
@@ -25,6 +26,7 @@ class ContentModelService extends ResourceService
      * Store a newly created resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreRequestInterface $request)
@@ -32,7 +34,7 @@ class ContentModelService extends ResourceService
         $data = $request->validated();
 
         if (
-            ! array_key_exists('base_route_name', $data) ||
+            !array_key_exists('base_route_name', $data) ||
             empty($data['base_route_name'])
         ) {
             // If base route name is not provided we build it
@@ -58,7 +60,7 @@ class ContentModelService extends ResourceService
         }
 
         if (
-            ! array_key_exists('model_name', $data) ||
+            !array_key_exists('model_name', $data) ||
             empty($data['model_name'])
         ) {
             // If model name is not provided we build it
@@ -71,7 +73,7 @@ class ContentModelService extends ResourceService
         // We pluralize the last
         // And finally we separate them by underscores instead of spaces
         if (
-            ! array_key_exists('table_name', $data) ||
+            !array_key_exists('table_name', $data) ||
             empty($data['table_name'])
         ) {
             // Get words

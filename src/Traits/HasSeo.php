@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 trait HasSeo
 {
     /**
-     * Determine if the model instance has SEO entries
+     * Determine if the model instance has SEO entries.
      *
      * @return bool
      */

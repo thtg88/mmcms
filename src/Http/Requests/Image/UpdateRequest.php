@@ -13,7 +13,8 @@ class UpdateRequest extends BaseUpdateRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper       $database_helper
+     *
      * @return void
      */
     public function __construct(ImageRepository $repository, DatabaseHelper $database_helper)
@@ -64,8 +65,8 @@ class UpdateRequest extends BaseUpdateRequest
         }
 
         $all_rules = [
-            'caption' => 'nullable|string',
-            'name' => 'nullable|string|max:255',
+            'caption'   => 'nullable|string',
+            'name'      => 'nullable|string|max:255',
             'target_id' => [
                 'required',
                 'integer',

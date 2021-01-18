@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Provide an enhanced searchQuery repository method to search for postcode
- * within an address relationship
+ * within an address relationship.
  */
 trait WithAddressPostcodeSearchQuery
 {
@@ -15,13 +15,14 @@ trait WithAddressPostcodeSearchQuery
      * from a given existing query builder, a search query string, and a column.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $builder
-     * @param string $q
-     * @param string $column
+     * @param string                                                                    $q
+     * @param string                                                                    $column
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     protected function searchQueryColumn($builder, $q, $column)
     {
-        if (! is_string($column)) {
+        if (!is_string($column)) {
             return $builder;
         }
 

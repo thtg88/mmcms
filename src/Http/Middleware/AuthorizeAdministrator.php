@@ -4,7 +4,6 @@ namespace Thtg88\MmCms\Http\Middleware;
 
 use Closure;
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Helpers\UserRoleHelper;
 
 class AuthorizeAdministrator
@@ -20,6 +19,7 @@ class AuthorizeAdministrator
      * Create a new middleware instance.
      *
      * @param \Thtg88\MmCms\Helpers\UserRoleHelper $user_role_helper
+     *
      * @return void
      */
     public function __construct(UserRoleHelper $user_role_helper)
@@ -31,7 +31,8 @@ class AuthorizeAdministrator
      * Handle an incoming request.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
+     * @param \Closure                 $next
+     *
      * @return mixed
      */
     public function handle($request, Closure $next)

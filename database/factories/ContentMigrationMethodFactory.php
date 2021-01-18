@@ -22,7 +22,7 @@ class ContentMigrationMethodFactory extends Factory
     {
         return [
             'display_name' => ucwords($this->faker->word),
-            'name' => $this->faker->word,
+            'name'         => $this->faker->word,
         ];
     }
 }

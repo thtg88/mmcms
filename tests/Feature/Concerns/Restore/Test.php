@@ -40,9 +40,9 @@ trait Test
         $response->assertStatus(200)
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

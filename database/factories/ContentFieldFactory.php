@@ -39,10 +39,10 @@ class ContentFieldFactory extends Factory
             'display_name' => static function (array $data) {
                 return ucwords($data['name']);
             },
-            'helper_text' => $this->faker->sentence,
-            'is_mandatory' => rand(0, 1) === 1,
+            'helper_text'      => $this->faker->sentence,
+            'is_mandatory'     => rand(0, 1) === 1,
             'is_resource_name' => rand(0, 1) === 1,
-            'name' => $this->faker->word,
+            'name'             => $this->faker->word,
         ];
     }
 }

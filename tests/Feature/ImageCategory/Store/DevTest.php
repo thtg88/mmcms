@@ -2,15 +2,16 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Store;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl;
+    use WithModelData;
+    use WithUrl;
 
     /**
      * @return void
@@ -24,8 +25,8 @@ class DevTest extends TestCase implements StoreTestContract
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name field is required.',
-                'sequence' => 'The sequence field is required.',
+                'name'         => 'The name field is required.',
+                'sequence'     => 'The sequence field is required.',
                 'target_table' => 'The target table field is required.',
             ]);
     }
@@ -40,12 +41,12 @@ class DevTest extends TestCase implements StoreTestContract
         $user = User::factory()->emailVerified()->dev()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'name' => [Str::random(5)],
+                'name'         => [Str::random(5)],
                 'target_table' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name must be a string.',
+                'name'         => 'The name must be a string.',
                 'target_table' => 'The target table must be a string.',
             ]);
     }
@@ -95,7 +96,7 @@ class DevTest extends TestCase implements StoreTestContract
         $model = call_user_func($this->model_classname.'::factory')->create();
 
         $response = $this->passportActingAs($user)->json('post', $this->getRoute(), [
-            'name' => $model->name,
+            'name'         => $model->name,
             'target_table' => $model->target_table,
         ]);
         $response->assertStatus(422)
@@ -155,11 +156,11 @@ class DevTest extends TestCase implements StoreTestContract
             ->findByModelName($data['name']);
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
+                'id'           => $model->id,
                 'target_table' => $data['target_table'],
-                'name' => $data['name'],
+                'name'         => $data['name'],
             ],
         ]);
 

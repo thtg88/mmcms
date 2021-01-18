@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Database\Factories;
 
-use Illuminate\Support\Str;
 use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Models\ImageCategory;
 
@@ -23,8 +22,8 @@ class ImageCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
-            'sequence' => rand(1, 10),
+            'name'         => $this->faker->word,
+            'sequence'     => rand(1, 10),
             'target_table' => static function (array $data) {
                 $table_names = app()->make(DatabaseHelper::class)->getTableNames();
 

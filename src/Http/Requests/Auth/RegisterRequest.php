@@ -13,6 +13,7 @@ class RegisterRequest extends Request
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $users
+     *
      * @return void
      */
     public function __construct(UserRepository $users)
@@ -47,7 +48,7 @@ class RegisterRequest extends Request
                         $query->whereNull('deleted_at');
                     }),
             ],
-            'name' => 'required|string|max:255',
+            'name'     => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 

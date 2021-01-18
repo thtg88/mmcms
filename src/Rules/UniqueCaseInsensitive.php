@@ -13,7 +13,6 @@ use Illuminate\Validation\Rules\Unique;
  * on a given database table.
  *
  * If a database column is not specified, the attribute will be used.
- *
  */
 class UniqueCaseInsensitive extends Unique implements Rule
 {
@@ -36,15 +35,16 @@ class UniqueCaseInsensitive extends Unique implements Rule
      * If a database column is not specified, the attribute will be used.
      *
      * @param string $attribute
-     * @param mixed $value
-     * @param array $parameters
+     * @param mixed  $value
+     * @param array  $parameters
+     *
      * @return bool
      */
     public function passes($attribute, $value): bool
     {
         $this->attribute = $attribute;
 
-        if (! is_string($value)) {
+        if (!is_string($value)) {
             return false;
         }
 
@@ -68,7 +68,7 @@ class UniqueCaseInsensitive extends Unique implements Rule
         if (isset($parameters[2])) {
             [$idColumn, $id] = $this->getUniqueIds($idColumn, $parameters);
 
-            if (! is_null($id)) {
+            if (!is_null($id)) {
                 $id = stripslashes($id);
             }
         }
@@ -95,8 +95,8 @@ class UniqueCaseInsensitive extends Unique implements Rule
     public function message(): string
     {
         return __('mmcms::validation.unique_case_insensitive', [
-             'attribute' => str_replace('_', ' ', Str::snake($this->attribute)),
-         ]);
+            'attribute' => str_replace('_', ' ', Str::snake($this->attribute)),
+        ]);
     }
 
     /**

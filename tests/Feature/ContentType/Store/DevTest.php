@@ -5,14 +5,14 @@ namespace Thtg88\MmCms\Tests\Feature\ContentType\Store;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
 use Thtg88\MmCms\Models\User;
-use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
-use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentType\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl;
+    use WithModelData;
+    use WithUrl;
 
     /**
      * @return void
@@ -26,7 +26,7 @@ class DevTest extends TestCase implements StoreTestContract
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name field is required.',
+                'name'     => 'The name field is required.',
                 'priority' => 'The priority field is required.',
             ]);
     }
@@ -42,12 +42,12 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'description' => [Str::random(5)],
-                'name' => [Str::random(5)],
+                'name'        => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'description' => 'The description must be a string.',
-                'name' => 'The name must be a string.',
+                'name'        => 'The name must be a string.',
             ]);
     }
 
@@ -109,12 +109,12 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'content_migration_method_id' => [Str::random(8)],
-                'priority' => [Str::random(8)],
+                'priority'                    => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_migration_method_id' => 'The content migration method id must be an integer.',
-                'priority' => 'The priority must be an integer.',
+                'priority'                    => 'The priority must be an integer.',
             ]);
     }
 
@@ -185,13 +185,13 @@ class DevTest extends TestCase implements StoreTestContract
             ->findByModelName($data['name']);
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
-                'created_at' => $model->created_at->toISOString(),
+                'id'          => $model->id,
+                'created_at'  => $model->created_at->toISOString(),
                 'description' => $data['description'],
-                'name' => $data['name'],
-                'priority' => $data['priority'],
+                'name'        => $data['name'],
+                'priority'    => $data['priority'],
             ],
         ]);
 

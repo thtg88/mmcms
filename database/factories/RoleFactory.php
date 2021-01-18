@@ -22,8 +22,8 @@ class RoleFactory extends Factory
     {
         return [
             'display_name' => ucwords($this->faker->word),
-            'name' => $this->faker->word,
-            'priority' => rand(1, 10),
+            'name'         => $this->faker->word,
+            'priority'     => rand(1, 10),
         ];
     }
 }

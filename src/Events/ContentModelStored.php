@@ -20,6 +20,7 @@ class ContentModelStored
      * Create a new event instance.
      *
      * @param \Thtg88\MmCms\Models\ContentModel $content_model
+     *
      * @return void
      */
     public function __construct(ContentModel $content_model)

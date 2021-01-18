@@ -4,14 +4,14 @@ namespace Thtg88\MmCms\Http\Controllers;
 
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
-use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
-use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
-use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Requests\ContentField\DestroyRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\PaginateRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\ShowRequest;
 use Thtg88\MmCms\Http\Requests\ContentField\StoreRequest;
+use Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface;
+use Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface;
 use Thtg88\MmCms\Http\Resources\ContentField\PaginateResource;
 use Thtg88\MmCms\Http\Resources\ContentField\ShowResource;
 use Thtg88\MmCms\Services\ContentFieldService;
@@ -24,16 +24,17 @@ class ContentFieldController extends Controller
      * @var string[]|callable[]
      */
     protected $bindings = [
-        DestroyRequestInterface::class => DestroyRequest::class,
+        DestroyRequestInterface::class  => DestroyRequest::class,
         PaginateRequestInterface::class => PaginateRequest::class,
-        ShowRequestInterface::class => ShowRequest::class,
-        StoreRequestInterface::class => StoreRequest::class,
+        ShowRequestInterface::class     => ShowRequest::class,
+        StoreRequestInterface::class    => StoreRequest::class,
     ];
 
     /**
      * Create a new controller instance.
      *
      * @param \Thtg88\MmCms\Services\ContentFieldService $service
+     *
      * @return void
      */
     public function __construct(ContentFieldService $service)
@@ -47,6 +48,7 @@ class ContentFieldController extends Controller
      * Display a paginated listing of the resources.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function paginate(PaginateRequestInterface $request)
@@ -64,7 +66,8 @@ class ContentFieldController extends Controller
      * Display the specified resource.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
-     * @param int $id
+     * @param int                                                        $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(ShowRequestInterface $request, $id)

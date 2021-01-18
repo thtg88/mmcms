@@ -8,7 +8,9 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl, WithSuccessfulTests;
+    use WithModelData;
+    use WithUrl;
+    use WithSuccessfulTests;
 
     /**
      * Return the factory state that represent the user role

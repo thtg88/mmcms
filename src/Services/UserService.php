@@ -21,6 +21,7 @@ class UserService extends ResourceService
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     *
      * @return void
      */
     public function __construct(
@@ -35,13 +36,14 @@ class UserService extends ResourceService
      * Store a newly created resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreRequestInterface $request)
     {
         $data = $request->validated();
 
-        if (! array_key_exists('role_id', $data) || empty($data['role_id'])) {
+        if (!array_key_exists('role_id', $data) || empty($data['role_id'])) {
             // Get user role
             $user_role = $this->roles->findByModelName(
                 Config::get('mmcms.roles.names.user')

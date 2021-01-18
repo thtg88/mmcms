@@ -19,9 +19,9 @@ class UserRepository extends Repository
      * @var array
      */
     protected static $order_by_columns = [
-        'name' => 'asc',
+        'name'  => 'asc',
         'email' => 'asc',
-        'id' => 'asc',
+        'id'    => 'asc',
     ];
 
     /**
@@ -45,6 +45,7 @@ class UserRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\User $model
+     *
      * @return void
      */
     public function __construct(User $model)

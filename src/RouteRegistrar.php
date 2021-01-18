@@ -18,6 +18,7 @@ class RouteRegistrar
      * Create a new route registrar instance.
      *
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function __construct(Router $router)
@@ -57,6 +58,7 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forAuth($router): void
@@ -66,15 +68,15 @@ class RouteRegistrar
             static function ($router) {
                 $router->post('register', [
                     'uses' => 'AuthController@register',
-                    'as' => 'register',
+                    'as'   => 'register',
                 ]);
                 $router->post('login', [
                     'uses' => 'AuthController@login',
-                    'as' => 'login',
+                    'as'   => 'login',
                 ]);
                 $router->post('token', [
                     'uses' => 'AuthController@token',
-                    'as' => 'token',
+                    'as'   => 'token',
                 ]);
 
                 $router->group(
@@ -82,15 +84,15 @@ class RouteRegistrar
                     static function ($router) {
                         $router->delete('logout', [
                             'uses' => 'AuthController@logout',
-                            'as' => 'logout',
+                            'as'   => 'logout',
                         ]);
                         $router->get('me', [
                             'uses' => 'AuthController@me',
-                            'as' => 'me',
+                            'as'   => 'me',
                         ]);
                         $router->put('me', [
                             'uses' => 'AuthController@updateProfile',
-                            'as' => 'update-profile',
+                            'as'   => 'update-profile',
                         ]);
                     }
                 );
@@ -100,24 +102,25 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentFieldContentValidationRules($router): void
     {
         $router->group(
             [
-                'as' => 'content-field-content-validation-rules.',
+                'as'         => 'content-field-content-validation-rules.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-field-content-validation-rules',
+                'prefix'     => 'content-field-content-validation-rules',
             ],
             static function ($router) {
                 $router->delete('{id}', [
                     'uses' => 'ContentFieldContentValidationRuleController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentFieldContentValidationRuleController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -125,32 +128,33 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentFields($router): void
     {
         $router->group(
             [
-                'as' => 'content-fields.',
+                'as'         => 'content-fields.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-fields',
+                'prefix'     => 'content-fields',
             ],
             static function ($router) {
                 $router->get('paginate', [
                     'uses' => 'ContentFieldController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentFieldController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentFieldController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentFieldController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -158,44 +162,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentMigrationMethods($router): void
     {
         $router->group(
             [
-                'as' => 'content-migration-methods.',
-                'prefix' => 'content-migration-methods',
+                'as'         => 'content-migration-methods.',
+                'prefix'     => 'content-migration-methods',
                 'middleware' => ['auth:api'],
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ContentMigrationMethodController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ContentMigrationMethodController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentMigrationMethodController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ContentMigrationMethodController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentMigrationMethodController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'ContentMigrationMethodController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentMigrationMethodController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -203,44 +208,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentModels($router): void
     {
         $router->group(
             [
-                'as' => 'content-models.',
+                'as'         => 'content-models.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-models',
+                'prefix'     => 'content-models',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ContentModelController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ContentModelController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentModelController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ContentModelController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentModelController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'ContentModelController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentModelController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -248,44 +254,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentTypes($router): void
     {
         $router->group(
             [
-                'as' => 'content-types.',
+                'as'         => 'content-types.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-types',
+                'prefix'     => 'content-types',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ContentTypeController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ContentTypeController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentTypeController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ContentTypeController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentTypeController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'ContentTypeController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentTypeController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -293,24 +300,25 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentTypeContentValidationRules($router): void
     {
         $router->group(
             [
-                'as' => 'content-type-content-validation-rules.',
+                'as'         => 'content-type-content-validation-rules.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-type-content-validation-rules',
+                'prefix'     => 'content-type-content-validation-rules',
             ],
             static function ($router) {
                 $router->delete('{id}', [
                     'uses' => 'ContentTypeContentValidationRuleController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentTypeContentValidationRuleController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -318,44 +326,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentValidationRuleAdditionalFieldTypes($router): void
     {
         $router->group(
             [
-                'as' => 'mmcms.content-validation-rule-additional-field-types.',
-                'prefix' => 'mmcms.content-validation-rule-additional-field-types',
+                'as'         => 'mmcms.content-validation-rule-additional-field-types.',
+                'prefix'     => 'mmcms.content-validation-rule-additional-field-types',
                 'middleware' => ['auth:api', 'authorize.developer'],
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentValidationRuleAdditionalFieldTypeController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -363,48 +372,49 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forContentValidationRules($router): void
     {
         $router->group(
             [
-                'as' => 'content-validation-rules.',
+                'as'         => 'content-validation-rules.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'content-validation-rules',
+                'prefix'     => 'content-validation-rules',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ContentValidationRuleController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ContentValidationRuleController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('search', [
                     'uses' => 'ContentValidationRuleController@search',
-                    'as' => 'search',
+                    'as'   => 'search',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ContentValidationRuleController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ContentValidationRuleController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ContentValidationRuleController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'ContentValidationRuleController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ContentValidationRuleController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -412,44 +422,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forImageCategories($router): void
     {
         $router->group(
             [
-                'as' => 'image-categories.',
+                'as'         => 'image-categories.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'image-categories',
+                'prefix'     => 'image-categories',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'ImageCategoryController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'ImageCategoryController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'ImageCategoryController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'ImageCategoryController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'ImageCategoryController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->get('/', [
                     'uses' => 'ImageCategoryController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'ImageCategoryController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -457,15 +468,16 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forImages($router): void
     {
         $router->group(
             [
-                'as' => 'images.',
+                'as'         => 'images.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'images',
+                'prefix'     => 'images',
             ],
             static function ($router) {
                 // $router->get('paginate', [
@@ -474,18 +486,18 @@ class RouteRegistrar
                 //     'uses' => 'ImageController@paginate',
                 // ]);
                 $router->delete('{id}', [
-                    'as' => 'destroy',
+                    'as'         => 'destroy',
                     'middleware' => 'authorize.administrator',
-                    'uses' => 'ImageController@destroy',
+                    'uses'       => 'ImageController@destroy',
                 ]);
                 $router->get('{id}', [
-                    'as' => 'show',
+                    'as'   => 'show',
                     'uses' => 'ImageController@show',
                 ]);
                 $router->put('{id}', [
-                    'as' => 'update',
+                    'as'         => 'update',
                     'middleware' => 'authorize.administrator',
-                    'uses' => 'ImageController@update',
+                    'uses'       => 'ImageController@update',
                 ]);
                 // $router->get('/', [
                 //     'as' => 'index',
@@ -493,9 +505,9 @@ class RouteRegistrar
                 //     'uses' => 'ImageController@index',
                 // ]);
                 $router->post('/', [
-                    'as' => 'store',
+                    'as'         => 'store',
                     'middleware' => 'authorize.administrator',
-                    'uses' => 'ImageController@store',
+                    'uses'       => 'ImageController@store',
                 ]);
             }
         );
@@ -503,44 +515,45 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forRoles($router): void
     {
         $router->group(
             [
-                'as' => 'roles.',
+                'as'         => 'roles.',
                 'middleware' => 'auth:api',
-                'prefix' => 'roles',
+                'prefix'     => 'roles',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'RoleController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
                     'uses' => 'RoleController@paginate',
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                 ]);
                 $router->get('{id}', [
                     'uses' => 'RoleController@show',
-                    'as' => 'show',
+                    'as'   => 'show',
                 ]);
                 $router->put('{id}', [
                     'uses' => 'RoleController@update',
-                    'as' => 'update',
+                    'as'   => 'update',
                 ]);
                 $router->delete('{id}', [
                     'uses' => 'RoleController@destroy',
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                 ]);
                 $router->get('/', [
                     'uses' => 'RoleController@index',
-                    'as' => 'index',
+                    'as'   => 'index',
                 ]);
                 $router->post('/', [
                     'uses' => 'RoleController@store',
-                    'as' => 'store',
+                    'as'   => 'store',
                 ]);
             }
         );
@@ -548,43 +561,44 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forSeoEntries($router): void
     {
         $router->group(
             [
-                'as' => 'seo-entries.',
+                'as'         => 'seo-entries.',
                 'middleware' => ['auth:api'],
-                'prefix' => 'seo-entries',
+                'prefix'     => 'seo-entries',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
-                    'as' => 'restore',
+                    'as'   => 'restore',
                     'uses' => 'SeoEntryController@restore',
                 ]);
                 $router->get('paginate', [
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                     'uses' => 'SeoEntryController@paginate',
                 ]);
                 $router->delete('{id}', [
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                     'uses' => 'SeoEntryController@destroy',
                 ]);
                 $router->get('{id}', [
-                    'as' => 'show',
+                    'as'   => 'show',
                     'uses' => 'SeoEntryController@show',
                 ]);
                 $router->put('{id}', [
-                    'as' => 'update',
+                    'as'   => 'update',
                     'uses' => 'SeoEntryController@update',
                 ]);
                 $router->get('/', [
-                    'as' => 'index',
+                    'as'   => 'index',
                     'uses' => 'SeoEntryController@index',
                 ]);
                 $router->post('/', [
-                    'as' => 'store',
+                    'as'   => 'store',
                     'uses' => 'SeoEntryController@store',
                 ]);
             }
@@ -593,43 +607,44 @@ class RouteRegistrar
 
     /**
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function forUsers($router): void
     {
         $router->group(
             [
-                'as' => 'users.',
+                'as'         => 'users.',
                 'middleware' => 'auth:api',
-                'prefix' => 'users',
+                'prefix'     => 'users',
             ],
             static function ($router) {
                 $router->post('{id}/restore', [
                     'uses' => 'UserController@restore',
-                    'as' => 'restore',
+                    'as'   => 'restore',
                 ]);
                 $router->get('paginate', [
-                    'as' => 'paginate',
+                    'as'   => 'paginate',
                     'uses' => 'UserController@paginate',
                 ]);
                 $router->get('{id}', [
-                    'as' => 'show',
+                    'as'   => 'show',
                     'uses' => 'UserController@show',
                 ]);
                 $router->put('{id}', [
-                    'as' => 'update',
+                    'as'   => 'update',
                     'uses' => 'UserController@update',
                 ]);
                 $router->delete('{id}', [
-                    'as' => 'destroy',
+                    'as'   => 'destroy',
                     'uses' => 'UserController@destroy',
                 ]);
                 $router->get('/', [
-                    'as' => 'index',
+                    'as'   => 'index',
                     'uses' => 'UserController@index',
                 ]);
                 $router->post('/', [
-                    'as' => 'store',
+                    'as'   => 'store',
                     'uses' => 'UserController@store',
                 ]);
             }

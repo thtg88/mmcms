@@ -11,6 +11,7 @@ class RestoreRequest extends BaseRestoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
+     *
      * @return void
      */
     public function __construct(SeoEntryRepository $repository)

@@ -26,19 +26,20 @@ class SeoEntryController extends Controller
      * @var string[]|callable[]
      */
     protected $bindings = [
-        DestroyRequestInterface::class => DestroyRequest::class,
-        IndexRequestInterface::class => IndexRequest::class,
+        DestroyRequestInterface::class  => DestroyRequest::class,
+        IndexRequestInterface::class    => IndexRequest::class,
         PaginateRequestInterface::class => PaginateRequest::class,
-        RestoreRequestInterface::class => RestoreRequest::class,
-        ShowRequestInterface::class => ShowRequest::class,
-        StoreRequestInterface::class => StoreRequest::class,
-        UpdateRequestInterface::class => UpdateRequest::class,
+        RestoreRequestInterface::class  => RestoreRequest::class,
+        ShowRequestInterface::class     => ShowRequest::class,
+        StoreRequestInterface::class    => StoreRequest::class,
+        UpdateRequestInterface::class   => UpdateRequest::class,
     ];
 
     /**
      * Create a new controller instance.
      *
      * @param \Thtg88\MmCms\Services\SeoEntryService $service
+     *
      * @return void
      */
     public function __construct(SeoEntryService $service)

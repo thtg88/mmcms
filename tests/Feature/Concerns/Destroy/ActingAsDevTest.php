@@ -51,7 +51,7 @@ trait ActingAsDevTest
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

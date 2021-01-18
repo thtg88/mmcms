@@ -13,6 +13,7 @@ class AccessTokenController extends BaseAccessTokenController
      * Authorize a client to access the user's account.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function issueToken(ServerRequestInterface $request)
@@ -33,13 +34,13 @@ class AccessTokenController extends BaseAccessTokenController
         try {
             $response = $this->withErrorHandling(function () use ($request) {
                 return $this->convertResponse(
-                    $this->server->respondToAccessTokenRequest($request, new Psr7Response)
+                    $this->server->respondToAccessTokenRequest($request, new Psr7Response())
                 );
             });
         } catch (OAuthServerException $e) {
             if ($e->getCode() === 10) {
                 return response()->json([
-                    'errors' => [__('auth.failed')],
+                    'errors'  => [__('auth.failed')],
                     'message' => __('auth.failed'),
                 ], 401);
             }

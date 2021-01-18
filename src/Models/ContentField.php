@@ -36,6 +36,7 @@ class ContentField extends Model
      * The attributes that should be visible in arrays.
      *
      * @var array
+     *
      * @todo remove once ready
      */
     protected $visible = [
@@ -57,12 +58,12 @@ class ContentField extends Model
      */
     protected $casts = [
         'content_model_id' => 'integer',
-        'content_type_id' => 'integer',
-        'is_mandatory' => 'boolean',
+        'content_type_id'  => 'integer',
+        'is_mandatory'     => 'boolean',
         'is_resource_name' => 'boolean',
-        'created_at' => 'datetime',
-        'deleted_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at'       => 'datetime',
+        'deleted_at'       => 'datetime',
+        'updated_at'       => 'datetime',
     ];
 
     // RELATIONSHIPS

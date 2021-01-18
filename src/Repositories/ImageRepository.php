@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\Image;
 
-/**
- *
- */
 class ImageRepository extends Repository
 {
     protected static $model_name = 'url';
@@ -22,7 +19,8 @@ class ImageRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\Image	$model
+     * @param \Thtg88\MmCms\Models\Image $model
+     *
      * @return void
      */
     public function __construct(Image $model)

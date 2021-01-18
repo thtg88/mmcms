@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Console\Commands;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use PDO;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -37,8 +37,9 @@ class CreateDatabaseCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return mixed
      * @throws RuntimeException If database connection not "mysql" nor "pgsql".
+     *
+     * @return mixed
      */
     public function handle()
     {
@@ -80,7 +81,7 @@ class CreateDatabaseCommand extends Command
             }
         }
 
-        if (! isset($created)) {
+        if (!isset($created)) {
             throw new \RuntimeException(
                 'Database type not supported: '.
                 $default_database_connection
@@ -104,6 +105,7 @@ class CreateDatabaseCommand extends Command
      * Create a PostgreSQL database.
      *
      * @param string $database_name
+     *
      * @return mixed
      */
     protected function createPostgreSql($database_name)
@@ -122,6 +124,7 @@ class CreateDatabaseCommand extends Command
 
         if (array_search($database_name, $databases) === false) {
             DB::statement('CREATE DATABASE '.$database_name.';');
+
             return true;
         }
 
@@ -132,6 +135,7 @@ class CreateDatabaseCommand extends Command
      * Create a MySQL database.
      *
      * @param string $database_name
+     *
      * @return mixed
      */
     protected function createMySql($database_name)
@@ -157,9 +161,10 @@ class CreateDatabaseCommand extends Command
      * and password.
      *
      * @param string $host
-     * @param int $port
+     * @param int    $port
      * @param string $username
      * @param string $password
+     *
      * @return PDO
      */
     protected function getPDOConnection($host, $port, $username, $password)

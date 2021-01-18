@@ -12,19 +12,19 @@ class RolesTableSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'dev',
+                'name'         => 'dev',
                 'display_name' => 'Developer',
-                'priority' => 1,
+                'priority'     => 1,
             ],
             [
-                'name' => 'admin',
+                'name'         => 'admin',
                 'display_name' => 'Administrator',
-                'priority' => 2,
+                'priority'     => 2,
             ],
             [
-                'name' => 'user',
+                'name'         => 'user',
                 'display_name' => 'User',
-                'priority' => 3,
+                'priority'     => 3,
             ],
         ];
 

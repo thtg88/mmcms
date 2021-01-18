@@ -14,6 +14,7 @@ class UpdateRequest extends BaseUpdateRequest
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     *
      * @return void
      */
     public function __construct(
@@ -44,7 +45,7 @@ class UpdateRequest extends BaseUpdateRequest
                             ->where('id', '<>', $this->route('id'));
                     }),
             ],
-            'name' => 'required|string|max:255',
+            'name'    => 'required|string|max:255',
             'role_id' => [
                 'required',
                 'integer',

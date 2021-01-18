@@ -13,7 +13,8 @@ class StoreRequest extends BaseStoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper       $database_helper
+     *
      * @return void
      */
     public function __construct(ImageRepository $repository, DatabaseHelper $database_helper)
@@ -46,9 +47,9 @@ class StoreRequest extends BaseStoreRequest
         $table_names = $this->database_helper->getTableNames();
 
         $all_rules = [
-            'caption' => 'nullable|string',
-            'data' => 'required_without:url|file|mimes:jpg,jpeg,png,gif',
-            'name' => 'nullable|string|max:255',
+            'caption'   => 'nullable|string',
+            'data'      => 'required_without:url|file|mimes:jpg,jpeg,png,gif',
+            'name'      => 'nullable|string|max:255',
             'target_id' => [
                 'required',
                 'integer',
@@ -59,7 +60,7 @@ class StoreRequest extends BaseStoreRequest
                 'in:'.implode(',', $table_names),
             ],
             'title' => 'nullable|string|max:255',
-            'url' => 'required_without:data|string|max:2000',
+            'url'   => 'required_without:data|string|max:2000',
         ];
 
         if (

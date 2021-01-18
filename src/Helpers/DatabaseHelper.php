@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Helpers;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 /**
@@ -14,9 +14,9 @@ class DatabaseHelper
     /**
      * Get a list of all the database table names.
      *
-     * @return array
-     *
      * @throws \InvalidArgumentException If the database connection is not supported
+     *
+     * @return array
      */
     public function getTableNames(): array
     {

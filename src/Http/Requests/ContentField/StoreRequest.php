@@ -19,7 +19,8 @@ class StoreRequest extends BaseStoreRequest
      *
      * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $repository
      * @param \Thtg88\MmCms\Repositories\ContentModelRepository $content_models
-     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository $content_types
+     * @param \Thtg88\MmCms\Repositories\ContentTypeRepository  $content_types
+     *
      * @return void
      */
     public function __construct(
@@ -82,7 +83,7 @@ class StoreRequest extends BaseStoreRequest
 
         if (
             $this->content_model_id !== null &&
-            ! empty($this->content_model_id) &&
+            !empty($this->content_model_id) &&
             is_numeric($this->content_model_id)
         ) {
             // Add unique-ness of fields within model

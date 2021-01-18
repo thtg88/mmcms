@@ -8,6 +8,7 @@ class BlogModule
      * Binds the mmCMS routes into the controller.
      *
      * @param array $options
+     *
      * @return void
      */
     public static function routes(array $options = [])
@@ -17,7 +18,7 @@ class BlogModule
         };
 
         $defaultOptions = [
-            'prefix' => 'blog',
+            'prefix'    => 'blog',
             'namespace' => '\Thtg88\MmCms\Blog\Http\Controllers',
         ];
 

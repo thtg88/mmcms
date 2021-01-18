@@ -6,15 +6,14 @@ use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\ContentType;
 use Thtg88\MmCms\Models\ContentValidationRule;
 use Thtg88\MmCms\Models\User;
-use Thtg88\MmCms\Repositories\ContentTypeRepository;
-use Thtg88\MmCms\Repositories\ContentValidationRuleRepository;
-use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentTypeContentValidationRule\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl;
+    use WithModelData;
+    use WithUrl;
 
     /**
      * @return void
@@ -28,7 +27,7 @@ class DevTest extends TestCase implements StoreTestContract
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'content_type_id' => 'The content type id field is required.',
+                'content_type_id'            => 'The content type id field is required.',
                 'content_validation_rule_id' => 'The content validation rule id field is required.',
             ]);
     }
@@ -45,7 +44,7 @@ class DevTest extends TestCase implements StoreTestContract
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'content_type_id' => $model->content_type_id,
+                'content_type_id'            => $model->content_type_id,
                 'content_validation_rule_id' => $model->content_validation_rule_id,
             ]);
         $response->assertStatus(422)
@@ -65,12 +64,12 @@ class DevTest extends TestCase implements StoreTestContract
 
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'content_type_id' => [Str::random(8)],
+                'content_type_id'            => [Str::random(8)],
                 'content_validation_rule_id' => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'content_type_id' => 'The content type id must be an integer.',
+                'content_type_id'            => 'The content type id must be an integer.',
                 'content_validation_rule_id' => 'The content validation rule id must be an integer.',
             ]);
     }
@@ -157,11 +156,11 @@ class DevTest extends TestCase implements StoreTestContract
         $model = app()->make($this->repository_classname)->findLast();
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
-                'created_at' => $model->created_at->toISOString(),
-                'content_type_id' => $data['content_type_id'],
+                'id'                         => $model->id,
+                'created_at'                 => $model->created_at->toISOString(),
+                'content_type_id'            => $data['content_type_id'],
                 'content_validation_rule_id' => $data['content_validation_rule_id'],
             ],
         ]);

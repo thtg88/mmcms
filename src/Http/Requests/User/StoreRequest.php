@@ -18,6 +18,7 @@ class StoreRequest extends BaseStoreRequest
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $repository
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     *
      * @return void
      */
     public function __construct(
@@ -47,9 +48,9 @@ class StoreRequest extends BaseStoreRequest
                         $query->whereNull('deleted_at');
                     }),
             ],
-            'name' => 'required|string|max:255',
+            'name'     => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
-            'role_id' => [
+            'role_id'  => [
                 'required',
                 'integer',
                 Rule::existsWithoutSoftDeleted(

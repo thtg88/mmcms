@@ -2,10 +2,9 @@
 
 namespace Thtg88\MmCms\Tests\Feature\User\Update;
 
-use Thtg88\MmCms\Models\Role;
-use Thtg88\MmCms\Repositories\RoleRepository;
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\Role;
+use Thtg88\MmCms\Models\User;
 
 trait WithSuccessfulTests
 {
@@ -23,12 +22,12 @@ trait WithSuccessfulTests
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'email' => [Str::random(5)],
-                'name' => [Str::random(5)],
+                'name'  => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'email' => 'The email must be a string.',
-                'name' => 'The name must be a string.',
+                'name'  => 'The name must be a string.',
             ]);
     }
 
@@ -46,12 +45,12 @@ trait WithSuccessfulTests
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'email' => Str::random(256),
-                'name' => Str::random(256),
+                'name'  => Str::random(256),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'email' => 'The email may not be greater than 255 characters.',
-                'name' => 'The name may not be greater than 255 characters.',
+                'name'  => 'The name may not be greater than 255 characters.',
             ]);
     }
 
@@ -153,12 +152,12 @@ trait WithSuccessfulTests
         $model = $model->refresh();
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
+                'id'         => $model->id,
                 'created_at' => $model->created_at->toISOString(),
-                'email' => $data['email'],
-                'name' => $data['name'],
+                'email'      => $data['email'],
+                'name'       => $data['name'],
             ],
         ]);
 

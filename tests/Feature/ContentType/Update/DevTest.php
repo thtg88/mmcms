@@ -5,15 +5,16 @@ namespace Thtg88\MmCms\Tests\Feature\ContentType\Update;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\ContentMigrationMethod;
 use Thtg88\MmCms\Models\User;
-use Thtg88\MmCms\Repositories\ContentMigrationMethodRepository;
 use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsDevTest;
-use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentType\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements UpdateTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
 
     /**
      * @return void
@@ -27,12 +28,12 @@ class DevTest extends TestCase implements UpdateTestContract
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
-                'name' => [Str::random(5)],
+                'name'        => [Str::random(5)],
                 'description' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name must be a string.',
+                'name'        => 'The name must be a string.',
                 'description' => 'The description must be a string.',
             ]);
     }
@@ -101,12 +102,12 @@ class DevTest extends TestCase implements UpdateTestContract
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
                 'content_migration_method_id' => [Str::random(8)],
-                'priority' => [Str::random(8)],
+                'priority'                    => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_migration_method_id' => 'The content migration method id must be an integer.',
-                'priority' => 'The priority must be an integer.',
+                'priority'                    => 'The priority must be an integer.',
             ]);
     }
 
@@ -178,14 +179,14 @@ class DevTest extends TestCase implements UpdateTestContract
             ->json('put', $this->getRoute([$model->id]), $data);
         $response->assertStatus(200)
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
-                    'created_at' => $model->created_at->toISOString(),
+                    'id'                          => $model->id,
+                    'created_at'                  => $model->created_at->toISOString(),
                     'content_migration_method_id' => $data['content_migration_method_id'],
-                    'description' => $data['description'],
-                    'name' => $data['name'],
-                    'priority' => $data['priority'],
+                    'description'                 => $data['description'],
+                    'name'                        => $data['name'],
+                    'priority'                    => $data['priority'],
                 ],
             ]);
 

@@ -13,7 +13,8 @@ class UpdateRequest extends BaseUpdateRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper               $database_helper
+     *
      * @return void
      */
     public function __construct(
@@ -43,7 +44,7 @@ class UpdateRequest extends BaseUpdateRequest
                 'string',
                 'max:255',
             ],
-            'sequence' => 'required|integer|min:1',
+            'sequence'     => 'required|integer|min:1',
             'target_table' => [
                 'required',
                 'string',
@@ -63,7 +64,7 @@ class UpdateRequest extends BaseUpdateRequest
 
         if (
             array_key_exists('target_table', $input)
-            && ! empty($input['target_table'])
+            && !empty($input['target_table'])
             && is_string($input['target_table'])
         ) {
             $target_table = $input['target_table'];
@@ -73,7 +74,7 @@ class UpdateRequest extends BaseUpdateRequest
 
         if (
             array_key_exists('name', $input)
-            && ! empty($input['name'])
+            && !empty($input['name'])
             && is_string($input['name'])
         ) {
             $name = $input['name'];
@@ -84,16 +85,16 @@ class UpdateRequest extends BaseUpdateRequest
         if (
             (
                 array_key_exists('name', $input)
-                && ! empty($input['name'])
+                && !empty($input['name'])
                 && is_string($input['name'])
-                && ! empty($target_table)
+                && !empty($target_table)
                 && is_string($target_table)
             )
             || (
                 array_key_exists('target_table', $input)
-                && ! empty($input['target_table'])
+                && !empty($input['target_table'])
                 && is_string($input['target_table'])
-                && ! empty($name)
+                && !empty($name)
                 && is_string($name)
             )
         ) {

@@ -11,7 +11,7 @@ trait HasPublishing
      */
     public static function bootHasPublishing()
     {
-        static::addGlobalScope(new PublishingScope);
+        static::addGlobalScope(new PublishingScope());
     }
 
     /**
@@ -49,7 +49,7 @@ trait HasPublishing
      */
     public function published()
     {
-        return ! is_null($this->{$this->getPublishedAtColumn()});
+        return !is_null($this->{$this->getPublishedAtColumn()});
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace Thtg88\MmCms\Helpers;
 
 use Illuminate\Support\Facades\Config;
-use Thtg88\MmCms\Repositories\RoleRepository;
 use Thtg88\MmCms\Models\User;
+use Thtg88\MmCms\Repositories\RoleRepository;
 
 /**
  * Helper methods for user role.
@@ -22,6 +22,7 @@ class UserRoleHelper
      * Create a new helper instance.
      *
      * @param \Thtg88\MmCms\Repositories\RoleRepository $roles
+     *
      * @return void
      */
     public function __construct(RoleRepository $roles)
@@ -37,13 +38,14 @@ class UserRoleHelper
      * this function will return true.
      *
      * @param \Thtg88\MmCms\Models\User $user
-     * @param string $role_name The name of the role.
+     * @param string                    $role_name The name of the role.
+     *
      * @return bool
      */
     public function authorize(User $user, $role_name): bool
     {
         // Assume name is string and not empty
-        if (empty($role_name) || ! is_string($role_name)) {
+        if (empty($role_name) || !is_string($role_name)) {
             return false;
         }
 
@@ -73,7 +75,8 @@ class UserRoleHelper
      * Return whether a given user is authorized for an administrator role.
      *
      * @param \Thtg88\MmCms\Models\User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function authorizeAdministrator(User $user)
     {
@@ -87,7 +90,8 @@ class UserRoleHelper
      * Return whether a user from a given id is authorized for a developer role.
      *
      * @param \Thtg88\MmCms\Models\User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function authorizeDeveloper(User $user)
     {

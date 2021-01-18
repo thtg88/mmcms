@@ -49,7 +49,7 @@ class ImageCategory extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
-        'sequence' => 'integer',
+        'sequence'   => 'integer',
         'updated_at' => 'datetime',
     ];
 

@@ -9,5 +9,7 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements DestroyTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
 }

@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Config;
 use Laravel\Passport\PassportServiceProvider;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Traits\Seedable;
@@ -125,15 +124,15 @@ class InstallCommand extends Command
             'migrations',
             'translations',
             'views',
-            'assets'
+            'assets',
         ];
         $this->call('vendor:publish', [
             '--provider' => MmCmsServiceProvider::class,
-            '--tag' => $tags,
+            '--tag'      => $tags,
         ]);
         $this->call('vendor:publish', [
             '--provider' => PassportServiceProvider::class,
-            '--tag' => 'passport-migrations',
+            '--tag'      => 'passport-migrations',
         ]);
     }
 
@@ -145,7 +144,7 @@ class InstallCommand extends Command
     private function extendUserModel()
     {
         // Check that file exists
-        if (! file_exists(Container::getInstance()->path('User.php'))) {
+        if (!file_exists(Container::getInstance()->path('User.php'))) {
             // Warn the user to do changes manually
             $this->warn('Unable to locate "app'.DIRECTORY_SEPARATOR.'User.php". Did you move this file?');
             $this->warn('You will need to update this manually.');
@@ -215,7 +214,7 @@ class InstallCommand extends Command
     private function addPassportRoutes()
     {
         // Check that Route service provider exists
-        if (! file_exists(
+        if (!file_exists(
             Container::getInstance()->path('Providers'.DIRECTORY_SEPARATOR.'RouteServiceProvider.php')
         )) {
             // Warn the user to do changes manually
@@ -261,7 +260,7 @@ class InstallCommand extends Command
     private function addExceptionRenderers()
     {
         // Check that exception handler is in the standard Laravel place
-        if (! file_exists(
+        if (!file_exists(
             Container::getInstance()->path('Exceptions'.DIRECTORY_SEPARATOR.'Handler.php')
         )) {
             // Warn user of the manual changes needed
@@ -313,7 +312,7 @@ class InstallCommand extends Command
     private function setPassportAuthDriver()
     {
         // Check that auth config is in the standard Laravel place
-        if (! file_exists(Container::getInstance()->configPath('auth.php'))) {
+        if (!file_exists(Container::getInstance()->configPath('auth.php'))) {
             // Warn user of the manual changes needed
             $this->warn('Unable to locate "config'.DIRECTORY_SEPARATOR.'auth.php". Did you move this file?');
             $this->warn("Make sure you have ['guards']['api']['driver'] set to 'passport'.");
@@ -365,12 +364,12 @@ class InstallCommand extends Command
         }
 
         // Create .htaccess file
-        $str = "";
-        $str .= "<IfModule mod_rewrite.c>".PHP_EOL;
-        $str .= "    RewriteEngine on".PHP_EOL.PHP_EOL;
-        $str .= "    RewriteCond %{REQUEST_URI} !public/".PHP_EOL;
-        $str .= "    RewriteRule (.*) /public/$1 [L]".PHP_EOL;
-        $str .= "</IfModule>".PHP_EOL;
+        $str = '';
+        $str .= '<IfModule mod_rewrite.c>'.PHP_EOL;
+        $str .= '    RewriteEngine on'.PHP_EOL.PHP_EOL;
+        $str .= '    RewriteCond %{REQUEST_URI} !public/'.PHP_EOL;
+        $str .= '    RewriteRule (.*) /public/$1 [L]'.PHP_EOL;
+        $str .= '</IfModule>'.PHP_EOL;
 
         file_put_contents(Container::getInstance()->basePath('.htaccess'), $str);
     }

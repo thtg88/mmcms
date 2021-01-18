@@ -9,5 +9,7 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class AdminTest extends TestCase implements RestoreTestContract
 {
-    use WithModelData, WithUrl, ActingAsAdminTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsAdminTest;
 }

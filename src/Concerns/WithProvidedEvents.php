@@ -7,16 +7,16 @@ use Illuminate\Support\Facades\Event;
 use Thtg88\MmCms\Events\ContentFieldDestroyed;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Events\ContentModelStored;
+use Thtg88\MmCms\Listeners\DatabaseMigrate;
 use Thtg88\MmCms\Listeners\MakeContentFieldDropColumnMigration;
 use Thtg88\MmCms\Listeners\MakeContentFieldMigration;
+use Thtg88\MmCms\Listeners\MakeContentModelController;
+use Thtg88\MmCms\Listeners\MakeContentModelDestroyRequest;
 use Thtg88\MmCms\Listeners\MakeContentModelMigration;
 use Thtg88\MmCms\Listeners\MakeContentModelModel;
 use Thtg88\MmCms\Listeners\MakeContentModelRepository;
-use Thtg88\MmCms\Listeners\MakeContentModelDestroyRequest;
 use Thtg88\MmCms\Listeners\MakeContentModelStoreRequest;
 use Thtg88\MmCms\Listeners\MakeContentModelUpdateRequest;
-use Thtg88\MmCms\Listeners\MakeContentModelController;
-use Thtg88\MmCms\Listeners\DatabaseMigrate;
 
 trait WithProvidedEvents
 {
@@ -123,7 +123,7 @@ trait WithProvidedEvents
     {
         return collect($this->discoverEventsWithin())
             ->reject(function ($directory) {
-                return ! is_dir($directory);
+                return !is_dir($directory);
             })
             ->reduce(function ($discovered, $directory) {
                 return array_merge_recursive(

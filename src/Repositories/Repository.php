@@ -5,21 +5,19 @@ namespace Thtg88\MmCms\Repositories;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\Config;
 use Thtg88\MmCms\Helpers\JournalEntryHelper;
-use Thtg88\MmCms\Repositories\JournalEntryRepository;
 
 class Repository implements RepositoryInterface
 {
-    use Concerns\WithAllModels,
-        Concerns\WithCreate,
-        Concerns\WithDateFilter,
-        Concerns\WithDestroy,
-        Concerns\WithFind,
-        Concerns\WithGet,
-        Concerns\WithPagination,
-        Concerns\WithSearch,
-        Concerns\WithUpdate;
+    use Concerns\WithAllModels;
+    use Concerns\WithCreate;
+    use Concerns\WithDateFilter;
+    use Concerns\WithDestroy;
+    use Concerns\WithFind;
+    use Concerns\WithGet;
+    use Concerns\WithPagination;
+    use Concerns\WithSearch;
+    use Concerns\WithUpdate;
 
     /**
      * The journal entry helper implementation.
@@ -100,7 +98,9 @@ class Repository implements RepositoryInterface
                 $container['request']->ip()
             );
         }
-    }/**
+    }
+
+    /**
      * Return the repository model.
      *
      * @return \Illuminate\Database\Eloquent\Model
@@ -151,7 +151,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Exclude a scope for the model in the current repository
+     * Exclude a scope for the model in the current repository.
      *
      * @return self
      */
@@ -163,7 +163,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Exclude a scope for the model in the current repository
+     * Exclude a scope for the model in the current repository.
      *
      * @return self
      */
@@ -219,12 +219,13 @@ class Repository implements RepositoryInterface
      * from a given existing query builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $builder
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     protected function withDefaultOrderBy($bulder)
     {
         if (
-            ! is_array(static::$order_by_columns) ||
+            !is_array(static::$order_by_columns) ||
             count(static::$order_by_columns) === 0
         ) {
             return $bulder;
@@ -242,6 +243,7 @@ class Repository implements RepositoryInterface
      * in the given builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $builder
+     *
      * @return \Illuminate\Database\Query\Builder
      */
     protected function withOptionalTrashed($builder)

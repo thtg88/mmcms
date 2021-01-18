@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentModel\Store;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\User;
@@ -13,7 +12,9 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl, WithGeneratedFiles;
+    use WithModelData;
+    use WithUrl;
+    use WithGeneratedFiles;
 
     /**
      * @return void
@@ -42,16 +43,16 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'base_route_name' => [Str::random(5)],
-                'model_name' => [Str::random(5)],
-                'name' => [Str::random(5)],
-                'table_name' => [Str::random(5)],
+                'model_name'      => [Str::random(5)],
+                'name'            => [Str::random(5)],
+                'table_name'      => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'base_route_name' => 'The base route name must be a string.',
-                'model_name' => 'The model name must be a string.',
-                'name' => 'The name must be a string.',
-                'table_name' => 'The table name must be a string.',
+                'model_name'      => 'The model name must be a string.',
+                'name'            => 'The name must be a string.',
+                'table_name'      => 'The table name must be a string.',
             ]);
     }
 
@@ -66,16 +67,16 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'base_route_name' => Str::random(256),
-                'model_name' => Str::random(256),
-                'name' => Str::random(256),
-                'table_name' => Str::random(256),
+                'model_name'      => Str::random(256),
+                'name'            => Str::random(256),
+                'table_name'      => Str::random(256),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'base_route_name' => 'The base route name may not be greater than 255 characters.',
-                'model_name' => 'The model name may not be greater than 255 characters.',
-                'name' => 'The name may not be greater than 255 characters.',
-                'table_name' => 'The table name may not be greater than 255 characters.',
+                'model_name'      => 'The model name may not be greater than 255 characters.',
+                'name'            => 'The name may not be greater than 255 characters.',
+                'table_name'      => 'The table name may not be greater than 255 characters.',
             ]);
     }
 
@@ -92,16 +93,16 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'base_route_name' => $model->base_route_name,
-                'model_name' => $model->model_name,
-                'name' => $model->name,
-                'table_name' => $model->table_name,
+                'model_name'      => $model->model_name,
+                'name'            => $model->name,
+                'table_name'      => $model->table_name,
             ]);
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'base_route_name' => 'The base route name has already been taken.',
-            'model_name' => 'The model name has already been taken.',
-            'name' => 'The name has already been taken.',
-            'table_name' => 'The table name has already been taken.',
+            'model_name'      => 'The model name has already been taken.',
+            'name'            => 'The name has already been taken.',
+            'table_name'      => 'The table name has already been taken.',
         ]);
     }
 
@@ -123,14 +124,14 @@ class DevTest extends TestCase implements StoreTestContract
             ->findByModelName($data['name']);
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
-                'created_at' => $model->created_at->toISOString(),
+                'id'              => $model->id,
+                'created_at'      => $model->created_at->toISOString(),
                 'base_route_name' => $data['base_route_name'],
-                'model_name' => $data['model_name'],
-                'name' => $data['name'],
-                'table_name' => $data['table_name'],
+                'model_name'      => $data['model_name'],
+                'name'            => $data['name'],
+                'table_name'      => $data['table_name'],
             ],
         ]);
 
