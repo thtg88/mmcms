@@ -22,7 +22,7 @@ class JournalEntryHelper
     /**
      * The current request IP.
      *
-     * @var string $current_request_ip
+     * @var string
      */
     protected $current_request_ip;
 
