@@ -22,10 +22,10 @@ use Thtg88\MmCms\Http\Resources\Resource;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests,
-        DispatchesJobs,
-        ValidatesRequests,
-        Concerns\WithBindings;
+    use AuthorizesRequests;
+    use DispatchesJobs;
+    use ValidatesRequests;
+    use Concerns\WithBindings;
 
     /**
      * The API resource class name.
@@ -55,6 +55,7 @@ class Controller extends BaseController
      * Display a listing of the resource filtered by a given start and end date.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function dateFilter(DateFilterRequestInterface $request)
@@ -74,7 +75,8 @@ class Controller extends BaseController
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
-     * @param int $id
+     * @param int                                                           $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(DestroyRequestInterface $request, $id)
@@ -87,7 +89,7 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json([
-                'success' => true,
+                'success'  => true,
                 'resource' => new $resource_classname($resource),
             ]);
     }
@@ -96,6 +98,7 @@ class Controller extends BaseController
      * Display a listing of the resources.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(IndexRequestInterface $request)
@@ -115,6 +118,7 @@ class Controller extends BaseController
      * Display a paginated listing of the resources.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function paginate(PaginateRequestInterface $request)
@@ -128,7 +132,8 @@ class Controller extends BaseController
      * Restore the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request
-     * @param int $id
+     * @param int                                                           $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function restore(RestoreRequestInterface $request, $id)
@@ -140,7 +145,7 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json([
-                'success' => true,
+                'success'  => true,
                 'resource' => new $resource_classname($resource),
             ]);
     }
@@ -149,6 +154,7 @@ class Controller extends BaseController
      * Search for the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\SearchRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function search(SearchRequestInterface $request)
@@ -168,7 +174,8 @@ class Controller extends BaseController
      * Display the specified resource.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
-     * @param int $id
+     * @param int                                                        $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(ShowRequestInterface $request, $id)
@@ -186,6 +193,7 @@ class Controller extends BaseController
      * Store a newly created resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequestInterface $request)
@@ -198,7 +206,7 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json([
-                'success' => true,
+                'success'  => true,
                 'resource' => new $resource_classname($resource),
             ]);
     }
@@ -207,7 +215,8 @@ class Controller extends BaseController
      * Update the specified resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface $request
-     * @param int $id
+     * @param int                                                          $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequestInterface $request, $id)
@@ -220,7 +229,7 @@ class Controller extends BaseController
         return Container::getInstance()
             ->make(ResponseFactory::class, [])
             ->json([
-                'success' => true,
+                'success'  => true,
                 'resource' => new $resource_classname($resource),
             ]);
     }
@@ -230,6 +239,7 @@ class Controller extends BaseController
      * filtered by a given start and end date.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function userDateFilter(DateFilterRequestInterface $request)
@@ -249,6 +259,7 @@ class Controller extends BaseController
      * Display a listing of the resource belonging to the user.
      *
      * @param \Thtg88\MmCms\Http\Requests\UserIndexRequest $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function userIndex(UserIndexRequest $request)

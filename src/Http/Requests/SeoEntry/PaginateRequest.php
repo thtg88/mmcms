@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Requests\SeoEntry;
 
-use Thtg88\MmCms\Models\SeoEntry;
 use Thtg88\MmCms\Http\Requests\PaginateRequest as BasePaginateRequest;
+use Thtg88\MmCms\Models\SeoEntry;
 
 class PaginateRequest extends BasePaginateRequest
 {

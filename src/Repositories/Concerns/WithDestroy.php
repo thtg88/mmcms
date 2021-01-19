@@ -12,6 +12,7 @@ trait WithDestroy
      * Deletes a model instance from a given id.
      *
      * @param int $id The id of the model.
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function destroy($id): Model
@@ -53,6 +54,7 @@ trait WithDestroy
      * Returns the number of records deleted.
      *
      * @param array $ids The ids of the model to destroy.
+     *
      * @return int
      */
     public function destroyBulk(array $ids)
@@ -61,11 +63,10 @@ trait WithDestroy
         $ids = array_filter(
             $ids,
             static function ($id) {
-                return (
-                    ! empty($id) &&
+                return
+                    !empty($id) &&
                     is_numeric($id) &&
-                    $id > 0
-                );
+                    $id > 0;
             }
         );
         if (count($ids) === 0) {
@@ -93,7 +94,7 @@ trait WithDestroy
                 null,
                 [
                     'target_table' => $this->model->getTable(),
-                    'ids' => $ids,
+                    'ids'          => $ids,
                 ]
             );
         }
@@ -106,6 +107,7 @@ trait WithDestroy
      * Restore a model instance from a given id.
      *
      * @param int $id The id of the model
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function restore($id)

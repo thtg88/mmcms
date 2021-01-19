@@ -7,7 +7,6 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Auth;
 use InvalidArgumentException;
 use Mockery as m;
 use Thtg88\MmCms\Repositories\UserRepository;
@@ -35,11 +34,11 @@ trait WithOauthHttpClientMock
         // Mock OAuth Passport HTTP Client
         $mock = new MockHandler([
             new GuzzleResponse(200, ['Content-Type' => 'application/json'], json_encode([
-                'token_type' => 'Bearer',
-                'expires_in' => 31536000,
-                'access_token' => 'access-token',
+                'token_type'    => 'Bearer',
+                'expires_in'    => 31536000,
+                'access_token'  => 'access-token',
                 'refresh_token' => 'refresh-token',
-            ]))
+            ])),
         ]);
         $handlerStack = HandlerStack::create($mock);
         $client = new Client(['handler' => $handlerStack]);

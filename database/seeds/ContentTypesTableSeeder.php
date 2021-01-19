@@ -21,10 +21,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Text',
+                    'name'                        => 'Text',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => 'Use for titles, names, tags, URLs, e-mail addresses',
-                    'priority' => 1,
+                    'description'                 => 'Use for titles, names, tags, URLs, e-mail addresses',
+                    'priority'                    => 1,
                 ]);
             }
         }
@@ -39,10 +39,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Long Text',
+                    'name'                        => 'Long Text',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => 'Use for descriptions, text paragraphs, articles',
-                    'priority' => 2,
+                    'description'                 => 'Use for descriptions, text paragraphs, articles',
+                    'priority'                    => 2,
                 ]);
             }
         }
@@ -57,10 +57,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Integer Positive Number',
+                    'name'                        => 'Integer Positive Number',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => '1, 2, 3, 5, 8, 13, ...',
-                    'priority' => 3,
+                    'description'                 => '1, 2, 3, 5, 8, 13, ...',
+                    'priority'                    => 3,
                 ]);
             }
         }
@@ -75,10 +75,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Decimal Number',
+                    'name'                        => 'Decimal Number',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => '3.14159265389',
-                    'priority' => 4,
+                    'description'                 => '3.14159265389',
+                    'priority'                    => 4,
                 ]);
             }
         }
@@ -93,10 +93,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Date and Time',
+                    'name'                        => 'Date and Time',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => 'Event date, opening hours',
-                    'priority' => 5,
+                    'description'                 => 'Event date, opening hours',
+                    'priority'                    => 5,
                 ]);
             }
         }
@@ -111,10 +111,10 @@ class ContentTypesTableSeeder extends Seeder
             if ($migration_method !== null) {
                 // if not - create
                 ContentType::create([
-                    'name' => 'Boolean',
+                    'name'                        => 'Boolean',
                     'content_migration_method_id' => $migration_method->id,
-                    'description' => 'Yes or no, 1 or 0, true or false',
-                    'priority' => 6,
+                    'description'                 => 'Yes or no, 1 or 0, true or false',
+                    'priority'                    => 6,
                 ]);
             }
         }

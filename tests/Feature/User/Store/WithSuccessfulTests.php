@@ -5,7 +5,6 @@ namespace Thtg88\MmCms\Tests\Feature\User\Store;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Models\Role;
 use Thtg88\MmCms\Models\User;
-use Thtg88\MmCms\Repositories\RoleRepository;
 
 trait WithSuccessfulTests
 {
@@ -22,8 +21,8 @@ trait WithSuccessfulTests
             ->json('post', $this->getRoute());
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email' => 'The email field is required.',
-                'name' => 'The name field is required.',
+                'email'    => 'The email field is required.',
+                'name'     => 'The name field is required.',
                 'password' => 'The password field is required.',
             ]);
     }
@@ -39,14 +38,14 @@ trait WithSuccessfulTests
         $user = User::factory()->emailVerified()->$user_role_name()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'email' => [Str::random(5)],
-                'name' => [Str::random(5)],
+                'email'    => [Str::random(5)],
+                'name'     => [Str::random(5)],
                 'password' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email' => 'The email must be a string.',
-                'name' => 'The name must be a string.',
+                'email'    => 'The email must be a string.',
+                'name'     => 'The name must be a string.',
                 'password' => 'The password must be a string.',
             ]);
     }
@@ -62,14 +61,14 @@ trait WithSuccessfulTests
         $user = User::factory()->emailVerified()->$user_role_name()->create();
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
-                'email' => Str::random(256),
-                'name' => Str::random(256),
+                'email'    => Str::random(256),
+                'name'     => Str::random(256),
                 'password' => Str::random(256),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email' => 'The email may not be greater than 255 characters.',
-                'name' => 'The name may not be greater than 255 characters.',
+                'email'    => 'The email may not be greater than 255 characters.',
+                'name'     => 'The name may not be greater than 255 characters.',
                 'password' => 'The password may not be greater than 255 characters.',
             ]);
     }
@@ -186,12 +185,12 @@ trait WithSuccessfulTests
             ->findByModelName($data['email']);
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
+                'id'         => $model->id,
                 'created_at' => $model->created_at->toISOString(),
-                'email' => $data['email'],
-                'name' => $data['name'],
+                'email'      => $data['email'],
+                'name'       => $data['name'],
             ],
         ]);
 

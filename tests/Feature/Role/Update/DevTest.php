@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\Role\Update;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\Role\WithModelData;
@@ -11,7 +11,9 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements UpdateTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
 
     /**
      * @return void
@@ -128,12 +130,12 @@ class DevTest extends TestCase implements UpdateTestContract
             ->json('put', $this->getRoute([$model->id]), $data);
         $response->assertStatus(200)
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
-                    'created_at' => $model->created_at->toISOString(),
+                    'id'           => $model->id,
+                    'created_at'   => $model->created_at->toISOString(),
                     'display_name' => $data['display_name'],
-                    'name' => $data['name'],
+                    'name'         => $data['name'],
                 ],
             ]);
 

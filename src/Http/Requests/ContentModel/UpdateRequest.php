@@ -12,6 +12,7 @@ class UpdateRequest extends BaseUpdateRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentModelRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentModelRepository $repository)

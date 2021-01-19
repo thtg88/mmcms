@@ -11,11 +11,11 @@ trait HasChildren
      */
     public static function bootHasChildren()
     {
-        static::addGlobalScope(new ChildrenScope);
+        static::addGlobalScope(new ChildrenScope());
     }
 
     /**
-     * Determine if the model instance has a parent
+     * Determine if the model instance has a parent.
      *
      * @return bool
      */
@@ -25,7 +25,7 @@ trait HasChildren
     }
 
     /**
-     * Determine if the model instance has children
+     * Determine if the model instance has children.
      *
      * @return bool
      */

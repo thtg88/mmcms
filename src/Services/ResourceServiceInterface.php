@@ -18,6 +18,7 @@ interface ResourceServiceInterface
      * Display a listing of the resource filtered by a given start and end date.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function dateFilter(DateFilterRequestInterface $request);
@@ -26,7 +27,8 @@ interface ResourceServiceInterface
      * Deletes a model instance from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
-     * @param int $id The id of the model.
+     * @param int                                                           $id      The id of the model.
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function destroy(DestroyRequestInterface $request, $id);
@@ -42,6 +44,7 @@ interface ResourceServiceInterface
      * Return all the model instances.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\IndexRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function index(IndexRequestInterface $request);
@@ -50,6 +53,7 @@ interface ResourceServiceInterface
      * Return the paginated model instances.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\PaginateRequestInterface $request
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate(PaginateRequestInterface $request);
@@ -58,7 +62,8 @@ interface ResourceServiceInterface
      * Restore a model instance from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\RestoreRequestInterface $request
-     * @param int $id The id of the model
+     * @param int                                                           $id      The id of the model
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function restore(RestoreRequestInterface $request, $id);
@@ -67,6 +72,7 @@ interface ResourceServiceInterface
      * Return the model instances matching the given search query.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\SearchRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function search(SearchRequestInterface $request);
@@ -75,7 +81,8 @@ interface ResourceServiceInterface
      * Returns a model from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\ShowRequestInterface $request
-     * @param int $id The id of the instance.
+     * @param int                                                        $id      The id of the instance.
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function show(ShowRequestInterface $request, $id);
@@ -84,6 +91,7 @@ interface ResourceServiceInterface
      * Create a new model instance in storage from the given data array.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreRequestInterface $request);
@@ -92,7 +100,8 @@ interface ResourceServiceInterface
      * Updates a model instance with given data, from a given id.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\UpdateRequestInterface $request
-     * @param int $id The id of the model
+     * @param int                                                          $id      The id of the model
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function update(UpdateRequestInterface $request, $id);
@@ -102,6 +111,7 @@ interface ResourceServiceInterface
      * filtered by a given start and end date.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DateFilterRequestInterface $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function userDateFilter(DateFilterRequestInterface $request);

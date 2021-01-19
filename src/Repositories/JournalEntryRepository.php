@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\JournalEntry;
 
-/**
- *
- */
 class JournalEntryRepository extends Repository
 {
     protected static $model_name = 'id';
@@ -23,6 +20,7 @@ class JournalEntryRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\JournalEntry $model
+     *
      * @return void
      */
     public function __construct(JournalEntry $model)

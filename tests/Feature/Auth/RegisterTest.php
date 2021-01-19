@@ -22,8 +22,8 @@ class RegisterTest extends TestCase
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email' => 'The email field is required.',
-                'name' => 'The name field is required.',
+                'email'    => 'The email field is required.',
+                'name'     => 'The name field is required.',
                 'password' => 'The password field is required.',
             ]);
     }
@@ -33,13 +33,13 @@ class RegisterTest extends TestCase
     {
         $response = $this->json('post', $this->getRoute(), [
             'email' => Str::random(256),
-            'name' => Str::random(256),
+            'name'  => Str::random(256),
         ]);
 
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'email' => 'The email may not be greater than 255 characters.',
-                'name' => 'The name may not be greater than 255 characters.',
+                'name'  => 'The name may not be greater than 255 characters.',
             ]);
     }
 
@@ -60,7 +60,7 @@ class RegisterTest extends TestCase
     public function password_confirmation_validation(): void
     {
         $response = $this->json('post', $this->getRoute(), [
-            'password' => Str::random(8),
+            'password'              => Str::random(8),
             'password_confirmation' => Str::random(8),
         ]);
 
@@ -103,13 +103,13 @@ class RegisterTest extends TestCase
             ->json('post', $this->getRoute(), $data);
         $response->assertStatus(200)
             ->assertJson([
-                'token_type' => 'Bearer',
-                'expires_in' => 31536000,
-                'access_token' => 'access-token',
+                'token_type'    => 'Bearer',
+                'expires_in'    => 31536000,
+                'access_token'  => 'access-token',
                 'refresh_token' => 'refresh-token',
-                'resource' => [
+                'resource'      => [
                     'email' => $data['email'],
-                    'name' => $data['name'],
+                    'name'  => $data['name'],
                 ],
             ]);
 
@@ -134,6 +134,7 @@ class RegisterTest extends TestCase
      * Return the route to use for these tests from a given parameters array.
      *
      * @param array $parameters
+     *
      * @return string
      */
     public function getRoute(array $parameters = []): string

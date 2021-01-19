@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\Concerns\Update;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 
 trait ActingAsAdminTest
 {
@@ -18,7 +18,6 @@ trait ActingAsAdminTest
         $deleted_model = call_user_func($this->model_classname.'::factory')
             ->softDeleted()
             ->create();
-
 
         // Test random string as id
         $response = $this->passportActingAs($user)
@@ -50,9 +49,9 @@ trait ActingAsAdminTest
             ->json('put', $this->getRoute([$model->id]));
         $response->assertStatus(200)
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

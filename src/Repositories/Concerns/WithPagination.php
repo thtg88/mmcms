@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Repositories\Concerns;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Config;
 
@@ -11,12 +10,13 @@ trait WithPagination
     /**
      * Return the paginated model instances.
      *
-     * @param int $page_size The number of model instances to return per page
-     * @param int $page The page number
-     * @param string $q The optional search query
-     * @param string $sort_column The optional sort column
+     * @param int    $page_size      The number of model instances to return per page
+     * @param int    $page           The page number
+     * @param string $q              The optional search query
+     * @param string $sort_column    The optional sort column
      * @param string $sort_direction The optional sort direction
-     * @param array $wheres Additional where clauses
+     * @param array  $wheres         Additional where clauses
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function paginate(
@@ -28,12 +28,12 @@ trait WithPagination
         array $wheres = []
     ): LengthAwarePaginator {
         // Assume page_size as numeric and > 0
-        if (empty($page_size) || ! is_numeric($page_size) || $page_size < 1) {
+        if (empty($page_size) || !is_numeric($page_size) || $page_size < 1) {
             return new LengthAwarePaginator([], 0, 1);
         }
 
         // Assume page as numeric and > 0
-        if (! empty($page) && (! is_numeric($page) || $page < 1)) {
+        if (!empty($page) && (!is_numeric($page) || $page < 1)) {
             return new LengthAwarePaginator([], 0, $page_size);
         }
 
@@ -45,20 +45,20 @@ trait WithPagination
         $result = $this->withOptionalTrashed($result);
 
         // Add additional where clauses
-        if (! empty($wheres)) {
+        if (!empty($wheres)) {
             foreach ($wheres as $key => $where) {
                 $result = $this->getWhereFilterQueryBuilder($result, $where);
             }
         }
 
         // Search clause
-        if (! empty($q)) {
+        if (!empty($q)) {
             $result = $this->searchQuery($result, $q);
         }
 
         // Order by clause
         $order_by_set = false;
-        if (! empty($sort_column) && ! empty($sort_direction)) {
+        if (!empty($sort_column) && !empty($sort_direction)) {
             if (in_array($sort_direction, ['asc', 'desc'])) {
                 if (is_string($sort_column)) {
                     // If sort name and direction included and valid
@@ -87,7 +87,8 @@ trait WithPagination
      * If not supported the given query builder will be returned.
      *
      * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $builder
-     * @param array $filter
+     * @param array                                                                     $filter
+     *
      * @return
      */
     protected function getWhereFilterQueryBuilder($builder, array $filter)
@@ -96,8 +97,8 @@ trait WithPagination
         // and the column is not in the filter columns repository array
         if (
             (
-                ! is_array(static::$filter_columns) ||
-                ! in_array($filter['name'], static::$filter_columns)
+                !is_array(static::$filter_columns) ||
+                !in_array($filter['name'], static::$filter_columns)
             )
             && $filter['name'] !== 'deleted_at'
         ) {
@@ -121,7 +122,7 @@ trait WithPagination
 
             if ($filter['value'] === null) {
                 if (
-                    ! isset($filter['operator']) ||
+                    !isset($filter['operator']) ||
                     empty($filter['operator']) ||
                     $filter['operator'] === '='
                 ) {
@@ -208,7 +209,7 @@ trait WithPagination
 
         if ($filter['value'] === null) {
             if (
-                ! array_key_exists('operator', $filter) ||
+                !array_key_exists('operator', $filter) ||
                 empty($filter['operator']) ||
                 $filter['operator'] === '='
             ) {

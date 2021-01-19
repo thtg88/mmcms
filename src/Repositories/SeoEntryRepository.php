@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\SeoEntry;
 
-/**
- *
- */
 class SeoEntryRepository extends Repository
 {
     protected static $model_name = 'name';
@@ -22,7 +19,8 @@ class SeoEntryRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param \Thtg88\MmCms\Models\SeoEntry	$model
+     * @param \Thtg88\MmCms\Models\SeoEntry $model
+     *
      * @return void
      */
     public function __construct(SeoEntry $model)

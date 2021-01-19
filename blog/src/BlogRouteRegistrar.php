@@ -17,6 +17,7 @@ class BlogRouteRegistrar
      * Create a new route registrar instance.
      *
      * @param \Illuminate\Contracts\Routing\Registrar $router
+     *
      * @return void
      */
     public function __construct(Router $router)
@@ -38,7 +39,7 @@ class BlogRouteRegistrar
         });
 
         $this->router->post('/token', [
-            'uses' => 'AccessTokenController@issueToken',
+            'uses'       => 'AccessTokenController@issueToken',
             'middleware' => 'throttle',
         ]);
     }

@@ -8,5 +8,7 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class UserTest extends TestCase
 {
-    use WithModelData, WithUrl, ActingAsUserTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsUserTest;
 }

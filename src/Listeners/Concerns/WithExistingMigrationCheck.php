@@ -41,7 +41,7 @@ trait WithExistingMigrationCheck
         }
 
         return [
-            'migration_path' => $migration_path,
+            'migration_path'     => $migration_path,
             'new_migration_path' => $new_migration_path,
         ];
     }

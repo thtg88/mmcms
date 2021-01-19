@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Http\Requests\ContentValidationRule;
 
-use Thtg88\MmCms\Models\ContentValidationRule;
 use Thtg88\MmCms\Http\Requests\PaginateRequest as BasePaginateRequest;
+use Thtg88\MmCms\Models\ContentValidationRule;
 
 class PaginateRequest extends BasePaginateRequest
 {

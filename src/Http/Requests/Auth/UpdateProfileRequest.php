@@ -2,9 +2,9 @@
 
 namespace Thtg88\MmCms\Http\Requests\Auth;
 
+use Illuminate\Validation\Rule;
 use Thtg88\MmCms\Http\Requests\Request;
 use Thtg88\MmCms\Repositories\UserRepository;
-use Illuminate\Validation\Rule;
 
 class UpdateProfileRequest extends Request
 {
@@ -12,6 +12,7 @@ class UpdateProfileRequest extends Request
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\UserRepository $users
+     *
      * @return void
      */
     public function __construct(UserRepository $users)
@@ -47,7 +48,7 @@ class UpdateProfileRequest extends Request
                             ->where('id', '<>', $this->user()->id);
                     }),
             ],
-            'name' => 'required|string|max:255',
+            'name'     => 'required|string|max:255',
             'password' => 'required|confirmed|string|min:6|max:255',
         ];
 

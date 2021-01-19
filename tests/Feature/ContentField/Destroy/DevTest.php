@@ -2,20 +2,21 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentField\Destroy;
 
-use Illuminate\Database\Migrations\MigrationCreator;
 use Illuminate\Container\Container;
-use Illuminate\Support\Carbon;
 use Thtg88\MmCms\Events\ContentFieldStored;
 use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Concerns\Destroy\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Feature\Concerns\WithGeneratedFiles;
-use Thtg88\MmCms\Tests\Feature\Contracts\DestroyTest as DestroyTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentField\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\DestroyTest as DestroyTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements DestroyTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest, WithGeneratedFiles;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
+    use WithGeneratedFiles;
 
     /**
      * @return void
@@ -39,7 +40,7 @@ class DevTest extends TestCase implements DestroyTestContract
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

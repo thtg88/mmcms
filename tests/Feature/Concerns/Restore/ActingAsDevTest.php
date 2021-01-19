@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\Concerns\Restore;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 
 trait ActingAsDevTest
 {
@@ -47,9 +47,9 @@ trait ActingAsDevTest
         $response->assertStatus(200)
             ->assertJsonMissing(['errors' => []])
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
+                    'id'         => $model->id,
                     'created_at' => $model->created_at->toISOString(),
                 ],
             ]);

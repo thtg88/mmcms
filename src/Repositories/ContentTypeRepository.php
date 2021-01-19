@@ -4,9 +4,6 @@ namespace Thtg88\MmCms\Repositories;
 
 use Thtg88\MmCms\Models\ContentType;
 
-/**
- *
- */
 class ContentTypeRepository extends Repository
 {
     protected static $model_name = 'name';
@@ -23,6 +20,7 @@ class ContentTypeRepository extends Repository
      * Create a new repository instance.
      *
      * @param \Thtg88\MmCms\Models\ContentType $model
+     *
      * @return void
      */
     public function __construct(ContentType $model)

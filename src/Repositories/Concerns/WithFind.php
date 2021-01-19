@@ -8,12 +8,13 @@ trait WithFind
      * Returns a model from a given id.
      *
      * @param int $id The id of the instance.
+     *
      * @return \Illuminate\Database\Eloquent\Model|null
      */
     public function find($id)
     {
         // Assume id as numeric and > 0
-        if (empty($id) || ! is_numeric($id)) {
+        if (empty($id) || !is_numeric($id)) {
             return null;
         }
 
@@ -59,13 +60,14 @@ trait WithFind
      * Returns a model from a given model name.
      *
      * @param mixed $model_name The model name of the instance.
+     *
      * @return \Illuminate\Database\Eloquent\Model
      * @TODO expand to include multiple column functionality. Perhaps allow array, with separator additional parameter, or closure.
      */
     public function findByModelName($model_name)
     {
         // Assume id as numeric and > 0
-        if (empty($model_name) || ! isset(static::$model_name)) {
+        if (empty($model_name) || !isset(static::$model_name)) {
             return null;
         }
 

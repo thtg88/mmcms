@@ -16,10 +16,10 @@ class UsersTableSeeder extends Seeder
         // if not - create
         if ($user === null) {
             User::create([
-                'name' => 'Admin Adminson',
-                'email' => 'admin@domain.com',
+                'name'     => 'Admin Adminson',
+                'email'    => 'admin@domain.com',
                 'password' => 'password',
-                'role_id' => config('mmcms.roles.ids.default'),
+                'role_id'  => config('mmcms.roles.ids.default'),
             ]);
         }
     }

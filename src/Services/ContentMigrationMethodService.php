@@ -10,6 +10,7 @@ class ContentMigrationMethodService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentMigrationMethodRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentMigrationMethodRepository $repository)

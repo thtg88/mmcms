@@ -18,8 +18,9 @@ class StoreRequest extends BaseStoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentFieldContentValidationRuleRepository $repository
-     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository $content_fields
-     * @param \Thtg88\MmCms\Repositories\ContentValidationRuleRepository $content_validation_rules
+     * @param \Thtg88\MmCms\Repositories\ContentFieldRepository                      $content_fields
+     * @param \Thtg88\MmCms\Repositories\ContentValidationRuleRepository             $content_validation_rules
+     *
      * @return void
      */
     public function __construct(

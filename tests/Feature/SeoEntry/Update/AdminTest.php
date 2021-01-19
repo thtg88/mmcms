@@ -8,7 +8,10 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class AdminTest extends TestCase
 {
-    use WithModelData, WithUrl, ActingAsAdminTest, WithSuccessfulTests;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsAdminTest;
+    use WithSuccessfulTests;
 
     /**
      * Return the factory state that represent the user role

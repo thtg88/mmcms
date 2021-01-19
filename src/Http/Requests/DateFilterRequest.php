@@ -23,7 +23,7 @@ class DateFilterRequest extends Request
     {
         return [
             'start' => 'nullable|string|date_format:Y-m-d',
-            'end' => 'nullable|string|date_format:Y-m-d',
+            'end'   => 'nullable|string|date_format:Y-m-d',
         ];
     }
 }

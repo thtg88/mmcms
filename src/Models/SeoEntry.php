@@ -72,7 +72,7 @@ class SeoEntry extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'deleted_at' => 'datetime',
-        'target_id' => 'integer',
+        'target_id'  => 'integer',
         'updated_at' => 'datetime',
     ];
 

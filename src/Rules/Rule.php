@@ -12,6 +12,7 @@ class Rule extends BaseRule
      *
      * @param string $table
      * @param string $column
+     *
      * @return \Thtg88\MmCms\Rules\ExistsCaseInsensitive
      */
     public static function existsCaseInsensitive(
@@ -26,6 +27,7 @@ class Rule extends BaseRule
      *
      * @param string $table
      * @param string $column
+     *
      * @return \Thtg88\LaravelExistsWithoutSoftDeletedRule\Rules\ExistsWithoutSoftDeletedRule
      */
     public static function existsWithoutSoftDeleted(
@@ -40,6 +42,7 @@ class Rule extends BaseRule
      *
      * @param string $table
      * @param string $column
+     *
      * @return \Thtg88\MmCms\Rules\UniqueCaseInsensitive
      */
     public static function uniqueCaseInsensitive(

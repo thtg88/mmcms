@@ -2,8 +2,6 @@
 
 namespace Thtg88\MmCms\Tests\Feature;
 
-use Illuminate\Config\Repository;
-use Illuminate\Container\Container;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Factory;
 use Laravel\Passport\Passport;
-use Thtg88\LaravelScaffoldCommands\LaravelScaffoldCommandsServiceProvider;
 use Thtg88\LaravelExistsWithoutSoftDeletedRule\LaravelExistsWithoutSoftDeletedRuleServiceProvider;
+use Thtg88\LaravelScaffoldCommands\LaravelScaffoldCommandsServiceProvider;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
 use Thtg88\MmCms\Models\User;
@@ -31,8 +29,8 @@ abstract class TestCase extends BaseTestCase
         MmCms::routes();
 
         if (
-            ! Schema::hasTable('users') ||
-            ! Schema::hasTable('oauth_clients')
+            !Schema::hasTable('users') ||
+            !Schema::hasTable('oauth_clients')
         ) {
             Schema::create('users', function (Blueprint $table) {
                 $table->id();
@@ -58,13 +56,12 @@ abstract class TestCase extends BaseTestCase
             $this->artisan('mmcms:install');
         }
 
-
         $oauth_clients = DB::select(
             'select * from oauth_clients where password_client = 1'
         );
 
         $this->app['config']->set('mmcms.passport', [
-            'oauth_url' => 'http://localhost',
+            'oauth_url'          => 'http://localhost',
             'password_client_id' => count($oauth_clients) === 0 ?
                 null :
                 $oauth_clients[0]->id,
@@ -115,9 +112,10 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Load package service provider
+     * Load package service provider.
      *
      * @param \Illuminate\Foundation\Application $app
+     *
      * @return array
      */
     protected function getPackageProviders($app)
@@ -145,6 +143,7 @@ abstract class TestCase extends BaseTestCase
      * Return the route to use for these tests from a given parameters array.
      *
      * @param array $parameters
+     *
      * @return string
      */
     abstract public function getRoute(array $parameters = []): string;

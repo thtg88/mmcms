@@ -2,18 +2,17 @@
 
 namespace Thtg88\MmCms\Events;
 
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 use Thtg88\MmCms\Models\ContentField;
 
 class ContentFieldDestroyed
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable;
+    use InteractsWithSockets;
+    use SerializesModels;
 
     public $content_field;
     public $force;
@@ -22,7 +21,8 @@ class ContentFieldDestroyed
      * Create a new event instance.
      *
      * @param ContentField $content_field
-     * @param boolean $force
+     * @param bool         $force
+     *
      * @return void
      */
     public function __construct(ContentField $content_field, $force = false)

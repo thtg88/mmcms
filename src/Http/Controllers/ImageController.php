@@ -19,14 +19,15 @@ class ImageController extends Controller
      */
     protected $bindings = [
         DestroyRequestInterface::class => DestroyRequest::class,
-        StoreRequestInterface::class => StoreRequest::class,
-        UpdateRequestInterface::class => UpdateRequest::class,
+        StoreRequestInterface::class   => StoreRequest::class,
+        UpdateRequestInterface::class  => UpdateRequest::class,
     ];
 
     /**
      * Create a new controller instance.
      *
      * @param \Thtg88\MmCms\Services\ImageService $service
+     *
      * @return void
      */
     public function __construct(ImageService $service)

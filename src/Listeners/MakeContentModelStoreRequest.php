@@ -13,6 +13,7 @@ class MakeContentModelStoreRequest
      * Handle the event.
      *
      * @param \Thtg88\MmCms\Events\ContentModelStored $event
+     *
      * @return void
      */
     public function handle(ContentModelStored $event): void
@@ -30,7 +31,7 @@ class MakeContentModelStoreRequest
         }
 
         Artisan::call('scaffold:request', [
-            'name' => $model_name,
+            'name'     => $model_name,
             '--method' => 'store',
         ]);
     }

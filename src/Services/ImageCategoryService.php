@@ -10,6 +10,7 @@ class ImageCategoryService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
+     *
      * @return void
      */
     public function __construct(ImageCategoryRepository $repository)

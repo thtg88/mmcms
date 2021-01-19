@@ -22,10 +22,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => $this->faker->safeEmail(),
-            'name' => $this->faker->name(),
+            'email'    => $this->faker->safeEmail(),
+            'name'     => $this->faker->name(),
             'password' => Str::random(8),
-            'role_id' => config('mmcms.roles.ids.default'),
+            'role_id'  => config('mmcms.roles.ids.default'),
         ];
     }
 

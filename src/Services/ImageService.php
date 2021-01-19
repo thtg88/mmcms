@@ -24,7 +24,8 @@ class ImageService extends ResourceService
      * Create a new service instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageRepository $repository
-     * @param \Thtg88\MmCms\Helpers\FileHelper $file_helper
+     * @param \Thtg88\MmCms\Helpers\FileHelper           $file_helper
+     *
      * @return void
      */
     public function __construct(
@@ -39,6 +40,7 @@ class ImageService extends ResourceService
      * Store a newly created resource in storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\StoreRequestInterface $request
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreRequestInterface $request)
@@ -66,7 +68,8 @@ class ImageService extends ResourceService
      * Remove the specified resource from storage.
      *
      * @param \Thtg88\MmCms\Http\Requests\Contracts\DestroyRequestInterface $request
-     * @param int $id
+     * @param int                                                           $id
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function destroy(DestroyRequestInterface $request, $id): Model

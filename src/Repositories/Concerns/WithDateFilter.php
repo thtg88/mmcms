@@ -20,7 +20,8 @@ trait WithDateFilter
      * are ignored, and scenario 2 applies.
      *
      * @param \DateTime $start_date The start date.
-     * @param \DateTime $end_date The end date.
+     * @param \DateTime $end_date   The end date.
+     *
      * @return \Illuminate\Database\Support\Collection
      */
     public function dateFilter(
@@ -29,8 +30,8 @@ trait WithDateFilter
     ): Collection {
         // If no date filter columns set
         if (
-            ! isset(static::$date_filter_columns) ||
-            ! is_array(static::$date_filter_columns)
+            !isset(static::$date_filter_columns) ||
+            !is_array(static::$date_filter_columns)
         ) {
             return new Collection();
         }
@@ -94,9 +95,10 @@ trait WithDateFilter
      * >2. If more than 2 columns are specified, the ones after the second
      * are ignored, and scenario 2 applies.
      *
-     * @param int $user_id The id of the user.
+     * @param int       $user_id    The id of the user.
      * @param \DateTime $start_date The start date.
-     * @param \DateTime $end_date The end date.
+     * @param \DateTime $end_date   The end date.
+     *
      * @return \Illuminate\Database\Support\Collection
      */
     public function getByUserIdAndDateFilter(
@@ -111,8 +113,8 @@ trait WithDateFilter
 
         // If no date filter columns set
         if (
-            ! isset(static::$date_filter_columns) ||
-            ! is_array(static::$date_filter_columns)
+            !isset(static::$date_filter_columns) ||
+            !is_array(static::$date_filter_columns)
         ) {
             return new Collection();
         }

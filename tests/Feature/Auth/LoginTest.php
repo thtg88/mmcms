@@ -17,9 +17,9 @@ class LoginTest extends TestCase
         $response->assertStatus(422)
             ->assertJson([
                 'errors' => [
-                    'email' => ['The email field is required.'],
+                    'email'    => ['The email field is required.'],
                     'password' => ['The password field is required.'],
-                ]
+                ],
             ]);
     }
 
@@ -34,7 +34,7 @@ class LoginTest extends TestCase
 
         // Test wrong email and password
         $response = $this->json('post', $this->getRoute(), [
-            'email' => $this->faker->email(),
+            'email'    => $this->faker->email(),
             'password' => 'wrong-password',
         ]);
         $response->assertStatus(422)
@@ -46,7 +46,7 @@ class LoginTest extends TestCase
 
         // Test wrong password
         $response = $this->json('post', $this->getRoute(), [
-            'email' => $model->email,
+            'email'    => $model->email,
             'password' => 'wrong-password',
         ]);
         $response->assertStatus(401)
@@ -56,7 +56,7 @@ class LoginTest extends TestCase
 
         // Test wrong email
         $response = $this->json('post', $this->getRoute(), [
-            'email' => $this->faker->email(),
+            'email'    => $this->faker->email(),
             'password' => $password,
         ]);
         $response->assertStatus(422)
@@ -80,14 +80,14 @@ class LoginTest extends TestCase
         $response = $this->mockOauthHttpClient($model->email, true)
             ->passportActingAs($model)
             ->json('post', $this->getRoute(), [
-                'email' => $model->email,
+                'email'    => $model->email,
                 'password' => $password,
             ]);
         $response->assertStatus(200)
             ->assertJson([
-                'token_type' => 'Bearer',
-                'expires_in' => 31536000,
-                'access_token' => 'access-token',
+                'token_type'    => 'Bearer',
+                'expires_in'    => 31536000,
+                'access_token'  => 'access-token',
                 'refresh_token' => 'refresh-token',
             ]);
         $this->assertAuthenticated();
@@ -98,14 +98,14 @@ class LoginTest extends TestCase
         // Test successful login with wrong email casing
         $response = $this->mockOauthHttpClient(strtoupper($model->email))
             ->json('post', $this->getRoute(), [
-                'email' => strtoupper($model->email),
+                'email'    => strtoupper($model->email),
                 'password' => $password,
             ]);
         $response->assertStatus(200)
             ->assertJson([
-                'token_type' => 'Bearer',
-                'expires_in' => 31536000,
-                'access_token' => 'access-token',
+                'token_type'    => 'Bearer',
+                'expires_in'    => 31536000,
+                'access_token'  => 'access-token',
                 'refresh_token' => 'refresh-token',
             ]);
         $this->assertAuthenticated();

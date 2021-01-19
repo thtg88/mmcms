@@ -11,12 +11,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\HasApiTokens;
 use Thtg88\MmCms\Database\Factories\UserFactory;
-use Thtg88\MmCms\Models\JournalEntry;
-use Thtg88\MmCms\Models\Role;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use SoftDeletes;
 
     /**
      * The database table used by the model.

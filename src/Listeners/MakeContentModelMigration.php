@@ -13,6 +13,7 @@ class MakeContentModelMigration
      * Handle the event.
      *
      * @param \Thtg88\MmCms\Events\ContentModelStored $event
+     *
      * @return void
      */
     public function handle(ContentModelStored $event)
@@ -22,7 +23,7 @@ class MakeContentModelMigration
 
         // If migration N/A we make it
         Artisan::call('make:migration', [
-            'name' => $migration_name,
+            'name'     => $migration_name,
             '--create' => $table_name,
         ]);
 

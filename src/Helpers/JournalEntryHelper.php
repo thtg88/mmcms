@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Helpers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Thtg88\MmCms\Repositories\JournalEntryRepository;
 
@@ -22,7 +22,7 @@ class JournalEntryHelper
     /**
      * The current request IP.
      *
-     * @var string	$current_request_ip
+     * @var string $current_request_ip
      */
     protected $current_request_ip;
 
@@ -30,7 +30,8 @@ class JournalEntryHelper
      * Create a new helper instance.
      *
      * @param \Thtg88\MmCms\Repositories\JournalEntryRepository $journal_entries
-     * @param string $current_request_ip
+     * @param string                                            $current_request_ip
+     *
      * @return void
      */
     public function __construct(
@@ -44,9 +45,10 @@ class JournalEntryHelper
     /**
      * Create a new journal entry instance in storage.
      *
-     * @param	string	$action	The action performing while creating the entry.
-     * @param	Illuminate\Database\Eloquent\Model	$model	The model the action is performed on.
-     * @param	array	$content	The action content data.
+     * @param string                             $action  The action performing while creating the entry.
+     * @param Illuminate\Database\Eloquent\Model $model   The model the action is performed on.
+     * @param array                              $content The action content data.
+     *
      * @return \Thtg88\MmCms\JournalEntry
      */
     public function createJournalEntry($action, Model $model, array $content = null)

@@ -66,11 +66,11 @@ class Image extends Model
      * @var array
      */
     protected $casts = [
-        'created_at' => 'datetime',
-        'deleted_at' => 'datetime',
+        'created_at'        => 'datetime',
+        'deleted_at'        => 'datetime',
         'image_category_id' => 'integer',
-        'target_id' => 'integer',
-        'updated_at' => 'datetime',
+        'target_id'         => 'integer',
+        'updated_at'        => 'datetime',
     ];
 
     // RELATIONSHIPS

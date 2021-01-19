@@ -13,6 +13,7 @@ class MakeContentModelDestroyRequest
      * Handle the event.
      *
      * @param \Thtg88\MmCms\Events\ContentModelStored $event
+     *
      * @return void
      */
     public function handle(ContentModelStored $event): void
@@ -30,7 +31,7 @@ class MakeContentModelDestroyRequest
         }
 
         Artisan::call('scaffold:request', [
-            'name' => $model_name,
+            'name'     => $model_name,
             '--method' => 'destroy',
         ]);
     }

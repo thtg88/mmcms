@@ -11,6 +11,7 @@ class DestroyRequest extends BaseDestroyRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ContentFieldContentValidationRuleRepository $repository
+     *
      * @return void
      */
     public function __construct(ContentFieldContentValidationRuleRepository $repository)

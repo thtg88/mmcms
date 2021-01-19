@@ -29,7 +29,7 @@ class OauthRefreshToken extends Model
      */
     protected $casts = [
         'expires_at' => 'datetime',
-        'revoked' => 'bool',
+        'revoked'    => 'bool',
     ];
 
     /**

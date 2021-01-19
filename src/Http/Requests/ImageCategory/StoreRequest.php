@@ -17,7 +17,8 @@ class StoreRequest extends BaseStoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\ImageCategoryRepository $repository
-     * @param \Thtg88\MmCms\Helpers\DatabaseHelper $database_helper
+     * @param \Thtg88\MmCms\Helpers\DatabaseHelper               $database_helper
+     *
      * @return void
      */
     public function __construct(
@@ -47,7 +48,7 @@ class StoreRequest extends BaseStoreRequest
                 'string',
                 'max:255',
             ],
-            'sequence' => 'required|integer|min:1',
+            'sequence'     => 'required|integer|min:1',
             'target_table' => [
                 'required',
                 'string',
@@ -58,8 +59,8 @@ class StoreRequest extends BaseStoreRequest
         if (
             array_key_exists('name', $input)
             && array_key_exists('target_table', $input)
-            && ! empty($input['name'])
-            && ! empty($input['target_table'])
+            && !empty($input['name'])
+            && !empty($input['target_table'])
             && is_string($input['name'])
             && is_string($input['target_table'])
         ) {

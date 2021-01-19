@@ -7,7 +7,6 @@ use Illuminate\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\InputOption;
 
 class PublishModuleCommand extends Command
 {
@@ -65,6 +64,7 @@ class PublishModuleCommand extends Command
 
         if (empty($module_name)) {
             $this->error('Module argument is mandatory.');
+
             return;
         }
 
@@ -75,15 +75,17 @@ class PublishModuleCommand extends Command
      * Copy all the files from the given module name.
      *
      * @param string $module_name
-     * @param bool $force
+     * @param bool   $force
+     *
      * @return void
      */
     protected function copyAllFiles($module_name, $force = false): void
     {
         $module_directory = Container::getInstance()->basePath('vendor/thtg88/mmcms/'.$module_name);
 
-        if (! $this->filesystem->isDirectory($module_directory)) {
+        if (!$this->filesystem->isDirectory($module_directory)) {
             $this->error('Module '.$module_name.' not found.');
+
             return;
         }
 
@@ -97,8 +99,9 @@ class PublishModuleCommand extends Command
 
             $appNamespace = Container::getInstance()->getNamespace();
 
-            if (! Str::startsWith($namespace, $appNamespace)) {
+            if (!Str::startsWith($namespace, $appNamespace)) {
                 $this->error('The modules namespace must start with your application namespace: '.$appNamespace);
+
                 return;
             }
 
@@ -109,7 +112,7 @@ class PublishModuleCommand extends Command
             );
 
             if (
-                ! $this->filesystem
+                !$this->filesystem
                     ->isDirectory(Container::getInstance()->path($location))
             ) {
                 $this->filesystem
@@ -123,7 +126,7 @@ class PublishModuleCommand extends Command
                 ->path($location.DIRECTORY_SEPARATOR.$filename);
 
             if (
-                ! $this->filesystem->exists($destination_path) ||
+                !$this->filesystem->exists($destination_path) ||
                 $this->option('force')
             ) {
                 $this->filesystem->put(

@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Http\Requests;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -97,11 +96,10 @@ class Request extends FormRequest
 
         $user = $this->user();
 
-        return (
+        return
             $resource !== null &&
             $user !== null &&
-            $resource->user_id == $user->id
-        );
+            $resource->user_id == $user->id;
     }
 
     protected function formatErrors(Validator $validator)
@@ -114,6 +112,7 @@ class Request extends FormRequest
      * Optionally include a trashed resource in the query.
      *
      * @param bool $with_trashed
+     *
      * @return \Illuminate\Database\Eloquent\Model
      */
     protected function findResource($with_trashed = false)

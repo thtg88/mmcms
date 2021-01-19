@@ -16,6 +16,7 @@ class StoreRequest extends BaseStoreRequest
      * Create a new request instance.
      *
      * @param \Thtg88\MmCms\Repositories\SeoEntryRepository $repository
+     *
      * @return void
      */
     public function __construct(SeoEntryRepository $repository)
@@ -47,17 +48,17 @@ class StoreRequest extends BaseStoreRequest
                 'in:'.implode(',', $table_names),
             ],
             'facebook_description' => 'nullable|string|max:255',
-            'facebook_image' => 'nullable|string|max:2000',
-            'facebook_title' => 'nullable|string|max:255',
-            'json_schema' => 'nullable|string|json',
-            'meta_description' => 'nullable|string|max:255',
-            'meta_robots_follow' => 'nullable|string|max:255',
-            'meta_robots_index' => 'nullable|string|max:255',
-            'meta_title' => 'nullable|string|max:255',
-            'page_title' => 'nullable|string|max:255',
-            'twitter_description' => 'nullable|string|max:255',
-            'twitter_image' => 'nullable|string|max:2000',
-            'twitter_title' => 'nullable|string|max:255',
+            'facebook_image'       => 'nullable|string|max:2000',
+            'facebook_title'       => 'nullable|string|max:255',
+            'json_schema'          => 'nullable|string|json',
+            'meta_description'     => 'nullable|string|max:255',
+            'meta_robots_follow'   => 'nullable|string|max:255',
+            'meta_robots_index'    => 'nullable|string|max:255',
+            'meta_title'           => 'nullable|string|max:255',
+            'page_title'           => 'nullable|string|max:255',
+            'twitter_description'  => 'nullable|string|max:255',
+            'twitter_image'        => 'nullable|string|max:2000',
+            'twitter_title'        => 'nullable|string|max:255',
         ];
 
         if (

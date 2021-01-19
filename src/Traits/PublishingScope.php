@@ -19,7 +19,8 @@ class PublishingScope implements Scope
      * Apply the scope to a given Eloquent query builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model   $model
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -31,6 +32,7 @@ class PublishingScope implements Scope
      * Extend the query builder with the needed functions.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     public function extend(Builder $builder)
@@ -44,6 +46,7 @@ class PublishingScope implements Scope
      * Get the "published at" column for the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return string
      */
     protected function getPublishedAtColumn(Builder $builder)
@@ -59,6 +62,7 @@ class PublishingScope implements Scope
      * Add the publish extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addPublish(Builder $builder)
@@ -77,6 +81,7 @@ class PublishingScope implements Scope
      * Add the unpublish extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addUnpublish(Builder $builder)
@@ -86,7 +91,7 @@ class PublishingScope implements Scope
             $column = $this->getPublishedAtColumn($builder);
 
             return $builder->update([
-                $column => null
+                $column => null,
             ]);
         });
     }
@@ -95,12 +100,13 @@ class PublishingScope implements Scope
      * Add the with-published extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithPublished(Builder $builder)
     {
         $builder->macro('withPublished', function (Builder $builder, $withPublished = true) {
-            if (! $withPublished) {
+            if (!$withPublished) {
                 return $builder->withoutPublished();
             }
 
@@ -112,6 +118,7 @@ class PublishingScope implements Scope
      * Add the without-published extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithoutPublished(Builder $builder)
@@ -131,6 +138,7 @@ class PublishingScope implements Scope
      * Add the only-published extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addOnlyPublished(Builder $builder)

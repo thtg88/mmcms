@@ -2,9 +2,7 @@
 
 namespace Thtg88\MmCms\Database\Factories;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Str;
-use Thtg88\MmCms\Helpers\DatabaseHelper;
 use Thtg88\MmCms\Models\SeoEntry;
 
 class SeoEntryFactory extends Factory
@@ -31,15 +29,15 @@ class SeoEntryFactory extends Factory
 
         return [
             'facebook_description' => $this->faker->sentence,
-            'facebook_image' => $this->faker->url,
-            'facebook_title' => $this->faker->word,
-            'json_schema' => null,
-            'meta_description' => $this->faker->sentence,
-            'meta_robots_follow' => rand(0, 1) === 0 ? 'follow' : 'nofollow',
-            'meta_robots_index' => rand(0, 1) === 0 ? 'index' : 'noindex',
-            'meta_title' => $this->faker->word,
-            'page_title' => $this->faker->word,
-            'target_id' => static function (array $data) {
+            'facebook_image'       => $this->faker->url,
+            'facebook_title'       => $this->faker->word,
+            'json_schema'          => null,
+            'meta_description'     => $this->faker->sentence,
+            'meta_robots_follow'   => rand(0, 1) === 0 ? 'follow' : 'nofollow',
+            'meta_robots_index'    => rand(0, 1) === 0 ? 'index' : 'noindex',
+            'meta_title'           => $this->faker->word,
+            'page_title'           => $this->faker->word,
+            'target_id'            => static function (array $data) {
                 $model_classname = config('mmcms.models.namespace').
                     Str::title(Str::singular($data['target_table'])).'';
 
@@ -51,10 +49,10 @@ class SeoEntryFactory extends Factory
 
                 return null;
             },
-            'target_table' => $table_names[$table_names_idx],
+            'target_table'        => $table_names[$table_names_idx],
             'twitter_description' => $this->faker->sentence,
-            'twitter_image' => $this->faker->url,
-            'twitter_title' => $this->faker->word,
+            'twitter_image'       => $this->faker->url,
+            'twitter_title'       => $this->faker->word,
         ];
     }
 }

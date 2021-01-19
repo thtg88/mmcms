@@ -11,6 +11,7 @@ class Resource extends JsonResource implements ResourceInterface
      * Transform the resource into an array.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return array
      */
     public function toArray($request): array
@@ -22,6 +23,7 @@ class Resource extends JsonResource implements ResourceInterface
      * Create new anonymous resource collection.
      *
      * @param mixed $resource
+     *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public static function collection($resource): AnonymousResourceCollection

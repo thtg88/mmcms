@@ -2,7 +2,6 @@
 
 namespace Thtg88\MmCms\Listeners;
 
-use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use Thtg88\MmCms\Events\ContentModelStored;
@@ -23,6 +22,7 @@ class MakeContentModelController
      * Handle the event.
      *
      * @param \Thtg88\MmCms\Events\ContentModelStored $event
+     *
      * @return void
      */
     public function handle(ContentModelStored $event)

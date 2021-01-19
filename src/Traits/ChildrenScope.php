@@ -19,7 +19,8 @@ class ChildrenScope implements Scope
      * Apply the scope to a given Eloquent query builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param \Illuminate\Database\Eloquent\Model   $model
+     *
      * @return void
      */
     public function apply(Builder $builder, Model $model)
@@ -31,6 +32,7 @@ class ChildrenScope implements Scope
      * Extend the query builder with the needed functions.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     public function extend(Builder $builder)
@@ -44,6 +46,7 @@ class ChildrenScope implements Scope
      * Get the "parent_id" column for the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return string
      */
     protected function getParentIdColumn(Builder $builder)
@@ -59,12 +62,13 @@ class ChildrenScope implements Scope
      * Add the with-children extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithChildren(Builder $builder)
     {
         $builder->macro('withChildren', function (Builder $builder, $withChildren = true) {
-            if (! $withChildren) {
+            if (!$withChildren) {
                 return $builder->withoutChildren();
             }
 
@@ -76,6 +80,7 @@ class ChildrenScope implements Scope
      * Add the without-children extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addWithoutChildren(Builder $builder)
@@ -95,6 +100,7 @@ class ChildrenScope implements Scope
      * Add the only-children extension to the builder.
      *
      * @param \Illuminate\Database\Eloquent\Builder $builder
+     *
      * @return void
      */
     protected function addOnlyChildren(Builder $builder)

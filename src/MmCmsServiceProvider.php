@@ -13,9 +13,9 @@ use Thtg88\MmCms\Providers\CurrentTimeServiceProvider;
 
 class MmCmsServiceProvider extends ServiceProvider
 {
-    use Concerns\WithCommands,
-        Concerns\WithProvidedEvents,
-        Concerns\WithProvidedPolicies;
+    use Concerns\WithCommands;
+    use Concerns\WithProvidedEvents;
+    use Concerns\WithProvidedPolicies;
 
     /**
      * Bootstrap the application services.
@@ -34,8 +34,8 @@ class MmCmsServiceProvider extends ServiceProvider
         $this->app->bind('OauthHttpClient', function () {
             return new Client([
                 'base_uri' => Config::get('mmcms.passport.oauth_url'),
-                'timeout' => 30,
-                'verify' => Config::get('app.env') !== 'local' &&
+                'timeout'  => 30,
+                'verify'   => Config::get('app.env') !== 'local' &&
                     Config::get('app.env') !== 'testing',
             ]);
         });

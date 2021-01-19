@@ -2,15 +2,16 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ContentMigrationMethod\Store;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
-use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\ContentMigrationMethod\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl;
+    use WithModelData;
+    use WithUrl;
 
     /**
      * @return void
@@ -93,10 +94,10 @@ class DevTest extends TestCase implements StoreTestContract
             ->json('post', $this->getRoute(), $data);
         $response->assertStatus(200)
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
                     'display_name' => $data['display_name'],
-                    'name' => $data['name'],
+                    'name'         => $data['name'],
                 ],
             ]);
 

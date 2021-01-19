@@ -8,7 +8,7 @@ use Thtg88\MmCms\Models\ImageCategory;
 trait HasImages
 {
     /**
-     * Determine if the model instance has images
+     * Determine if the model instance has images.
      *
      * @return bool
      */
@@ -22,7 +22,7 @@ trait HasImages
     }
 
     /**
-     * Determine if the model instance has children
+     * Determine if the model instance has children.
      *
      * @return bool
      */

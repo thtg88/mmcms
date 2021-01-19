@@ -2,8 +2,8 @@
 
 namespace Thtg88\MmCms\Tests\Feature\ImageCategory\Update;
 
-use Thtg88\MmCms\Models\User;
 use Illuminate\Support\Str;
+use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Tests\Feature\Concerns\Update\ActingAsDevTest;
 use Thtg88\MmCms\Tests\Feature\Contracts\UpdateTest as UpdateTestContract;
 use Thtg88\MmCms\Tests\Feature\ImageCategory\WithModelData;
@@ -11,7 +11,9 @@ use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements UpdateTestContract
 {
-    use WithModelData, WithUrl, ActingAsDevTest;
+    use WithModelData;
+    use WithUrl;
+    use ActingAsDevTest;
 
     /**
      * @return void
@@ -25,12 +27,12 @@ class DevTest extends TestCase implements UpdateTestContract
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
-                'name' => [Str::random(5)],
+                'name'         => [Str::random(5)],
                 'target_table' => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name must be a string.',
+                'name'         => 'The name must be a string.',
                 'target_table' => 'The target table must be a string.',
             ]);
     }
@@ -68,7 +70,7 @@ class DevTest extends TestCase implements UpdateTestContract
 
         $response = $this->passportActingAs($user)
             ->json('put', $this->getRoute([$model->id]), [
-                'name' => $other_model->name,
+                'name'         => $other_model->name,
                 'target_table' => $other_model->target_table,
             ]);
         $response->assertStatus(422)
@@ -151,12 +153,12 @@ class DevTest extends TestCase implements UpdateTestContract
             ->json('put', $this->getRoute([$model->id]), $data);
         $response->assertStatus(200)
             ->assertJson([
-                'success' => true,
+                'success'  => true,
                 'resource' => [
-                    'id' => $model->id,
-                    'created_at' => $model->created_at->toISOString(),
-                    'name' => $data['name'],
-                    'sequence' => $data['sequence'],
+                    'id'           => $model->id,
+                    'created_at'   => $model->created_at->toISOString(),
+                    'name'         => $data['name'],
+                    'sequence'     => $data['sequence'],
                     'target_table' => $data['target_table'],
                 ],
             ]);

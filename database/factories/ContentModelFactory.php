@@ -26,10 +26,10 @@ class ContentModelFactory extends Factory
                 return Str::slug($data['name']);
             },
             'description' => $this->faker->sentence,
-            'model_name' => static function (array $data) {
+            'model_name'  => static function (array $data) {
                 return Str::studly($data['name']);
             },
-            'name' => $this->faker->words(3, true),
+            'name'       => $this->faker->words(3, true),
             'table_name' => static function (array $data) {
                 return Str::snake($data['name']);
             },

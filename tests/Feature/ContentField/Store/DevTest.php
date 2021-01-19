@@ -9,13 +9,15 @@ use Thtg88\MmCms\Models\User;
 use Thtg88\MmCms\Repositories\ContentModelRepository;
 use Thtg88\MmCms\Repositories\ContentTypeRepository;
 use Thtg88\MmCms\Tests\Feature\Concerns\WithGeneratedFiles;
-use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\ContentField\WithModelData;
+use Thtg88\MmCms\Tests\Feature\Contracts\StoreTest as StoreTestContract;
 use Thtg88\MmCms\Tests\Feature\TestCase;
 
 class DevTest extends TestCase implements StoreTestContract
 {
-    use WithModelData, WithUrl, WithGeneratedFiles;
+    use WithModelData;
+    use WithUrl;
+    use WithGeneratedFiles;
 
     /**
      * @return void
@@ -30,11 +32,11 @@ class DevTest extends TestCase implements StoreTestContract
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_model_id' => 'The content model id field is required.',
-                'content_type_id' => 'The content type id field is required.',
-                'display_name' => 'The display name field is required.',
+                'content_type_id'  => 'The content type id field is required.',
+                'display_name'     => 'The display name field is required.',
                 'is_resource_name' => 'The is resource name field is required.',
-                'is_mandatory' => 'The is mandatory field is required.',
-                'name' => 'The name field is required.',
+                'is_mandatory'     => 'The is mandatory field is required.',
+                'name'             => 'The name field is required.',
             ]);
     }
 
@@ -49,14 +51,14 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'display_name' => [Str::random(5)],
-                'helper_text' => [Str::random(5)],
-                'name' => [Str::random(5)],
+                'helper_text'  => [Str::random(5)],
+                'name'         => [Str::random(5)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'display_name' => 'The display name must be a string.',
-                'helper_text' => 'The helper text must be a string.',
-                'name' => 'The name must be a string.',
+                'helper_text'  => 'The helper text must be a string.',
+                'name'         => 'The name must be a string.',
             ]);
     }
 
@@ -71,12 +73,12 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'display_name' => Str::random(256),
-                'name' => Str::random(256),
+                'name'         => Str::random(256),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'display_name' => 'The display name may not be greater than 255 characters.',
-                'name' => 'The name may not be greater than 255 characters.',
+                'name'         => 'The name may not be greater than 255 characters.',
             ]);
     }
 
@@ -93,26 +95,26 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'content_model_id' => $model->content_model_id,
-                'display_name' => $model->display_name,
-                'name' => $model->name,
+                'display_name'     => $model->display_name,
+                'name'             => $model->name,
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'display_name' => 'The display name has already been taken.',
-                'name' => 'The name has already been taken.',
+                'name'         => 'The name has already been taken.',
             ]);
 
         // Check unique case insensitive
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'content_model_id' => $model->content_model_id,
-                'display_name' => strtoupper($model->display_name),
-                'name' => strtoupper($model->name),
+                'display_name'     => strtoupper($model->display_name),
+                'name'             => strtoupper($model->name),
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'display_name' => 'The display name has already been taken.',
-                'name' => 'The name has already been taken.',
+                'name'         => 'The name has already been taken.',
             ]);
     }
 
@@ -128,12 +130,12 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'content_model_id' => [Str::random(8)],
-                'content_type_id' => [Str::random(8)],
+                'content_type_id'  => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'content_model_id' => 'The content model id must be an integer.',
-                'content_type_id' => 'The content type id must be an integer.',
+                'content_type_id'  => 'The content type id must be an integer.',
             ]);
     }
 
@@ -217,12 +219,12 @@ class DevTest extends TestCase implements StoreTestContract
         $response = $this->passportActingAs($user)
             ->json('post', $this->getRoute(), [
                 'is_resource_name' => [Str::random(8)],
-                'is_mandatory' => [Str::random(8)],
+                'is_mandatory'     => [Str::random(8)],
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
                 'is_resource_name' => 'The is resource name field must be true or false.',
-                'is_mandatory' => 'The is mandatory field must be true or false.',
+                'is_mandatory'     => 'The is mandatory field must be true or false.',
             ]);
     }
 
@@ -245,17 +247,17 @@ class DevTest extends TestCase implements StoreTestContract
             ->findByModelName($data['name']);
 
         $response->assertJson([
-            'success' => true,
+            'success'  => true,
             'resource' => [
-                'id' => $model->id,
-                'created_at' => $model->created_at->toISOString(),
+                'id'               => $model->id,
+                'created_at'       => $model->created_at->toISOString(),
                 'content_model_id' => $data['content_model_id'],
-                'content_type_id' => $data['content_type_id'],
-                'display_name' => $data['display_name'],
-                'helper_text' => $data['helper_text'],
+                'content_type_id'  => $data['content_type_id'],
+                'display_name'     => $data['display_name'],
+                'helper_text'      => $data['helper_text'],
                 'is_resource_name' => $data['is_resource_name'],
-                'is_mandatory' => $data['is_mandatory'],
-                'name' => $data['name'],
+                'is_mandatory'     => $data['is_mandatory'],
+                'name'             => $data['name'],
             ],
         ]);
 
