@@ -51,7 +51,7 @@ class DevTest extends TestCase implements UpdateTestContract
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'name' => 'The name may not be greater than 255 characters.',
+                'name' => 'The name must not be greater than 255 characters.',
             ]);
     }
 
