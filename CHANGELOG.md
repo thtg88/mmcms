@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/) (or at lea
 ### Removed
 - Unique index for user email in create users table migration in install command
 
+## [0.40.0] - 2021-03-11
+### Changed
+- Min PHP version is now 8.0
+
 ## [0.39.2] - 2020-11-19
 ### Added
 - Timeout to OAuth HTTP client singleton
