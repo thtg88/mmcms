@@ -3,7 +3,7 @@
 namespace Thtg88\MmCms\Rules;
 
 use Illuminate\Validation\Rule as BaseRule;
-use Thtg88\LaravelExistsWithoutSoftDeletedRule\Rules\ExistsWithoutSoftDeletedRule;
+use Thtg88\ExistsWithoutSoftDeletedRule\Rules\ExistsWithoutSoftDeletedRule;
 
 class Rule extends BaseRule
 {
@@ -28,7 +28,7 @@ class Rule extends BaseRule
      * @param string $table
      * @param string $column
      *
-     * @return \Thtg88\LaravelExistsWithoutSoftDeletedRule\Rules\ExistsWithoutSoftDeletedRule
+     * @return \Thtg88\ExistsWithoutSoftDeletedRule\Rules\ExistsWithoutSoftDeletedRule
      */
     public static function existsWithoutSoftDeleted(
         string $table,
