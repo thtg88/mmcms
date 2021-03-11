@@ -5,7 +5,6 @@ namespace Thtg88\MmCms\Concerns;
 use Laravel\Passport\Console\ClientCommand as PassportClientCommand;
 use Laravel\Passport\Console\InstallCommand as PassportInstallCommand;
 use Laravel\Passport\Console\KeysCommand as PassportKeysCommand;
-use Thtg88\MmCms\Console\Commands\CreateDatabaseCommand;
 use Thtg88\MmCms\Console\Commands\InstallCommand;
 use Thtg88\MmCms\Console\Commands\PublishModuleCommand;
 use Thtg88\MmCms\Console\Commands\SeedCommand;
@@ -21,7 +20,6 @@ trait WithCommands
     {
         // Commands
         $this->commands([
-            CreateDatabaseCommand::class,
             InstallCommand::class,
             PublishModuleCommand::class,
             SeedCommand::class,

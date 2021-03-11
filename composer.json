@@ -29,7 +29,8 @@
         "laravel/passport": "^10.0",
         "nesbot/carbon": "^2.0.0",
         "thtg88/laravel-exists-without-soft-deleted-rule": "^0.2.0",
-        "thtg88/laravel-scaffold-commands": "^0.3.0"
+        "thtg88/laravel-scaffold-commands": "^0.3.0",
+        "thtg88/laravel-db-scaffold-commands": "^0.3.0"
     },
     "autoload": {
         "psr-4": {
