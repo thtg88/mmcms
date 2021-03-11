@@ -77,8 +77,8 @@ class DevTest extends TestCase implements StoreTestContract
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'display_name' => 'The display name may not be greater than 255 characters.',
-                'name'         => 'The name may not be greater than 255 characters.',
+                'display_name' => 'The display name must not be greater than 255 characters.',
+                'name'         => 'The name must not be greater than 255 characters.',
             ]);
     }
 

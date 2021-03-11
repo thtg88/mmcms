@@ -96,17 +96,17 @@ trait WithSuccessfulTests
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'facebook_description' => 'The facebook description may not be greater than 255 characters.',
-                'facebook_image'       => 'The facebook image may not be greater than 2000 characters.',
-                'facebook_title'       => 'The facebook title may not be greater than 255 characters.',
-                'meta_description'     => 'The meta description may not be greater than 255 characters.',
-                'meta_robots_follow'   => 'The meta robots follow may not be greater than 255 characters.',
-                'meta_robots_index'    => 'The meta robots index may not be greater than 255 characters.',
-                'meta_title'           => 'The meta title may not be greater than 255 characters.',
-                'page_title'           => 'The page title may not be greater than 255 characters.',
-                'twitter_description'  => 'The twitter description may not be greater than 255 characters.',
-                'twitter_image'        => 'The twitter image may not be greater than 2000 characters.',
-                'twitter_title'        => 'The twitter title may not be greater than 255 characters.',
+                'facebook_description' => 'The facebook description must not be greater than 255 characters.',
+                'facebook_image'       => 'The facebook image must not be greater than 2000 characters.',
+                'facebook_title'       => 'The facebook title must not be greater than 255 characters.',
+                'meta_description'     => 'The meta description must not be greater than 255 characters.',
+                'meta_robots_follow'   => 'The meta robots follow must not be greater than 255 characters.',
+                'meta_robots_index'    => 'The meta robots index must not be greater than 255 characters.',
+                'meta_title'           => 'The meta title must not be greater than 255 characters.',
+                'page_title'           => 'The page title must not be greater than 255 characters.',
+                'twitter_description'  => 'The twitter description must not be greater than 255 characters.',
+                'twitter_image'        => 'The twitter image must not be greater than 2000 characters.',
+                'twitter_title'        => 'The twitter title must not be greater than 255 characters.',
             ]);
     }
 

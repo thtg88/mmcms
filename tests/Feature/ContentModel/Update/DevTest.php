@@ -60,10 +60,10 @@ class DevTest extends TestCase implements UpdateTestContract
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'base_route_name' => 'The base route name may not be greater than 255 characters.',
-                'model_name'      => 'The model name may not be greater than 255 characters.',
-                'name'            => 'The name may not be greater than 255 characters.',
-                'table_name'      => 'The table name may not be greater than 255 characters.',
+                'base_route_name' => 'The base route name must not be greater than 255 characters.',
+                'model_name'      => 'The model name must not be greater than 255 characters.',
+                'name'            => 'The name must not be greater than 255 characters.',
+                'table_name'      => 'The table name must not be greater than 255 characters.',
             ]);
     }
 

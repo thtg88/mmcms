@@ -67,9 +67,9 @@ trait WithSuccessfulTests
             ]);
         $response->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email'    => 'The email may not be greater than 255 characters.',
-                'name'     => 'The name may not be greater than 255 characters.',
-                'password' => 'The password may not be greater than 255 characters.',
+                'email'    => 'The email must not be greater than 255 characters.',
+                'name'     => 'The name must not be greater than 255 characters.',
+                'password' => 'The password must not be greater than 255 characters.',
             ]);
     }
 

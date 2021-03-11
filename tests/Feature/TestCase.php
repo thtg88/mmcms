@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\Factory;
 use Laravel\Passport\Passport;
-use Thtg88\LaravelExistsWithoutSoftDeletedRule\LaravelExistsWithoutSoftDeletedRuleServiceProvider;
+use Thtg88\ExistsWithoutSoftDeletedRule\ExistsWithoutSoftDeletedRuleServiceProvider;
 use Thtg88\LaravelScaffoldCommands\LaravelScaffoldCommandsServiceProvider;
 use Thtg88\MmCms\MmCms;
 use Thtg88\MmCms\MmCmsServiceProvider;
@@ -122,7 +122,7 @@ abstract class TestCase extends BaseTestCase
     {
         return [
             LaravelScaffoldCommandsServiceProvider::class,
-            LaravelExistsWithoutSoftDeletedRuleServiceProvider::class,
+            ExistsWithoutSoftDeletedRuleServiceProvider::class,
             MmCmsServiceProvider::class,
         ];
     }
